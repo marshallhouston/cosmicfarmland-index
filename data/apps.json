@@ -1,0 +1,40 @@
+{
+  "apps": [
+    {
+      "slug": "lenny-explorer",
+      "name": "Lenny Explorer",
+      "blurb": "Search and explore Lenny's Newsletter + Podcast archive.",
+      "url": "https://lenny-explorer.cosmicfarmland.wtf",
+      "repo": "https://github.com/marshallhouston/lenny-explorer",
+      "status": "live",
+      "tags": ["search", "product"]
+    },
+    {
+      "slug": "grateful-dead-77",
+      "name": "Grateful Dead '77",
+      "blurb": "Explore the Grateful Dead's legendary 1977 run.",
+      "url": "https://grateful-dead-77.cosmicfarmland.wtf",
+      "repo": "https://github.com/marshallhouston/grateful-dead-77",
+      "status": "live",
+      "tags": ["music", "archive"]
+    },
+    {
+      "slug": "systems-thinking",
+      "name": "Systems Thinking",
+      "blurb": "A playground for thinking in systems, loops, and leverage points.",
+      "url": "https://systems-thinking.cosmicfarmland.wtf",
+      "repo": "https://github.com/marshallhouston/systems-thinking",
+      "status": "coming-soon",
+      "tags": ["thinking", "interactive"]
+    },
+    {
+      "slug": "strategy-creator",
+      "name": "Strategy Creator",
+      "blurb": "Build and pressure-test strategy.",
+      "url": "https://strategy-creator.cosmicfarmland.wtf",
+      "repo": "https://github.com/marshallhouston/strategy-creator",
+      "status": "coming-soon",
+      "tags": ["strategy", "interactive"]
+    }
+  ]
+}

@@ -1,0 +1,545 @@
+{
+  "generatedFrom": "github.com/marshallhouston/cosmic-farmland",
+  "counts": {
+    "command": 18,
+    "plugin": 3,
+    "skill": 18
+  },
+  "entries": [
+    {
+      "slug": "execute-plan",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Execute Plan",
+      "blurb": "Execute a superpowers implementation plan via subagent-driven-development (one subagent per task, stop before push). Defaults to the most recently modified plan in docs/superpowers/plans/.",
+      "triggers": [
+        "/superpowers",
+        "/plans"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/execute-plan.md"
+    },
+    {
+      "slug": "fart-smell-detection",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Fart Smell Detection",
+      "blurb": "[DEPRECATED] Renamed to /fart-sniffing-detection in 1.0.0. Shim kept for transition; remove in 2.0.0.",
+      "triggers": [
+        "/fart-sniffing-detection"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] [PR #N | git-range | --staged]",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/fart-smell-detection.md"
+    },
+    {
+      "slug": "fart-sniffing-detection",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Fart Sniffing Detection",
+      "blurb": "PTVM audit of recent commits/PR. Flags bloat, ranks kill candidates. Levels whiff|sniff|huff|dutch-oven-yourselff.",
+      "triggers": [
+        "/PR"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] [PR #N | git-range | --staged]",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/fart-sniffing-detection.md"
+    },
+    {
+      "slug": "feedback-triage",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Feedback Triage",
+      "blurb": "Triage a feedback blob from a named source into structured items + auto-spawn worktrees for accepted work",
+      "triggers": [],
+      "argumentHint": "<source-name> (then paste feedback)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/feedback-triage.md"
+    },
+    {
+      "slug": "granola-sync",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Granola Sync",
+      "blurb": "Sync recent Granola meeting notes into ~/marshall.notes/meetings/ as markdown",
+      "triggers": [
+        "/marshall",
+        "/meetings"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/granola-sync.md"
+    },
+    {
+      "slug": "lovable-setup",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Lovable Setup",
+      "blurb": "Take a freshly-exported Lovable app all the way to marshall's dev setup — de-brand, deps, lint, real tests, design.html, favicon + social link preview, deploy scaffolding.",
+      "triggers": [],
+      "argumentHint": "[project-dir] (default: current dir)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/lovable-setup.md"
+    },
+    {
+      "slug": "next",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Next",
+      "blurb": "What's next in this repo? Reads git state, PRs, worktrees, backlog docs, issues.",
+      "triggers": [],
+      "argumentHint": "(none)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/next.md"
+    },
+    {
+      "slug": "prove-the-value-idea",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Prove The Value Idea",
+      "blurb": "Prove The Value Idea audit. Alias for /ptv-idea. Levels whiff|sniff|huff|dutch-oven-yourselff.",
+      "triggers": [
+        "/ptv-idea"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] <idea text | path/to/spec.md | 'last turn'>",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/prove-the-value-idea.md"
+    },
+    {
+      "slug": "prove-the-value-motherfucker",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Prove The Value Motherfucker",
+      "blurb": "Prove The Value Motherfucker audit. Alias for /fart-sniffing-detection. Levels whiff|sniff|huff|dutch-oven-yourselff.",
+      "triggers": [
+        "/fart-sniffing-detection"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] [PR #N | git-range | --staged]",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/prove-the-value-motherfucker.md"
+    },
+    {
+      "slug": "ptv",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Ptv",
+      "blurb": "PTV (Prove The Value) audit. Alias for /fart-sniffing-detection. Levels whiff|sniff|huff|dutch-oven-yourselff.",
+      "triggers": [
+        "/fart-sniffing-detection"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] [PR #N | git-range | --staged]",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/ptv.md"
+    },
+    {
+      "slug": "ptv-idea",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Ptv Idea",
+      "blurb": "PTV an idea/proposal BEFORE code. Same PTVM rubric as /ptv, input is a written idea. Levels whiff|sniff|huff|dutch-oven-yourselff.",
+      "triggers": [
+        "/proposal",
+        "/ptv"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] <idea text | path/to/spec.md | 'last turn'>",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/ptv-idea.md"
+    },
+    {
+      "slug": "ptvi",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Ptvi",
+      "blurb": "PTV an idea. Short alias for /ptv-idea. Levels whiff|sniff|huff|dutch-oven-yourselff.",
+      "triggers": [
+        "/ptv-idea"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] <idea text | path/to/spec.md | 'last turn'>",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/ptvi.md"
+    },
+    {
+      "slug": "ptvm",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Ptvm",
+      "blurb": "PTV (Prove The Value) audit. Alias for /fart-sniffing-detection. Levels whiff|sniff|huff|dutch-oven-yourselff.",
+      "triggers": [
+        "/fart-sniffing-detection"
+      ],
+      "argumentHint": "[whiff|sniff|huff|dutch-oven-yourselff] [PR #N | git-range | --staged]",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/ptvm.md"
+    },
+    {
+      "slug": "ship",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Ship",
+      "blurb": "Wait for a PR to go green, merge it, clean up the worktree + local branch",
+      "triggers": [],
+      "argumentHint": "[pr-number] [--ack-yellow|--ack-red] (defaults to current branch's PR)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/ship.md"
+    },
+    {
+      "slug": "ship-all",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Ship All",
+      "blurb": "List your open PRs and ship them in sequence. Replaces /ship -> /ship loops.",
+      "triggers": [
+        "/ship"
+      ],
+      "argumentHint": "[--ack-yellow|--ack-red] (passed to each /ship)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/ship-all.md"
+    },
+    {
+      "slug": "slideshow",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Slideshow",
+      "blurb": "Build an on-brand LinkedIn/Instagram carousel from a topic or outline. Produces HTML slides, PNGs, a combined PDF, and a draft caption.",
+      "triggers": [
+        "/Instagram"
+      ],
+      "argumentHint": "[topic or outline]",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/slideshow.md"
+    },
+    {
+      "slug": "systematize",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Systematize",
+      "blurb": "Promote a lesson from passive memory to active enforcement (hook > CI > script > doc > memory). Picks highest viable tier, ships the artifact.",
+      "triggers": [],
+      "argumentHint": "[lesson description]",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/systematize.md"
+    },
+    {
+      "slug": "wrap",
+      "kind": "command",
+      "plugin": "cosmic-farmland",
+      "name": "Wrap",
+      "blurb": "End-of-session cap. Ships current PR (or skips if none), then writes resumption prompt.",
+      "triggers": [],
+      "argumentHint": "[pr-number] (optional, defaults to current branch's PR)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/wrap.md"
+    },
+    {
+      "slug": "cosmic-farmland",
+      "kind": "plugin",
+      "plugin": "cosmic-farmland",
+      "name": "Cosmic Farmland",
+      "blurb": "cosmic farmland's collection of skills, commands, hooks, and other randomness",
+      "triggers": [],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland"
+    },
+    {
+      "slug": "graphify-out",
+      "kind": "plugin",
+      "plugin": "graphify-out",
+      "name": "Graphify Out",
+      "blurb": "",
+      "triggers": [],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/graphify-out"
+    },
+    {
+      "slug": "obsidian-weaver",
+      "kind": "plugin",
+      "plugin": "obsidian-weaver",
+      "name": "Obsidian Weaver",
+      "blurb": "Claude Code as the interface to your Obsidian vault. Daily notes, captures, and an auto-maintained knowledge graph that weaves connections between your notes as you write them. Vault-agnostic — set OBSIDIAN_VAULT and run /obsidian-setup.",
+      "triggers": [],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/obsidian-weaver"
+    },
+    {
+      "slug": "activity-stats",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Activity Stats",
+      "blurb": "Generate wall-clock active work stats for the current repo by combining git commits + Claude Code session events. Produces weekly hours summary, day x 4h-bucket heatmap (HTML), and a paste-ready prompt. Use when the user says /activity-stats, 'how many hours did I work', 'activity report', 'weekly hours', 'time spent on this repo', or wants to share progress with a co-founder/cowork.",
+      "triggers": [
+        "/activity-stats",
+        "/cowork",
+        "how many hours did I work",
+        "activity report",
+        "weekly hours",
+        "time spent on this repo"
+      ],
+      "argumentHint": "[author-substring] (default: marshall) [tz] (default: America/Denver)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/activity-stats/SKILL.md"
+    },
+    {
+      "slug": "capture",
+      "kind": "skill",
+      "plugin": "obsidian-weaver",
+      "name": "Capture",
+      "blurb": "Capture brain dumps, article links, and thoughts into the structured knowledge store. Use when the user says 'capture', '/capture', 'brain dump', 'save this thought', 'save this link', 'capture this', 'log this thought', 'jot this down', 'note this down', 'stash this', 'remember this', 'file this', 'dump this', or otherwise wants to save an idea, article, quote, or reflection for later use. With 'pull' arg, batch-imports from a Slack self-DM channel (requires Slack MCP).",
+      "triggers": [
+        "/capture",
+        "capture",
+        "brain dump",
+        "save this thought",
+        "save this link",
+        "capture this",
+        "log this thought",
+        "jot this down"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/obsidian-weaver/skills/capture/SKILL.md"
+    },
+    {
+      "slug": "connect-sync",
+      "kind": "skill",
+      "plugin": "obsidian-weaver",
+      "name": "Connect Sync",
+      "blurb": "Sync recent Obsidian notes into the _connections/ knowledge graph. Scans modified files for themes, people, concerns, and decisions, then updates connection pages with new source links. Use when the user says 'sync connections', 'connect-sync', 'update connections', 'sync my notes', 'weave my notes', 'weave the graph', 'crosslink my notes', 'link my notes', 'rebuild the graph', 'refresh connections', or after meetings to keep the knowledge graph current. Also invoked automatically by scheduled triggers.",
+      "triggers": [
+        "sync connections",
+        "connect-sync",
+        "update connections",
+        "sync my notes",
+        "weave my notes",
+        "weave the graph",
+        "crosslink my notes",
+        "link my notes"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/obsidian-weaver/skills/connect-sync/SKILL.md"
+    },
+    {
+      "slug": "disk-memory-cleanup",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Disk Memory Cleanup",
+      "blurb": "Use when the user asks to clean up disk space, manage storage/memory, free up space, or says \"/disk-memory-cleanup\". Runs the automated cleanup script first, then investigates deeper for new space hogs.",
+      "triggers": [
+        "/memory",
+        "/disk-memory-cleanup"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/disk-memory-cleanup/SKILL.md"
+    },
+    {
+      "slug": "fart-sniffing-detection",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Fart Sniffing Detection",
+      "blurb": "PTVM audit of recent commits/PRs. Flags bloat, ranks kill candidates. Triggers: /ptv, /ptvm, /fart-sniffing-detection, 'is this bloat', 'prove the value', skeptical review before merge.",
+      "triggers": [
+        "/PRs",
+        "/ptv",
+        "/ptvm",
+        "/fart-sniffing-detection",
+        "is this bloat",
+        "prove the value"
+      ],
+      "argumentHint": "[level] [target]  e.g. 'huff PR #42', 'sniff main..HEAD', 'dutch-oven-yourselff' (staged)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/fart-sniffing-detection/SKILL.md"
+    },
+    {
+      "slug": "feedback",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Feedback",
+      "blurb": "Generate a section-by-section feedback page for any content file, then apply the feedback. Use when the user says /feedback <file>, 'give me a feedback page', 'review this file', or wants to do structured section-by-section review of any markdown or text file.",
+      "triggers": [
+        "/feedback",
+        "give me a feedback page",
+        "review this file"
+      ],
+      "argumentHint": "<file-path>",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/feedback/SKILL.md"
+    },
+    {
+      "slug": "feedback-triage",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Feedback Triage",
+      "blurb": "Triage raw feedback into structured items, optionally spawn worktrees for accepted ones. Triggers: \"triage feedback\", \"rip on this\", \"/feedback-triage\", or pasted block from named source. Not for single bugs or file review (use /feedback).",
+      "triggers": [
+        "/feedback-triage",
+        "/feedback",
+        "triage feedback",
+        "rip on this"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/feedback-triage/SKILL.md"
+    },
+    {
+      "slug": "golf-tee-times",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Golf Tee Times",
+      "blurb": "Check tee times across 11 Denver courses (CPS/TeeItUp/MemberSports/ClubCaddie/EZLinks), filtered by date/players/time/holes. Triggers: \"tee times\", \"play golf\", \"when can I play\", \"find a round\".",
+      "triggers": [
+        "/TeeItUp",
+        "/MemberSports",
+        "/ClubCaddie",
+        "/EZLinks",
+        "/players",
+        "/time",
+        "/holes",
+        "tee times"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/golf-tee-times/SKILL.md"
+    },
+    {
+      "slug": "handoff",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Handoff",
+      "blurb": "Generate self-contained resumption prompt for fresh session after /clear. Triggers: 'handoff', 'resumption prompt', 'pickup prompt', 'wrap up', 'pause here', 'prompt for new session'.",
+      "triggers": [
+        "/clear",
+        "handoff",
+        "resumption prompt",
+        "pickup prompt",
+        "wrap up",
+        "pause here",
+        "prompt for new session"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/handoff/SKILL.md"
+    },
+    {
+      "slug": "interactive-review-doc",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Interactive Review Doc",
+      "blurb": "Create interactive HTML review docs with side panel for per-section feedback, copy-to-clipboard as markdown. Triggers: 'review doc', 'feedback doc', 'interactive doc', or any structured content where user wants to iterate via copied notes.",
+      "triggers": [
+        "review doc",
+        "feedback doc",
+        "interactive doc"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/interactive-review-doc/SKILL.md"
+    },
+    {
+      "slug": "next",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Next",
+      "blurb": "Answer 'what's next?' for the current repo. Reads git state, PRs, worktrees, backlog/planning docs, open issues. Use when the user says /next, 'what's next', 'what should I work on', 'what now', or opens a session and wants to resume.",
+      "triggers": [
+        "/planning",
+        "/next",
+        "what",
+        ", "
+      ],
+      "argumentHint": "(none) — reads repo state automatically",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/next/SKILL.md"
+    },
+    {
+      "slug": "obsidian-setup",
+      "kind": "skill",
+      "plugin": "obsidian-weaver",
+      "name": "Obsidian Setup",
+      "blurb": "One-time bootstrap for the obsidian-weaver plugin. Use when the user says '/obsidian-setup', 'set up obsidian', 'initialize vault', 'get started with obsidian-weaver', or when /today, /capture, or /connect-sync fails because OBSIDIAN_VAULT isn't set or the vault isn't seeded.",
+      "triggers": [
+        "/obsidian-setup",
+        "/today",
+        "/capture",
+        "/connect-sync",
+        "set up obsidian",
+        "initialize vault",
+        "get started with obsidian-weaver",
+        "t set or the vault isn"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/obsidian-weaver/skills/obsidian-setup/SKILL.md"
+    },
+    {
+      "slug": "ptv-idea",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Ptv Idea",
+      "blurb": "PTVM audit of an idea/proposal/plan BEFORE diff. Triggers: /ptv-idea, /ptvi, 'is this worth building', 'audit this proposal', 'sanity-check this plan'.",
+      "triggers": [
+        "/proposal",
+        "/plan",
+        "/ptv-idea",
+        "/ptvi",
+        "is this worth building",
+        "audit this proposal",
+        "sanity-check this plan"
+      ],
+      "argumentHint": "[level] <idea text | path to spec | 'last turn'>  e.g. 'huff add dark mode toggle', 'sniff docs/SMOKE_LEDGER_PLAN.md'",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/ptv-idea/SKILL.md"
+    },
+    {
+      "slug": "screenshot",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Screenshot",
+      "blurb": "Read user's newest screenshot(s) from their screenshot folder and execute the intent they give. Trigger: /screenshot, /screenshot N, /screenshot <intent>, /screenshot N <intent>.",
+      "triggers": [
+        "/screenshot"
+      ],
+      "argumentHint": "[count] [intent...]  e.g. '/screenshot', '/screenshot fix', '/screenshot 4 make infographic'",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/screenshot/SKILL.md"
+    },
+    {
+      "slug": "skill-stats",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Skill Stats",
+      "blurb": "Cross-project Claude Code skill-usage report from session transcripts. Counts every Skill invocation across ~/.claude/projects (all history, real names, normalized bare-vs-namespaced), by skill / project / session / day. Use when the user says /skill-stats, 'which skills do I use', 'skill usage', 'am I using skill X', 'dead skills', 'what skills never fire', or wants to prune their skill library. Pairs with the Honeycomb 'Skill Usage' board (live trigger mix + token cost).",
+      "triggers": [
+        "/projects",
+        "/skill-stats",
+        "which skills do I use",
+        "skill usage",
+        "am I using skill X",
+        "dead skills",
+        "what skills never fire",
+        "Skill Usage"
+      ],
+      "argumentHint": "[days] (default: all history) [skill-substring] (filter)",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/skill-stats/SKILL.md"
+    },
+    {
+      "slug": "slideshow",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Slideshow",
+      "blurb": "LinkedIn/IG carousel from topic/outline. HTML slides + PNGs + PDF + caption. Triggers: 'slideshow', 'carousel', 'make slides', 'deck for LinkedIn'.",
+      "triggers": [
+        "/IG",
+        "/outline",
+        "slideshow",
+        "carousel",
+        "make slides",
+        "deck for LinkedIn"
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/slideshow/SKILL.md"
+    },
+    {
+      "slug": "systematize",
+      "kind": "skill",
+      "plugin": "cosmic-farmland",
+      "name": "Systematize",
+      "blurb": "Promote lesson from memory to enforcement (hook>CI>script>doc>memory). Picks highest tier, ships artifact. Triggers: /systematize, 'make this stick', 'turn into a rule', after corrections.",
+      "triggers": [
+        "/systematize",
+        "make this stick",
+        "turn into a rule"
+      ],
+      "argumentHint": "[lesson description] -- e.g. '/systematize never commit seed files without URL verification'",
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/systematize/SKILL.md"
+    },
+    {
+      "slug": "today",
+      "kind": "skill",
+      "plugin": "obsidian-weaver",
+      "name": "Today",
+      "blurb": "Daily note creator and status surface — calendar sync, carryover items from previous days, and meeting file setup. Use when the user says 'today', '/today', 'daily note', 'start my day', 'morning planning', 'plan my day', 'what's on my plate today', 'what do I have going on today', 'what's on the docket', 'open today's note', or otherwise wants to see or set up their day.",
+      "triggers": [
+        "/today",
+        "today",
+        "daily note",
+        "start my day",
+        "morning planning",
+        "plan my day",
+        "what",
+        ", "
+      ],
+      "argumentHint": null,
+      "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/obsidian-weaver/skills/today/SKILL.md"
+    }
+  ]
+}
