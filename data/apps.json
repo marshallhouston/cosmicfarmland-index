@@ -3,7 +3,7 @@
     {
       "slug": "lenny-explorer",
       "name": "Lenny Explorer",
-      "blurb": "Search and explore Lenny's Newsletter + Podcast archive.",
+      "blurb": "A personal archive reader for Lenny's Newsletter posts and podcast transcripts.",
       "url": "https://lenny-explorer.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/lenny-explorer",
       "status": "live",
@@ -11,8 +11,8 @@
     },
     {
       "slug": "grateful-dead-77",
-      "name": "Grateful Dead '77",
-      "blurb": "Explore the Grateful Dead's legendary 1977 run.",
+      "name": "Anthology '77",
+      "blurb": "An interactive archive of the Grateful Dead's legendary Spring 1977 tour. Map every show, read every setlist, hear the tapes.",
       "url": "https://grateful-dead-77.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/dead-77-odyssey",
       "status": "live",
