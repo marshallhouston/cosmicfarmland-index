@@ -1,0 +1,24 @@
+{
+  "name": "cosmicfarmland-index",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "bun server.mjs",
+    "gen": "node scripts/gen-catalog.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.575.0",
+    "motion": "^12.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@vitejs/plugin-react": "^5.0.4",
+    "tailwindcss": "^4.2.1",
+    "vite": "^7.3.1"
+  }
+}

@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Familjen Grotesk', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+
+  /* Cosmic Farmland palette: midnight indigo soil, harvest-gold moon,
+     bioluminescent crop glow. Warm dark, not cold sci-fi. */
+  --color-void: #08070f;
+  --color-soil: #0e0b1d;
+  --color-soil-2: #161031;
+  --color-haze: #241a45;
+  --color-cream: #f1ead9;
+  --color-cream-dim: #b6ad97;
+  --color-gold: #f3c364;
+  --color-gold-deep: #d99b3e;
+  --color-glow: #8ce6b6;
+  --color-glow-deep: #4cc88a;
+  --color-violet: #a78be0;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-void);
+  color: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Atmosphere: layered aurora mesh + drifting glow over the soil. */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60% 50% at 75% 8%, rgba(243, 195, 100, 0.16), transparent 70%),
+    radial-gradient(55% 45% at 18% 22%, rgba(140, 230, 182, 0.12), transparent 70%),
+    radial-gradient(80% 60% at 50% 120%, rgba(76, 200, 138, 0.18), transparent 65%),
+    linear-gradient(180deg, var(--color-void) 0%, var(--color-soil) 45%, var(--color-soil-2) 100%);
+}
+
+/* Starfield: cheap, crisp, twinkling. */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(241, 234, 217, 0.9), transparent),
+    radial-gradient(1px 1px at 70% 18%, rgba(241, 234, 217, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 40% 12%, rgba(243, 195, 100, 0.8), transparent),
+    radial-gradient(1px 1px at 88% 40%, rgba(241, 234, 217, 0.6), transparent),
+    radial-gradient(1px 1px at 33% 48%, rgba(241, 234, 217, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 62% 36%, rgba(140, 230, 182, 0.7), transparent),
+    radial-gradient(1px 1px at 12% 60%, rgba(241, 234, 217, 0.5), transparent);
+  animation: twinkle 7s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* Grain overlay for texture / film depth. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Rolling field silhouette anchored to the bottom horizon. */
+.field {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  height: 22vh;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(8, 7, 15, 0.85) 60%, var(--color-void));
+  -webkit-mask: radial-gradient(120% 100% at 50% 100%, #000 60%, transparent 61%);
+          mask: radial-gradient(120% 100% at 50% 100%, #000 60%, transparent 61%);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-void);
+}
+
+/* Custom scrollbar to stay in-world. */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-soil); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-haze);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-glow-deep); }
+
+.glow-text {
+  text-shadow: 0 0 24px rgba(243, 195, 100, 0.35);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise { animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
