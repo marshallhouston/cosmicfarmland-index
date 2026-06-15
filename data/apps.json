@@ -14,27 +14,27 @@
       "name": "Grateful Dead '77",
       "blurb": "Explore the Grateful Dead's legendary 1977 run.",
       "url": "https://grateful-dead-77.cosmicfarmland.wtf",
-      "repo": "https://github.com/marshallhouston/grateful-dead-77",
+      "repo": "https://github.com/marshallhouston/dead-77-odyssey",
       "status": "live",
       "tags": ["music", "archive"]
     },
     {
       "slug": "systems-thinking",
-      "name": "Systems Thinking",
-      "blurb": "A playground for thinking in systems, loops, and leverage points.",
+      "name": "Systems Playground",
+      "blurb": "Interactive teaching tool for Donella Meadows' systems thinking — stocks, flows, feedback loops, delays, and the 12 leverage points.",
       "url": "https://systems-thinking.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/systems-thinking",
-      "status": "coming-soon",
-      "tags": ["thinking", "interactive"]
+      "status": "live",
+      "tags": ["systems", "learning", "interactive"]
     },
     {
-      "slug": "strategy-creator",
-      "name": "Strategy Creator",
-      "blurb": "Build and pressure-test strategy.",
-      "url": "https://strategy-creator.cosmicfarmland.wtf",
-      "repo": "https://github.com/marshallhouston/strategy-creator",
-      "status": "coming-soon",
-      "tags": ["strategy", "interactive"]
+      "slug": "strategy-foundry",
+      "name": "Foundry",
+      "blurb": "Build a real strategy — an action agenda, not a wish list. Guided, with an inline critic, based on Rumelt's Good Strategy / Bad Strategy.",
+      "url": "https://strategy-foundry.cosmicfarmland.wtf",
+      "repo": "https://github.com/marshallhouston/strategy-foundry",
+      "status": "live",
+      "tags": ["strategy", "critic", "interactive"]
     }
   ]
 }
