@@ -209,7 +209,7 @@ export default function App() {
             transition={{ duration: 0.9, delay: 0.25 }}
             className="mt-8 max-w-md text-lg leading-relaxed text-[var(--color-cream-dim)]"
           >
-            Apps, tools, and writing.
+            apps, tools, and writing. entrypoint to the cosmic farmland
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
