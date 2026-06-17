@@ -242,8 +242,8 @@ export default function App() {
             <Terminal size={16} className="text-[var(--color-gold)]" /> the toolshed
           </h2>
           <p className="mb-8 max-w-lg text-sm text-[var(--color-cream-dim)]">
-            The skills, commands, and plugins I use across every project. Browse here,
-            then jump to source on GitHub when you want the code.
+            the skills, commands, and plugins i use across every project. browse here,
+            then jump to source on github when you want the code.
           </p>
 
           <div className="mb-6 flex flex-wrap items-center gap-3">
