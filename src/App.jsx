@@ -227,7 +227,7 @@ export default function App() {
         {/* Apps */}
         <section id="apps" className="mt-12">
           <h2 className="mb-8 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-cream-dim)]">
-            <Sprout size={16} className="text-[var(--color-glow)]" /> the field — apps
+            <Sprout size={16} className="text-[var(--color-glow)]" /> apps
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
             {appsData.apps.map((app, i) => (

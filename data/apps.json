@@ -1,6 +1,14 @@
 {
   "apps": [
     {
+      "slug": "writing",
+      "name": "marshallhouston.wtf",
+      "blurb": "Writing about the cosmic farmland.",
+      "url": "https://marshallhouston.wtf",
+      "status": "live",
+      "tags": ["writing", "essays"]
+    },
+    {
       "slug": "lenny-explorer",
       "name": "Lenny Explorer",
       "blurb": "A personal archive reader for Lenny's Newsletter posts and podcast transcripts.",
@@ -35,14 +43,6 @@
       "repo": "https://github.com/marshallhouston/strategy-wizard",
       "status": "live",
       "tags": ["strategy", "critic", "interactive"]
-    },
-    {
-      "slug": "writing",
-      "name": "Writing",
-      "blurb": "Writing about the cosmic farmland.",
-      "url": "https://marshallhouston.wtf",
-      "status": "live",
-      "tags": ["writing", "essays"]
     }
   ]
 }
