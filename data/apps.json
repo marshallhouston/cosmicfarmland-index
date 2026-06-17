@@ -28,13 +28,21 @@
       "tags": ["systems", "learning", "interactive"]
     },
     {
-      "slug": "strategy-foundry",
-      "name": "Foundry",
+      "slug": "strategy-wizard",
+      "name": "Strategy Wizard",
       "blurb": "Build a real strategy — an action agenda, not a wish list. Guided, with an inline critic, based on Rumelt's Good Strategy / Bad Strategy.",
-      "url": "https://strategy-foundry.cosmicfarmland.wtf",
-      "repo": "https://github.com/marshallhouston/strategy-foundry",
+      "url": "https://strategy-wizard.cosmicfarmland.wtf",
+      "repo": "https://github.com/marshallhouston/strategy-wizard",
       "status": "live",
       "tags": ["strategy", "critic", "interactive"]
+    },
+    {
+      "slug": "writing",
+      "name": "Writing",
+      "blurb": "Writing about the cosmic farmland.",
+      "url": "https://marshallhouston.wtf",
+      "status": "live",
+      "tags": ["writing", "essays"]
     }
   ]
 }
