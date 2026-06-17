@@ -71,7 +71,7 @@
       "kind": "command",
       "plugin": "cosmic-farmland",
       "name": "Lovable Setup",
-      "blurb": "Take a freshly-exported Lovable app all the way to marshall's dev setup — de-brand, deps, lint, real tests, design.html, favicon + social link preview, deploy scaffolding.",
+      "blurb": "Take a freshly-exported Lovable app all the way to marshall's dev setup - de-brand, deps, lint, real tests, design.html, favicon + social link preview, deploy scaffolding.",
       "triggers": [],
       "argumentHint": "[project-dir] (default: current dir)",
       "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/commands/lovable-setup.md"
@@ -238,7 +238,7 @@
       "kind": "plugin",
       "plugin": "obsidian-weaver",
       "name": "Obsidian Weaver",
-      "blurb": "Claude Code as the interface to your Obsidian vault. Daily notes, captures, and an auto-maintained knowledge graph that weaves connections between your notes as you write them. Vault-agnostic — set OBSIDIAN_VAULT and run /obsidian-setup.",
+      "blurb": "Claude Code as the interface to your Obsidian vault. Daily notes, captures, and an auto-maintained knowledge graph that weaves connections between your notes as you write them. Vault-agnostic - set OBSIDIAN_VAULT and run /obsidian-setup.",
       "triggers": [],
       "argumentHint": null,
       "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/obsidian-weaver"
@@ -420,7 +420,7 @@
         "what",
         ", "
       ],
-      "argumentHint": "(none) — reads repo state automatically",
+      "argumentHint": "(none) - reads repo state automatically",
       "source": "https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/cosmic-farmland/skills/next/SKILL.md"
     },
     {
@@ -527,7 +527,7 @@
       "kind": "skill",
       "plugin": "obsidian-weaver",
       "name": "Today",
-      "blurb": "Daily note creator and status surface — calendar sync, carryover items from previous days, and meeting file setup. Use when the user says 'today', '/today', 'daily note', 'start my day', 'morning planning', 'plan my day', 'what's on my plate today', 'what do I have going on today', 'what's on the docket', 'open today's note', or otherwise wants to see or set up their day.",
+      "blurb": "Daily note creator and status surface - calendar sync, carryover items from previous days, and meeting file setup. Use when the user says 'today', '/today', 'daily note', 'start my day', 'morning planning', 'plan my day', 'what's on my plate today', 'what do I have going on today', 'what's on the docket', 'open today's note', or otherwise wants to see or set up their day.",
       "triggers": [
         "/today",
         "today",
