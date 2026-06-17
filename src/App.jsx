@@ -209,8 +209,7 @@ export default function App() {
             transition={{ duration: 0.9, delay: 0.25 }}
             className="mt-8 max-w-md text-lg leading-relaxed text-[var(--color-cream-dim)]"
           >
-            Things I grow online — apps I build, and the skills, commands, and
-            plugins I tend to build them with.
+            Apps, tools, and writing.
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -296,9 +295,6 @@ export default function App() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <span>grown by marshall · {new Date().getFullYear()}</span>
             <div className="flex gap-5">
-              <a href="https://marshallhouston.wtf" className="hover:text-[var(--color-gold)]">
-                writing ↗
-              </a>
               <a
                 href="https://github.com/marshallhouston/cosmic-farmland"
                 className="hover:text-[var(--color-gold)]"
