@@ -29,7 +29,7 @@
     {
       "slug": "systems-thinking",
       "name": "Systems Playground",
-      "blurb": "Interactive teaching tool for Donella Meadows' systems thinking — stocks, flows, feedback loops, delays, and the 12 leverage points.",
+      "blurb": "Interactive teaching tool for Donella H. Meadows' systems thinking — stocks, flows, feedback loops, delays, and the 12 leverage points.",
       "url": "https://systems-thinking.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/systems-thinking",
       "status": "live",
