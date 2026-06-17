@@ -22,7 +22,12 @@ function prettyName(slug) {
   return slug.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
-// Minimal frontmatter parser — first --- fenced block, flat key: value pairs.
+// Strip em/en dashes from generated copy (house style: no em-dashes).
+function deDash(s = '') {
+  return s.replace(/\s*[—–]\s*/g, ' - ')
+}
+
+// Minimal frontmatter parser - first --- fenced block, flat key: value pairs.
 function parseFrontmatter(text) {
   if (!text.startsWith('---')) return {}
   const end = text.indexOf('\n---', 3)
@@ -96,9 +101,9 @@ for (const plugin of listDirs(pluginsRoot)) {
       kind: 'skill',
       plugin,
       name: prettyName(fm.name || slug),
-      blurb: fm.description || '',
+      blurb: deDash(fm.description || ''),
       triggers: extractTriggers(fm.description),
-      argumentHint: fm['argument-hint'] || null,
+      argumentHint: fm['argument-hint'] ? deDash(fm['argument-hint']) : null,
       source: `${GH}/plugins/${plugin}/skills/${slug}/SKILL.md`,
     })
   }
@@ -112,9 +117,9 @@ for (const plugin of listDirs(pluginsRoot)) {
       kind: 'command',
       plugin,
       name: prettyName(slug),
-      blurb: fm.description || '',
+      blurb: deDash(fm.description || ''),
       triggers: extractTriggers(fm.description),
-      argumentHint: fm['argument-hint'] || null,
+      argumentHint: fm['argument-hint'] ? deDash(fm['argument-hint']) : null,
       source: `${GH}/plugins/${plugin}/commands/${fileName}`,
     })
   }
@@ -124,7 +129,7 @@ for (const plugin of listDirs(pluginsRoot)) {
     kind: 'plugin',
     plugin,
     name: prettyName(plugin),
-    blurb: meta.description || '',
+    blurb: deDash(meta.description || ''),
     triggers: [],
     argumentHint: null,
     source: `${GH}/plugins/${plugin}`,

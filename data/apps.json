@@ -29,7 +29,7 @@
     {
       "slug": "systems-thinking",
       "name": "Systems Playground",
-      "blurb": "Interactive teaching tool for Donella H. Meadows' systems thinking — stocks, flows, feedback loops, delays, and the 12 leverage points.",
+      "blurb": "Interactive teaching tool for Donella H. Meadows' systems thinking - stocks, flows, feedback loops, delays, and the 12 leverage points.",
       "url": "https://systems-thinking.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/systems-thinking",
       "status": "live",
@@ -38,7 +38,7 @@
     {
       "slug": "strategy-wizard",
       "name": "Strategy Wizard",
-      "blurb": "Build a real strategy — an action agenda, not a wish list. Guided, with an inline critic, based on Rumelt's Good Strategy / Bad Strategy.",
+      "blurb": "Build a real strategy - an action agenda, not a wish list. Guided, with an inline critic, based on Rumelt's Good Strategy / Bad Strategy.",
       "url": "https://strategy-wizard.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/strategy-wizard",
       "status": "live",
