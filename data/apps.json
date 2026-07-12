@@ -43,6 +43,14 @@
       "repo": "https://github.com/marshallhouston/strategy-wizard",
       "status": "live",
       "tags": ["strategy", "critic", "interactive"]
+    },
+    {
+      "slug": "bobby-bowser",
+      "name": "Bobby Bowser Arcade",
+      "blurb": "A 10-cabinet arcade of coding-craft minigames. Defeat bad practices, collect good ones.",
+      "url": "https://bobby-bowser.cosmicfarmland.wtf",
+      "status": "live",
+      "tags": ["arcade", "games", "interactive"]
     }
   ]
 }
