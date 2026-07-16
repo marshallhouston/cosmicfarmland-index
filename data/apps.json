@@ -56,8 +56,9 @@
       "slug": "octopus-org-lair",
       "name": "Octopus Org Lair",
       "blurb": "A GitHub repo in the cosmic farmland.",
-      "repo": "https://github.com/marshallhouston/octopus-org-lair",
-      "status": "coming-soon",
+      "url": "https://octopus-org-lair.cosmicfarmland.wtf",
+      "repo": "https://github.com/marshallhouston/octopus-organization",
+      "status": "live",
       "tags": ["github"]
     }
   ]
