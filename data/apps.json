@@ -54,12 +54,12 @@
     },
     {
       "slug": "octopus-org-lair",
-      "name": "Octopus Org Lair",
-      "blurb": "A GitHub repo in the cosmic farmland.",
+      "name": "Octopus Antipatterns",
+      "blurb": "A personal study site for the 36 antipatterns in The Octopus Organization. Browse by category, drill with recall quizzes, and run a spot-it diagnostic on your own org.",
       "url": "https://octopus-org-lair.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/octopus-organization",
       "status": "live",
-      "tags": ["github"]
+      "tags": ["learning", "org design", "interactive"]
     }
   ]
 }
