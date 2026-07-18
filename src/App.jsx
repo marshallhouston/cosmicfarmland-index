@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { motion } from 'motion/react'
+import { motion, MotionConfig } from 'motion/react'
 import {
   ArrowUpRight,
   Sprout,
@@ -54,6 +54,7 @@ function AppCard({ app, index }) {
       />
       <div className="mb-4 flex items-center justify-between">
         <Sprout
+          aria-hidden="true"
           className={live ? 'text-[var(--color-glow)]' : 'text-[var(--color-cream-dim)]'}
           size={22}
         />
@@ -71,7 +72,7 @@ function AppCard({ app, index }) {
       <p className="mb-5 text-sm leading-relaxed text-[var(--color-cream-dim)]">
         {app.blurb}
       </p>
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         {(app.tags || []).map((t) => (
           <span
             key={t}
@@ -103,12 +104,13 @@ function CatalogCard({ entry }) {
     >
       <button
         onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
         className="flex w-full items-start gap-3 p-4 text-left"
       >
         {open ? (
-          <CircleDot size={16} className="mt-1 shrink-0 text-[var(--color-glow)]" />
+          <CircleDot size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-glow)]" />
         ) : (
-          <Circle size={16} className="mt-1 shrink-0 text-[var(--color-cream-dim)]" />
+          <Circle size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-cream-dim)]" />
         )}
         <span className="min-w-0 flex-1">
           <span className="flex items-baseline gap-2">
@@ -176,7 +178,7 @@ export default function App() {
   }, [kind, q])
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <div className="sky" />
       <div className="stars" />
       <div className="grain" />
@@ -227,7 +229,7 @@ export default function App() {
         {/* Apps */}
         <section id="apps" className="mt-12">
           <h2 className="mb-8 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-cream-dim)]">
-            <Sprout size={16} className="text-[var(--color-glow)]" /> apps
+            <Sprout size={16} aria-hidden="true" className="text-[var(--color-glow)]" /> apps
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
             {appsData.apps.map((app, i) => (
@@ -239,7 +241,7 @@ export default function App() {
         {/* Catalog */}
         <section id="catalog" className="mt-24">
           <h2 className="mb-2 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-cream-dim)]">
-            <Terminal size={16} className="text-[var(--color-gold)]" /> the toolshed
+            <Terminal size={16} aria-hidden="true" className="text-[var(--color-gold)]" /> the toolshed
           </h2>
           <p className="mb-8 max-w-lg text-sm text-[var(--color-cream-dim)]">
             the skills, commands, and plugins i use across every project. browse here,
@@ -254,13 +256,14 @@ export default function App() {
                 <button
                   key={k.id}
                   onClick={() => setKind(k.id)}
-                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 font-mono text-xs transition-colors ${
+                  aria-pressed={active}
+                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-xs transition-colors ${
                     active
                       ? 'border-[var(--color-gold)] bg-[var(--color-gold)]/10 text-[var(--color-gold)]'
                       : 'border-[var(--color-haze)] text-[var(--color-cream-dim)] hover:border-[var(--color-violet)]'
                   }`}
                 >
-                  <Icon size={14} /> {k.label}
+                  <Icon size={14} aria-hidden="true" /> {k.label}
                   <span className="opacity-60">{counts[k.id] || 0}</span>
                 </button>
               )
@@ -268,13 +271,16 @@ export default function App() {
             <div className="relative ml-auto">
               <Search
                 size={14}
+                aria-hidden="true"
                 className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-cream-dim)]"
               />
               <input
+                type="search"
+                aria-label="filter the toolshed"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="filter…"
-                className="w-40 rounded-full border border-[var(--color-haze)] bg-[var(--color-soil)]/60 py-1.5 pl-9 pr-3 font-mono text-xs text-[var(--color-cream)] outline-none placeholder:text-[var(--color-cream-dim)] focus:border-[var(--color-glow-deep)]"
+                className="w-40 rounded-full border border-[var(--color-haze)] bg-[var(--color-soil)]/60 py-2 pl-9 pr-3 font-mono text-xs text-[var(--color-cream)] outline-none placeholder:text-[var(--color-cream-dim)] focus:border-[var(--color-glow-deep)] focus-visible:ring-2 focus-visible:ring-[var(--color-glow-deep)]/60"
               />
             </div>
           </div>
@@ -305,6 +311,6 @@ export default function App() {
           </div>
         </footer>
       </main>
-    </>
+    </MotionConfig>
   )
 }

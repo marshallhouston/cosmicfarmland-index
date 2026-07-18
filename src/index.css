@@ -123,3 +123,9 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 .rise { animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .stars { animation: none; }
+  .rise { animation: none; opacity: 1; transform: none; }
+}
