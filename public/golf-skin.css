@@ -1,0 +1,108 @@
+/* Cosmic Farmland skin for the golf page.
+   Lives here, not in the vault source, so regenerating the vault HTML can't
+   wipe it. Loaded after the page's inline <style>, so same-specificity rules
+   win. Tokens mirror src/index.css. */
+
+:root {
+  --gold: #f3c364;
+  --gold-deep: #d99b3e;
+  --cf-glow: #8ce6b6;
+  --cf-glow-deep: #4cc88a;
+  --violet: #a78be0;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Familjen Grotesk', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+
+  /* light theme: parchment, not gray */
+  --surface-1: #fbf7ec;
+  --plane: #f4eddc;
+  --text-primary: #1b1633;
+  --text-secondary: #4a4360;
+  --muted: #7c7490;
+  --grid: #e4dcc7;
+  --axis: #c9bfa4;
+  --border: rgba(27, 22, 51, 0.12);
+  --chip: #efe6d1;
+  --div-mid: #e4dcc7;
+}
+
+:root[data-theme="dark"] {
+  --surface-1: #161031;
+  --plane: #08070f;
+  --text-primary: #f1ead9;
+  --text-secondary: #b6ad97;
+  --muted: #8f8878;
+  --grid: #241a45;
+  --axis: #3a2c68;
+  --border: rgba(241, 234, 217, 0.12);
+  --chip: #1c1440;
+  --div-mid: #241a45;
+}
+
+body { font-family: var(--font-body); }
+a { color: var(--gold-deep); }
+:root[data-theme="dark"] a { color: var(--gold); }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; }
+h1 { font-size: 38px; font-weight: 300; }
+:root[data-theme="dark"] h2 { color: var(--gold); }
+.eyebrow, .f label, .tile .k, th, .legend, .chip, nav.jump a, .btn, .seg button, .fcount, .themebtn {
+  font-family: var(--font-mono);
+}
+.eyebrow { color: var(--cf-glow-deep); letter-spacing: 0.28em; }
+:root[data-theme="dark"] .eyebrow { color: var(--cf-glow); }
+.tile .v { font-family: var(--font-mono); color: var(--gold-deep); font-weight: 500; }
+:root[data-theme="dark"] .tile .v { color: var(--gold); }
+
+.btn.active, .seg button.on, nav.jump a.on {
+  background: var(--gold); color: #08070f; border-color: var(--gold);
+}
+.tile.click:hover, .card:hover { border-color: var(--cf-glow-deep); }
+::selection { background: var(--gold); color: #08070f; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--plane); }
+::-webkit-scrollbar-thumb { background: var(--grid); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--cf-glow-deep); }
+
+/* home link, injected at the top of the page */
+.cf-brand {
+  display: inline-block; padding: 18px 0 0; font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--cf-glow-deep); text-decoration: none;
+}
+:root[data-theme="dark"] .cf-brand { color: var(--cf-glow); }
+.cf-brand:hover { color: var(--gold); }
+nav.jump a.cf-home { color: var(--cf-glow-deep); }
+:root[data-theme="dark"] nav.jump a.cf-home { color: var(--cf-glow); }
+nav.jump a.cf-home:hover { color: var(--gold); }
+
+/* fixed atmosphere layers, dark only (mirrors src/index.css) */
+.sky, .stars, .grain { position: fixed; inset: 0; pointer-events: none; }
+.sky {
+  z-index: -2;
+  background:
+    radial-gradient(60% 50% at 75% 8%, rgba(243, 195, 100, 0.16), transparent 70%),
+    radial-gradient(55% 45% at 18% 22%, rgba(140, 230, 182, 0.12), transparent 70%),
+    radial-gradient(80% 60% at 50% 120%, rgba(76, 200, 138, 0.18), transparent 65%),
+    linear-gradient(180deg, #08070f 0%, #0e0b1d 45%, #161031 100%);
+}
+.stars {
+  z-index: -2; animation: cf-twinkle 7s ease-in-out infinite;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(241, 234, 217, 0.9), transparent),
+    radial-gradient(1px 1px at 70% 18%, rgba(241, 234, 217, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 40% 12%, rgba(243, 195, 100, 0.8), transparent),
+    radial-gradient(1px 1px at 88% 40%, rgba(241, 234, 217, 0.6), transparent),
+    radial-gradient(1px 1px at 33% 48%, rgba(241, 234, 217, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 62% 36%, rgba(140, 230, 182, 0.7), transparent),
+    radial-gradient(1px 1px at 12% 60%, rgba(241, 234, 217, 0.5), transparent);
+}
+.grain {
+  z-index: -1; opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="light"] .sky,
+:root[data-theme="light"] .stars,
+:root[data-theme="light"] .grain { display: none; }
+@keyframes cf-twinkle { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .stars { animation: none; } }
