@@ -60,6 +60,14 @@
       "repo": "https://github.com/marshallhouston/octopus-organization",
       "status": "live",
       "tags": ["learning", "org design", "interactive"]
+    },
+    {
+      "slug": "golf-record",
+      "name": "Golf Record",
+      "blurb": "Every round from my GHIN history - scoring trends, hole-by-hole splits, and where the strokes actually go.",
+      "url": "/golf.html",
+      "status": "live",
+      "tags": ["golf", "data", "personal"]
     }
   ]
 }
