@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marshall Houston — Golf Record</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --plane:#f9f9f7;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --series-1:#2a78d6; --series-2:#eb6834; --series-3:#1baf7a;
+  --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --seq-100:#cde2fb; --seq-250:#86b6ef; --seq-350:#5598e7; --seq-450:#2a78d6; --seq-600:#184f95;
+  --div-mid:#f0efec;
+  --u1:#b7d3f6; --u2:#5598e7; --u3:#184f95;
+  --o1:#f7d2d1; --o2c:#eb9c9a; --o3:#dd5c5a; --o4:#a82322;
+  --chip:#f0efec;
+  --ink-eagle:#ffffff; --ink-birdie:#0b0b0b; --ink-par:#0b0b0b; --ink-bogey:#0b0b0b;
+  --ink-double:#0b0b0b; --ink-triple:#ffffff; --ink-quad:#ffffff;
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --plane:#0d0d0d;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70;
+  --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --seq-100:#104281; --seq-250:#184f95; --seq-350:#256abf; --seq-450:#3987e5; --seq-600:#86b6ef;
+  --div-mid:#383835;
+  --u1:#1c3f68; --u2:#2a6fbe; --u3:#86b6ef;
+  --o1:#5a2422; --o2c:#8e3634; --o3:#c94a48; --o4:#f08a88;
+  --chip:#242422;
+  --ink-eagle:#0b0b0b; --ink-birdie:#ffffff; --ink-par:#ffffff; --ink-bogey:#ffffff;
+  --ink-double:#0b0b0b; --ink-triple:#0b0b0b; --ink-quad:#0b0b0b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--plane); color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--series-1)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px 96px}
+
+/* ---------- header ---------- */
+header.top{padding:36px 0 12px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-size:30px;line-height:1.15;margin:8px 0 6px;font-weight:650;letter-spacing:-.01em}
+.sub{color:var(--text-secondary);font-size:14px;margin:0}
+.themebtn{position:absolute;top:28px;right:20px;background:var(--surface-1);color:var(--text-secondary);
+  border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;font-family:inherit}
+.themebtn:hover{color:var(--text-primary)}
+.topbar{position:relative}
+
+/* ---------- nav ---------- */
+nav.jump{position:sticky;top:0;z-index:40;background:var(--plane);border-bottom:1px solid var(--border);
+  display:flex;gap:2px;overflow-x:auto;padding:8px 0;margin-bottom:0}
+nav.jump a{padding:6px 11px;border-radius:7px;font-size:13px;text-decoration:none;color:var(--text-secondary);white-space:nowrap}
+nav.jump a:hover{background:var(--chip);color:var(--text-primary)}
+nav.jump a.on{background:var(--text-primary);color:var(--surface-1)}
+
+/* ---------- filters ---------- */
+.filters{position:sticky;top:44px;z-index:35;background:var(--plane);border-bottom:1px solid var(--border);
+  padding:12px 0 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:26px}
+.f{display:flex;flex-direction:column;gap:4px}
+.f label{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.f select,.f input{background:var(--surface-1);color:var(--text-primary);border:1px solid var(--border);
+  border-radius:8px;padding:7px 9px;font-size:13px;font-family:inherit;min-width:120px}
+.f select{min-width:150px;max-width:230px}
+.btn{background:var(--surface-1);color:var(--text-secondary);border:1px solid var(--border);border-radius:8px;
+  padding:8px 12px;font-size:13px;cursor:pointer;font-family:inherit}
+.btn:hover{color:var(--text-primary)}
+.btn.active{background:var(--text-primary);color:var(--surface-1);border-color:var(--text-primary)}
+.seg{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface-1)}
+.seg button{background:transparent;border:0;padding:8px 12px;font-size:13px;cursor:pointer;color:var(--text-secondary);font-family:inherit}
+.seg button.on{background:var(--text-primary);color:var(--surface-1)}
+.fcount{margin-left:auto;font-size:13px;color:var(--text-secondary);padding-bottom:8px}
+.fcount b{color:var(--text-primary)}
+
+/* ---------- sections ---------- */
+section{margin:0 0 44px;scroll-margin-top:136px}
+h2{font-size:19px;font-weight:640;margin:0 0 4px;letter-spacing:-.01em}
+h3{font-size:15px;font-weight:620;margin:22px 0 10px}
+.lede{color:var(--text-secondary);font-size:13.5px;margin:0 0 16px;max-width:74ch}
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g6{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(max-width:900px){.g4,.g6{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.g2{grid-template-columns:1fr}}
+
+/* ---------- stat tiles ---------- */
+.tile{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.tile .k{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.tile .v{font-size:27px;font-weight:640;letter-spacing:-.02em;line-height:1.1}
+.tile .n{font-size:12.5px;color:var(--text-secondary);margin-top:4px}
+.tile.click{cursor:pointer}
+.tile.click:hover{border-color:var(--axis)}
+
+/* ---------- charts ---------- */
+.chart{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 16px 12px}
+.chart h4{margin:0 0 2px;font-size:14px;font-weight:620}
+.chart .cap{margin:0 0 12px;font-size:12.5px;color:var(--text-secondary)}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:12.5px;color:var(--text-secondary)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .ln{display:inline-block;width:14px;height:2px;margin-right:6px;vertical-align:4px}
+
+/* ---------- table ---------- */
+.tablewrap{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;overflow:auto;max-height:620px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--grid);white-space:nowrap}
+th{position:sticky;top:0;background:var(--surface-1);z-index:2;font-weight:620;font-size:11.5px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--muted);cursor:pointer;user-select:none}
+th:hover{color:var(--text-primary)}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:hover{background:var(--chip)}
+tbody tr.expandable{cursor:pointer}
+td.name{max-width:340px;overflow:hidden;text-overflow:ellipsis}
+.sortarrow{opacity:.5;font-size:9px}
+.miniwrap td{border:0;padding:0}
+.detail{background:var(--plane);padding:14px 16px !important;white-space:normal}
+
+/* scorecard */
+.sc{display:grid;grid-template-columns:52px repeat(10,minmax(0,1fr));gap:2px;font-size:11px;max-width:800px}
+.sc div{padding:5px 2px;text-align:center;border-radius:3px;font-variant-numeric:tabular-nums}
+.sc .lab{color:var(--muted);font-weight:600;background:transparent;text-align:right;padding-right:6px}
+.sc .hd{color:var(--muted);font-weight:600;background:transparent}
+
+/* misc */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{background:var(--chip);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--text-secondary)}
+.note{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--warning);
+  border-radius:10px;padding:13px 16px;font-size:13px;color:var(--text-secondary)}
+.note b{color:var(--text-primary)}
+.notable{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:15px 16px}
+.notable .t{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.notable .big{font-size:23px;font-weight:640;margin:6px 0 2px;letter-spacing:-.02em}
+.notable .who{font-size:12.5px;color:var(--text-secondary)}
+.notable .who em{font-style:normal;color:var(--text-primary)}
+.notable.click,.tile.click,tr.rowlink{cursor:pointer}
+.notable.click:hover,.tile.click:hover{border-color:var(--axis);background:var(--chip)}
+.notable.click::after{content:"View round →";display:block;margin-top:9px;font-size:11.5px;color:var(--series-1);font-weight:600}
+.tile.sel{border-color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--text-primary)}
+.tile.click::after{content:"Filter to these →";display:block;margin-top:9px;font-size:11.5px;color:var(--series-1);font-weight:600}
+.tile.sel.click::after{content:"Filtering — click to clear ×";color:var(--text-primary)}
+@keyframes flash{0%,100%{background:transparent}18%{background:var(--seq-100)}}
+tbody tr.hl>td{animation:flash 1.8s ease-out}
+:root[data-theme="dark"] tbody tr.hl>td{animation:flashd 1.8s ease-out}
+@keyframes flashd{0%,100%{background:transparent}18%{background:var(--seq-250)}}
+.gchip{display:inline-flex;align-items:center;gap:8px;background:var(--text-primary);color:var(--surface-1);
+  border-radius:999px;padding:5px 6px 5px 13px;font-size:12.5px;font-weight:600}
+.gchip button{background:rgba(255,255,255,.22);color:inherit;border:0;border-radius:999px;width:20px;height:20px;
+  line-height:1;cursor:pointer;font-size:13px;font-family:inherit}
+.gchip button:hover{background:rgba(255,255,255,.4)}
+.bar-bg{fill:var(--grid)}
+.tt{position:fixed;pointer-events:none;z-index:200;background:var(--text-primary);color:var(--surface-1);
+  padding:7px 10px;border-radius:7px;font-size:12.5px;line-height:1.45;opacity:0;transition:opacity .1s;max-width:280px}
+.tt b{font-weight:640}
+.tblbtn{margin-top:10px}
+.tblview{display:none;margin-top:12px;max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:9px}
+.tblview.on{display:block}
+.tblview table{font-size:12.5px}
+.empty{padding:40px;text-align:center;color:var(--muted);font-size:14px}
+footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="tt" id="tt"></div>
+<div class="wrap">
+
+<div class="topbar">
+  <button class="themebtn" id="themebtn">Dark</button>
+  <header class="top">
+    <div class="eyebrow">GHIN record · all time</div>
+    <h1>Marshall Houston — Golf Record</h1>
+    <p class="sub" id="subline"></p>
+  </header>
+</div>
+
+<nav class="jump" id="jump">
+  <a href="#overview">Overview</a>
+  <a href="#trend">Trend</a>
+  <a href="#highlights">Highlights</a>
+  <a href="#partype">Par 3 / 4 / 5</a>
+  <a href="#outcomes">Outcomes</a>
+  <a href="#notable">Notable rounds</a>
+  <a href="#stretches">Stretch explorer</a>
+  <a href="#courses">Courses &amp; tees</a>
+  <a href="#holes">Hole patterns</a>
+  <a href="#rounds">All rounds</a>
+</nav>
+
+<div class="filters" id="filters">
+  <div class="f"><label for="fCourse">Course</label><select id="fCourse"></select></div>
+  <div class="f"><label for="fTee">Tees</label><select id="fTee"></select></div>
+  <div class="f"><label for="fFrom">From</label><input type="date" id="fFrom"></div>
+  <div class="f"><label for="fTo">To</label><input type="date" id="fTo"></div>
+  <div class="f"><label>Holes</label>
+    <div class="seg" id="fHoles">
+      <button data-v="all" class="on">All</button><button data-v="18">18</button><button data-v="9">9</button>
+    </div>
+  </div>
+  <div class="f"><label for="fYear">Quick range</label><select id="fYear"></select></div>
+  <button class="btn" id="fReset">Reset</button>
+  <span id="groupChip"></span>
+  <div class="fcount" id="fCount"></div>
+</div>
+
+<section id="overview">
+  <h2>Overview</h2>
+  <p class="lede">Every round posted to GHIN, scored from the hole-by-hole cards. Differential is the
+  handicap differential GHIN computed for that round — lower is better, and it already accounts for
+  course rating, slope and playing conditions, so it's the only fair way to compare a 78 at one course
+  to an 84 at another.</p>
+  <div class="grid g4" id="heroTiles"></div>
+  <div class="grid g4" style="margin-top:12px" id="heroTiles2"></div>
+</section>
+
+<section id="trend">
+  <h2>Differentials over time</h2>
+  <p class="lede">Each dot is one round. The line is your 5-round rolling average — the shape of your
+  form, with the noise of any single round smoothed out.</p>
+  <div class="chart">
+    <h4>Handicap differential by date</h4>
+    <p class="cap">Lower is better. Hover any dot for the round.</p>
+    <div id="trendChart"></div>
+    <div class="legend">
+      <span><i style="background:var(--series-1)"></i>Round differential</span>
+      <span><span class="ln" style="background:var(--series-2)"></span>5-round rolling average</span>
+    </div>
+    <button class="btn tblbtn" data-tbl="trendTbl">Table view</button>
+    <div class="tblview" id="trendTbl"></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="chart">
+      <h4>Distribution of differentials</h4>
+      <p class="cap">How often you land in each band.</p>
+      <div id="histChart"></div>
+      <button class="btn tblbtn" data-tbl="histTbl">Table view</button>
+      <div class="tblview" id="histTbl"></div>
+    </div>
+    <div class="chart">
+      <h4>Rust — scoring by days since your last round</h4>
+      <p class="cap">Every round bucketed by the gap since the one before it.</p>
+      <div id="rustChart"></div>
+      <button class="btn tblbtn" data-tbl="rustTbl">Table view</button>
+      <div class="tblview" id="rustTbl"></div>
+    </div>
+    <div class="chart">
+      <h4>Scoring by month</h4>
+      <p class="cap">Average differential per calendar month, across all years.</p>
+      <div id="monthChart"></div>
+      <button class="btn tblbtn" data-tbl="monthTbl">Table view</button>
+      <div class="tblview" id="monthTbl"></div>
+    </div>
+  </div>
+</section>
+
+<section id="highlights">
+  <h2>Highlights</h2>
+  <p class="lede">Rounds grouped two ways — by the raw 18-hole score, and by the differential band you
+  asked for. Each group carries its own par-3 / par-4 / par-5 scoring average, so you can see exactly
+  where the good rounds come from.</p>
+
+  <h3>By score — 18-hole rounds</h3>
+  <div class="grid g4" id="bandTiles"></div>
+
+  <h3>By differential band — all rounds</h3>
+  <div class="grid g4" id="bucketTiles"></div>
+</section>
+
+<section id="partype">
+  <h2>Where the strokes come from</h2>
+  <p class="lede">The same par-type averages, side by side. The gap between your best band and your
+  worst band on each par type is the honest answer to "what actually separates a good round from a
+  bad one."</p>
+  <div class="grid g2">
+    <div class="chart">
+      <h4>Average score by par type, per differential band</h4>
+      <p class="cap">Bars grouped by band. Lower is better.</p>
+      <div id="parBucketChart"></div>
+      <div class="legend">
+        <span><i style="background:var(--series-1)"></i>Par 3</span>
+        <span><i style="background:var(--series-2)"></i>Par 4</span>
+        <span><i style="background:var(--series-3)"></i>Par 5</span>
+      </div>
+      <button class="btn tblbtn" data-tbl="parBucketTbl">Table view</button>
+      <div class="tblview" id="parBucketTbl"></div>
+    </div>
+    <div class="chart">
+      <h4>Average score by par type, per score band</h4>
+      <p class="cap">18-hole rounds only.</p>
+      <div id="parBandChart"></div>
+      <div class="legend">
+        <span><i style="background:var(--series-1)"></i>Par 3</span>
+        <span><i style="background:var(--series-2)"></i>Par 4</span>
+        <span><i style="background:var(--series-3)"></i>Par 5</span>
+      </div>
+      <button class="btn tblbtn" data-tbl="parBandTbl">Table view</button>
+      <div class="tblview" id="parBandTbl"></div>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:12px" id="parSpread"></div>
+</section>
+
+<section id="outcomes">
+  <h2>Outcomes</h2>
+  <p class="lede">Every hole you've played with a card, sorted by result against par. Rates are per 18
+  holes, so 9-hole rounds don't distort them.</p>
+  <div class="grid g4" id="outTiles"></div>
+  <h3>Where each outcome happens</h3>
+  <p class="lede">Pick a result and see every hole behind the count — or roll it up to find the
+  pattern. <b>Every hole</b> lists them individually; the three <b>by</b> views rank where that result
+  happens most. Rate matters more than raw count: a hole you've played 13 times will collect more
+  doubles than one you've played 4 times, so both columns are shown and either can sort.</p>
+  <div class="filters" style="position:static;border:0;padding:0 0 12px;margin-bottom:0">
+    <div class="f"><label for="oType">Result</label>
+      <select id="oType">
+        <option value="eb">Eagles &amp; birdies</option>
+        <option value="eagle">Eagle or better</option>
+        <option value="birdie">Birdie</option>
+        <option value="par">Par</option>
+        <option value="parbetter">Par or better</option>
+        <option value="bogey">Bogey</option>
+        <option value="double">Double</option>
+        <option value="triple">Triple</option>
+        <option value="quad">Quad or worse</option>
+        <option value="blowup">Double or worse</option>
+        <option value="all">Every result</option>
+      </select>
+    </div>
+    <div class="f"><label>View</label>
+      <div class="seg" id="oView">
+        <button data-v="list" class="on">Every hole</button>
+        <button data-v="hole">By hole</button>
+        <button data-v="num">By hole no.</button>
+        <button data-v="si">By stroke index</button>
+      </div>
+    </div>
+    <div class="f"><label for="oPar">Par type</label>
+      <select id="oPar" style="min-width:110px"><option value="">All pars</option><option value="3">Par 3</option>
+        <option value="4">Par 4</option><option value="5">Par 5</option></select>
+    </div>
+    <div class="f"><label for="oMin">Min. plays</label>
+      <select id="oMin" style="min-width:100px"><option value="1">1+</option><option value="3">3+</option>
+        <option value="4" selected>4+</option><option value="6">6+</option><option value="10">10+</option></select>
+    </div>
+    <div class="f" style="flex:1;min-width:180px"><label for="oSearch">Search course, tees or date</label>
+      <input type="text" id="oSearch" placeholder="e.g. Applewood, 2025" style="width:100%"></div>
+  </div>
+  <div class="grid g3" id="oHotspots" style="margin-bottom:12px"></div>
+  <p class="lede" id="oNote" style="margin:0 0 10px"></p>
+  <div class="tablewrap" style="max-height:520px"><table id="outHoleTbl"></table></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="chart">
+      <h4>Outcome mix</h4>
+      <p class="cap">Share of all holes played.</p>
+      <div id="outChart"></div>
+      <button class="btn tblbtn" data-tbl="outTbl">Table view</button>
+      <div class="tblview" id="outTbl"></div>
+    </div>
+    <div class="chart">
+      <h4>Outcome mix by par type</h4>
+      <p class="cap">Share of holes of each par, by result.</p>
+      <div id="outParChart"></div>
+      <div class="legend" id="outParLegend"></div>
+      <button class="btn tblbtn" data-tbl="outParTbl">Table view</button>
+      <div class="tblview" id="outParTbl"></div>
+    </div>
+  </div>
+</section>
+
+<section id="notable">
+  <h2>Notable rounds</h2>
+  <p class="lede">The extremes — streaks, stretches, recoveries and collapses. Every card names the
+  round it came from.</p>
+  <h3>Streaks &amp; stretches</h3>
+  <div class="grid g3" id="notableA"></div>
+  <h3>Signed nines &amp; turnarounds</h3>
+  <p class="lede">The nines as they appear on the card, rather than the rolling nine above, plus the
+  swing between them. Complete 18-hole rounds only.</p>
+  <div class="grid g4" id="notableN"></div>
+  <div class="chart" style="margin-top:12px">
+    <h4>Every signed nine, by score to par</h4>
+    <p class="cap">All complete 18-hole rounds, split into their two nines. Hover any bar for the split.</p>
+    <div id="nineDist"></div>
+    <div class="legend">
+      <span><i style="background:var(--series-1)"></i>Front nine</span>
+      <span><i style="background:var(--series-2)"></i>Back nine</span>
+    </div>
+    <button class="btn tblbtn" data-tbl="nineDistTbl">Table view</button>
+    <div class="tblview" id="nineDistTbl"></div>
+  </div>
+  <h3>Three-hole transitions</h3>
+  <p class="lede">Back-to-back three-hole stretches inside the same round — holes 1–3 into 4–6, 2–4
+  into 5–7, and so on. The swing is how many strokes the second stretch gained or lost against the
+  first.</p>
+  <div class="grid g2" id="notableT"></div>
+  <h3>Recovery &amp; collapse</h3>
+  <div class="grid g3" id="notableB"></div>
+  <h3>Single-round records</h3>
+  <div class="grid g3" id="notableC"></div>
+
+  <h3>The war on double bogeys</h3>
+  <p class="lede">How close you get to a card with nothing worse than a bogey on it. The tiles are
+  cumulative — "1 or fewer" includes the clean rounds. Click any tile to filter the whole page to
+  those rounds.</p>
+  <div class="grid g4" id="cleanTiles"></div>
+  <h3 style="margin-top:22px">What the blow-ups actually cost</h3>
+  <p class="lede">A counterfactual, not a prediction: every hole you played worse than bogey, replayed
+  as a bogey, with everything else untouched. It isn't a score you'd shoot — it's the size of the
+  prize you're playing for.</p>
+  <div class="grid g4" id="ifNoBlowups"></div>
+  <div class="chart" style="margin-top:12px">
+    <h4>Blow-up holes per round, over time</h4>
+    <p class="cap">Doubles or worse in each complete 18-hole round. The line is a 5-round rolling
+    average. Click any dot to open that round.</p>
+    <div id="blowChart"></div>
+    <div class="legend">
+      <span><i style="background:var(--series-1)"></i>Doubles or worse in the round</span>
+      <span><span class="ln" style="background:var(--series-2)"></span>5-round rolling average</span>
+    </div>
+    <button class="btn tblbtn" data-tbl="blowTbl">Table view</button>
+    <div class="tblview" id="blowTbl"></div>
+  </div>
+</section>
+
+<section id="stretches">
+  <h2>Stretch explorer</h2>
+  <p class="lede">Every stretch of golf in your record, not just the record-holder. Pick a stretch
+  type, then sort or search. This respects the filters at the top of the page, so you can narrow to a
+  course or a season first.</p>
+  <div class="filters" style="position:static;border:0;padding:0 0 14px;margin-bottom:0">
+    <div class="f"><label for="sType">Stretch type</label>
+      <select id="sType">
+        <option value="s3">Any 3-hole stretch</option>
+        <option value="s9">Any 9-hole stretch</option>
+        <option value="front">Front nine (signed)</option>
+        <option value="back">Back nine (signed)</option>
+        <option value="turn">Front → back turnaround</option>
+        <option value="t3">3-hole transition</option>
+        <option value="run:par">Par streak</option>
+        <option value="run:parbetter">Par-or-better streak</option>
+        <option value="run:bird">Birdie streak</option>
+        <option value="run:bogeyfree">Bogey-free streak</option>
+        <option value="run:bogey">Bogey-or-worse streak</option>
+        <option value="run:blowfree">Blow-up-free streak (no double+)</option>
+      </select>
+    </div>
+    <div class="f"><label for="sOrder">Order</label>
+      <select id="sOrder"><option value="best">Best first</option><option value="worst">Worst first</option></select>
+    </div>
+    <div class="f" style="flex:1;min-width:220px"><label for="sSearch">Search course, tees or date</label>
+      <input type="text" id="sSearch" placeholder="e.g. Applewood, Copper, 2025" style="width:100%">
+    </div>
+  </div>
+  <p class="lede" id="sNote" style="margin:0 0 10px"></p>
+  <div class="tablewrap"><table id="stretchTbl"></table></div>
+</section>
+
+<section id="courses">
+  <h2>Courses &amp; tees</h2>
+  <p class="lede">Click any row to filter the whole page to that course. Click again to clear.
+  Only combinations you've played at least twice are ranked by average.</p>
+  <div class="grid g2">
+    <div>
+      <h3 style="margin-top:0">By course</h3>
+      <div class="tablewrap" style="max-height:460px"><table id="courseTbl"></table></div>
+    </div>
+    <div>
+      <h3 style="margin-top:0">By course &amp; tee</h3>
+      <div class="tablewrap" style="max-height:460px"><table id="teeTbl"></table></div>
+    </div>
+  </div>
+  <div class="chart" style="margin-top:12px">
+    <h4>Average differential by course</h4>
+    <p class="cap">Courses played 3+ times. The dot is your best round there.</p>
+    <div id="courseChart"></div>
+    <div class="legend">
+      <span><i style="background:var(--seq-450)"></i>Average differential</span>
+      <span><i style="background:var(--series-2);border-radius:50%"></i>Best round</span>
+    </div>
+  </div>
+</section>
+
+<section id="holes">
+  <h2>Hole patterns</h2>
+  <p class="lede">How you score relative to par depending on where the hole sits — its stroke index
+  (1 = hardest), its position in the round, and which nine it's on.</p>
+  <div class="grid g2">
+    <div class="chart">
+      <h4>Strokes over par by stroke index</h4>
+      <p class="cap">Stroke index 1 is the hardest hole on the card, 18 the easiest.</p>
+      <div id="siChart"></div>
+      <button class="btn tblbtn" data-tbl="siTbl">Table view</button>
+      <div class="tblview" id="siTbl"></div>
+    </div>
+    <div class="chart">
+      <h4>Strokes over par by hole number</h4>
+      <p class="cap">Where in the round the damage happens. 18-hole rounds only.</p>
+      <div id="holeChart"></div>
+      <button class="btn tblbtn" data-tbl="holeTbl">Table view</button>
+      <div class="tblview" id="holeTbl"></div>
+    </div>
+  </div>
+  <div class="grid g4" style="margin-top:12px" id="nineTiles"></div>
+  <h3>Nemesis &amp; comfort holes</h3>
+  <p class="lede">Specific holes you've played at least four times, ranked by your average score
+  against par there.</p>
+  <div class="grid g2">
+    <div><div class="tablewrap" style="max-height:380px"><table id="nemesisTbl"></table></div></div>
+    <div><div class="tablewrap" style="max-height:380px"><table id="comfortTbl"></table></div></div>
+  </div>
+</section>
+
+<section id="rounds">
+  <h2>All rounds</h2>
+  <p class="lede">Click any column header to sort — click again to reverse. Click a row to open the
+  scorecard. Sorting by differential ascending gives you your best rounds; descending gives you your
+  worst.</p>
+  <div class="chips" id="quickSorts"></div>
+  <div class="tablewrap" style="margin-top:12px"><table id="roundTbl"></table></div>
+  <div class="legend" style="margin-top:10px">
+    <span><i style="background:var(--u2)"></i>Under par</span>
+    <span><i style="background:var(--div-mid);border:1px solid var(--border)"></i>Par</span>
+    <span><i style="background:var(--o2c)"></i>Bogey</span>
+    <span><i style="background:var(--o3)"></i>Double</span>
+    <span><i style="background:var(--o4)"></i>Triple+</span>
+  </div>
+</section>
+
+<section id="quality">
+  <h2>Data quality</h2>
+  <div class="note" id="qualityNote"></div>
+</section>
+
+<footer>
+  Built from <b>155</b> rounds pulled from your GHIN account on July 26, 2026.
+  Differentials, course ratings and slopes are GHIN's own values; everything else is computed from the
+  hole-by-hole cards using raw (uncapped) scores.
+</footer>
+</div>
+
+<script>
+const RAW = [{"id":9000000001,"d":"2026-07-25","c":"CPGC - Men's Amateur R1","f":"City Park Golf Course","t":"67.8 / 116","n":18,"np":18,"ags":74,"diff":6.0,"cr":67.8,"sr":116,"pcc":0,"ch":"5","hi":8.1,"st":"T","status":"Pending","used":false,"tp":"+4","pending":true,"sg":{"Off the tee":3.0,"Approach":2.1,"Short game":-1.0,"Putting":0.4,"vs":"5-Index"},"h":[[1,4,4,4,4],[2,3,3,3,8],[3,4,3,3,14],[4,4,4,4,6],[5,3,4,4,12],[6,4,4,4,16],[7,4,5,5,10],[8,3,3,3,18],[9,5,5,5,2],[10,4,5,5,13],[11,4,5,5,5],[12,3,3,3,17],[13,5,5,5,3],[14,4,4,4,7],[15,4,4,4,9],[16,5,6,6,1],[17,3,3,3,15],[18,4,4,4,11]]},{"id":1183839275,"d":"2026-07-19","c":"Meadows Golf Club","f":"Meadows Golf Club","t":"Gold/Blue","n":18,"np":18,"ags":83,"diff":10.5,"cr":70.7,"sr":133,"pcc":0,"ch":"8","hi":8.1,"st":"A","status":"Validated","used":true,"tp":"+11","h":[[1,4,7,6,11],[2,4,4,4,1],[3,3,4,4,15],[4,5,6,6,5],[5,4,4,4,13],[6,4,4,4,7],[7,4,5,5,9],[8,3,5,5,17],[9,5,5,5,3],[10,4,5,5,14],[11,3,3,3,12],[12,5,7,7,4],[13,4,4,4,8],[14,4,4,4,6],[15,3,4,4,18],[16,5,5,5,2],[17,4,4,4,16],[18,4,4,4,10]]},{"id":1183188438,"d":"2026-07-17","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":9,"np":9,"ags":43,"diff":5.9,"cr":35.5,"sr":144,"pcc":0,"ch":"-31","hi":8.1,"st":"A","status":"Validated","used":false,"tp":"-29","h":[[1,4,4,4,7],[2,3,4,4,9],[3,5,7,7,1],[4,4,4,4,3],[5,5,5,5,2],[6,4,5,5,4],[7,4,5,5,6],[8,4,6,6,5],[9,3,3,3,8]]},{"id":1181225723,"d":"2026-07-12","c":"Championship 18","f":"Foothills Golf Course","t":"Blue","n":18,"np":18,"ags":78,"diff":6.9,"cr":70.4,"sr":124,"pcc":0,"ch":"8","hi":8.7,"st":"A","status":"Validated","used":true,"tp":"+6","h":[[1,4,4,4,13],[2,5,5,5,3],[3,4,3,3,9],[4,3,3,3,15],[5,4,4,4,5],[6,5,5,5,7],[7,4,5,5,1],[8,3,3,3,17],[9,4,4,4,11],[10,4,4,4,12],[11,5,4,4,8],[12,4,7,7,4],[13,3,5,5,16],[14,4,4,4,10],[15,4,5,5,14],[16,5,5,5,2],[17,3,3,3,18],[18,4,5,5,6]]},{"id":1178187686,"d":"2026-07-03","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":87,"diff":12.3,"cr":72.2,"sr":136,"pcc":0,"ch":"10","hi":8.1,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,4,4,4,11],[2,5,5,5,3],[3,4,7,7,9],[4,4,4,4,5],[5,5,5,5,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,4,4,15],[9,4,5,5,13],[10,4,4,4,10],[11,4,6,6,2],[12,3,3,3,12],[13,4,5,5,8],[14,5,4,4,4],[15,3,4,4,18],[16,4,7,6,14],[17,4,5,5,16],[18,5,8,8,6]]},{"id":1176166410,"d":"2026-06-28","c":"Meadows Golf Club","f":"Meadows Golf Club","t":"Gold","n":18,"np":18,"ags":89,"diff":13.6,"cr":72.1,"sr":140,"pcc":0,"ch":"10","hi":7.7,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,4,6,6,11],[2,4,6,6,1],[3,3,5,5,15],[4,5,6,6,5],[5,4,5,5,13],[6,4,4,4,7],[7,4,4,4,9],[8,3,5,5,17],[9,5,4,4,3],[10,4,5,5,14],[11,3,5,5,12],[12,5,6,6,4],[13,4,5,5,8],[14,4,5,5,6],[15,3,3,3,18],[16,5,5,5,2],[17,4,4,4,16],[18,4,6,6,10]]},{"id":1168197756,"d":"2026-06-07","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":88,"diff":13.1,"cr":72.2,"sr":136,"pcc":0,"ch":"9","hi":7.7,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,4,4,11],[2,5,5,5,3],[3,4,4,4,9],[4,4,5,5,5],[5,5,5,5,1],[6,3,4,4,17],[7,4,5,5,7],[8,3,4,4,15],[9,4,7,6,13],[10,4,5,5,10],[11,4,5,5,2],[12,3,4,4,12],[13,4,6,6,8],[14,5,6,6,4],[15,3,4,4,18],[16,4,5,5,14],[17,4,4,4,16],[18,5,7,7,6]]},{"id":1162445530,"d":"2026-05-23","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":80,"diff":6.5,"cr":72.2,"sr":136,"pcc":0,"ch":"10","hi":8.2,"st":"A","status":"Validated","used":true,"tp":"+8","h":[[1,4,4,4,11],[2,5,6,6,3],[3,4,4,4,9],[4,4,5,5,5],[5,5,5,5,1],[6,3,4,4,17],[7,4,5,5,7],[8,3,3,3,15],[9,4,4,4,13],[10,4,4,4,10],[11,4,4,4,2],[12,3,6,5,12],[13,4,4,4,8],[14,5,4,4,4],[15,3,6,5,18],[16,4,5,5,14],[17,4,5,5,16],[18,5,4,4,6]]},{"id":1161483790,"d":"2026-05-20","c":"Ute Creek Golf Course","f":"Ute Creek Golf Course","t":"Gold","n":18,"np":18,"ags":88,"diff":14.1,"cr":71.6,"sr":131,"pcc":0,"ch":"9","hi":8.2,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,5,5,5,13],[2,4,5,5,11],[3,4,6,6,9],[4,4,3,3,5],[5,4,4,4,1],[6,3,4,4,17],[7,5,6,6,7],[8,3,3,3,15],[9,4,6,6,3],[10,4,5,5,4],[11,5,7,7,6],[12,3,3,3,18],[13,5,6,6,14],[14,3,3,3,16],[15,4,4,4,12],[16,3,5,5,10],[17,5,6,6,8],[18,4,7,7,2]]},{"id":1156030163,"d":"2026-05-04","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":87,"diff":12.6,"cr":72,"sr":135,"pcc":0,"ch":"10","hi":8,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,4,4,4,11],[2,4,5,5,7],[3,5,6,6,1],[4,3,5,5,5],[5,4,4,4,3],[6,5,5,5,9],[7,3,4,4,17],[8,4,5,5,13],[9,4,5,5,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,9,7,8],[13,5,5,5,2],[14,3,3,3,18],[15,4,6,6,6],[16,4,6,6,10],[17,3,3,3,14],[18,5,4,4,4]]},{"id":1155636965,"d":"2026-05-03","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":84,"diff":10.7,"cr":71.3,"sr":134,"pcc":0,"ch":"9","hi":8,"st":"A","status":"Validated","used":true,"tp":"+12","h":[[1,5,7,7,5],[2,4,4,4,3],[3,5,7,7,1],[4,3,4,4,17],[5,4,5,5,13],[6,4,5,5,7],[7,4,5,5,11],[8,3,4,4,15],[9,4,4,4,9],[10,4,3,3,4],[11,4,5,5,14],[12,5,4,4,2],[13,3,4,4,16],[14,4,4,4,8],[15,5,5,5,10],[16,3,4,4,18],[17,4,5,5,12],[18,4,5,5,6]]},{"id":1151264513,"d":"2026-04-19","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":84,"diff":10,"cr":72,"sr":135,"pcc":0,"ch":"9","hi":7.7,"st":"A","status":"Validated","used":true,"tp":"+12","h":[[1,4,4,4,11],[2,4,5,5,7],[3,5,5,5,1],[4,3,5,5,5],[5,4,5,5,3],[6,5,6,6,9],[7,3,3,3,17],[8,4,5,5,13],[9,4,4,4,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,4,4,8],[13,5,5,5,2],[14,3,4,4,18],[15,4,5,5,6],[16,4,4,4,10],[17,3,5,5,14],[18,5,5,5,4]]},{"id":1149378756,"d":"2026-04-13","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":82,"diff":8.1,"cr":72.2,"sr":136,"pcc":0,"ch":"10","hi":8.1,"st":"H","status":"Validated","used":true,"tp":"+10","h":[[1,4,3,3,11],[2,5,7,7,3],[3,4,4,4,9],[4,4,4,4,5],[5,5,6,6,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,5,5,15],[9,4,3,3,13],[10,4,9,7,10],[11,4,4,4,2],[12,3,2,2,12],[13,4,6,6,8],[14,5,7,7,4],[15,3,3,3,18],[16,4,4,4,14],[17,4,4,4,16],[18,5,5,5,6]]},{"id":1148627568,"d":"2026-04-11","c":"Applewood Golf Course","f":"Applewood Golf Course","t":"Blue","n":18,"np":18,"ags":83,"diff":14.8,"cr":67.9,"sr":115,"pcc":0,"ch":"5","hi":7.8,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,4,6,6,16],[2,3,4,4,14],[3,4,6,6,6],[4,5,4,4,18],[5,4,5,5,2],[6,4,4,4,12],[7,5,6,6,10],[8,4,3,3,8],[9,3,5,5,4],[10,4,3,3,7],[11,3,4,4,15],[12,4,4,4,13],[13,4,6,6,1],[14,3,4,4,17],[15,5,6,6,5],[16,5,6,6,3],[17,3,3,3,11],[18,4,4,4,9]]},{"id":1145385336,"d":"2026-03-28","c":"Meadow Hills Golf Course","f":"Meadow Hills Golf Course","t":"Orange","n":18,"np":18,"ags":86,"diff":13.1,"cr":70.7,"sr":132,"pcc":0,"ch":"10","hi":7.7,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,6,6,1],[2,3,3,3,11],[3,4,5,5,7],[4,3,4,4,15],[5,4,4,4,9],[6,5,5,5,13],[7,4,2,2,17],[8,4,6,6,5],[9,4,4,4,3],[10,5,5,5,8],[11,4,7,7,6],[12,4,3,3,10],[13,3,4,4,18],[14,4,5,5,2],[15,3,6,5,16],[16,5,6,6,12],[17,3,5,5,14],[18,4,7,7,4]]},{"id":1123515508,"d":"2025-11-04","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":78,"diff":5.1,"cr":71.5,"sr":143,"pcc":0,"ch":"9","hi":7.6,"st":"H","status":"Validated","used":true,"tp":"+6","h":[[1,4,4,4,13],[2,3,4,4,17],[3,5,5,5,1],[4,4,4,4,5],[5,5,5,5,3],[6,4,3,3,7],[7,4,5,5,11],[8,4,4,4,9],[9,3,4,4,15],[10,4,3,3,12],[11,5,5,5,4],[12,4,4,4,10],[13,4,5,5,6],[14,5,5,5,2],[15,3,5,5,18],[16,4,6,6,8],[17,3,3,3,16],[18,4,4,4,14]]},{"id":1122755634,"d":"2025-10-31","c":"Applewood Golf Course","f":"Applewood Golf Course","t":"Blue","n":18,"np":17,"ags":71,"diff":3,"cr":67.9,"sr":115,"pcc":0,"ch":"5","hi":7.7,"st":"A","status":"Validated","used":true,"tp":"E","h":[[1,4,4,4,16],[2,3,3,3,14],[3,4,5,5,6],[4,5,5,5,18],[5,4,4,4,2],[6,4,4,4,12],[7,5,4,4,10],[8,4,5,5,8],[9,3,3,3,4],[10,4,4,4,7],[11,3,5,5,15],[12,4,5,5,13],[13,4,3,3,1],[14,3,3,3,17],[15,5,5,5,5],[16,5,5,5,3],[17,3,null,0,11],[18,4,4,4,9]]},{"id":1122067365,"d":"2025-10-27","c":"Dunes","f":"Riverdale Golf Course","t":"Diamond","n":18,"np":18,"ags":86,"diff":10.8,"cr":73,"sr":136,"pcc":0,"ch":"10","hi":7.5,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,4,6,6,11],[2,4,4,4,15],[3,5,6,6,9],[4,3,3,3,7],[5,4,6,6,1],[6,4,5,5,3],[7,4,6,6,5],[8,3,3,3,13],[9,5,5,5,17],[10,4,4,4,10],[11,5,5,5,4],[12,3,4,4,14],[13,4,5,5,2],[14,4,5,5,12],[15,4,5,5,6],[16,5,6,6,18],[17,3,3,3,8],[18,4,5,5,16]]},{"id":1118857096,"d":"2025-10-12","c":"Fossil Trace Golf Club","f":"Fossil Trace Golf Club","t":"T-Rex","n":18,"np":18,"ags":87,"diff":13.3,"cr":70.9,"sr":137,"pcc":0,"ch":"8","hi":7.5,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,5,6,6,3],[2,4,5,5,13],[3,3,4,4,15],[4,4,6,6,5],[5,3,3,3,17],[6,4,4,4,9],[7,4,4,4,11],[8,4,7,7,7],[9,5,6,6,1],[10,4,4,4,10],[11,3,3,3,16],[12,5,6,6,4],[13,4,4,4,8],[14,3,3,3,14],[15,5,6,6,2],[16,3,4,4,18],[17,4,7,6,12],[18,5,6,6,6]]},{"id":1116934693,"d":"2025-10-04","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":12,"ags":57,"diff":-12.6,"cr":72.2,"sr":136,"pcc":0,"ch":"9","hi":7.5,"st":"H","status":"UnderReview","used":false,"tp":"-15","h":[[1,4,4,4,11],[2,5,5,5,3],[3,4,5,5,9],[4,4,4,4,5],[5,5,7,7,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,3,3,15],[9,4,6,6,13],[10,4,7,6,10],[11,4,5,5,2],[12,3,4,4,12],[13,4,null,0,8],[14,5,null,0,4],[15,3,null,0,18],[16,4,null,0,14],[17,4,null,0,16],[18,5,null,0,6]]},{"id":1116934823,"d":"2025-10-04","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":89,"diff":14,"cr":72.2,"sr":136,"pcc":0,"ch":"9","hi":7.5,"st":"H","status":"Validated","used":false,"tp":"+17","h":[[1,4,4,4,11],[2,5,5,5,3],[3,4,5,5,9],[4,4,4,4,5],[5,5,7,7,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,3,3,15],[9,4,6,6,13],[10,4,7,6,10],[11,4,5,5,2],[12,3,4,4,12],[13,4,5,5,8],[14,5,5,5,4],[15,3,5,5,18],[16,4,5,5,14],[17,4,5,5,16],[18,5,7,7,6]]},{"id":1115643807,"d":"2025-09-29","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":86,"diff":11.5,"cr":72.2,"sr":136,"pcc":0,"ch":"8","hi":6.8,"st":"H","status":"Validated","used":false,"tp":"+14","h":[[1,4,4,4,11],[2,5,5,5,3],[3,4,6,6,9],[4,4,5,5,5],[5,5,7,7,1],[6,3,4,4,17],[7,4,3,3,7],[8,3,3,3,15],[9,4,6,6,13],[10,4,4,4,10],[11,4,5,5,2],[12,3,3,3,12],[13,4,7,7,8],[14,5,6,6,4],[15,3,4,4,18],[16,4,3,3,14],[17,4,6,6,16],[18,5,5,5,6]]},{"id":1114565859,"d":"2025-09-25","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":88,"diff":13.4,"cr":72,"sr":135,"pcc":0,"ch":"8","hi":6.8,"st":"H","status":"Validated","used":false,"tp":"+16","h":[[1,4,5,5,11],[2,4,5,5,7],[3,5,5,5,1],[4,3,3,3,5],[5,4,5,5,3],[6,5,7,7,9],[7,3,3,3,17],[8,4,3,3,13],[9,4,6,6,15],[10,4,6,6,12],[11,4,6,6,16],[12,4,4,4,8],[13,5,7,7,2],[14,3,4,4,18],[15,4,5,5,6],[16,4,4,4,10],[17,3,5,5,14],[18,5,5,5,4]]},{"id":1113972068,"d":"2025-09-21","c":"Meadow Hills Golf Course","f":"Meadow Hills Golf Course","t":"Blue","n":18,"np":18,"ags":83,"diff":12.8,"cr":69.1,"sr":123,"pcc":0,"ch":"7","hi":6.8,"st":"T","status":"Validated","used":false,"tp":"+13","h":[[1,4,3,3,1],[2,3,4,4,11],[3,4,5,5,7],[4,3,4,4,15],[5,4,4,4,9],[6,5,5,5,13],[7,4,5,5,17],[8,4,4,4,5],[9,4,7,7,3],[10,5,7,7,8],[11,4,4,4,6],[12,4,4,4,10],[13,3,4,4,18],[14,4,4,4,2],[15,3,3,3,16],[16,5,6,6,12],[17,3,5,5,14],[18,4,5,5,4]]},{"id":1113973196,"d":"2025-09-20","c":"Meadow Hills Golf Course","f":"Meadow Hills Golf Course","t":"Blue","n":18,"np":18,"ags":84,"diff":13.7,"cr":69.1,"sr":123,"pcc":0,"ch":"7","hi":6.8,"st":"T","status":"Validated","used":false,"tp":"+14","h":[[1,4,5,5,1],[2,3,3,3,11],[3,4,6,6,7],[4,3,4,4,15],[5,4,5,5,9],[6,5,5,5,13],[7,4,5,5,17],[8,4,4,4,5],[9,4,5,5,3],[10,5,5,5,8],[11,4,4,4,6],[12,4,5,5,10],[13,3,3,3,18],[14,4,5,5,2],[15,3,5,5,16],[16,5,7,7,12],[17,3,3,3,14],[18,4,5,5,4]]},{"id":1110863000,"d":"2025-09-12","c":"Meadow Hills Golf Course","f":"Meadow Hills Golf Course","t":"Blue","n":18,"np":18,"ags":77,"diff":7.3,"cr":69.1,"sr":123,"pcc":0,"ch":"7","hi":7,"st":"A","status":"Validated","used":false,"tp":"+7","h":[[1,4,5,5,1],[2,3,3,3,11],[3,4,4,4,7],[4,3,3,3,15],[5,4,5,5,9],[6,5,5,5,13],[7,4,5,5,17],[8,4,4,4,5],[9,4,5,5,3],[10,5,5,5,8],[11,4,5,5,6],[12,4,5,5,10],[13,3,3,3,18],[14,4,4,4,2],[15,3,3,3,16],[16,5,5,5,12],[17,3,4,4,14],[18,4,4,4,4]]},{"id":1108428408,"d":"2025-09-03","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":81,"diff":7.3,"cr":72.2,"sr":136,"pcc":0,"ch":"9","hi":7.1,"st":"H","status":"Validated","used":false,"tp":"+9","h":[[1,4,5,5,11],[2,5,6,6,3],[3,4,3,3,9],[4,4,6,6,5],[5,5,5,5,1],[6,3,3,3,17],[7,4,4,4,7],[8,3,4,4,15],[9,4,4,4,13],[10,4,5,5,10],[11,4,5,5,2],[12,3,3,3,12],[13,4,6,6,8],[14,5,5,5,4],[15,3,3,3,18],[16,4,4,4,14],[17,4,6,6,16],[18,5,4,4,6]]},{"id":1107767128,"d":"2025-09-01","c":"Meadow Hills Golf Course","f":"Meadow Hills Golf Course","t":"Blue","n":18,"np":18,"ags":82,"diff":11.9,"cr":69.1,"sr":123,"pcc":0,"ch":"7","hi":6.9,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,4,5,5,1],[2,3,3,3,11],[3,4,4,4,7],[4,3,5,5,15],[5,4,3,3,9],[6,5,5,5,13],[7,4,4,4,17],[8,4,4,4,5],[9,4,7,7,3],[10,5,5,5,8],[11,4,5,5,6],[12,4,7,6,10],[13,3,4,4,18],[14,4,4,4,2],[15,3,3,3,16],[16,5,7,7,12],[17,3,4,4,14],[18,4,4,4,4]]},{"id":1100115903,"d":"2025-08-10","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"3","n":18,"np":18,"ags":88,"diff":15.5,"cr":69.9,"sr":125,"pcc":1,"ch":"5","hi":6.8,"st":"H","status":"Validated","used":false,"tp":"+16","h":[[1,4,6,6,11],[2,4,5,5,7],[3,5,6,6,1],[4,3,4,4,5],[5,4,5,5,3],[6,5,6,6,9],[7,3,3,3,17],[8,4,5,5,13],[9,4,5,5,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,5,5,8],[13,5,5,5,2],[14,3,2,2,18],[15,4,7,6,6],[16,4,4,4,10],[17,3,4,4,14],[18,5,7,7,4]]},{"id":1096649290,"d":"2025-08-01","c":"Dunes","f":"Riverdale Golf Course","t":"Diamond","n":18,"np":18,"ags":85,"diff":10.8,"cr":73,"sr":136,"pcc":-1,"ch":"9","hi":6.8,"st":"A","status":"Validated","used":false,"tp":"+13","h":[[1,4,5,5,11],[2,4,4,4,15],[3,5,4,4,9],[4,3,4,4,7],[5,4,5,5,1],[6,4,5,5,3],[7,4,6,6,5],[8,3,4,4,13],[9,5,7,7,17],[10,4,4,4,10],[11,5,7,7,4],[12,3,4,4,14],[13,4,5,5,2],[14,4,3,3,12],[15,4,7,7,6],[16,5,5,5,18],[17,3,2,2,8],[18,4,4,4,16]]},{"id":1093052355,"d":"2025-07-22","c":"Dunes","f":"Riverdale Golf Course","t":"Diamond","n":18,"np":18,"ags":84,"diff":9.1,"cr":73,"sr":136,"pcc":0,"ch":"9","hi":6.8,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,4,4,4,11],[2,4,5,5,15],[3,5,6,6,9],[4,3,5,5,7],[5,4,4,4,1],[6,4,3,3,3],[7,4,4,4,5],[8,3,4,4,13],[9,5,5,5,17],[10,4,5,5,10],[11,5,5,5,4],[12,3,4,4,14],[13,4,6,6,2],[14,4,4,4,12],[15,4,5,5,6],[16,5,6,6,18],[17,3,4,4,8],[18,4,5,5,16]]},{"id":1092369664,"d":"2025-07-20","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Gold","n":18,"np":18,"ags":91,"diff":14.9,"cr":72.6,"sr":140,"pcc":0,"ch":"9","hi":6.8,"st":"A","status":"Validated","used":false,"tp":"+19","h":[[1,4,6,6,9],[2,4,7,7,5],[3,5,7,7,7],[4,3,3,3,15],[5,4,4,4,11],[6,5,7,7,1],[7,4,5,5,13],[8,3,3,3,17],[9,4,5,5,3],[10,4,6,6,16],[11,5,5,5,10],[12,3,4,4,18],[13,4,6,6,8],[14,4,5,5,6],[15,4,4,4,14],[16,3,4,4,12],[17,4,4,4,2],[18,5,6,6,4]]},{"id":1091558021,"d":"2025-07-18","c":"Dunes","f":"Riverdale Golf Course","t":"Diamond","n":18,"np":18,"ags":82,"diff":7.5,"cr":73,"sr":136,"pcc":0,"ch":"9","hi":7,"st":"A","status":"Validated","used":false,"tp":"+10","h":[[1,4,4,4,11],[2,4,4,4,15],[3,5,5,5,9],[4,3,3,3,7],[5,4,4,4,1],[6,4,4,4,3],[7,4,6,6,5],[8,3,4,4,13],[9,5,5,5,17],[10,4,4,4,10],[11,5,8,8,4],[12,3,4,4,14],[13,4,4,4,2],[14,4,4,4,12],[15,4,4,4,6],[16,5,6,6,18],[17,3,4,4,8],[18,4,5,5,16]]},{"id":1088572007,"d":"2025-07-10","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":90,"diff":15.1,"cr":72,"sr":135,"pcc":0,"ch":"8","hi":7,"st":"H","status":"Validated","used":false,"tp":"+18","h":[[1,4,5,5,11],[2,4,5,5,7],[3,5,7,7,1],[4,3,4,4,5],[5,4,4,4,3],[6,5,5,5,9],[7,3,3,3,17],[8,4,5,5,13],[9,4,5,5,15],[10,4,5,5,12],[11,4,6,6,16],[12,4,7,7,8],[13,5,5,5,2],[14,3,2,2,18],[15,4,6,6,6],[16,4,5,5,10],[17,3,3,3,14],[18,5,8,8,4]]},{"id":1087831261,"d":"2025-07-08","c":"Dunes","f":"Riverdale Golf Course","t":"Diamond","n":18,"np":18,"ags":83,"diff":8.3,"cr":73,"sr":136,"pcc":0,"ch":"10","hi":7.1,"st":"A","status":"Validated","used":false,"tp":"+11","h":[[1,4,5,5,11],[2,4,5,5,15],[3,5,5,5,9],[4,3,3,3,7],[5,4,5,5,1],[6,4,5,5,3],[7,4,5,5,5],[8,3,3,3,13],[9,5,5,5,17],[10,4,4,4,10],[11,5,5,5,4],[12,3,4,4,14],[13,4,3,3,2],[14,4,4,4,12],[15,4,5,5,6],[16,5,7,7,18],[17,3,6,6,8],[18,4,4,4,16]]},{"id":1086749748,"d":"2025-07-05","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":85,"diff":10.6,"cr":72.2,"sr":136,"pcc":0,"ch":"9","hi":7.1,"st":"H","status":"Validated","used":false,"tp":"+13","h":[[1,4,6,6,11],[2,5,7,7,3],[3,4,4,4,9],[4,4,4,4,5],[5,5,5,5,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,2,2,15],[9,4,5,5,13],[10,4,4,4,10],[11,4,5,5,2],[12,3,4,4,12],[13,4,7,7,8],[14,5,5,5,4],[15,3,4,4,18],[16,4,5,5,14],[17,4,4,4,16],[18,5,6,6,6]]},{"id":1085954311,"d":"2025-07-03","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Gold","n":18,"np":18,"ags":78,"diff":4.4,"cr":72.6,"sr":140,"pcc":0,"ch":"10","hi":7.8,"st":"A","status":"Validated","used":false,"tp":"+6","h":[[1,4,5,5,9],[2,4,5,5,5],[3,5,5,5,7],[4,3,2,2,15],[5,4,4,4,11],[6,5,5,5,1],[7,4,6,6,13],[8,3,4,4,17],[9,4,6,6,3],[10,4,4,4,16],[11,5,4,4,10],[12,3,3,3,18],[13,4,5,5,8],[14,4,5,5,6],[15,4,4,4,14],[16,3,3,3,12],[17,4,4,4,2],[18,5,4,4,4]]},{"id":1084814191,"d":"2025-06-29","c":"CPGC - Men's Amateur R3","f":"","t":"67.8 / 116","n":18,"np":18,"ags":75,"diff":7,"cr":67.8,"sr":116,"pcc":0,"ch":"NH","hi":8.2,"st":"T","status":"Validated","used":false,"tp":"-","h":[]},{"id":1084813786,"d":"2025-06-28","c":"CPGC - Men's Amateur R2","f":"","t":"67.8 / 116","n":18,"np":18,"ags":77,"diff":9,"cr":67.8,"sr":116,"pcc":0,"ch":"NH","hi":8.4,"st":"T","status":"Validated","used":false,"tp":"-","h":[]},{"id":1082965357,"d":"2025-06-25","c":"City Park Golf Course","f":"City Park Golf Course","t":"Gold","n":18,"np":18,"ags":87,"diff":18,"cr":67.6,"sr":122,"pcc":0,"ch":"6","hi":8.2,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,4,4,4,4],[2,3,4,4,8],[3,4,6,6,14],[4,4,7,7,6],[5,3,4,4,12],[6,4,4,4,16],[7,4,5,5,10],[8,3,3,3,18],[9,5,6,6,2],[10,4,5,5,13],[11,4,7,7,5],[12,3,3,3,17],[13,5,8,8,3],[14,4,4,4,7],[15,4,4,4,9],[16,5,5,5,1],[17,3,3,3,15],[18,4,5,5,11]]},{"id":1081566257,"d":"2025-06-21","c":"Broken Tee Golf Course","f":"Broken Tee Golf Course","t":"Blue","n":18,"np":18,"ags":82,"diff":10.9,"cr":70,"sr":124,"pcc":0,"ch":"7","hi":8.2,"st":"A","status":"Validated","used":false,"tp":"+10","h":[[1,4,4,4,11],[2,4,5,5,5],[3,4,4,4,13],[4,4,4,4,3],[5,3,3,3,15],[6,5,6,6,1],[7,3,4,4,17],[8,4,5,5,7],[9,5,6,6,9],[10,3,3,3,18],[11,4,6,6,12],[12,4,4,4,8],[13,5,5,5,2],[14,4,4,4,14],[15,5,7,7,10],[16,4,3,3,4],[17,3,6,5,16],[18,4,4,4,6]]},{"id":1079905446,"d":"2025-06-16","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"3","n":18,"np":18,"ags":74,"diff":3.7,"cr":69.9,"sr":125,"pcc":0,"ch":"8","hi":9.1,"st":"H","status":"Validated","used":false,"tp":"+2","h":[[1,4,5,5,11],[2,4,6,6,7],[3,5,5,5,1],[4,3,3,3,5],[5,4,4,4,3],[6,5,6,6,9],[7,3,3,3,17],[8,4,3,3,13],[9,4,4,4,15],[10,4,4,4,12],[11,4,3,3,16],[12,4,5,5,8],[13,5,4,4,2],[14,3,3,3,18],[15,4,5,5,6],[16,4,3,3,10],[17,3,3,3,14],[18,5,5,5,4]]},{"id":1079554499,"d":"2025-06-15","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Iron","n":9,"np":9,"ags":40,"diff":4.5,"cr":34.7,"sr":132,"pcc":0,"ch":"-32","hi":9.1,"st":"H","status":"Validated","used":false,"tp":"-32","h":[[1,4,5,5,7],[2,3,3,3,9],[3,5,5,5,1],[4,4,5,5,3],[5,5,6,6,2],[6,4,4,4,4],[7,4,4,4,6],[8,4,5,5,5],[9,3,3,3,8]]},{"id":1077445942,"d":"2025-06-10","c":"Cottonwood - Silo","f":"West Woods Golf Club","t":"Iron","n":9,"np":9,"ags":44,"diff":8.2,"cr":34.9,"sr":125,"pcc":0,"ch":"-32","hi":8.8,"st":"H","status":"Validated","used":false,"tp":"-28","h":[[1,4,6,6,5],[2,4,4,4,1],[3,3,4,4,6],[4,4,7,7,4],[5,5,5,5,2],[6,3,3,3,9],[7,4,5,5,7],[8,4,6,6,8],[9,5,4,4,3]]},{"id":1076361331,"d":"2025-06-07","c":"City Park Golf Course","f":"City Park Golf Course","t":"Gold","n":18,"np":18,"ags":82,"diff":13.3,"cr":67.6,"sr":122,"pcc":0,"ch":"7","hi":8.4,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,4,5,5,4],[2,3,4,4,8],[3,4,5,5,14],[4,4,5,5,6],[5,3,4,4,12],[6,4,5,5,16],[7,4,4,4,10],[8,3,4,4,18],[9,5,5,5,2],[10,4,4,4,13],[11,4,5,5,5],[12,3,4,4,17],[13,5,7,7,3],[14,4,4,4,7],[15,4,4,4,9],[16,5,4,4,1],[17,3,4,4,15],[18,4,5,5,11]]},{"id":1075301147,"d":"2025-06-04","c":"Ute Creek Golf Course","f":"Ute Creek Golf Course","t":"Gold","n":18,"np":18,"ags":89,"diff":15,"cr":71.6,"sr":131,"pcc":0,"ch":"9","hi":8.4,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,5,5,5,13],[2,4,4,4,11],[3,4,6,6,9],[4,4,5,5,5],[5,4,5,5,1],[6,3,5,5,17],[7,5,6,6,7],[8,3,3,3,15],[9,4,4,4,3],[10,4,4,4,4],[11,5,8,8,6],[12,3,4,4,18],[13,5,6,6,14],[14,3,3,3,16],[15,4,4,4,12],[16,3,5,5,10],[17,5,6,6,8],[18,4,6,6,2]]},{"id":1074141436,"d":"2025-06-01","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Black","n":18,"np":18,"ags":79,"diff":7.6,"cr":70.4,"sr":128,"pcc":0,"ch":"8","hi":8.7,"st":"A","status":"Validated","used":false,"tp":"+7","h":[[1,4,4,4,9],[2,4,4,4,5],[3,5,6,6,7],[4,3,4,4,15],[5,4,4,4,11],[6,5,5,5,1],[7,4,5,5,13],[8,3,4,4,17],[9,4,5,5,3],[10,4,3,3,16],[11,5,3,3,10],[12,3,4,4,18],[13,4,4,4,8],[14,4,5,5,6],[15,4,4,4,14],[16,3,4,4,12],[17,4,4,4,2],[18,5,7,7,4]]},{"id":1073747446,"d":"2025-05-31","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":80,"diff":7.3,"cr":71.3,"sr":134,"pcc":0,"ch":"10","hi":9.1,"st":"A","status":"Validated","used":false,"tp":"+8","h":[[1,5,5,5,5],[2,4,6,6,3],[3,5,6,6,1],[4,3,3,3,17],[5,4,4,4,13],[6,4,4,4,7],[7,4,4,4,11],[8,3,4,4,15],[9,4,5,5,9],[10,4,4,4,4],[11,4,5,5,14],[12,5,5,5,2],[13,3,3,3,16],[14,4,4,4,8],[15,5,6,6,10],[16,3,3,3,18],[17,4,4,4,12],[18,4,5,5,6]]},{"id":1072782451,"d":"2025-05-28","c":"Cottonwood - Silo","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":82,"diff":8.4,"cr":71.7,"sr":138,"pcc":0,"ch":"11","hi":9.4,"st":"H","status":"Validated","used":false,"tp":"+10","h":[[1,4,5,5,9],[2,4,4,4,1],[3,3,4,4,11],[4,4,5,5,7],[5,5,4,4,3],[6,3,3,3,17],[7,4,5,5,13],[8,4,5,5,15],[9,5,5,5,5],[10,4,6,6,14],[11,3,3,3,18],[12,5,8,8,2],[13,4,5,5,6],[14,5,5,5,4],[15,4,4,4,8],[16,4,4,4,12],[17,4,4,4,10],[18,3,3,3,16]]},{"id":1071952731,"d":"2025-05-26","c":"Willis Case Golf Course","f":"Willis Case Golf Course","t":"Bronze","n":18,"np":18,"ags":87,"diff":16.8,"cr":69,"sr":121,"pcc":0,"ch":"9","hi":9.4,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,4,6,6,9],[2,3,4,4,5],[3,4,5,5,3],[4,3,4,4,15],[5,5,6,6,11],[6,4,6,6,1],[7,4,6,6,7],[8,4,4,4,17],[9,4,5,5,13],[10,3,3,3,18],[11,4,4,4,6],[12,5,5,5,14],[13,4,5,5,8],[14,4,4,4,16],[15,4,4,4,12],[16,4,5,5,4],[17,3,6,5,10],[18,4,6,6,2]]},{"id":1071309380,"d":"2025-05-24","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Bronze","n":18,"np":18,"ags":85,"diff":14,"cr":70,"sr":121,"pcc":0,"ch":"8","hi":9.2,"st":"A","status":"Validated","used":false,"tp":"+13","h":[[1,4,5,5,3],[2,3,3,3,17],[3,5,6,6,11],[4,4,4,4,1],[5,4,5,5,5],[6,4,5,5,7],[7,4,5,5,9],[8,3,2,2,15],[9,5,6,6,13],[10,3,4,4,10],[11,4,4,4,14],[12,4,5,5,2],[13,5,7,7,16],[14,4,3,3,8],[15,4,6,6,4],[16,3,5,5,6],[17,4,4,4,18],[18,5,6,6,12]]},{"id":1070488295,"d":"2025-05-22","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":83,"diff":9.2,"cr":72,"sr":135,"pcc":0,"ch":"11","hi":9.4,"st":"H","status":"Validated","used":false,"tp":"+11","h":[[1,4,4,4,11],[2,4,5,5,7],[3,5,4,4,1],[4,3,3,3,5],[5,4,5,5,3],[6,5,6,6,9],[7,3,4,4,17],[8,4,4,4,13],[9,4,5,5,15],[10,4,4,4,12],[11,4,5,5,16],[12,4,5,5,8],[13,5,6,6,2],[14,3,4,4,18],[15,4,5,5,6],[16,4,5,5,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1069310269,"d":"2025-05-18","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Gold","n":18,"np":18,"ags":86,"diff":10.8,"cr":72.6,"sr":140,"pcc":0,"ch":"12","hi":9.4,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,4,4,4,9],[2,4,6,6,5],[3,5,6,6,7],[4,3,3,3,15],[5,4,5,5,11],[6,5,6,6,1],[7,4,4,4,13],[8,3,4,4,17],[9,4,4,4,3],[10,4,4,4,16],[11,5,4,4,10],[12,3,7,5,18],[13,4,6,6,8],[14,4,5,5,6],[15,4,4,4,14],[16,3,3,3,12],[17,4,6,6,2],[18,5,7,7,4]]},{"id":1067390745,"d":"2025-05-12","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":84,"diff":10,"cr":72,"sr":135,"pcc":0,"ch":"11","hi":9.6,"st":"H","status":"Validated","used":false,"tp":"+12","h":[[1,4,5,5,11],[2,4,4,4,7],[3,5,5,5,1],[4,3,3,3,5],[5,4,4,4,3],[6,5,4,4,9],[7,3,3,3,17],[8,4,7,6,13],[9,4,7,6,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,5,5,8],[13,5,5,5,2],[14,3,3,3,18],[15,4,6,6,6],[16,4,5,5,10],[17,3,4,4,14],[18,5,6,6,4]]},{"id":1065225829,"d":"2025-05-05","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":86,"diff":11.5,"cr":71.5,"sr":143,"pcc":0,"ch":"11","hi":9.3,"st":"H","status":"Validated","used":false,"tp":"+14","h":[[1,4,5,5,13],[2,3,4,4,17],[3,5,7,7,1],[4,4,8,7,5],[5,5,4,4,3],[6,4,4,4,7],[7,4,5,5,11],[8,4,5,5,9],[9,3,4,4,15],[10,4,3,3,12],[11,5,5,5,4],[12,4,6,6,10],[13,4,4,4,6],[14,5,6,6,2],[15,3,4,4,18],[16,4,4,4,8],[17,3,4,4,16],[18,4,5,5,14]]},{"id":1064571820,"d":"2025-05-03","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Gold","n":18,"np":18,"ags":87,"diff":11.3,"cr":73.4,"sr":136,"pcc":0,"ch":"13","hi":9.3,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,5,6,6,5],[2,4,5,5,3],[3,5,6,6,1],[4,3,3,3,17],[5,4,6,6,13],[6,4,4,4,7],[7,4,5,5,11],[8,3,3,3,15],[9,4,5,5,9],[10,4,5,5,4],[11,4,4,4,14],[12,5,5,5,2],[13,3,3,3,16],[14,4,7,7,8],[15,5,6,6,10],[16,3,5,5,18],[17,4,5,5,12],[18,4,4,4,6]]},{"id":1063118205,"d":"2025-04-28","c":"Cottonwood - Silo","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":95,"diff":17.4,"cr":71.7,"sr":138,"pcc":2,"ch":"11","hi":9.3,"st":"H","status":"Validated","used":false,"tp":"+23","h":[[1,4,6,6,9],[2,4,5,5,1],[3,3,5,5,11],[4,4,7,7,7],[5,5,5,5,3],[6,3,4,4,17],[7,4,5,5,13],[8,4,5,5,15],[9,5,5,5,5],[10,4,4,4,14],[11,3,4,4,18],[12,5,6,6,2],[13,4,5,5,6],[14,5,6,6,4],[15,4,7,7,8],[16,4,5,5,12],[17,4,7,7,10],[18,3,4,4,16]]},{"id":1062637112,"d":"2025-04-27","c":"Broken Tee Golf Course","f":"Broken Tee Golf Course","t":"Green","n":18,"np":18,"ags":88,"diff":13.3,"cr":72,"sr":136,"pcc":0,"ch":"11","hi":9.3,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,6,6,11],[2,4,4,4,5],[3,4,3,3,13],[4,4,6,6,3],[5,3,3,3,15],[6,5,6,6,1],[7,3,3,3,17],[8,4,3,3,7],[9,5,6,6,9],[10,3,5,5,18],[11,4,6,6,12],[12,4,4,4,8],[13,5,7,7,2],[14,4,4,4,14],[15,5,6,6,10],[16,4,5,5,4],[17,3,6,5,16],[18,4,6,6,6]]},{"id":1060812773,"d":"2025-04-21","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Gold","n":18,"np":18,"ags":87,"diff":11.6,"cr":72.6,"sr":140,"pcc":0,"ch":"11","hi":8.6,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,4,4,4,9],[2,4,6,6,5],[3,5,6,6,7],[4,3,4,4,15],[5,4,6,6,11],[6,5,5,5,1],[7,4,4,4,13],[8,3,4,4,17],[9,4,4,4,3],[10,4,4,4,16],[11,5,4,4,10],[12,3,5,5,18],[13,4,6,6,8],[14,4,5,5,6],[15,4,5,5,14],[16,3,4,4,12],[17,4,5,5,2],[18,5,6,6,4]]},{"id":1060546060,"d":"2025-04-20","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":83,"diff":9.2,"cr":72,"sr":135,"pcc":0,"ch":"10","hi":8.2,"st":"H","status":"Validated","used":false,"tp":"+11","h":[[1,4,4,4,11],[2,4,4,4,7],[3,5,7,7,1],[4,3,4,4,5],[5,4,5,5,3],[6,5,4,4,9],[7,3,3,3,17],[8,4,5,5,13],[9,4,10,6,15],[10,4,4,4,12],[11,4,4,4,16],[12,4,5,5,8],[13,5,7,7,2],[14,3,3,3,18],[15,4,4,4,6],[16,4,6,6,10],[17,3,4,4,14],[18,5,4,4,4]]},{"id":1059258075,"d":"2025-04-16","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Gold","n":18,"np":18,"ags":86,"diff":10.5,"cr":73.4,"sr":136,"pcc":0,"ch":"11","hi":8.3,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,5,5,5,5],[2,4,4,4,3],[3,5,7,7,1],[4,3,6,5,17],[5,4,4,4,13],[6,4,5,5,7],[7,4,4,4,11],[8,3,4,4,15],[9,4,4,4,9],[10,4,5,5,4],[11,4,5,5,14],[12,5,5,5,2],[13,3,4,4,16],[14,4,4,4,8],[15,5,7,7,10],[16,3,3,3,18],[17,4,5,5,12],[18,4,6,6,6]]},{"id":1058129261,"d":"2025-04-12","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Gold","n":18,"np":18,"ags":87,"diff":11.6,"cr":72.6,"sr":140,"pcc":0,"ch":"10","hi":7.8,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,4,5,5,9],[2,4,4,4,5],[3,5,7,7,7],[4,3,2,2,15],[5,4,4,4,11],[6,5,5,5,1],[7,4,4,4,13],[8,3,5,5,17],[9,4,5,5,3],[10,4,5,5,16],[11,5,4,4,10],[12,3,5,5,18],[13,4,5,5,8],[14,4,5,5,6],[15,4,4,4,14],[16,3,4,4,12],[17,4,6,6,2],[18,5,9,8,4]]},{"id":1056875187,"d":"2025-04-06","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"1","n":18,"np":18,"ags":89,"diff":11.4,"cr":75.2,"sr":137,"pcc":0,"ch":"13","hi":7.8,"st":"H","status":"Validated","used":false,"tp":"+17","h":[[1,4,3,3,11],[2,4,5,5,7],[3,5,8,8,1],[4,3,4,4,5],[5,4,4,4,3],[6,5,5,5,9],[7,3,4,4,17],[8,4,6,6,13],[9,4,4,4,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,7,7,8],[13,5,7,7,2],[14,3,3,3,18],[15,4,5,5,6],[16,4,5,5,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1056186685,"d":"2025-04-03","c":"Applewood Golf Course","f":"Applewood Golf Course","t":"Blue","n":18,"np":18,"ags":76,"diff":8,"cr":67.9,"sr":115,"pcc":0,"ch":"5","hi":7.8,"st":"A","status":"Validated","used":false,"tp":"+5","h":[[1,4,5,5,16],[2,3,3,3,14],[3,4,5,5,6],[4,5,5,5,18],[5,4,4,4,2],[6,4,4,4,12],[7,5,4,4,10],[8,4,3,3,8],[9,3,4,4,4],[10,4,5,5,7],[11,3,4,4,15],[12,4,5,5,13],[13,4,4,4,1],[14,3,4,4,17],[15,5,4,4,5],[16,5,5,5,3],[17,3,2,2,11],[18,4,6,6,9]]},{"id":1055890971,"d":"2025-04-01","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":81,"diff":7.3,"cr":72.2,"sr":136,"pcc":0,"ch":"10","hi":8.1,"st":"H","status":"Validated","used":false,"tp":"+9","h":[[1,4,4,4,11],[2,5,5,5,3],[3,4,7,7,9],[4,4,5,5,5],[5,5,4,4,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,3,3,15],[9,4,4,4,13],[10,4,5,5,10],[11,4,5,5,2],[12,3,3,3,12],[13,4,6,6,8],[14,5,6,6,4],[15,3,4,4,18],[16,4,4,4,14],[17,4,4,4,16],[18,5,4,4,6]]},{"id":1053791936,"d":"2025-03-22","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":84,"diff":9.9,"cr":71.5,"sr":143,"pcc":0,"ch":"10","hi":8.3,"st":"H","status":"Validated","used":false,"tp":"+12","h":[[1,4,6,6,13],[2,3,4,4,17],[3,5,4,4,1],[4,4,5,5,5],[5,5,7,7,3],[6,4,4,4,7],[7,4,4,4,11],[8,4,5,5,9],[9,3,4,4,15],[10,4,4,4,12],[11,5,5,5,4],[12,4,5,5,10],[13,4,5,5,6],[14,5,6,6,2],[15,3,3,3,18],[16,4,4,4,8],[17,3,4,4,16],[18,4,5,5,14]]},{"id":1053556538,"d":"2025-03-21","c":"South Suburban Family Sports","f":"South Suburban Family Sports","t":"Blue","n":9,"np":9,"ags":39,"diff":9.7,"cr":30.3,"sr":101,"pcc":0,"ch":"3","hi":8.3,"st":"A","status":"Validated","used":false,"tp":"+8","h":[[1,4,5,5,4],[2,3,5,5,7],[3,3,3,3,5],[4,3,4,4,9],[5,3,4,4,8],[6,5,6,6,1],[7,3,4,4,6],[8,4,5,5,3],[9,3,3,3,2]]},{"id":1053102466,"d":"2025-03-19","c":"Twin Peaks Golf Course","f":"Twin Peaks Golf Course","t":"Blue","n":18,"np":18,"ags":86,"diff":12.6,"cr":72.1,"sr":125,"pcc":0,"ch":"11","hi":7.9,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,5,5,17],[2,5,5,5,5],[3,4,6,6,1],[4,3,4,4,9],[5,4,5,5,13],[6,4,6,6,7],[7,3,3,3,11],[8,4,5,5,3],[9,4,4,4,15],[10,4,6,6,8],[11,4,5,5,12],[12,3,3,3,14],[13,4,4,4,2],[14,5,6,6,18],[15,4,5,5,16],[16,4,5,5,4],[17,3,4,4,10],[18,4,5,5,6]]},{"id":1052690749,"d":"2025-03-16","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":89,"diff":13.8,"cr":71.5,"sr":143,"pcc":0,"ch":"9","hi":7.9,"st":"H","status":"Validated","used":false,"tp":"+17","h":[[1,4,6,6,13],[2,3,4,4,17],[3,5,7,7,1],[4,4,4,4,5],[5,5,4,4,3],[6,4,5,5,7],[7,4,5,5,11],[8,4,4,4,9],[9,3,5,5,15],[10,4,4,4,12],[11,5,7,7,4],[12,4,6,6,10],[13,4,6,6,6],[14,5,6,6,2],[15,3,4,4,18],[16,4,4,4,8],[17,3,3,3,16],[18,4,5,5,14]]},{"id":1037038018,"d":"2024-11-14","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":91,"diff":15.4,"cr":71.5,"sr":143,"pcc":0,"ch":null,"hi":7.9,"st":"H","status":"Validated","used":false,"tp":"+19","h":[[1,4,5,5,13],[2,3,4,4,17],[3,5,8,8,1],[4,4,5,5,5],[5,5,7,7,3],[6,4,5,5,7],[7,4,5,5,11],[8,4,5,5,9],[9,3,4,4,15],[10,4,5,5,12],[11,5,6,6,4],[12,4,4,4,10],[13,4,5,5,6],[14,5,7,7,2],[15,3,3,3,18],[16,4,4,4,8],[17,3,4,4,16],[18,4,5,5,14]]},{"id":1035228392,"d":"2024-11-03","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":83,"diff":9.2,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":8.2,"st":"A","status":"Validated","used":false,"tp":"+11","h":[[1,4,5,5,11],[2,4,5,5,7],[3,5,6,6,1],[4,3,3,3,5],[5,4,4,4,3],[6,5,6,6,9],[7,3,3,3,17],[8,4,4,4,13],[9,4,3,3,15],[10,4,7,6,12],[11,4,6,6,16],[12,4,5,5,8],[13,5,5,5,2],[14,3,3,3,18],[15,4,5,5,6],[16,4,4,4,10],[17,3,5,5,14],[18,5,5,5,4]]},{"id":1033535646,"d":"2024-10-26","c":"Aurora Hills Golf Course","f":"Aurora Hills Golf Course","t":"Blue","n":18,"np":18,"ags":90,"diff":17.8,"cr":70.5,"sr":124,"pcc":0,"ch":null,"hi":8,"st":"A","status":"Validated","used":false,"tp":"+18","h":[[1,4,5,5,7],[2,5,5,5,5],[3,3,4,4,17],[4,4,6,6,1],[5,4,5,5,9],[6,4,4,4,3],[7,3,4,4,11],[8,5,6,6,15],[9,4,4,4,13],[10,5,6,6,2],[11,3,5,5,12],[12,5,6,6,6],[13,3,4,4,18],[14,4,5,5,8],[15,5,6,6,10],[16,4,4,4,16],[17,3,6,5,14],[18,4,6,6,4]]},{"id":1033174184,"d":"2024-10-24","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":90,"diff":14.6,"cr":71.5,"sr":143,"pcc":0,"ch":null,"hi":8,"st":"H","status":"Validated","used":false,"tp":"+18","h":[[1,4,6,6,13],[2,3,6,5,17],[3,5,5,5,1],[4,4,4,4,5],[5,5,5,5,3],[6,4,5,5,7],[7,4,5,5,11],[8,4,5,5,9],[9,3,4,4,15],[10,4,4,4,12],[11,5,4,4,4],[12,4,5,5,10],[13,4,5,5,6],[14,5,7,7,2],[15,3,5,5,18],[16,4,6,6,8],[17,3,7,5,16],[18,4,5,5,14]]},{"id":1032623766,"d":"2024-10-22","c":"Ute Creek Golf Course","f":"Ute Creek Golf Course","t":"Gold","n":18,"np":18,"ags":87,"diff":13.3,"cr":71.6,"sr":131,"pcc":0,"ch":null,"hi":8,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,5,6,6,13],[2,4,6,6,11],[3,4,5,5,9],[4,4,4,4,5],[5,4,4,4,1],[6,3,3,3,17],[7,5,5,5,7],[8,3,3,3,15],[9,4,4,4,3],[10,4,6,6,4],[11,5,5,5,6],[12,3,4,4,18],[13,5,6,6,14],[14,3,4,4,16],[15,4,4,4,12],[16,3,5,5,10],[17,5,6,6,8],[18,4,9,7,2]]},{"id":1032205581,"d":"2024-10-20","c":"Fossil Trace Golf Club","f":"Fossil Trace Golf Club","t":"T-Rex","n":18,"np":18,"ags":82,"diff":9.2,"cr":70.9,"sr":137,"pcc":0,"ch":null,"hi":8.3,"st":"A","status":"Validated","used":false,"tp":"+10","h":[[1,5,5,5,3],[2,4,5,5,13],[3,3,2,2,15],[4,4,5,5,5],[5,3,2,2,17],[6,4,5,5,9],[7,4,4,4,11],[8,4,5,5,7],[9,5,4,4,1],[10,4,6,6,10],[11,3,4,4,16],[12,5,6,6,4],[13,4,3,3,8],[14,3,4,4,14],[15,5,6,6,2],[16,3,5,5,18],[17,4,4,4,12],[18,5,7,7,6]]},{"id":1031037182,"d":"2024-10-14","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":86,"diff":11.7,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":8.3,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,4,4,4,11],[2,4,5,5,7],[3,5,4,4,1],[4,3,4,4,5],[5,4,6,6,3],[6,5,5,5,9],[7,3,3,3,17],[8,4,6,6,13],[9,4,5,5,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,5,5,8],[13,5,7,7,2],[14,3,3,3,18],[15,4,6,6,6],[16,4,4,4,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1030852540,"d":"2024-10-13","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":87,"diff":12.3,"cr":72.2,"sr":136,"pcc":0,"ch":null,"hi":8.3,"st":"H","status":"Validated","used":false,"tp":"+15","h":[[1,4,4,4,11],[2,5,6,6,3],[3,4,5,5,9],[4,4,4,4,5],[5,5,7,7,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,4,4,15],[9,4,6,6,13],[10,4,5,5,10],[11,4,5,5,2],[12,3,4,4,12],[13,4,6,6,8],[14,5,5,5,4],[15,3,4,4,18],[16,4,4,4,14],[17,4,5,5,16],[18,5,5,5,6]]},{"id":1029876329,"d":"2024-10-09","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":85,"diff":11.5,"cr":71.5,"sr":143,"pcc":-1,"ch":null,"hi":8.4,"st":"H","status":"Validated","used":false,"tp":"+13","h":[[1,4,5,5,13],[2,3,3,3,17],[3,5,7,7,1],[4,4,5,5,5],[5,5,4,4,3],[6,4,4,4,7],[7,4,4,4,11],[8,4,5,5,9],[9,3,3,3,15],[10,4,5,5,12],[11,5,8,8,4],[12,4,4,4,10],[13,4,5,5,6],[14,5,6,6,2],[15,3,4,4,18],[16,4,4,4,8],[17,3,4,4,16],[18,4,5,5,14]]},{"id":1029589590,"d":"2024-10-08","c":"Applewood Golf Course","f":"Applewood Golf Course","t":"Blue","n":18,"np":18,"ags":74,"diff":5.8,"cr":67.8,"sr":120,"pcc":0,"ch":null,"hi":8.4,"st":"A","status":"Validated","used":false,"tp":"+3","h":[[1,4,5,5,16],[2,3,3,3,14],[3,4,3,3,6],[4,5,4,4,18],[5,4,3,3,2],[6,4,4,4,12],[7,5,4,4,10],[8,4,4,4,8],[9,3,4,4,4],[10,4,3,3,7],[11,3,3,3,15],[12,4,5,5,13],[13,4,9,7,1],[14,3,3,3,17],[15,5,6,6,5],[16,5,5,5,3],[17,3,4,4,11],[18,4,4,4,9]]},{"id":1028927241,"d":"2024-10-05","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Bronze","n":18,"np":18,"ags":76,"diff":5.6,"cr":70,"sr":121,"pcc":0,"ch":null,"hi":9.2,"st":"A","status":"Validated","used":false,"tp":"+4","h":[[1,4,5,5,3],[2,3,4,4,17],[3,5,5,5,11],[4,4,5,5,1],[5,4,4,4,5],[6,4,4,4,7],[7,4,5,5,9],[8,3,3,3,15],[9,5,5,5,13],[10,3,3,3,10],[11,4,5,5,14],[12,4,5,5,2],[13,5,4,4,16],[14,4,7,7,8],[15,4,3,3,4],[16,3,3,3,6],[17,4,2,2,18],[18,5,4,4,12]]},{"id":1028774445,"d":"2024-10-04","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":91,"diff":15.6,"cr":72.2,"sr":136,"pcc":0,"ch":null,"hi":9.2,"st":"H","status":"Validated","used":false,"tp":"+19","h":[[1,4,4,4,11],[2,5,6,6,3],[3,4,7,7,9],[4,4,5,5,5],[5,5,5,5,1],[6,3,5,5,17],[7,4,4,4,7],[8,3,4,4,15],[9,4,5,5,13],[10,4,4,4,10],[11,4,8,7,2],[12,3,4,4,12],[13,4,5,5,8],[14,5,6,6,4],[15,3,5,5,18],[16,4,5,5,14],[17,4,5,5,16],[18,5,5,5,6]]},{"id":1028234711,"d":"2024-10-02","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":81,"diff":7.5,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":9.9,"st":"A","status":"Validated","used":false,"tp":"+9","h":[[1,4,7,7,11],[2,4,5,5,7],[3,5,5,5,1],[4,3,5,5,5],[5,4,3,3,3],[6,5,5,5,9],[7,3,3,3,17],[8,4,5,5,13],[9,4,5,5,15],[10,4,4,4,12],[11,4,5,5,16],[12,4,5,5,8],[13,5,4,4,2],[14,3,3,3,18],[15,4,5,5,6],[16,4,3,3,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1027856019,"d":"2024-09-30","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":89,"diff":13.8,"cr":71.5,"sr":143,"pcc":0,"ch":null,"hi":9.9,"st":"H","status":"Validated","used":false,"tp":"+17","h":[[1,4,6,6,13],[2,3,2,2,17],[3,5,6,6,1],[4,4,5,5,5],[5,5,5,5,3],[6,4,4,4,7],[7,4,6,6,11],[8,4,4,4,9],[9,3,5,5,15],[10,4,4,4,12],[11,5,6,6,4],[12,4,5,5,10],[13,4,7,7,6],[14,5,5,5,2],[15,3,4,4,18],[16,4,4,4,8],[17,3,5,5,16],[18,4,8,6,14]]},{"id":1027290219,"d":"2024-09-28","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Black","n":18,"np":18,"ags":80,"diff":8,"cr":70.7,"sr":132,"pcc":0,"ch":null,"hi":10.6,"st":"A","status":"Validated","used":false,"tp":"+8","h":[[1,4,4,4,9],[2,4,5,5,5],[3,5,5,5,7],[4,3,4,4,15],[5,4,5,5,11],[6,5,4,4,1],[7,4,4,4,13],[8,3,3,3,17],[9,4,4,4,3],[10,4,4,4,16],[11,5,5,5,10],[12,3,5,5,18],[13,4,4,4,8],[14,4,5,5,6],[15,4,5,5,14],[16,3,5,5,12],[17,4,5,5,2],[18,5,4,4,4]]},{"id":1026754862,"d":"2024-09-25","c":"Cottonwood - Silo","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":83,"diff":9.3,"cr":71.7,"sr":138,"pcc":0,"ch":null,"hi":10.5,"st":"H","status":"Validated","used":false,"tp":"+11","h":[[1,4,5,5,9],[2,4,4,4,1],[3,3,4,4,11],[4,4,6,6,7],[5,5,5,5,3],[6,3,2,2,17],[7,4,5,5,13],[8,4,6,6,15],[9,5,6,6,5],[10,4,4,4,14],[11,3,3,3,18],[12,5,5,5,2],[13,4,6,6,6],[14,5,6,6,4],[15,4,5,5,8],[16,4,4,4,12],[17,4,4,4,10],[18,3,3,3,16]]},{"id":1026230329,"d":"2024-09-23","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":90,"diff":14.6,"cr":71.5,"sr":143,"pcc":0,"ch":null,"hi":10.2,"st":"H","status":"Validated","used":false,"tp":"+18","h":[[1,4,5,5,13],[2,3,3,3,17],[3,5,5,5,1],[4,4,4,4,5],[5,5,5,5,3],[6,4,5,5,7],[7,4,4,4,11],[8,4,7,7,9],[9,3,4,4,15],[10,4,4,4,12],[11,5,7,7,4],[12,4,6,6,10],[13,4,4,4,6],[14,5,6,6,2],[15,3,5,5,18],[16,4,6,6,8],[17,3,6,5,16],[18,4,5,5,14]]},{"id":1025635728,"d":"2024-09-21","c":"Championship 18","f":"Foothills Golf Course","t":"Black","n":18,"np":18,"ags":90,"diff":15.6,"cr":72,"sr":130,"pcc":0,"ch":null,"hi":10,"st":"A","status":"Validated","used":false,"tp":"+18","h":[[1,4,5,5,13],[2,5,6,6,3],[3,4,7,7,9],[4,3,5,5,15],[5,4,6,6,5],[6,5,5,5,7],[7,4,5,5,1],[8,3,3,3,17],[9,4,4,4,11],[10,4,4,4,12],[11,5,7,7,8],[12,4,5,5,4],[13,3,4,4,16],[14,4,5,5,10],[15,4,5,5,14],[16,5,4,4,2],[17,3,5,5,18],[18,4,5,5,6]]},{"id":1024902963,"d":"2024-09-18","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":82,"diff":8.4,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":10.6,"st":"A","status":"Validated","used":false,"tp":"+10","h":[[1,4,5,5,11],[2,4,4,4,7],[3,5,5,5,1],[4,3,4,4,5],[5,4,5,5,3],[6,5,5,5,9],[7,3,3,3,17],[8,4,4,4,13],[9,4,4,4,15],[10,4,5,5,12],[11,4,4,4,16],[12,4,5,5,8],[13,5,6,6,2],[14,3,3,3,18],[15,4,6,6,6],[16,4,5,5,10],[17,3,3,3,14],[18,5,6,6,4]]},{"id":1024397809,"d":"2024-09-16","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Black","n":18,"np":18,"ags":85,"diff":12.2,"cr":70.7,"sr":132,"pcc":0,"ch":null,"hi":10.7,"st":"A","status":"Validated","used":false,"tp":"+13","h":[[1,4,4,4,9],[2,4,6,6,5],[3,5,4,4,7],[4,3,4,4,15],[5,4,4,4,11],[6,5,8,8,1],[7,4,4,4,13],[8,3,4,4,17],[9,4,5,5,3],[10,4,4,4,16],[11,5,8,8,10],[12,3,4,4,18],[13,4,5,5,8],[14,4,4,4,6],[15,4,5,5,14],[16,3,5,5,12],[17,4,4,4,2],[18,5,3,3,4]]},{"id":1021825432,"d":"2024-09-07","c":"Lind-Creek","f":"Kennedy Golf Course","t":"Bronze","n":18,"np":18,"ags":86,"diff":13.9,"cr":71.2,"sr":120,"pcc":0,"ch":null,"hi":10.7,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,5,7,7,11],[2,4,3,3,7],[3,3,4,4,5],[4,4,5,5,15],[5,3,3,3,17],[6,4,6,6,1],[7,5,6,6,3],[8,4,4,4,13],[9,4,6,6,9],[10,4,4,4,14],[11,4,3,3,12],[12,4,6,6,8],[13,4,5,5,2],[14,3,3,3,16],[15,5,8,8,4],[16,3,3,3,18],[17,4,5,5,10],[18,4,5,5,6]]},{"id":1020548580,"d":"2024-09-02","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":91,"diff":15.9,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":10.7,"st":"A","status":"Validated","used":false,"tp":"+19","h":[[1,4,6,6,11],[2,4,4,4,7],[3,5,5,5,1],[4,3,5,5,5],[5,4,4,4,3],[6,5,5,5,9],[7,3,6,5,17],[8,4,5,5,13],[9,4,5,5,15],[10,4,4,4,12],[11,4,6,6,16],[12,4,4,4,8],[13,5,6,6,2],[14,3,5,5,18],[15,4,5,5,6],[16,4,7,7,10],[17,3,4,4,14],[18,5,6,6,4]]},{"id":1019462558,"d":"2024-08-30","c":"Mountain Lake","f":"Pinery Country Club, The","t":"Black","n":9,"np":9,"ags":44,"diff":5.6,"cr":36.8,"sr":145,"pcc":0,"ch":null,"hi":11,"st":"A","status":"Validated","used":false,"tp":"-28","h":[[1,4,5,5,2],[2,4,5,5,5],[3,5,5,5,4],[4,3,4,4,9],[5,4,6,6,1],[6,4,7,7,7],[7,4,4,4,8],[8,3,3,3,6],[9,5,5,5,3]]},{"id":1019462745,"d":"2024-08-30","c":"Lake Valley","f":"Pinery Country Club, The","t":"Black","n":18,"np":18,"ags":84,"diff":10,"cr":72.4,"sr":142,"pcc":-1,"ch":null,"hi":11,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,5,6,6,5],[2,4,4,4,11],[3,4,5,5,1],[4,4,7,6,15],[5,3,2,2,13],[6,5,5,5,7],[7,4,4,4,3],[8,3,4,4,17],[9,4,5,5,9],[10,3,3,3,16],[11,4,5,5,10],[12,4,4,4,2],[13,5,7,7,4],[14,4,6,6,6],[15,4,5,5,14],[16,3,3,3,18],[17,4,5,5,8],[18,5,5,5,12]]},{"id":1017917666,"d":"2024-08-25","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":90,"diff":15.8,"cr":71.3,"sr":134,"pcc":0,"ch":null,"hi":11,"st":"A","status":"Validated","used":false,"tp":"+18","h":[[1,5,6,6,5],[2,4,5,5,3],[3,5,6,6,1],[4,3,4,4,17],[5,4,7,6,13],[6,4,7,7,7],[7,4,5,5,11],[8,3,4,4,15],[9,4,6,6,9],[10,4,7,7,4],[11,4,5,5,14],[12,5,5,5,2],[13,3,3,3,16],[14,4,5,5,8],[15,5,5,5,10],[16,3,3,3,18],[17,4,5,5,12],[18,4,3,3,6]]},{"id":1017401726,"d":"2024-08-24","c":"Meadows Golf Club","f":"Meadows Golf Club","t":"Gold/Blue","n":18,"np":18,"ags":87,"diff":14.4,"cr":70.7,"sr":128,"pcc":0,"ch":null,"hi":11,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,4,5,5,11],[2,4,5,5,1],[3,3,5,5,15],[4,5,5,5,5],[5,4,6,6,13],[6,4,5,5,7],[7,4,5,5,9],[8,3,4,4,17],[9,5,5,5,3],[10,4,6,6,14],[11,3,5,5,12],[12,5,5,5,4],[13,4,5,5,8],[14,4,3,3,6],[15,3,5,5,18],[16,5,4,4,2],[17,4,4,4,16],[18,4,5,5,10]]},{"id":1017223663,"d":"2024-08-23","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":90,"diff":15.1,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":10.2,"st":"A","status":"Validated","used":false,"tp":"+18","h":[[1,4,4,4,11],[2,4,5,5,7],[3,5,5,5,1],[4,3,4,4,5],[5,4,6,6,3],[6,5,5,5,9],[7,3,4,4,17],[8,4,5,5,13],[9,4,7,6,15],[10,4,6,6,12],[11,4,4,4,16],[12,4,6,6,8],[13,5,6,6,2],[14,3,4,4,18],[15,4,5,5,6],[16,4,6,6,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1016466706,"d":"2024-08-21","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":89,"diff":14.2,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":9.7,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,4,5,5,11],[2,4,5,5,7],[3,5,5,5,1],[4,3,5,5,5],[5,4,5,5,3],[6,5,6,6,9],[7,3,4,4,17],[8,4,6,6,13],[9,4,4,4,15],[10,4,5,5,12],[11,4,4,4,16],[12,4,6,6,8],[13,5,7,7,2],[14,3,7,5,18],[15,4,6,6,6],[16,4,4,4,10],[17,3,3,3,14],[18,5,4,4,4]]},{"id":1013500478,"d":"2024-08-12","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":88,"diff":13.4,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":9.5,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,4,4,11],[2,4,6,6,7],[3,5,7,7,1],[4,3,4,4,5],[5,4,4,4,3],[6,5,7,7,9],[7,3,4,4,17],[8,4,5,5,13],[9,4,4,4,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,5,5,8],[13,5,5,5,2],[14,3,4,4,18],[15,4,4,4,6],[16,4,6,6,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1013279247,"d":"2024-08-11","c":"Applewood Golf Course","f":"Applewood Golf Course","t":"Blue","n":18,"np":18,"ags":74,"diff":5.8,"cr":67.8,"sr":120,"pcc":0,"ch":null,"hi":10.4,"st":"A","status":"Validated","used":false,"tp":"+3","h":[[1,4,4,4,16],[2,3,4,4,14],[3,4,4,4,6],[4,5,4,4,18],[5,4,5,5,2],[6,4,4,4,12],[7,5,5,5,10],[8,4,5,5,8],[9,3,3,3,4],[10,4,4,4,7],[11,3,2,2,15],[12,4,4,4,13],[13,4,4,4,1],[14,3,3,3,17],[15,5,5,5,5],[16,5,4,4,3],[17,3,4,4,11],[18,4,7,6,9]]},{"id":1012535545,"d":"2024-08-09","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Bronze","n":18,"np":18,"ags":84,"diff":13.1,"cr":70,"sr":121,"pcc":0,"ch":null,"hi":10.5,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,4,5,5,3],[2,3,3,3,17],[3,5,6,6,11],[4,4,5,5,1],[5,4,5,5,5],[6,4,5,5,7],[7,4,5,5,9],[8,3,4,4,15],[9,5,5,5,13],[10,3,3,3,10],[11,4,8,6,14],[12,4,4,4,2],[13,5,7,7,16],[14,4,5,5,8],[15,4,3,3,4],[16,3,3,3,6],[17,4,4,4,18],[18,5,6,6,12]]},{"id":1012182487,"d":"2024-08-08","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":90,"diff":15.1,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":10.5,"st":"A","status":"Validated","used":false,"tp":"+18","h":[[1,4,6,6,11],[2,4,6,6,7],[3,5,6,6,1],[4,3,3,3,5],[5,4,6,6,3],[6,5,7,7,9],[7,3,3,3,17],[8,4,4,4,13],[9,4,6,6,15],[10,4,5,5,12],[11,4,4,4,16],[12,4,5,5,8],[13,5,5,5,2],[14,3,4,4,18],[15,4,6,6,6],[16,4,5,5,10],[17,3,3,3,14],[18,5,6,6,4]]},{"id":1011644655,"d":"2024-08-06","c":"Applewood Golf Course","f":"Applewood Golf Course","t":"Blue","n":18,"np":18,"ags":84,"diff":15.3,"cr":67.8,"sr":120,"pcc":0,"ch":null,"hi":10.5,"st":"A","status":"Validated","used":false,"tp":"+13","h":[[1,4,4,4,16],[2,3,3,3,14],[3,4,5,5,6],[4,5,4,4,18],[5,4,4,4,2],[6,4,5,5,12],[7,5,7,7,10],[8,4,5,5,8],[9,3,6,6,4],[10,4,4,4,7],[11,3,5,5,15],[12,4,5,5,13],[13,4,5,5,1],[14,3,3,3,17],[15,5,6,6,5],[16,5,5,5,3],[17,3,3,3,11],[18,4,5,5,9]]},{"id":1010756950,"d":"2024-08-03","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":89,"diff":14.2,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":10.1,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,4,4,4,11],[2,4,4,4,7],[3,5,6,6,1],[4,3,5,5,5],[5,4,5,5,3],[6,5,6,6,9],[7,3,4,4,17],[8,4,5,5,13],[9,4,4,4,15],[10,4,6,6,12],[11,4,5,5,16],[12,4,4,4,8],[13,5,6,6,2],[14,3,3,3,18],[15,4,6,6,6],[16,4,7,7,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1010409798,"d":"2024-08-02","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":90,"diff":14.8,"cr":72.2,"sr":136,"pcc":0,"ch":null,"hi":10.1,"st":"H","status":"Validated","used":false,"tp":"+18","h":[[1,4,5,5,11],[2,5,5,5,3],[3,4,6,6,9],[4,4,4,4,5],[5,5,7,7,1],[6,3,4,4,17],[7,4,3,3,7],[8,3,4,4,15],[9,4,5,5,13],[10,4,7,7,10],[11,4,5,5,2],[12,3,3,3,12],[13,4,7,7,8],[14,5,4,4,4],[15,3,4,4,18],[16,4,5,5,14],[17,4,5,5,16],[18,5,7,7,6]]},{"id":1010031323,"d":"2024-08-01","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":82,"diff":8.3,"cr":71.5,"sr":143,"pcc":0,"ch":null,"hi":9.9,"st":"H","status":"Validated","used":false,"tp":"+10","h":[[1,4,4,4,13],[2,3,4,4,17],[3,5,5,5,1],[4,4,4,4,5],[5,5,5,5,3],[6,4,4,4,7],[7,4,4,4,11],[8,4,5,5,9],[9,3,4,4,15],[10,4,4,4,12],[11,5,6,6,4],[12,4,5,5,10],[13,4,6,6,6],[14,5,5,5,2],[15,3,4,4,18],[16,4,4,4,8],[17,3,4,4,16],[18,4,5,5,14]]},{"id":1009705166,"d":"2024-07-31","c":"Cottonwood - Silo","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":85,"diff":10.9,"cr":71.7,"sr":138,"pcc":0,"ch":null,"hi":10.1,"st":"H","status":"Validated","used":false,"tp":"+13","h":[[1,4,5,5,9],[2,4,5,5,1],[3,3,4,4,11],[4,4,5,5,7],[5,5,4,4,3],[6,3,5,5,17],[7,4,6,6,13],[8,4,5,5,15],[9,5,6,6,5],[10,4,4,4,14],[11,3,4,4,18],[12,5,6,6,2],[13,4,4,4,6],[14,5,5,5,4],[15,4,4,4,8],[16,4,5,5,12],[17,4,5,5,10],[18,3,3,3,16]]},{"id":1009028460,"d":"2024-07-29","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":86,"diff":11.7,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":10.3,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,4,4,4,11],[2,4,4,4,7],[3,5,4,4,1],[4,3,5,5,5],[5,4,5,5,3],[6,5,6,6,9],[7,3,4,4,17],[8,4,5,5,13],[9,4,4,4,15],[10,4,5,5,12],[11,4,5,5,16],[12,4,6,6,8],[13,5,5,5,2],[14,3,3,3,18],[15,4,4,4,6],[16,4,4,4,10],[17,3,5,5,14],[18,5,8,8,4]]},{"id":1008543425,"d":"2024-07-28","c":"Indian Peaks Golf Course","f":"Indian Peaks Golf Course","t":"Black","n":18,"np":18,"ags":91,"diff":18.8,"cr":70.5,"sr":123,"pcc":0,"ch":null,"hi":9.8,"st":"A","status":"Validated","used":false,"tp":"+19","h":[[1,5,6,6,1],[2,4,4,4,11],[3,4,6,6,13],[4,5,6,6,9],[5,3,3,3,17],[6,4,7,7,5],[7,4,4,4,7],[8,3,4,4,15],[9,4,5,5,3],[10,4,5,5,16],[11,5,8,8,2],[12,4,6,6,8],[13,4,4,4,12],[14,3,4,4,18],[15,4,4,4,4],[16,3,3,3,14],[17,5,6,6,6],[18,4,8,6,10]]},{"id":1008365329,"d":"2024-07-27","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":9,"np":9,"ags":49,"diff":10.6,"cr":35.5,"sr":144,"pcc":0,"ch":null,"hi":9.8,"st":"H","status":"Validated","used":false,"tp":"-23","h":[[1,4,6,6,7],[2,3,4,4,9],[3,5,8,8,1],[4,4,6,6,3],[5,5,7,7,2],[6,4,5,5,4],[7,4,6,6,6],[8,4,4,4,5],[9,3,3,3,8]]},{"id":1007301229,"d":"2024-07-24","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":9,"np":9,"ags":47,"diff":8.8,"cr":36,"sr":141,"pcc":0,"ch":null,"hi":9.8,"st":"H","status":"Validated","used":false,"tp":"-25","h":[[1,4,4,4,6],[2,5,6,6,2],[3,4,4,4,5],[4,4,5,5,3],[5,5,7,7,1],[6,3,7,5,9],[7,4,7,7,4],[8,3,5,5,8],[9,4,4,4,7]]},{"id":1006639022,"d":"2024-07-22","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":88,"diff":13.4,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":9.8,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,5,5,11],[2,4,5,5,7],[3,5,5,5,1],[4,3,5,5,5],[5,4,6,6,3],[6,5,5,5,9],[7,3,3,3,17],[8,4,4,4,13],[9,4,6,6,15],[10,4,6,6,12],[11,4,4,4,16],[12,4,4,4,8],[13,5,5,5,2],[14,3,3,3,18],[15,4,7,7,6],[16,4,5,5,10],[17,3,4,4,14],[18,5,6,6,4]]},{"id":1005684575,"d":"2024-07-20","c":"Walnut Creek Golf Preserve","f":"Walnut Creek Golf Preserve","t":"2","n":18,"np":18,"ags":86,"diff":11.7,"cr":72,"sr":135,"pcc":0,"ch":null,"hi":10.1,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,4,5,5,11],[2,4,4,4,7],[3,5,6,6,1],[4,3,3,3,5],[5,4,6,6,3],[6,5,6,6,9],[7,3,4,4,17],[8,4,4,4,13],[9,4,5,5,15],[10,4,4,4,12],[11,4,5,5,16],[12,4,6,6,8],[13,5,6,6,2],[14,3,3,3,18],[15,4,5,5,6],[16,4,5,5,10],[17,3,4,4,14],[18,5,5,5,4]]},{"id":1005447042,"d":"2024-07-19","c":"Sonnenalp Golf Club","f":"Sonnenalp Golf Club","t":"2 Suns","n":18,"np":18,"ags":94,"diff":20.3,"cr":70.1,"sr":133,"pcc":0,"ch":null,"hi":10.1,"st":"A","status":"Validated","used":false,"tp":"+23","h":[[1,5,7,7,5],[2,3,3,3,15],[3,4,5,5,3],[4,4,5,5,13],[5,3,3,3,17],[6,5,7,7,9],[7,4,7,7,7],[8,4,5,5,11],[9,4,5,5,1],[10,4,6,6,10],[11,4,6,6,16],[12,4,7,7,2],[13,4,4,4,8],[14,3,4,4,18],[15,4,6,6,12],[16,4,3,3,6],[17,3,4,4,14],[18,5,7,7,4]]},{"id":1003271287,"d":"2024-07-13","c":"Legacy Ridge Golf Course","f":"Legacy Ridge Golf Course","t":"Black","n":18,"np":18,"ags":94,"diff":19.9,"cr":70.7,"sr":132,"pcc":0,"ch":null,"hi":10.1,"st":"A","status":"Validated","used":false,"tp":"+22","h":[[1,4,4,4,9],[2,4,6,6,5],[3,5,5,5,7],[4,3,4,4,15],[5,4,6,6,11],[6,5,6,6,1],[7,4,5,5,13],[8,3,3,3,17],[9,4,6,6,3],[10,4,4,4,16],[11,5,6,6,10],[12,3,5,5,18],[13,4,5,5,8],[14,4,7,7,6],[15,4,4,4,14],[16,3,4,4,12],[17,4,6,6,2],[18,5,8,8,4]]},{"id":1003112314,"d":"2024-07-12","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":90,"diff":14.8,"cr":72.2,"sr":136,"pcc":0,"ch":null,"hi":10.1,"st":"H","status":"Validated","used":false,"tp":"+18","h":[[1,4,4,4,11],[2,5,6,6,3],[3,4,5,5,9],[4,4,5,5,5],[5,5,6,6,1],[6,3,3,3,17],[7,4,7,7,7],[8,3,4,4,15],[9,4,4,4,13],[10,4,7,7,10],[11,4,6,6,2],[12,3,4,4,12],[13,4,5,5,8],[14,5,5,5,4],[15,3,4,4,18],[16,4,6,6,14],[17,4,4,4,16],[18,5,5,5,6]]},{"id":1001270028,"d":"2024-07-07","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Bronze","n":18,"np":18,"ags":77,"diff":6.5,"cr":70,"sr":121,"pcc":0,"ch":null,"hi":10.6,"st":"A","status":"Validated","used":false,"tp":"+5","h":[[1,4,6,6,3],[2,3,4,4,17],[3,5,5,5,11],[4,4,4,4,1],[5,4,5,5,5],[6,4,3,3,7],[7,4,4,4,9],[8,3,2,2,15],[9,5,6,6,13],[10,3,3,3,10],[11,4,4,4,14],[12,4,4,4,2],[13,5,5,5,16],[14,4,4,4,8],[15,4,5,5,4],[16,3,4,4,6],[17,4,4,4,18],[18,5,5,5,12]]},{"id":1001089222,"d":"2024-07-06","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":83,"diff":9.9,"cr":71.3,"sr":134,"pcc":0,"ch":null,"hi":11.1,"st":"A","status":"Validated","used":false,"tp":"+11","h":[[1,5,4,4,5],[2,4,5,5,3],[3,5,5,5,1],[4,3,5,5,17],[5,4,5,5,13],[6,4,4,4,7],[7,4,6,6,11],[8,3,3,3,15],[9,4,5,5,9],[10,4,4,4,4],[11,4,6,6,14],[12,5,5,5,2],[13,3,6,5,16],[14,4,5,5,8],[15,5,5,5,10],[16,3,3,3,18],[17,4,4,4,12],[18,4,4,4,6]]},{"id":999613289,"d":"2024-07-03","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":9,"np":9,"ags":41,"diff":4.3,"cr":35.5,"sr":144,"pcc":0,"ch":null,"hi":11,"st":"H","status":"Validated","used":false,"tp":"-31","h":[[1,4,4,4,7],[2,3,6,5,9],[3,5,5,5,1],[4,4,4,4,3],[5,5,6,6,2],[6,4,4,4,4],[7,4,4,4,6],[8,4,5,5,5],[9,3,4,4,8]]},{"id":999566908,"d":"2024-07-02","c":"Applewood Golf Course","f":"Applewood Golf Course","t":"Blue","n":9,"np":9,"ags":41,"diff":7,"cr":33.7,"sr":118,"pcc":0,"ch":null,"hi":11.1,"st":"A","status":"Validated","used":false,"tp":"+5","h":[[1,4,3,3,8],[2,3,4,4,7],[3,4,5,5,3],[4,5,3,3,9],[5,4,5,5,1],[6,4,4,4,6],[7,5,6,6,5],[8,4,6,6,4],[9,3,5,5,2]]},{"id":999030938,"d":"2024-06-30","c":"CPGC - Men's Amateur R2","f":"","t":"67.8 / 116","n":18,"np":18,"ags":84,"diff":15.8,"cr":67.8,"sr":116,"pcc":0,"ch":null,"hi":10.6,"st":"T","status":"Validated","used":false,"tp":"-","h":[]},{"id":999031729,"d":"2024-06-29","c":"CPGC - Men's Amateur R1","f":"","t":"67.8 / 116","n":18,"np":18,"ags":83,"diff":14.8,"cr":67.8,"sr":116,"pcc":0,"ch":null,"hi":10.6,"st":"T","status":"Validated","used":false,"tp":"-","h":[]},{"id":997105116,"d":"2024-06-26","c":"City Park Golf Course","f":"City Park Golf Course","t":"Gold","n":18,"np":18,"ags":79,"diff":10.6,"cr":67.6,"sr":122,"pcc":0,"ch":null,"hi":10.9,"st":"A","status":"Validated","used":false,"tp":"+9","h":[[1,4,5,5,4],[2,3,4,4,8],[3,4,4,4,14],[4,4,6,6,6],[5,3,3,3,12],[6,4,6,6,16],[7,4,4,4,10],[8,3,3,3,18],[9,5,6,6,2],[10,4,4,4,13],[11,4,6,6,5],[12,3,3,3,17],[13,5,4,4,3],[14,4,4,4,7],[15,4,5,5,9],[16,5,5,5,1],[17,3,3,3,15],[18,4,4,4,11]]},{"id":997313646,"d":"2024-06-26","c":"City Park Golf Course","f":"City Park Golf Course","t":"Gold","n":18,"np":18,"ags":86,"diff":17,"cr":67.6,"sr":122,"pcc":0,"ch":null,"hi":10.9,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,5,5,4],[2,3,4,4,8],[3,4,4,4,14],[4,4,4,4,6],[5,3,4,4,12],[6,4,4,4,16],[7,4,4,4,10],[8,3,4,4,18],[9,5,7,7,2],[10,4,6,6,13],[11,4,5,5,5],[12,3,4,4,17],[13,5,5,5,3],[14,4,4,4,7],[15,4,7,7,9],[16,5,6,6,1],[17,3,3,3,15],[18,4,6,6,11]]},{"id":993622840,"d":"2024-06-16","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":79,"diff":6.5,"cr":71.3,"sr":134,"pcc":0,"ch":null,"hi":11.8,"st":"A","status":"Validated","used":false,"tp":"+7","h":[[1,5,4,4,5],[2,4,5,5,3],[3,5,5,5,1],[4,3,4,4,17],[5,4,4,4,13],[6,4,5,5,7],[7,4,4,4,11],[8,3,3,3,15],[9,4,6,6,9],[10,4,4,4,4],[11,4,6,6,14],[12,5,5,5,2],[13,3,4,4,16],[14,4,4,4,8],[15,5,5,5,10],[16,3,3,3,18],[17,4,4,4,12],[18,4,4,4,6]]},{"id":993843418,"d":"2024-06-16","c":"Springhill Golf Course","f":"Springhill Golf Course","t":"White","n":18,"np":18,"ags":75,"diff":12.6,"cr":63,"sr":108,"pcc":0,"ch":null,"hi":11.8,"st":"A","status":"Validated","used":false,"tp":"+11","h":[[1,4,5,5,3],[2,3,4,4,7],[3,3,5,5,15],[4,5,6,6,1],[5,4,4,4,5],[6,3,3,3,17],[7,4,5,5,13],[8,3,3,3,9],[9,3,3,3,11],[10,3,3,3,16],[11,3,3,3,14],[12,4,6,6,10],[13,5,5,5,4],[14,3,4,4,12],[15,4,4,4,2],[16,4,4,4,8],[17,3,5,5,18],[18,3,3,3,6]]},{"id":993166591,"d":"2024-06-15","c":"Willis Case Golf Course","f":"Willis Case Golf Course","t":"Bronze","n":18,"np":18,"ags":87,"diff":16.8,"cr":69,"sr":121,"pcc":0,"ch":null,"hi":11.6,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,4,4,4,9],[2,3,4,4,5],[3,4,6,6,3],[4,3,3,3,15],[5,5,5,5,11],[6,4,6,6,1],[7,4,5,5,7],[8,4,5,5,17],[9,4,4,4,13],[10,3,4,4,18],[11,4,4,4,6],[12,5,6,6,14],[13,4,6,6,8],[14,4,5,5,16],[15,4,4,4,12],[16,4,7,7,4],[17,3,4,4,10],[18,4,5,5,2]]},{"id":991485437,"d":"2024-06-10","c":"Wellshire Golf Course","f":"Wellshire Golf Course","t":"Bronze","n":18,"np":18,"ags":90,"diff":17,"cr":70.7,"sr":128,"pcc":0,"ch":null,"hi":11,"st":"A","status":"Validated","used":false,"tp":"+20","h":[[1,5,5,5,8],[2,3,3,3,16],[3,4,5,5,12],[4,4,6,6,6],[5,4,6,6,2],[6,4,4,4,10],[7,4,6,6,4],[8,4,4,4,18],[9,3,3,3,14],[10,4,6,6,1],[11,3,3,3,17],[12,4,5,5,5],[13,4,7,7,3],[14,3,5,5,15],[15,4,10,7,13],[16,4,4,4,7],[17,4,5,5,9],[18,5,6,6,11]]},{"id":988519457,"d":"2024-06-02","c":"Championship 18","f":"Foothills Golf Course","t":"Blue","n":18,"np":18,"ags":81,"diff":9.7,"cr":70.4,"sr":124,"pcc":0,"ch":null,"hi":11.4,"st":"A","status":"Validated","used":false,"tp":"+9","h":[[1,4,4,4,13],[2,5,5,5,3],[3,4,5,5,9],[4,3,3,3,15],[5,4,5,5,5],[6,5,6,6,7],[7,4,5,5,1],[8,3,3,3,17],[9,4,3,3,11],[10,4,5,5,12],[11,5,5,5,8],[12,4,6,6,4],[13,3,4,4,16],[14,4,5,5,10],[15,4,4,4,14],[16,5,4,4,2],[17,3,4,4,18],[18,4,5,5,6]]},{"id":988235760,"d":"2024-06-01","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Iron","n":18,"np":18,"ags":87,"diff":15.5,"cr":69.6,"sr":127,"pcc":0,"ch":null,"hi":11.4,"st":"H","status":"Validated","used":false,"tp":"+15","h":[[1,4,4,4,11],[2,5,7,7,3],[3,4,5,5,9],[4,4,4,4,5],[5,5,6,6,1],[6,3,3,3,17],[7,4,5,5,7],[8,3,5,5,15],[9,4,4,4,13],[10,4,4,4,10],[11,4,7,7,2],[12,3,5,5,12],[13,4,4,4,8],[14,5,7,7,4],[15,3,4,4,18],[16,4,5,5,14],[17,4,3,3,16],[18,5,5,5,6]]},{"id":987756169,"d":"2024-05-31","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":9,"np":9,"ags":46,"diff":8.2,"cr":35.5,"sr":144,"pcc":0,"ch":null,"hi":11.4,"st":"H","status":"Validated","used":false,"tp":"-26","h":[[1,4,4,4,7],[2,3,4,4,9],[3,5,5,5,1],[4,4,5,5,3],[5,5,5,5,2],[6,4,7,7,4],[7,4,7,7,6],[8,4,6,6,5],[9,3,3,3,8]]},{"id":987585043,"d":"2024-05-30","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":88,"diff":14.1,"cr":71.3,"sr":134,"pcc":0,"ch":null,"hi":11.4,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,5,6,6,5],[2,4,5,5,3],[3,5,6,6,1],[4,3,3,3,17],[5,4,8,7,13],[6,4,6,6,7],[7,4,4,4,11],[8,3,4,4,15],[9,4,5,5,9],[10,4,3,3,4],[11,4,5,5,14],[12,5,6,6,2],[13,3,3,3,16],[14,4,4,4,8],[15,5,5,5,10],[16,3,4,4,18],[17,4,5,5,12],[18,4,8,7,6]]},{"id":986541349,"d":"2024-05-27","c":"Willis Case Golf Course","f":"Willis Case Golf Course","t":"Bronze","n":18,"np":18,"ags":87,"diff":16.8,"cr":69,"sr":121,"pcc":0,"ch":null,"hi":11.4,"st":"A","status":"Validated","used":false,"tp":"+17","h":[[1,4,5,5,9],[2,3,4,4,5],[3,4,6,6,3],[4,3,3,3,15],[5,5,7,7,11],[6,4,5,5,1],[7,4,7,7,7],[8,4,3,3,17],[9,4,5,5,13],[10,3,3,3,18],[11,4,4,4,6],[12,5,6,6,14],[13,4,6,6,8],[14,4,4,4,16],[15,4,4,4,12],[16,4,6,6,4],[17,3,3,3,10],[18,4,6,6,2]]},{"id":986008378,"d":"2024-05-26","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Bronze","n":18,"np":18,"ags":86,"diff":14.9,"cr":70,"sr":121,"pcc":0,"ch":null,"hi":11.4,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,4,5,5,3],[2,3,4,4,17],[3,5,5,5,11],[4,4,4,4,1],[5,4,5,5,5],[6,4,6,6,7],[7,4,4,4,9],[8,3,4,4,15],[9,5,5,5,13],[10,3,4,4,10],[11,4,4,4,14],[12,4,7,7,2],[13,5,5,5,16],[14,4,5,5,8],[15,4,6,6,4],[16,3,4,4,6],[17,4,5,5,18],[18,5,4,4,12]]},{"id":985558980,"d":"2024-05-25","c":"Willis Case Golf Course","f":"Willis Case Golf Course","t":"Bronze","n":18,"np":18,"ags":90,"diff":19.6,"cr":69,"sr":121,"pcc":0,"ch":null,"hi":11.4,"st":"A","status":"Validated","used":false,"tp":"+20","h":[[1,4,5,5,9],[2,3,4,4,5],[3,4,5,5,3],[4,3,4,4,15],[5,5,8,8,11],[6,4,6,6,1],[7,4,5,5,7],[8,4,5,5,17],[9,4,5,5,13],[10,3,4,4,18],[11,4,5,5,6],[12,5,7,7,14],[13,4,5,5,8],[14,4,4,4,16],[15,4,5,5,12],[16,4,4,4,4],[17,3,5,5,10],[18,4,4,4,2]]},{"id":984944574,"d":"2024-05-23","c":"Championship 18","f":"Foothills Golf Course","t":"Blue","n":18,"np":18,"ags":93,"diff":20.6,"cr":70.4,"sr":124,"pcc":0,"ch":null,"hi":11.1,"st":"A","status":"Validated","used":false,"tp":"+21","h":[[1,4,5,5,13],[2,5,8,8,3],[3,4,5,5,9],[4,3,4,4,15],[5,4,5,5,5],[6,5,5,5,7],[7,4,4,4,1],[8,3,4,4,17],[9,4,4,4,11],[10,4,6,6,12],[11,5,7,7,8],[12,4,5,5,4],[13,3,5,5,16],[14,4,7,7,10],[15,4,4,4,14],[16,5,7,7,2],[17,3,4,4,18],[18,4,4,4,6]]},{"id":983424340,"d":"2024-05-19","c":"Willis Case Golf Course","f":"Willis Case Golf Course","t":"Bronze","n":18,"np":18,"ags":80,"diff":10.3,"cr":69,"sr":121,"pcc":0,"ch":null,"hi":11.3,"st":"A","status":"Validated","used":false,"tp":"+10","h":[[1,4,5,5,9],[2,3,3,3,5],[3,4,5,5,3],[4,3,3,3,15],[5,5,6,6,11],[6,4,5,5,1],[7,4,4,4,7],[8,4,4,4,17],[9,4,5,5,13],[10,3,4,4,18],[11,4,5,5,6],[12,5,5,5,14],[13,4,4,4,8],[14,4,3,3,16],[15,4,6,6,12],[16,4,4,4,4],[17,3,5,5,10],[18,4,4,4,2]]},{"id":983111039,"d":"2024-05-18","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Bronze","n":18,"np":18,"ags":88,"diff":15.9,"cr":70,"sr":121,"pcc":1,"ch":null,"hi":11.3,"st":"A","status":"Validated","used":false,"tp":"+16","h":[[1,4,5,5,3],[2,3,4,4,17],[3,5,5,5,11],[4,4,7,7,1],[5,4,5,5,5],[6,4,4,4,7],[7,4,5,5,9],[8,3,4,4,15],[9,5,5,5,13],[10,3,6,6,10],[11,4,4,4,14],[12,4,5,5,2],[13,5,5,5,16],[14,4,6,6,8],[15,4,4,4,4],[16,3,4,4,6],[17,4,4,4,18],[18,5,6,6,12]]},{"id":982570094,"d":"2024-05-16","c":"Cottonwood - Silo","f":"West Woods Golf Club","t":"Iron","n":18,"np":18,"ags":81,"diff":10,"cr":69.6,"sr":129,"pcc":0,"ch":null,"hi":11.5,"st":"H","status":"Validated","used":false,"tp":"+9","h":[[1,4,8,7,9],[2,4,6,6,1],[3,3,3,3,11],[4,4,3,3,7],[5,5,5,5,3],[6,3,3,3,17],[7,4,4,4,13],[8,4,4,4,15],[9,5,4,4,5],[10,4,5,5,14],[11,3,3,3,18],[12,5,4,4,2],[13,4,5,5,6],[14,5,10,8,4],[15,4,4,4,8],[16,4,4,4,12],[17,4,4,4,10],[18,3,5,5,16]]},{"id":981301467,"d":"2024-05-12","c":"Broken Tee Golf Course","f":"Broken Tee Golf Course","t":"Green Temp","n":18,"np":18,"ags":91,"diff":18,"cr":70.1,"sr":131,"pcc":0,"ch":null,"hi":11.5,"st":"A","status":"Validated","used":false,"tp":"+21","h":[[1,4,6,6,11],[2,4,5,5,5],[3,4,5,5,13],[4,4,4,4,3],[5,3,6,5,15],[6,5,8,8,1],[7,3,5,5,17],[8,4,4,4,7],[9,5,7,7,9],[10,3,4,4,16],[11,4,4,4,10],[12,4,5,5,6],[13,3,7,5,18],[14,4,5,5,12],[15,5,5,5,8],[16,4,5,5,2],[17,3,3,3,14],[18,4,6,6,4]]},{"id":980578811,"d":"2024-05-10","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":84,"diff":10.7,"cr":71.3,"sr":134,"pcc":0,"ch":null,"hi":11.8,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,5,7,7,5],[2,4,5,5,3],[3,5,7,7,1],[4,3,4,4,17],[5,4,4,4,13],[6,4,5,5,7],[7,4,4,4,11],[8,3,5,5,15],[9,4,6,6,9],[10,4,4,4,4],[11,4,4,4,14],[12,5,5,5,2],[13,3,4,4,16],[14,4,3,3,8],[15,5,6,6,10],[16,3,2,2,18],[17,4,4,4,12],[18,4,5,5,6]]},{"id":980444104,"d":"2024-05-09","c":"Silo - Sleeping Indian","f":"West Woods Golf Club","t":"Copper","n":18,"np":18,"ags":92,"diff":16.2,"cr":71.5,"sr":143,"pcc":0,"ch":null,"hi":11.8,"st":"H","status":"Validated","used":false,"tp":"+20","h":[[1,4,4,4,13],[2,3,4,4,17],[3,5,5,5,1],[4,4,6,6,5],[5,5,7,7,3],[6,4,4,4,7],[7,4,4,4,11],[8,4,5,5,9],[9,3,4,4,15],[10,4,4,4,12],[11,5,7,7,4],[12,4,8,7,10],[13,4,6,6,6],[14,5,6,6,2],[15,3,3,3,18],[16,4,5,5,8],[17,3,4,4,16],[18,4,7,7,14]]},{"id":978904098,"d":"2024-05-04","c":"Lind-Creek","f":"Kennedy Golf Course","t":"Bronze","n":18,"np":18,"ags":89,"diff":15.8,"cr":71.2,"sr":120,"pcc":1,"ch":null,"hi":11.8,"st":"A","status":"Validated","used":false,"tp":"+18","h":[[1,5,7,7,11],[2,4,4,4,7],[3,3,4,4,5],[4,4,6,6,15],[5,3,5,5,17],[6,4,5,5,1],[7,5,5,5,3],[8,4,4,4,13],[9,4,5,5,9],[10,4,4,4,14],[11,4,5,5,12],[12,4,5,5,8],[13,4,7,7,2],[14,3,3,3,16],[15,5,6,6,4],[16,3,3,3,18],[17,4,4,4,10],[18,4,7,7,6]]},{"id":978400997,"d":"2024-05-03","c":"Blue Course","f":"Hyland Hills, The Courses at","t":"Blue","n":9,"np":9,"ags":41,"diff":5.9,"cr":34.7,"sr":121,"pcc":0,"ch":null,"hi":11.3,"st":"A","status":"Validated","used":false,"tp":"+5","h":[[1,5,5,5,2],[2,4,4,4,3],[3,4,4,4,6],[4,4,4,4,5],[5,3,3,3,9],[6,4,5,5,8],[7,4,5,5,4],[8,5,7,7,1],[9,3,4,4,7]]},{"id":977972788,"d":"2024-05-01","c":"Wellshire Golf Course","f":"Wellshire Golf Course","t":"Gold","n":18,"np":18,"ags":84,"diff":13.4,"cr":69.1,"sr":126,"pcc":0,"ch":null,"hi":11.3,"st":"A","status":"Validated","used":false,"tp":"+14","h":[[1,5,7,7,8],[2,3,5,5,16],[3,4,4,4,12],[4,4,5,5,6],[5,4,4,4,2],[6,4,4,4,10],[7,4,4,4,4],[8,4,4,4,18],[9,3,4,4,14],[10,4,5,5,1],[11,3,4,4,17],[12,4,4,4,5],[13,4,5,5,3],[14,3,4,4,15],[15,4,5,5,13],[16,4,7,7,7],[17,4,5,5,9],[18,5,4,4,11]]},{"id":978072273,"d":"2024-04-29","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Iron","n":9,"np":9,"ags":41,"diff":5.5,"cr":34.7,"sr":129,"pcc":0,"ch":null,"hi":11.4,"st":"H","status":"Validated","used":false,"tp":"-31","h":[[1,4,4,4,6],[2,5,5,5,2],[3,4,4,4,5],[4,4,5,5,3],[5,5,6,6,1],[6,3,4,4,9],[7,4,6,6,4],[8,3,3,3,8],[9,4,4,4,7]]},{"id":978072459,"d":"2024-04-28","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Bronze","n":18,"np":18,"ags":84,"diff":13.1,"cr":70,"sr":121,"pcc":0,"ch":null,"hi":10.6,"st":"A","status":"Validated","used":false,"tp":"+12","h":[[1,4,4,4,3],[2,3,3,3,17],[3,5,5,5,11],[4,4,5,5,1],[5,4,4,4,5],[6,4,4,4,7],[7,4,7,7,9],[8,3,3,3,15],[9,5,6,6,13],[10,3,4,4,10],[11,4,5,5,14],[12,4,4,4,2],[13,5,5,5,16],[14,4,5,5,8],[15,4,5,5,4],[16,3,5,5,6],[17,4,4,4,18],[18,5,6,6,12]]},{"id":978072674,"d":"2024-04-26","c":"Gold Course","f":"Hyland Hills, The Courses at","t":"Blue","n":18,"np":18,"ags":81,"diff":8.2,"cr":71.3,"sr":134,"pcc":0,"ch":null,"hi":13.3,"st":"A","status":"Validated","used":false,"tp":"+9","h":[[1,5,5,5,5],[2,4,4,4,3],[3,5,6,6,1],[4,3,3,3,17],[5,4,5,5,13],[6,4,4,4,7],[7,4,5,5,11],[8,3,4,4,15],[9,4,4,4,9],[10,4,4,4,4],[11,4,4,4,14],[12,5,7,7,2],[13,3,3,3,16],[14,4,4,4,8],[15,5,6,6,10],[16,3,4,4,18],[17,4,4,4,12],[18,4,5,5,6]]},{"id":978072860,"d":"2024-04-23","c":"Cottonwood - Silo","f":"West Woods Golf Club","t":"Iron","n":18,"np":18,"ags":85,"diff":13.5,"cr":69.6,"sr":129,"pcc":0,"ch":null,"hi":12.5,"st":"H","status":"Validated","used":false,"tp":"+13","h":[[1,4,4,4,9],[2,4,6,6,1],[3,3,3,3,11],[4,4,4,4,7],[5,5,5,5,3],[6,3,3,3,17],[7,4,3,3,13],[8,4,5,5,15],[9,5,8,8,5],[10,4,5,5,14],[11,3,2,2,18],[12,5,7,7,2],[13,4,4,4,6],[14,5,6,6,4],[15,4,5,5,8],[16,4,6,6,12],[17,4,6,6,10],[18,3,3,3,16]]},{"id":978072983,"d":"2024-04-21","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Gold","n":9,"np":9,"ags":45,"diff":11.5,"cr":33.5,"sr":113,"pcc":0,"ch":null,"hi":13,"st":"A","status":"Validated","used":false,"tp":"+9","h":[[10,3,4,4,5],[11,4,4,4,7],[12,4,6,6,1],[13,5,5,5,8],[14,4,6,6,4],[15,4,7,7,2],[16,3,3,3,3],[17,4,5,5,9],[18,5,5,5,6]]},{"id":978360918,"d":"2024-04-21","c":"Willis Case Golf Course / Overland Park Golf Course","f":"Willis Case Golf Course / Overland Park Golf Course","t":"Gold / Gold","n":18,"np":18,"ags":86,"diff":17,"cr":68.5,"sr":116,"pcc":0,"ch":null,"hi":12.9,"st":"C","status":"Temporary","used":false,"tp":"-","h":[[1,4,5,5,5],[2,3,4,4,3],[3,4,5,5,2],[4,3,2,2,8],[5,5,6,6,6],[6,4,5,5,1],[7,4,5,5,4],[8,4,5,5,9],[9,4,4,4,7],[10,3,4,4,5],[11,4,4,4,7],[12,4,6,6,1],[13,5,5,5,8],[14,4,6,6,4],[15,4,7,7,2],[16,3,3,3,3],[17,4,5,5,9],[18,5,5,5,6]]},{"id":978084871,"d":"2024-04-19","c":"Willis Case Golf Course","f":"Willis Case Golf Course","t":"Gold","n":9,"np":9,"ags":41,"diff":5.7,"cr":35,"sr":118,"pcc":0,"ch":null,"hi":12.9,"st":"A","status":"Validated","used":false,"tp":"+6","h":[[1,4,5,5,5],[2,3,4,4,3],[3,4,5,5,2],[4,3,2,2,8],[5,5,6,6,6],[6,4,5,5,1],[7,4,5,5,4],[8,4,5,5,9],[9,4,4,4,7]]},{"id":978085189,"d":"2024-04-12","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Iron","n":18,"np":18,"ags":88,"diff":16.4,"cr":69.6,"sr":127,"pcc":0,"ch":null,"hi":11.9,"st":"H","status":"Validated","used":false,"tp":"+16","h":[[1,4,6,6,11],[2,5,5,5,3],[3,4,5,5,9],[4,4,7,7,5],[5,5,7,7,1],[6,3,4,4,17],[7,4,4,4,7],[8,3,4,4,15],[9,4,4,4,13],[10,4,3,3,10],[11,4,8,8,2],[12,3,3,3,12],[13,4,3,3,8],[14,5,5,5,4],[15,3,3,3,18],[16,4,5,5,14],[17,4,5,5,16],[18,5,7,7,6]]},{"id":978143652,"d":"2024-03-30","c":"Sleeping Indian - Cottonwood","f":"West Woods Golf Club","t":"Silver","n":18,"np":18,"ags":85,"diff":18.4,"cr":66,"sr":117,"pcc":0,"ch":null,"hi":999,"st":"H","status":"Validated","used":false,"tp":"+13","h":[[1,4,5,5,11],[2,5,5,5,3],[3,4,6,6,9],[4,4,4,4,5],[5,5,5,5,1],[6,3,3,3,17],[7,4,4,4,7],[8,3,4,4,15],[9,4,5,5,13],[10,4,5,5,10],[11,4,4,4,2],[12,3,6,6,12],[13,4,5,5,8],[14,5,7,7,4],[15,3,4,4,18],[16,4,5,5,14],[17,4,4,4,16],[18,5,4,4,6]]},{"id":978144360,"d":"2024-03-23","c":"Meadows Golf Club","f":"Meadows Golf Club","t":"Blue/White","n":18,"np":18,"ags":87,"diff":17.5,"cr":68.1,"sr":122,"pcc":0,"ch":null,"hi":999,"st":"A","status":"Validated","used":false,"tp":"+15","h":[[1,4,5,5,11],[2,4,4,4,1],[3,3,3,3,15],[4,5,5,5,5],[5,4,4,4,13],[6,4,5,5,7],[7,4,5,5,9],[8,3,6,6,17],[9,5,6,6,3],[10,4,6,6,14],[11,3,3,3,12],[12,5,5,5,4],[13,4,6,6,8],[14,4,4,4,6],[15,3,4,4,18],[16,5,7,7,2],[17,4,4,4,16],[18,4,5,5,10]]},{"id":978144872,"d":"2024-03-19","c":"Overland Park Golf Course","f":"Overland Park Golf Course","t":"Gold","n":18,"np":18,"ags":82,"diff":13.9,"cr":67.7,"sr":116,"pcc":0,"ch":null,"hi":999,"st":"A","status":"Validated","used":false,"tp":"+10","h":[[1,4,3,3,3],[2,3,3,3,17],[3,5,6,6,11],[4,4,5,5,1],[5,4,5,5,5],[6,4,5,5,7],[7,4,5,5,9],[8,3,3,3,15],[9,5,6,6,13],[10,3,3,3,10],[11,4,5,5,14],[12,4,4,4,2],[13,5,6,6,16],[14,4,5,5,8],[15,4,5,5,4],[16,3,4,4,6],[17,4,4,4,18],[18,5,5,5,12]]}];
+const PULL_DATE = "July 26, 2026";
+const EXCLUDED = [{"id":1116934693,"date":"2025-10-04","course":"Sleeping Indian - Cottonwood","score":57,"cr":72.2,"diff":-12.6,"status":"UnderReview","played":12}];
+
+/* ============================ prep ============================ */
+const EXCL_IDS = new Set(EXCLUDED.map(e=>e.id));
+const ALL = RAW.filter(r=>!EXCL_IDS.has(r.id)).map(r=>{
+  const holes = r.h.map(h=>({n:h[0],par:h[1],raw:h[2],adj:h[3],si:h[4]}))
+                   .filter(h=>h.raw!=null && h.par>0);
+  const toPar = holes.reduce((a,h)=>a+(h.raw-h.par),0);
+  return {
+    id:r.id, date:r.d, course:r.c, facility:r.f||r.c, tee:r.t,
+    nHoles:r.n, played:r.np, score:r.ags, diff:r.diff,
+    cr:r.cr, sr:r.sr, pcc:r.pcc, hi:r.hi, type:r.st, status:r.status,
+    pending:!!r.pending, sg:r.sg||null,
+    holes, toPar, hasCard:holes.length>0,
+    parTotal: holes.reduce((a,h)=>a+h.par,0),
+    y:+r.d.slice(0,4), m:+r.d.slice(5,7)
+  };
+}).sort((a,b)=> a.date<b.date?1:a.date>b.date?-1:0);
+
+const REL_LABELS=[
+  {k:'eagle', label:'Eagle or better', test:d=>d<=-2, color:'var(--u3)'},
+  {k:'birdie',label:'Birdie',          test:d=>d===-1,color:'var(--u2)'},
+  {k:'par',   label:'Par',             test:d=>d===0, color:'var(--div-mid)'},
+  {k:'bogey', label:'Bogey',           test:d=>d===1, color:'var(--o2c)'},
+  {k:'double',label:'Double',          test:d=>d===2, color:'var(--o3)'},
+  {k:'triple',label:'Triple',          test:d=>d===3, color:'var(--o4)'},
+  {k:'quad',  label:'Quad or worse',   test:d=>d>=4,  color:'var(--o4)'}
+];
+function relKey(d){ for(const o of REL_LABELS) if(o.test(d)) return o.k; return 'par'; }
+function relColor(d){
+  if(d<=-2) return 'var(--u3)'; if(d===-1) return 'var(--u2)';
+  if(d===0) return 'var(--div-mid)'; if(d===1) return 'var(--o2c)';
+  if(d===2) return 'var(--o3)'; return 'var(--o4)';
+}
+function relInk(d){
+  if(d<=-2) return 'var(--ink-eagle)'; if(d===-1) return 'var(--ink-birdie)';
+  if(d===0) return 'var(--ink-par)';   if(d===1) return 'var(--ink-bogey)';
+  if(d===2) return 'var(--ink-double)'; if(d===3) return 'var(--ink-triple)';
+  return 'var(--ink-quad)';
+}
+const REL_D={eagle:-2,birdie:-1,par:0,bogey:1,double:2,triple:3,quad:4};
+
+const BUCKETS=[
+  {k:'Sub 5.0', lo:-99, hi:5.0},
+  {k:'5.1–8.2', lo:5.0, hi:8.2},
+  {k:'8.3–9.9', lo:8.2, hi:9.9},
+  {k:'10+',     lo:9.9, hi:999}
+];
+function bucketOf(d){ if(d==null) return null; for(const b of BUCKETS) if(d>b.lo && d<=b.hi) return b.k; return '10+'; }
+const BANDS=[{k:'60s',lo:0,hi:69},{k:'70s',lo:70,hi:79},{k:'80s',lo:80,hi:89},{k:'90s',lo:90,hi:99},{k:'100+',lo:100,hi:999}];
+function bandOf(s){ for(const b of BANDS) if(s>=b.lo&&s<=b.hi) return b.k; return null; }
+
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* ============================ helpers ============================ */
+const $=s=>document.querySelector(s);
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+const f1=v=>v==null?'—':(Math.round(v*10)/10).toFixed(1);
+const f2=v=>v==null?'—':(Math.round(v*100)/100).toFixed(2);
+const sgn=v=>v==null?'—':(v>0?'+':'')+v;
+const pct=(n,d)=>d?((n/d*100).toFixed(1)+'%'):'—';
+function fmtDate(d){const [y,m,dd]=d.split('-');return MONTHS[+m-1]+' '+(+dd)+', '+y;}
+function shortDate(d){const [y,m,dd]=d.split('-');return MONTHS[+m-1]+' '+(+dd)+' '+y.slice(2);}
+function el(t,c,h){const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;}
+function SVG(w,h){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox','0 0 '+w+' '+h); s.setAttribute('width','100%'); return s;}
+function N(tag,attrs){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const k in attrs) e.setAttribute(k,attrs[k]); return e;}
+
+const tt=$('#tt');
+function bindTip(node,html){
+  node.style.cursor='default';
+  node.addEventListener('mouseenter',e=>{tt.innerHTML=html;tt.style.opacity='1';});
+  node.addEventListener('mousemove',e=>{
+    const pad=14; let x=e.clientX+pad, y=e.clientY+pad;
+    const r=tt.getBoundingClientRect();
+    if(x+r.width>window.innerWidth-8) x=e.clientX-r.width-pad;
+    if(y+r.height>window.innerHeight-8) y=e.clientY-r.height-pad;
+    tt.style.left=x+'px'; tt.style.top=y+'px';
+  });
+  node.addEventListener('mouseleave',()=>{tt.style.opacity='0';});
+}
+function tableFrom(cols,rows){
+  let h='<table><thead><tr>'+cols.map(c=>'<th class="'+(c.num?'num':'')+'">'+c.t+'</th>').join('')+'</tr></thead><tbody>';
+  h+=rows.map(r=>'<tr>'+r.map((v,i)=>'<td class="'+(cols[i].num?'num':'')+'">'+v+'</td>').join('')+'</tr>').join('');
+  return h+'</tbody></table>';
+}
+
+/* ============================ state ============================ */
+const S={course:'',tee:'',from:'',to:'',holes:'all',sortKey:'date',sortDir:-1,expanded:new Set(),group:null};
+let VIEW=[], VIEW_NG=[];
+
+function applyFilters(){
+  VIEW_NG=ALL.filter(r=>{
+    if(S.course && r.course!==S.course) return false;
+    if(S.tee && (r.course+' · '+r.tee)!==S.tee) return false;
+    if(S.from && r.date<S.from) return false;
+    if(S.to && r.date>S.to) return false;
+    if(S.holes==='18' && r.nHoles!==18) return false;
+    if(S.holes==='9' && r.nHoles!==9) return false;
+    return true;
+  });
+  VIEW = S.group ? VIEW_NG.filter(S.group.test) : VIEW_NG;
+  const gc=$('#groupChip');
+  gc.innerHTML = S.group
+    ? '<span class="gchip">'+S.group.label+'<button title="Clear this group" aria-label="Clear group">×</button></span>' : '';
+  const btn=gc.querySelector('button');
+  if(btn) btn.addEventListener('click',()=>{S.group=null; render();});
+}
+/* a group is a click-through slice chosen from the Highlights tiles or the histogram */
+function setGroup(g){
+  S.group = (S.group && S.group.key===g.key) ? null : g;
+  S.expanded.clear();
+  render();
+  if(S.group) document.querySelector('#rounds').scrollIntoView({behavior:'smooth',block:'start'});
+}
+/* open one round: reveal its scorecard in the rounds table and scroll to it */
+function openRound(id){
+  if(!VIEW.some(r=>r.id===id)){
+    // the round is outside the current slice — clear filters so it can be shown
+    S.course='';S.tee='';S.from='';S.to='';S.holes='all';S.group=null;
+    $('#fYear').value=''; $('#fHoles').querySelectorAll('button').forEach((x,i)=>x.classList.toggle('on',i===0));
+    syncControls();
+  }
+  S.expanded=new Set([id]);
+  render();
+  const sec=document.querySelector('#rounds');
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>{
+    const tr=document.querySelector('#roundTbl tr[data-id="'+id+'"]');
+    if(!tr) return;
+    const wrap=tr.closest('.tablewrap');
+    wrap.scrollTop += tr.getBoundingClientRect().top - wrap.getBoundingClientRect().top - 60;
+    tr.classList.add('hl'); setTimeout(()=>tr.classList.remove('hl'),1900);
+  },420);
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-rid]');
+  if(t) openRound(+t.dataset.rid);
+});
+
+/* ============================ compute ============================ */
+function holesOf(rs){ const out=[]; for(const r of rs) for(const h of r.holes) out.push({...h,r}); return out; }
+
+function parAvgs(rs){
+  const hs=holesOf(rs); const o={};
+  for(const p of [3,4,5]){
+    const sel=hs.filter(h=>h.par===p);
+    o[p]= sel.length? {avg:mean(sel.map(h=>h.raw)), over:mean(sel.map(h=>h.raw-h.par)), n:sel.length} : null;
+  }
+  return o;
+}
+function outcomeCounts(rs){
+  const c={}; REL_LABELS.forEach(o=>c[o.k]=0); let n=0;
+  for(const r of rs) for(const h of r.holes){ c[relKey(h.raw-h.par)]++; n++; }
+  return {c,n};
+}
+/* every maximal run of holes satisfying `test`, in hole order.
+   A run breaks on a non-matching hole OR a gap in hole numbers (an unplayed hole). */
+function runsIn(r,test){
+  const out=[]; let cur=null, prev=null;
+  for(const h of r.holes){
+    const broken = prev!==null && h.n!==prev+1;
+    prev=h.n;
+    if(test(h.raw-h.par) && !broken){ if(!cur){cur={start:h.n,len:0};out.push(cur);} cur.len++; }
+    else if(test(h.raw-h.par)){ cur={start:h.n,len:1}; out.push(cur); }
+    else cur=null;
+  }
+  return out.map(x=>({...x,end:x.start+x.len-1}));
+}
+function streakIn(r,test){
+  const rs=runsIn(r,test);
+  if(!rs.length) return {len:0,start:0};
+  const b=rs.reduce((a,x)=>x.len>a.len?x:a,rs[0]);
+  return {len:b.len,start:b.start};
+}
+/* how many rounds in `rs` tie the given streak length */
+function tieCount(rs,test,len){ return rs.filter(r=>streakIn(r,test).len===len).length; }
+function tieNote(n){ return n>1 ? ' · <em>'+n+' rounds tie this</em>' : ''; }
+function bestStretch(r,n,dir){
+  const hs=r.holes; if(hs.length<n) return null;
+  let best=null;
+  for(let i=0;i<=hs.length-n;i++){
+    // require contiguous hole numbers
+    if(hs[i+n-1].n - hs[i].n !== n-1) continue;
+    const s=hs.slice(i,i+n).reduce((a,h)=>a+(h.raw-h.par),0);
+    if(best===null || (dir<0? s<best.s : s>best.s)) best={s,start:hs[i].n,end:hs[i+n-1].n};
+  }
+  return best;
+}
+/* every stretch in a set of rounds, keyed by type.
+   `val` is the sortable measure: to-par for stretch types, stroke swing for turnaround/transition
+   types (positive swing = improved). */
+function buildStretches(rs,type){
+  const out=[];
+  const win=(r,w,label)=>({
+    r, label, start:w[0].n, end:w[w.length-1].n,
+    toPar:w.reduce((a,h)=>a+(h.raw-h.par),0),
+    strokes:w.reduce((a,h)=>a+h.raw,0),
+    par:w.reduce((a,h)=>a+h.par,0),
+    seq:w.map(h=>h.raw).join('-')
+  });
+  rs.forEach(r=>{
+    const hs=r.holes; if(!hs.length) return;
+    const contiguous=(i,n)=> i+n<=hs.length && hs[i+n-1].n-hs[i].n===n-1;
+    if(type==='s3'||type==='s9'){
+      const n = type==='s3'?3:9;
+      for(let i=0;i+n<=hs.length;i++){
+        if(!contiguous(i,n)) continue;
+        const w=win(r,hs.slice(i,i+n));
+        w.val=w.toPar; out.push(w);
+      }
+    } else if(type==='front'||type==='back'){
+      if(r.nHoles!==18||hs.length!==18) return;
+      const w=win(r, type==='front'?hs.slice(0,9):hs.slice(9));
+      w.val=w.toPar; out.push(w);
+    } else if(type==='turn'){
+      if(r.nHoles!==18||hs.length!==18) return;
+      const f=win(r,hs.slice(0,9)), b=win(r,hs.slice(9));
+      out.push({r,start:1,end:18,front:f,back:b,val:f.toPar-b.toPar,
+        toPar:f.toPar+b.toPar,strokes:f.strokes+b.strokes,par:f.par+b.par});
+    } else if(type.startsWith('run:')){
+      const tests={par:d=>d===0,parbetter:d=>d<=0,bird:d=>d<=-1,bogeyfree:d=>d<=0,
+                   bogey:d=>d>=1,blowfree:d=>d<2};
+      const k=type.slice(4);
+      runsIn(r,tests[k]).forEach(run=>{
+        if(run.len<2) return;
+        const i=hs.findIndex(h=>h.n===run.start);
+        const w=win(r,hs.slice(i,i+run.len));
+        w.val=run.len; w.len=run.len; out.push(w);
+      });
+    } else if(type==='t3'){
+      for(let i=0;i+6<=hs.length;i++){
+        if(!contiguous(i,6)) continue;
+        const a=win(r,hs.slice(i,i+3)), b=win(r,hs.slice(i+3,i+6));
+        out.push({r,a,b,start:a.start,end:b.end,val:a.toPar-b.toPar,
+          toPar:a.toPar+b.toPar,strokes:a.strokes+b.strokes,par:a.par+b.par});
+      }
+    }
+  });
+  return out;
+}
+function argBest(list,fn,dir){
+  let bv=null,bi=null;
+  list.forEach(x=>{const v=fn(x); if(v==null)return; if(bv===null||(dir<0?v<bv:v>bv)){bv=v;bi=x;}});
+  return bi===null?null:{item:bi,val:bv};
+}
+
+/* ============================ render ============================ */
+function render(){
+  applyFilters();
+  $('#fCount').innerHTML='<b>'+VIEW.length+'</b> round'+(VIEW.length===1?'':'s')+' shown';
+  if(!VIEW.length){
+    document.querySelectorAll('section').forEach(s=>{ if(s.id!=='quality'){} });
+  }
+  renderHero(); renderTrend(); renderHighlights(); renderParType();
+  renderOutcomes(); renderOutHoles(); renderNotable(); renderStretches();
+  renderCourses(); renderHoles(); renderRounds();
+}
+
+/* --- hero --- */
+function renderHero(){
+  const rs=VIEW, ds=rs.map(r=>r.diff).filter(v=>v!=null).sort((a,b)=>a-b);
+  const r18=rs.filter(r=>r.nHoles===18&&r.played===18);
+  const best=ds[0], worst=ds[ds.length-1];
+  const bestR=rs.find(r=>r.diff===best), worstR=rs.find(r=>r.diff===worst);
+  const carded18=r18.filter(r=>r.hasCard);
+  const lowToPar=carded18.length?Math.min(...carded18.map(r=>r.toPar)):null;
+  const lowR=carded18.find(r=>r.toPar===lowToPar);
+  const last10=rs.slice(0,10).map(r=>r.diff).filter(v=>v!=null);
+  const hi=ALL.find(r=>r.hi!=null);
+  const sd = ds.length>1 ? Math.sqrt(ds.reduce((a,v)=>a+Math.pow(v-mean(ds),2),0)/(ds.length-1)) : null;
+  const {c:oc,n:on}=outcomeCounts(rs);
+
+  const tiles=[
+    ['Rounds', rs.length, [...new Set(rs.map(r=>r.course))].length+' courses · '+[...new Set(rs.map(r=>r.course+r.tee))].length+' tee setups'],
+    ['Best differential', f1(best), bestR? bestR.course+' · '+shortDate(bestR.date):''],
+    ['Average differential', f1(mean(ds)), 'median '+f1(ds[Math.floor(ds.length/2)])],
+    ['Worst differential', f1(worst), worstR? worstR.course+' · '+shortDate(worstR.date):'']
+  ];
+  const tiles2=[
+    ['Lowest 18-hole round', lowToPar==null?'—':sgn(lowToPar)+' to par',
+      lowR? lowR.score+' at '+lowR.course+' · '+shortDate(lowR.date):''],
+    ['Last 10 rounds', f1(mean(last10)), 'average differential'],
+    ['Consistency', f1(sd), 'std deviation of differential'],
+    ['Pars or better', pct(oc.par+oc.birdie+oc.eagle,on), (oc.par+oc.birdie+oc.eagle)+' of '+on+' holes']
+  ];
+  const put=(id,arr)=>{ const g=$(id); g.innerHTML='';
+    arr.forEach(([k,v,n])=>g.appendChild(el('div','tile','<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+(n||'&nbsp;')+'</div>'))); };
+  put('#heroTiles',tiles); put('#heroTiles2',tiles2);
+}
+
+/* --- trend --- */
+function renderTrend(){
+  const rs=[...VIEW].filter(r=>r.diff!=null).sort((a,b)=>a.date<b.date?-1:1);
+  const box=$('#trendChart'); box.innerHTML='';
+  if(rs.length<2){ box.innerHTML='<div class="empty">Not enough rounds in this slice.</div>'; $('#trendTbl').innerHTML=''; return; }
+  const W=880,H=300,P={t:14,r:16,b:34,l:40};
+  const s=SVG(W,H);
+  const t0=new Date(rs[0].date).getTime(), t1=new Date(rs[rs.length-1].date).getTime();
+  const dmin=Math.min(...rs.map(r=>r.diff)), dmax=Math.max(...rs.map(r=>r.diff));
+  const lo=Math.floor((dmin-1)/2)*2, hiV=Math.ceil((dmax+1)/2)*2;
+  const X=t=>P.l+((t-t0)/Math.max(1,(t1-t0)))*(W-P.l-P.r);
+  const Y=v=>P.t+(1-(v-lo)/(hiV-lo))*(H-P.t-P.b);
+  for(let v=lo; v<=hiV; v+=Math.max(2,Math.round((hiV-lo)/6/2)*2)){
+    s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),stroke:'var(--grid)','stroke-width':1}));
+    const tx=N('text',{x:P.l-8,y:Y(v)+4,'text-anchor':'end',fill:'var(--muted)','font-size':11}); tx.textContent=v; s.appendChild(tx);
+  }
+  // x ticks: one per quarter-ish
+  const years=[...new Set(rs.map(r=>r.date.slice(0,7)))];
+  const ticks=years.filter((_,i)=>i%Math.ceil(years.length/6)===0);
+  ticks.forEach(ym=>{ const t=new Date(ym+'-01').getTime(); if(t<t0||t>t1)return;
+    const tx=N('text',{x:X(t),y:H-P.b+18,'text-anchor':'middle',fill:'var(--muted)','font-size':11});
+    tx.textContent=MONTHS[+ym.slice(5,7)-1]+' '+ym.slice(2,4); s.appendChild(tx); });
+  s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:H-P.b,y2:H-P.b,stroke:'var(--axis)','stroke-width':1}));
+  // rolling
+  const roll=[];
+  rs.forEach((r,i)=>{ const w=rs.slice(Math.max(0,i-4),i+1).map(x=>x.diff); roll.push({t:new Date(r.date).getTime(),v:mean(w)}); });
+  // break the line across off-season gaps (>60 days) rather than drawing a flat span through them
+  const GAP=60*864e5; let d='', pen='M';
+  roll.forEach((p,i)=>{
+    if(i>0 && p.t-roll[i-1].t>GAP) pen='M';
+    d+= pen+X(p.t).toFixed(1)+' '+Y(p.v).toFixed(1)+' '; pen='L';
+  });
+  s.appendChild(N('path',{d,fill:'none',stroke:'var(--series-2)','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  rs.forEach(r=>{
+    const t=new Date(r.date).getTime();
+    const hit=N('circle',{cx:X(t),cy:Y(r.diff),r:11,fill:'transparent',style:'cursor:pointer'});
+    const c=N('circle',{cx:X(t),cy:Y(r.diff),r:4,fill:'var(--series-1)',stroke:'var(--surface-1)','stroke-width':2});
+    bindTip(hit,'<b>'+f1(r.diff)+' differential</b><br>'+fmtDate(r.date)+'<br>'+r.course+' · '+r.tee+'<br>'+r.score+' strokes'+(r.nHoles===9?' (9 holes)':'')+'<br><span style="opacity:.75">Click to open the scorecard</span>');
+    hit.addEventListener('click',()=>openRound(r.id));
+    s.appendChild(c); s.appendChild(hit);
+  });
+  box.appendChild(s);
+  $('#trendTbl').innerHTML=tableFrom(
+    [{t:'Date'},{t:'Course'},{t:'Tees'},{t:'Score',num:1},{t:'Differential',num:1},{t:'5-rd avg',num:1}],
+    rs.map((r,i)=>[fmtDate(r.date),r.course,r.tee,r.score,f1(r.diff),f1(roll[i].v)]).reverse());
+
+  // histogram
+  const hb=$('#histChart'); hb.innerHTML='';
+  const hrs=VIEW_NG.filter(r=>r.diff!=null);
+  const hmin=Math.min(...hrs.map(r=>r.diff)), hmax=Math.max(...hrs.map(r=>r.diff));
+  const bins=[]; const step=2; const bl=Math.floor(hmin/step)*step, bh=Math.ceil(hmax/step)*step;
+  for(let v=bl;v<bh;v+=step) bins.push({lo:v,hi:v+step,n:0});
+  hrs.forEach(r=>{ const b=bins.find(b=>r.diff>=b.lo&&r.diff<b.hi)||bins[bins.length-1]; b.n++; });
+  const hW=420,hH=210,hP={t:10,r:10,b:36,l:32};
+  const hs=SVG(hW,hH); const mx=Math.max(...bins.map(b=>b.n),1);
+  const bw=(hW-hP.l-hP.r)/bins.length;
+  bins.forEach((b,i)=>{
+    const h=(b.n/mx)*(hH-hP.t-hP.b), x=hP.l+i*bw, y=hH-hP.b-h;
+    if(b.n>0){
+      const key='bin:'+b.lo, on=S.group&&S.group.key===key;
+      const rct=N('rect',{x:x+1,y:y,width:Math.max(1,bw-2),height:h,rx:4,
+        fill: on?'var(--seq-600)':'var(--seq-450)', style:'cursor:pointer'});
+      s2tip(rct,'<b>'+b.n+' round'+(b.n===1?'':'s')+'</b><br>differential '+b.lo+' to '+b.hi+
+        '<br><span style="opacity:.75">'+(on?'Click to clear this filter':'Click to filter to these rounds')+'</span>');
+      rct.addEventListener('click',()=>setGroup({key,label:'Differential '+b.lo+'–'+b.hi,
+        test:r=>r.diff!=null&&r.diff>=b.lo&&r.diff<b.hi}));
+      hs.appendChild(rct);
+      const lb=N('text',{x:x+bw/2,y:y-5,'text-anchor':'middle',fill:'var(--text-secondary)','font-size':10.5}); lb.textContent=b.n; hs.appendChild(lb);
+    }
+    if(i%2===0){const tx=N('text',{x:x+bw/2,y:hH-hP.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10.5}); tx.textContent=b.lo; hs.appendChild(tx);}
+  });
+  hs.appendChild(N('line',{x1:hP.l,x2:hW-hP.r,y1:hH-hP.b,y2:hH-hP.b,stroke:'var(--axis)','stroke-width':1}));
+  hb.appendChild(hs);
+  $('#histTbl').innerHTML=tableFrom([{t:'Differential band'},{t:'Rounds',num:1},{t:'Share',num:1}],
+    bins.filter(b=>b.n).map(b=>[b.lo+' – '+b.hi,b.n,pct(b.n,rs.length)]));
+
+  // rust: gap since the previous round, using the full record so gaps stay true
+  const rb=$('#rustChart'); rb.innerHTML='';
+  const chron=[...ALL].filter(r=>r.diff!=null).sort((a,b)=>a.date<b.date?-1:1);
+  const gapOf={};
+  chron.forEach((r,i)=>{ if(i) gapOf[r.id]=Math.round((new Date(r.date)-new Date(chron[i-1].date))/864e5); });
+  const GB=[{k:'0–2 days',lo:0,hi:2},{k:'3–6',lo:3,hi:6},{k:'7–13',lo:7,hi:13},
+            {k:'14–29',lo:14,hi:29},{k:'30+',lo:30,hi:1e9}];
+  const gb=GB.map(b=>{ const sel=VIEW.filter(r=>gapOf[r.id]!=null&&gapOf[r.id]>=b.lo&&gapOf[r.id]<=b.hi&&r.diff!=null);
+    return {...b,n:sel.length,avg:mean(sel.map(r=>r.diff))}; });
+  const ract=gb.filter(x=>x.n>0);
+  if(ract.length<2){ rb.innerHTML='<div class="empty">Not enough rounds in this slice to compare gaps.</div>'; $('#rustTbl').innerHTML=''; }
+  else{
+    const W=420,H=210,P={t:12,r:10,b:44,l:32};
+    const s3=SVG(W,H);
+    const top=Math.ceil(Math.max(...ract.map(x=>x.avg))+1), bot=Math.max(0,Math.floor(Math.min(...ract.map(x=>x.avg))-1));
+    const bw3=(W-P.l-P.r)/gb.length;
+    gb.forEach((x,i)=>{
+      const xx=P.l+i*bw3;
+      if(x.n){
+        const h=((x.avg-bot)/(top-bot))*(H-P.t-P.b);
+        const rct=N('rect',{x:xx+3,y:H-P.b-h,width:Math.max(1,bw3-6),height:h,rx:4,fill:'var(--seq-450)'});
+        bindTip(rct,'<b>'+x.k+' since last round</b><br>'+f1(x.avg)+' avg differential<br>'+x.n+' round'+(x.n===1?'':'s'));
+        s3.appendChild(rct);
+        const lb=N('text',{x:xx+bw3/2,y:H-P.b-h-5,'text-anchor':'middle',fill:'var(--text-secondary)','font-size':10.5});
+        lb.textContent=f1(x.avg); s3.appendChild(lb);
+      }
+      const tx=N('text',{x:xx+bw3/2,y:H-P.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10}); tx.textContent=x.k; s3.appendChild(tx);
+      const t2=N('text',{x:xx+bw3/2,y:H-P.b+29,'text-anchor':'middle',fill:'var(--muted)','font-size':9.5}); t2.textContent=x.n?x.n+' rd':''; s3.appendChild(t2);
+    });
+    s3.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:H-P.b,y2:H-P.b,stroke:'var(--axis)','stroke-width':1}));
+    rb.appendChild(s3);
+    $('#rustTbl').innerHTML=tableFrom([{t:'Gap since last round'},{t:'Rounds',num:1},{t:'Avg differential',num:1}],
+      ract.map(x=>[x.k,x.n,f1(x.avg)]));
+  }
+
+  // month
+  const mb=$('#monthChart'); mb.innerHTML='';
+  const byM=MONTHS.map((m,i)=>{ const sel=VIEW.filter(r=>r.m===i+1&&r.diff!=null); return {m,n:sel.length,avg:mean(sel.map(r=>r.diff))}; });
+  const act=byM.filter(x=>x.n>0);
+  if(!act.length){ mb.innerHTML='<div class="empty">No data.</div>'; $('#monthTbl').innerHTML=''; }
+  else{
+    const mW=420,mH=210,mP={t:10,r:10,b:36,l:32};
+    const ms=SVG(mW,mH); const mmax=Math.max(...act.map(x=>x.avg)), mmin=Math.min(...act.map(x=>x.avg));
+    const top=Math.ceil(mmax+1), bot=Math.max(0,Math.floor(mmin-1));
+    const bw2=(mW-mP.l-mP.r)/12;
+    byM.forEach((x,i)=>{
+      const xx=mP.l+i*bw2;
+      if(x.n){
+        const h=((x.avg-bot)/(top-bot))*(mH-mP.t-mP.b);
+        const rct=N('rect',{x:xx+2,y:mH-mP.b-h,width:Math.max(1,bw2-4),height:h,rx:4,fill:'var(--seq-450)'});
+        s2tip(rct,'<b>'+x.m+'</b><br>'+f1(x.avg)+' avg differential<br>'+x.n+' round'+(x.n===1?'':'s'));
+        ms.appendChild(rct);
+        const lb=N('text',{x:xx+bw2/2,y:mH-mP.b-h-5,'text-anchor':'middle',fill:'var(--text-secondary)','font-size':10}); lb.textContent=f1(x.avg); ms.appendChild(lb);
+      }
+      const tx=N('text',{x:xx+bw2/2,y:mH-mP.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10}); tx.textContent=x.m[0]; ms.appendChild(tx);
+    });
+    ms.appendChild(N('line',{x1:mP.l,x2:mW-mP.r,y1:mH-mP.b,y2:mH-mP.b,stroke:'var(--axis)','stroke-width':1}));
+    mb.appendChild(ms);
+    $('#monthTbl').innerHTML=tableFrom([{t:'Month'},{t:'Rounds',num:1},{t:'Avg differential',num:1}],
+      act.map(x=>[x.m,x.n,f1(x.avg)]));
+  }
+}
+function s2tip(node,html){ bindTip(node,html); }
+
+/* --- highlights --- */
+function bandCard(title,sub,rs,accent){
+  const pa=parAvgs(rs);
+  const ds=rs.map(r=>r.diff).filter(v=>v!=null);
+  let h='<div class="k">'+title+'</div><div class="v">'+rs.length+'</div>';
+  h+='<div class="n">'+sub+'</div>';
+  if(rs.length){
+    h+='<div style="margin-top:12px;border-top:1px solid var(--grid);padding-top:10px">';
+    [3,4,5].forEach(p=>{
+      const v=pa[p];
+      h+='<div style="display:flex;justify-content:space-between;font-size:12.5px;padding:2px 0">'+
+         '<span style="color:var(--text-secondary)">Par '+p+'</span>'+
+         '<span style="font-variant-numeric:tabular-nums"><b>'+(v?f2(v.avg):'—')+'</b>'+
+         '<span style="color:var(--muted)"> ('+(v?(v.over>=0?'+':'')+f2(v.over):'—')+')</span></span></div>';
+    });
+    h+='<div style="display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0 0;margin-top:4px;border-top:1px solid var(--grid)">'+
+       '<span style="color:var(--text-secondary)">Avg differential</span><span style="font-variant-numeric:tabular-nums"><b>'+f1(mean(ds))+'</b></span></div>';
+    h+='</div>';
+  }
+  return h;
+}
+function renderHighlights(){
+  // these grids are the source of the group filter, so they read the ungrouped slice
+  const r18=VIEW_NG.filter(r=>r.nHoles===18&&r.played===18);
+  const bt=$('#bandTiles'); bt.innerHTML='';
+  const bandsPresent=BANDS.filter(b=>r18.some(r=>bandOf(r.score)===b.k));
+  (bandsPresent.length?bandsPresent:BANDS.slice(1,4)).forEach(b=>{
+    const sel=r18.filter(r=>bandOf(r.score)===b.k);
+    const key='band:'+b.k;
+    const t=el('div','tile'+(sel.length?' click':'')+(S.group&&S.group.key===key?' sel':''),
+      bandCard('Rounds in the '+b.k,
+        sel.length? 'scores '+Math.min(...sel.map(r=>r.score))+'–'+Math.max(...sel.map(r=>r.score))+' · '+pct(sel.length,r18.length)+' of 18s':'none in this slice', sel));
+    if(sel.length) t.addEventListener('click',()=>setGroup({key,label:'Rounds in the '+b.k,
+      test:r=>r.nHoles===18&&r.played===18&&bandOf(r.score)===b.k}));
+    bt.appendChild(t);
+  });
+  const ct=$('#bucketTiles'); ct.innerHTML='';
+  BUCKETS.forEach(b=>{
+    const sel=VIEW_NG.filter(r=>bucketOf(r.diff)===b.k);
+    const key='bucket:'+b.k;
+    const t=el('div','tile'+(sel.length?' click':'')+(S.group&&S.group.key===key?' sel':''),
+      bandCard(b.k+' differential',
+        sel.length? pct(sel.length,VIEW_NG.length)+' of rounds shown':'none in this slice', sel));
+    if(sel.length) t.addEventListener('click',()=>setGroup({key,label:'Differential '+b.k,
+      test:r=>bucketOf(r.diff)===b.k}));
+    ct.appendChild(t);
+  });
+}
+
+/* --- par type --- */
+function groupedParChart(target,tblTarget,groups){
+  const box=$(target); box.innerHTML='';
+  const live=groups.filter(g=>g.rs.length);
+  if(!live.length){ box.innerHTML='<div class="empty">No rounds in this slice.</div>'; $(tblTarget).innerHTML=''; return; }
+  const W=420,H=250,P={t:14,r:10,b:44,l:34};
+  const s=SVG(W,H);
+  const data=live.map(g=>({k:g.k,n:g.rs.length,pa:parAvgs(g.rs)}));
+  const vals=data.flatMap(d=>[3,4,5].map(p=>d.pa[p]?d.pa[p].avg:null)).filter(v=>v!=null);
+  const lo=Math.floor(Math.min(...vals)-0.4), hiV=Math.ceil(Math.max(...vals)+0.3);
+  const Y=v=>P.t+(1-(v-lo)/(hiV-lo))*(H-P.t-P.b);
+  for(let v=lo;v<=hiV;v++){
+    s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),stroke:'var(--grid)','stroke-width':1}));
+    const tx=N('text',{x:P.l-7,y:Y(v)+4,'text-anchor':'end',fill:'var(--muted)','font-size':11}); tx.textContent=v; s.appendChild(tx);
+  }
+  const gw=(W-P.l-P.r)/data.length, cols=['var(--series-1)','var(--series-2)','var(--series-3)'];
+  data.forEach((d,gi)=>{
+    const gx=P.l+gi*gw, bw=(gw-14)/3;
+    [3,4,5].forEach((p,pi)=>{
+      const v=d.pa[p]; if(!v) return;
+      const x=gx+7+pi*bw, y=Y(v.avg), h=(H-P.b)-y;
+      const rct=N('rect',{x:x+1,y:y,width:Math.max(1,bw-2),height:Math.max(0,h),rx:4,fill:cols[pi]});
+      bindTip(rct,'<b>Par '+p+' · '+d.k+'</b><br>'+f2(v.avg)+' average ('+(v.over>=0?'+':'')+f2(v.over)+' to par)<br>'+v.n+' holes · '+d.n+' rounds');
+      s.appendChild(rct);
+      const lb=N('text',{x:x+bw/2,y:y-4,'text-anchor':'middle',fill:'var(--text-secondary)','font-size':10}); lb.textContent=f2(v.avg); s.appendChild(lb);
+    });
+    const tx=N('text',{x:gx+gw/2,y:H-P.b+17,'text-anchor':'middle',fill:'var(--text-secondary)','font-size':11}); tx.textContent=d.k; s.appendChild(tx);
+    const tx2=N('text',{x:gx+gw/2,y:H-P.b+31,'text-anchor':'middle',fill:'var(--muted)','font-size':10}); tx2.textContent=d.n+' rd'; s.appendChild(tx2);
+  });
+  s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:H-P.b,y2:H-P.b,stroke:'var(--axis)','stroke-width':1}));
+  box.appendChild(s);
+  $(tblTarget).innerHTML=tableFrom(
+    [{t:'Group'},{t:'Rounds',num:1},{t:'Par 3 avg',num:1},{t:'Par 4 avg',num:1},{t:'Par 5 avg',num:1}],
+    data.map(d=>[d.k,d.n,d.pa[3]?f2(d.pa[3].avg):'—',d.pa[4]?f2(d.pa[4].avg):'—',d.pa[5]?f2(d.pa[5].avg):'—']));
+  return data;
+}
+function renderParType(){
+  const bData=groupedParChart('#parBucketChart','#parBucketTbl',
+    BUCKETS.map(b=>({k:b.k,rs:VIEW.filter(r=>bucketOf(r.diff)===b.k)})));
+  const r18=VIEW.filter(r=>r.nHoles===18&&r.played===18);
+  groupedParChart('#parBandChart','#parBandTbl',
+    BANDS.map(b=>({k:b.k,rs:r18.filter(r=>bandOf(r.score)===b.k)})));
+  const sp=$('#parSpread'); sp.innerHTML='';
+  if(bData&&bData.length>1){
+    [3,4,5].forEach(p=>{
+      const vs=bData.map(d=>d.pa[p]).filter(Boolean);
+      if(vs.length<2) return;
+      const best=Math.min(...vs.map(v=>v.avg)), worst=Math.max(...vs.map(v=>v.avg));
+      const t=el('div','tile click','<div class="k">Par '+p+' swing</div><div class="v">'+f2(worst-best)+'</div>'+
+        '<div class="n">strokes per hole between your best and worst differential bands — '+
+        f2(best)+' vs '+f2(worst)+'</div>');
+      t.addEventListener('click',()=>{
+        OX.par=String(p); OX.type='blowup'; OX.view='hole'; OX.pin=null; OX.min='4';
+        $('#oPar').value=String(p); $('#oType').value='blowup'; $('#oMin').value='4';
+        $('#oView').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='hole'));
+        renderOutHoles();
+        document.querySelector('#outHoleTbl').closest('.tablewrap').scrollIntoView({behavior:'smooth',block:'center'});
+      });
+      sp.appendChild(t);
+    });
+  }
+}
+
+/* --- outcomes --- */
+function renderOutcomes(){
+  const {c,n}=outcomeCounts(VIEW);
+  const rounds18equiv = VIEW.reduce((a,r)=>a+r.holes.length,0)/18;
+  const g=$('#outTiles'); g.innerHTML='';
+  const per18=v=>{ if(!rounds18equiv) return '—'; const x=v/rounds18equiv; return x<1?f2(x):f1(x); };
+  REL_LABELS.forEach(o=>{
+    const cnt=c[o.k];
+    const t=el('div','tile'+(cnt?' click':''),'<div class="k">'+o.label+'</div><div class="v">'+cnt+'</div>'+
+      '<div class="n">'+pct(cnt,n)+' of holes · '+per18(cnt)+' per 18</div>');
+    if(cnt){
+      t.querySelector('.n').insertAdjacentHTML('afterend',
+        '<div style="margin-top:9px;font-size:11.5px;color:var(--series-1);font-weight:600">List these holes →</div>');
+      t.addEventListener('click',()=>{ $('#oType').value=o.k; OX.type=o.k; renderOutHoles();
+        document.querySelector('#outHoleTbl').closest('.tablewrap').scrollIntoView({behavior:'smooth',block:'center'}); });
+    }
+    g.appendChild(t);
+  });
+
+  // outcome mix bars
+  const box=$('#outChart'); box.innerHTML='';
+  const W=440,H=230,P={t:8,r:104,b:20,l:96};
+  const s=SVG(W,H); const mx=Math.max(...REL_LABELS.map(o=>c[o.k]),1);
+  const rh=(H-P.t-P.b)/REL_LABELS.length;
+  REL_LABELS.forEach((o,i)=>{
+    const y=P.t+i*rh, w=(c[o.k]/mx)*(W-P.l-P.r);
+    const lb=N('text',{x:P.l-9,y:y+rh/2+4,'text-anchor':'end',fill:'var(--text-secondary)','font-size':11.5}); lb.textContent=o.label; s.appendChild(lb);
+    s.appendChild(N('rect',{x:P.l,y:y+3,width:W-P.l-P.r,height:rh-6,rx:4,fill:'var(--grid)',opacity:.45}));
+    if(c[o.k]>0){
+      const rct=N('rect',{x:P.l,y:y+3,width:Math.max(2,w),height:rh-6,rx:4,fill:'var(--seq-450)'});
+      bindTip(rct,'<b>'+o.label+'</b><br>'+c[o.k]+' holes · '+pct(c[o.k],n));
+      s.appendChild(rct);
+    }
+    // value label: inside the bar when it fits, otherwise just past its end
+    const inside = w>46;
+    const v=N('text',{x: inside ? P.l+w-8 : P.l+Math.max(2,w)+8, y:y+rh/2+4,
+      'text-anchor': inside?'end':'start', fill: inside?'var(--surface-1)':'var(--text-primary)',
+      'font-size':11.5,'font-weight':600}); v.textContent=c[o.k]; s.appendChild(v);
+    const pc=N('text',{x:W-4,y:y+rh/2+4,'text-anchor':'end',fill:'var(--muted)','font-size':11}); pc.textContent=pct(c[o.k],n); s.appendChild(pc);
+  });
+  box.appendChild(s);
+  $('#outTbl').innerHTML=tableFrom([{t:'Outcome'},{t:'Holes',num:1},{t:'Share',num:1},{t:'Per 18',num:1}],
+    REL_LABELS.map(o=>[o.label,c[o.k],pct(c[o.k],n),per18(c[o.k])]));
+
+  // by par type — stacked
+  const box2=$('#outParChart'); box2.innerHTML='';
+  const W2=420,H2=230,P2={t:14,r:10,b:34,l:44};
+  const s2=SVG(W2,H2);
+  const rowsT=[];
+  [3,4,5].forEach((p,pi)=>{
+    const hs=holesOf(VIEW).filter(h=>h.par===p);
+    const tot=hs.length; if(!tot) return;
+    const cc={}; REL_LABELS.forEach(o=>cc[o.k]=0);
+    hs.forEach(h=>cc[relKey(h.raw-h.par)]++);
+    const y=P2.t+pi*((H2-P2.t-P2.b)/3), bh=((H2-P2.t-P2.b)/3)-16;
+    let x=P2.l;
+    const lb=N('text',{x:P2.l-9,y:y+bh/2+4,'text-anchor':'end',fill:'var(--text-secondary)','font-size':11.5}); lb.textContent='Par '+p; s2.appendChild(lb);
+    REL_LABELS.forEach(o=>{
+      if(!cc[o.k]) return;
+      const w=(cc[o.k]/tot)*(W2-P2.l-P2.r);
+      const rct=N('rect',{x:x+1,y:y,width:Math.max(0.5,w-2),height:bh,rx:3,fill:o.color,
+        stroke:(o.k==='par'?'var(--border)':'none'),'stroke-width':(o.k==='par'?1:0)});
+      bindTip(rct,'<b>Par '+p+' · '+o.label+'</b><br>'+cc[o.k]+' of '+tot+' holes · '+pct(cc[o.k],tot));
+      s2.appendChild(rct);
+      if(w>34){ const t=N('text',{x:x+w/2,y:y+bh/2+4,'text-anchor':'middle',fill:relInk(REL_D[o.k]),'font-size':10.5,'font-weight':600});
+        t.textContent=pct(cc[o.k],tot).replace('.0',''); s2.appendChild(t); }
+      x+=w;
+    });
+    rowsT.push(['Par '+p,tot,...REL_LABELS.map(o=>cc[o.k]+' ('+pct(cc[o.k],tot)+')')]);
+  });
+  box2.appendChild(s2);
+  $('#outParLegend').innerHTML=REL_LABELS.map(o=>'<span><i style="background:'+o.color+
+    (o.k==='par'?';border:1px solid var(--border)':'')+'"></i>'+o.label+'</span>').join('');
+  $('#outParTbl').innerHTML=tableFrom([{t:'Par'},{t:'Holes',num:1},...REL_LABELS.map(o=>({t:o.label,num:1}))],rowsT);
+}
+
+/* --- individual holes by outcome --- */
+const OX={type:'eb',view:'list',par:'',min:'4',q:'',pin:null,sortKey:'date',sortDir:-1,aggKey:'times',aggDir:-1};
+const OX_LIMIT=300;
+const OX_TESTS={eb:d=>d<=-1, eagle:d=>d<=-2, birdie:d=>d===-1, par:d=>d===0, parbetter:d=>d<=0,
+                bogey:d=>d===1, double:d=>d===2, triple:d=>d===3, quad:d=>d>=4, blowup:d=>d>=2, all:()=>true};
+const OX_LABELS={eb:'eagles & birdies',eagle:'eagles or better',birdie:'birdies',par:'pars',
+                 parbetter:'pars or better',bogey:'bogeys',double:'doubles',triple:'triples',
+                 quad:'quads or worse',blowup:'doubles or worse',all:'holes played'};
+const OX_SHORT={eb:'Eagles & birdies',eagle:'Eagles',birdie:'Birdies',par:'Pars',parbetter:'Pars or better',
+                bogey:'Bogeys',double:'Doubles',triple:'Triples',quad:'Quads+',blowup:'Doubles+',all:'Holes'};
+const REL_NAME={'-3':'Albatross','-2':'Eagle','-1':'Birdie','0':'Par','1':'Bogey','2':'Double','3':'Triple'};
+const relName=d=>REL_NAME[d]||(d>=4?'Quad+':'—');
+
+function renderOutHoles(){
+  const t=$('#outHoleTbl'), note=$('#oNote'), hot=$('#oHotspots');
+  const test=OX_TESTS[OX.type], minPlays=+OX.min;
+  const q=OX.q.trim().toLowerCase();
+  const matchQ=r=>!q||(r.course+' '+r.facility+' '+r.tee+' '+r.date).toLowerCase().includes(q);
+
+  // one pass: collect matching holes and, in parallel, how often each bucket was played at all
+  const hits=[], plays={hole:{},num:{},si:{}}, meta={};
+  VIEW.forEach(r=>{
+    if(!matchQ(r)) return;
+    r.holes.forEach(h=>{
+      if(OX.par && h.par!==+OX.par) return;
+      const kH=r.course+'|'+r.tee+'|'+h.n;
+      plays.hole[kH]=(plays.hole[kH]||0)+1;
+      plays.num[h.n]=(plays.num[h.n]||0)+1;
+      plays.si[h.si]=(plays.si[h.si]||0)+1;
+      if(!meta[kH]) meta[kH]={course:r.course,tee:r.tee,n:h.n,par:h.par,si:h.si};
+      if(test(h.raw-h.par)) hits.push({r,h,d:h.raw-h.par,kH});
+    });
+  });
+
+  const agg=(keyOf,playsMap)=>{
+    const m={};
+    hits.forEach(x=>{ const k=keyOf(x); (m[k]=m[k]||{k,times:0,ex:[]}).times++; if(m[k].ex.length<40) m[k].ex.push(x); });
+    return Object.values(m).map(o=>({...o,plays:playsMap[o.k]||0,rate:(playsMap[o.k]?o.times/playsMap[o.k]:0)}))
+                           .filter(o=>o.plays>=minPlays);
+  };
+  const isList = OX.view==='list';
+  let rows;
+  if(OX.view==='hole') rows=agg(x=>x.kH, plays.hole).map(o=>({...o,...meta[o.k]}));
+  else if(OX.view==='num') rows=agg(x=>x.h.n, plays.num).map(o=>({...o,n:+o.k}));
+  else if(OX.view==='si') rows=agg(x=>x.h.si, plays.si).map(o=>({...o,si:+o.k}));
+
+  /* ---- hotspot tiles ---- */
+  hot.innerHTML='';
+  if(!isList && rows.length){
+    const byRate=[...rows].sort((a,b)=>b.rate-a.rate||b.times-a.times).slice(0,3);
+    byRate.forEach(o=>{
+      const label = OX.view==='hole' ? o.course+' #'+o.n
+                  : OX.view==='num'  ? 'Hole '+o.n : 'Stroke index '+o.si;
+      const sub = OX.view==='hole' ? 'par '+o.par+' · SI '+o.si+' · '+o.tee+' tees' : 'across every course';
+      hot.appendChild(el('div','tile','<div class="k">'+label+'</div><div class="v">'+
+        Math.round(o.rate*100)+'%</div><div class="n">'+o.times+' '+OX_LABELS[OX.type]+' in '+o.plays+
+        ' plays · '+sub+'</div>'));
+    });
+  }
+
+  /* ---- table ---- */
+  if(isList){
+    let list=hits;
+    if(OX.pin) list=list.filter(x=>x.kH===OX.pin);
+    const total=hits.length, matched=list.length;
+    const cols=[{k:'result',t:'Result'},{k:'date',t:'Date'},{k:'course',t:'Course'},{k:'tee',t:'Tees'},
+      {k:'hole',t:'Hole',num:1},{k:'par',t:'Par',num:1},{k:'score',t:'Score',num:1},{k:'si',t:'SI',num:1},
+      {k:'round',t:'Round',num:1},{k:'diff',t:'Round diff',num:1}];
+    const sv={result:x=>x.d,date:x=>x.r.date,course:x=>x.r.course,tee:x=>x.r.tee,hole:x=>x.h.n,
+      par:x=>x.h.par,score:x=>x.h.raw,si:x=>x.h.si,round:x=>x.r.score,diff:x=>x.r.diff??999};
+    list=[...list].sort((a,b)=>{const p=sv[OX.sortKey](a),o=sv[OX.sortKey](b);
+      if(p<o) return -1*OX.sortDir; if(p>o) return 1*OX.sortDir; return a.r.date<b.r.date?1:-1;});
+    const shown=list.slice(0,OX_LIMIT);
+    note.innerHTML='<b>'+matched.toLocaleString()+'</b> '+OX_LABELS[OX.type]+(OX.par?' on par '+OX.par+'s':'')+
+      (OX.pin?' on <b>'+meta[OX.pin].course+' #'+meta[OX.pin].n+'</b> <a href="#" id="oUnpin">(show all)</a>':'')+
+      (q?' matching “'+OX.q+'”':'')+(matched!==total&&OX.pin?' of '+total.toLocaleString():'')+'. '+
+      (matched>OX_LIMIT?'Showing the first <b>'+OX_LIMIT+'</b> by the current sort — narrow with the filters to see the rest.'
+                       :'All of them are listed below.')+' Click a row to open that round.';
+    t.innerHTML='<thead><tr>'+cols.map(c=>'<th data-k="'+c.k+'" class="'+(c.num?'num':'')+'">'+c.t+
+        (OX.sortKey===c.k?' <span class="sortarrow">'+(OX.sortDir>0?'▲':'▼')+'</span>':'')+'</th>').join('')+'</tr></thead><tbody>'+
+      (shown.length? shown.map(x=>'<tr class="rowlink" data-rid="'+x.r.id+'">'+
+          '<td><span style="display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px;background:'+
+            relColor(x.d)+(x.d===0?';border:1px solid var(--border)':'')+'"></span>'+relName(x.d)+'</td>'+
+          '<td>'+fmtDate(x.r.date)+'</td><td class="name" title="'+x.r.facility+'">'+x.r.course+'</td>'+
+          '<td>'+x.r.tee+'</td><td class="num">'+x.h.n+'</td><td class="num">'+x.h.par+'</td>'+
+          '<td class="num"><b>'+x.h.raw+'</b></td><td class="num">'+x.h.si+'</td>'+
+          '<td class="num">'+x.r.score+'</td><td class="num">'+f1(x.r.diff)+'</td></tr>').join('')
+        : '<tr><td colspan="10" style="color:var(--muted);padding:26px">No holes match. Try a different result or clear the filters.</td></tr>')+
+      '</tbody>';
+    const un=$('#oUnpin');
+    if(un) un.addEventListener('click',e=>{e.preventDefault();OX.pin=null;renderOutHoles();});
+    t.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
+      const k=th.dataset.k; if(!k) return;
+      if(OX.sortKey===k) OX.sortDir*=-1; else {OX.sortKey=k; OX.sortDir=(k==='date')?-1:1;}
+      renderOutHoles();
+    }));
+    return;
+  }
+
+  const firstCol = OX.view==='hole'?'Hole':OX.view==='num'?'Hole number':'Stroke index';
+  const cols=[{k:'label',t:firstCol},{k:'par',t:'Par',num:1},{k:'si',t:'SI',num:1},
+    {k:'times',t:OX_SHORT[OX.type],num:1},{k:'plays',t:'Plays',num:1},{k:'rate',t:'Rate',num:1}]
+    .filter(c=> OX.view==='hole' ? true : (c.k!=='par'&&c.k!=='si'));
+  const sv={label:o=>OX.view==='hole'?o.course+o.n:(o.n??o.si),par:o=>o.par,si:o=>o.si,
+    times:o=>o.times,plays:o=>o.plays,rate:o=>o.rate};
+  rows.sort((a,b)=>{const p=sv[OX.aggKey](a),o=sv[OX.aggKey](b);
+    if(p<o) return -1*OX.aggDir; if(p>o) return 1*OX.aggDir; return b.times-a.times;});
+  const totalHits=hits.length, listed=rows.reduce((a,o)=>a+o.times,0);
+  note.innerHTML='<b>'+totalHits.toLocaleString()+'</b> '+OX_LABELS[OX.type]+(OX.par?' on par '+OX.par+'s':'')+
+    (q?' matching “'+OX.q+'”':'')+', grouped by '+firstCol.toLowerCase()+'. '+
+    'Only '+(OX.view==='hole'?'holes':'groups')+' played <b>'+minPlays+'+</b> times are listed'+
+    (listed<totalHits?', covering '+listed.toLocaleString()+' of them — lower the minimum to include the rest':'')+
+    '. Rate is how often that result happens when you play it'+
+    (OX.view==='hole'?', and clicking a row lists those holes individually':'')+'.';
+  t.innerHTML='<thead><tr>'+cols.map(c=>'<th data-k="'+c.k+'" class="'+(c.num?'num':'')+'">'+c.t+
+      (OX.aggKey===c.k?' <span class="sortarrow">'+(OX.aggDir>0?'▲':'▼')+'</span>':'')+'</th>').join('')+'</tr></thead><tbody>'+
+    (rows.length? rows.map(o=>{
+      const label = OX.view==='hole'
+        ? '<span title="'+o.tee+' tees">'+o.course+' <span style="color:var(--muted)">#'+o.n+'</span></span>'
+        : (OX.view==='num'?'Hole '+o.n:'SI '+o.si);
+      const bar='<span style="display:inline-block;width:52px;height:6px;border-radius:3px;background:var(--grid);'+
+        'vertical-align:1px;margin-right:8px"><span style="display:block;width:'+Math.round(o.rate*52)+
+        'px;height:6px;border-radius:3px;background:var(--seq-450)"></span></span>';
+      return '<tr'+(OX.view==='hole'?' class="rowlink" data-pin="'+o.k+'"':'')+'>'+
+        '<td class="name">'+label+'</td>'+
+        (OX.view==='hole'?'<td class="num">'+o.par+'</td><td class="num">'+o.si+'</td>':'')+
+        '<td class="num"><b>'+o.times+'</b></td><td class="num">'+o.plays+'</td>'+
+        '<td class="num">'+bar+Math.round(o.rate*100)+'%</td></tr>';
+    }).join('')
+    : '<tr><td colspan="'+cols.length+'" style="color:var(--muted);padding:26px">Nothing reaches the minimum play count. Lower it or widen the page filters.</td></tr>')+
+    '</tbody>';
+  t.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
+    const k=th.dataset.k; if(!k) return;
+    if(OX.aggKey===k) OX.aggDir*=-1; else {OX.aggKey=k; OX.aggDir=-1;}
+    renderOutHoles();
+  }));
+  t.querySelectorAll('tr[data-pin]').forEach(tr=>tr.addEventListener('click',()=>{
+    OX.pin=tr.dataset.pin; OX.view='list';
+    $('#oView').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='list'));
+    renderOutHoles();
+  }));
+}
+
+/* --- notable --- */
+function card(t,big,who,rid){
+  return '<div class="notable'+(rid?' click':'')+'"'+(rid?' data-rid="'+rid+'"':'')+'>'+
+    '<div class="t">'+t+'</div><div class="big">'+big+'</div><div class="who">'+who+'</div></div>';
+}
+function roundRef(r,extra){ return '<em>'+r.course+'</em> · '+fmtDate(r.date)+(extra?' · '+extra:''); }
+function renderNotable(){
+  const rs=VIEW.filter(r=>r.hasCard);
+  const A=$('#notableA'), B=$('#notableB'), C=$('#notableC');
+  A.innerHTML=B.innerHTML=C.innerHTML='';
+  if(!rs.length){ A.innerHTML='<div class="empty">No carded rounds in this slice.</div>'; return; }
+
+  const pars=argBest(rs,r=>streakIn(r,d=>d===0).len,1);
+  const birds=argBest(rs,r=>streakIn(r,d=>d<=-1).len,1);
+  const bfree=argBest(rs,r=>streakIn(r,d=>d<=0).len,1);
+  const train=argBest(rs,r=>streakIn(r,d=>d>=1).len,1);
+  const b3=argBest(rs.map(r=>({r,s:bestStretch(r,3,-1)})).filter(x=>x.s),x=>x.s.s,-1);
+  const b9=argBest(rs.filter(r=>r.holes.length>=9).map(r=>({r,s:bestStretch(r,9,-1)})).filter(x=>x.s),x=>x.s.s,-1);
+  const w3=argBest(rs.map(r=>({r,s:bestStretch(r,3,1)})).filter(x=>x.s),x=>x.s.s,1);
+  const w9=argBest(rs.filter(r=>r.holes.length>=9).map(r=>({r,s:bestStretch(r,9,1)})).filter(x=>x.s),x=>x.s.s,1);
+
+  const A_=[];
+  if(pars) A_.push(card('Most pars in a row',streakIn(pars.item,d=>d===0).len+' holes',
+    roundRef(pars.item,'from hole '+streakIn(pars.item,d=>d===0).start)+tieNote(tieCount(rs,d=>d===0,streakIn(pars.item,d=>d===0).len)),pars.item.id));
+  if(birds) A_.push(card('Most birdies in a row',streakIn(birds.item,d=>d<=-1).len+' hole'+(streakIn(birds.item,d=>d<=-1).len===1?'':'s'),
+    roundRef(birds.item,'from hole '+streakIn(birds.item,d=>d<=-1).start)+tieNote(tieCount(rs,d=>d<=-1,streakIn(birds.item,d=>d<=-1).len)),birds.item.id));
+  if(bfree) A_.push(card('Longest bogey-free run',streakIn(bfree.item,d=>d<=0).len+' holes',
+    roundRef(bfree.item,'from hole '+streakIn(bfree.item,d=>d<=0).start)+tieNote(tieCount(rs,d=>d<=0,streakIn(bfree.item,d=>d<=0).len)),bfree.item.id));
+  if(b3) A_.push(card('Best 3-hole stretch <span style="text-transform:none;letter-spacing:0;font-weight:500">(any consecutive 3)</span>',
+    sgn(b3.item.s.s)+' to par', roundRef(b3.item.r,'holes '+b3.item.s.start+'–'+b3.item.s.end)+tieNote(buildStretches(rs,'s3').filter(x=>x.toPar===b3.val).length),b3.item.r.id));
+  if(b9) A_.push(card('Best 9-hole stretch <span style="text-transform:none;letter-spacing:0;font-weight:500">(any consecutive 9)</span>',
+    sgn(b9.item.s.s)+' to par', roundRef(b9.item.r,'holes '+b9.item.s.start+'–'+b9.item.s.end)+tieNote(buildStretches(rs,'s9').filter(x=>x.toPar===b9.val).length),b9.item.r.id));
+  if(w3) A_.push(card('Worst 3-hole stretch <span style="text-transform:none;letter-spacing:0;font-weight:500">(any consecutive 3)</span>',
+    sgn(w3.item.s.s)+' to par', roundRef(w3.item.r,'holes '+w3.item.s.start+'–'+w3.item.s.end)+tieNote(buildStretches(rs,'s3').filter(x=>x.toPar===w3.val).length),w3.item.r.id));
+  if(w9) A_.push(card('Worst 9-hole stretch <span style="text-transform:none;letter-spacing:0;font-weight:500">(any consecutive 9)</span>',
+    sgn(w9.item.s.s)+' to par', roundRef(w9.item.r,'holes '+w9.item.s.start+'–'+w9.item.s.end)+tieNote(buildStretches(rs,'s9').filter(x=>x.toPar===w9.val).length),w9.item.r.id));
+  if(train) A_.push(card('Longest bogey-or-worse run',streakIn(train.item,d=>d>=1).len+' holes',
+    roundRef(train.item,'from hole '+streakIn(train.item,d=>d>=1).start)+tieNote(tieCount(rs,d=>d>=1,streakIn(train.item,d=>d>=1).len)),train.item.id));
+  A.innerHTML=A_.join('');
+
+  // strict signed nines — complete 18-hole rounds only
+  const Nn=$('#notableN'); Nn.innerHTML='';
+  const full=rs.filter(r=>r.nHoles===18&&r.holes.length===18);
+  if(!full.length){ Nn.innerHTML='<div class="empty">No complete 18-hole rounds in this slice.</div>'; }
+  else{
+    const F=r=>r.holes.slice(0,9).reduce((a,h)=>a+(h.raw-h.par),0);
+    const Bk=r=>r.holes.slice(9).reduce((a,h)=>a+(h.raw-h.par),0);
+    const strokes=(r,half)=>(half==='f'?r.holes.slice(0,9):r.holes.slice(9)).reduce((a,h)=>a+h.raw,0);
+    const mk=(title,fn,half,dir)=>{
+      const b=argBest(full,fn,dir); if(!b) return '';
+      return card(title, sgn(b.val)+' to par',
+        roundRef(b.item, strokes(b.item,half)+' strokes · '+b.item.tee+' tees')+tieNote(full.filter(r=>fn(r)===b.val).length), b.item.id);
+    };
+    const N_=[
+      mk('Best front nine',F,'f',-1),
+      mk('Best back nine',Bk,'b',-1),
+      mk('Worst front nine',F,'f',1),
+      mk('Worst back nine',Bk,'b',1)
+    ].filter(Boolean);
+    const fAvg=mean(full.map(F)), bAvg=mean(full.map(Bk));
+    const betterFront=full.filter(r=>F(r)<Bk(r)).length, betterBack=full.filter(r=>Bk(r)<F(r)).length;
+    // turnarounds: front → back swing
+    const up=argBest(full,r=>F(r)-Bk(r),1), down=argBest(full,r=>Bk(r)-F(r),1);
+    if(up&&up.val>0) N_.push(card('Best turnaround front → back', sgn(F(up.item))+' → '+sgn(Bk(up.item)),
+      roundRef(up.item,up.val+' strokes better on the back'),up.item.id));
+    if(down&&down.val>0) N_.push(card('Worst turnaround front → back', sgn(F(down.item))+' → '+sgn(Bk(down.item)),
+      roundRef(down.item,down.val+' strokes worse on the back'),down.item.id));
+    N_.push(card('Which nine is better',
+      betterFront>betterBack?'Front':betterBack>betterFront?'Back':'Even',
+      '<em>'+betterFront+'</em> rounds better on the front, <em>'+betterBack+'</em> better on the back, '+
+      (full.length-betterFront-betterBack)+' level · averages '+sgn(f1(fAvg))+' vs '+sgn(f1(bAvg))));
+    Nn.innerHTML=N_.join('');
+  }
+
+  // three-hole transitions
+  const T=$('#notableT'); T.innerHTML='';
+  const t3=buildStretches(rs,'t3');
+  if(!t3.length){ T.innerHTML='<div class="empty">No round in this slice has six contiguous holes.</div>'; }
+  else{
+    const win=[...t3].sort((x,y)=>y.val-x.val)[0];   // biggest improvement: worst → best
+    const los=[...t3].sort((x,y)=>x.val-y.val)[0];   // biggest deterioration: best → worst
+    T.innerHTML=
+      card('Worst → best 3-hole transition', sgn(win.a.toPar)+' → '+sgn(win.b.toPar),
+        roundRef(win.r,'holes '+win.a.start+'–'+win.a.end+' into '+win.b.start+'–'+win.b.end+
+          ' · '+win.val+'-stroke gain · '+win.a.seq+' then '+win.b.seq), win.r.id) +
+      card('Best → worst 3-hole transition', sgn(los.a.toPar)+' → '+sgn(los.b.toPar),
+        roundRef(los.r,'holes '+los.a.start+'–'+los.a.end+' into '+los.b.start+'–'+los.b.end+
+          ' · '+(-los.val)+'-stroke loss · '+los.a.seq+' then '+los.b.seq), los.r.id);
+  }
+
+  // bounce back / dropoff
+  let bbHit=0,bbOpp=0,drHit=0,drOpp=0,bestBB=null,worstDR=null;
+  rs.forEach(r=>{
+    for(let i=0;i<r.holes.length-1;i++){
+      const a=r.holes[i], b=r.holes[i+1];
+      if(b.n!==a.n+1) continue;
+      const da=a.raw-a.par, db=b.raw-b.par;
+      if(da>=2){ bbOpp++; if(db<=0){ bbHit++;
+        const swing=da-db; if(!bestBB||swing>bestBB.swing) bestBB={r,a,b,da,db,swing}; } }
+      if(da<=-1){ drOpp++; if(db>=2){ drHit++;
+        const swing=db-da; if(!worstDR||swing>worstDR.swing) worstDR={r,a,b,da,db,swing}; } }
+    }
+  });
+  const nm=d=>({'-3':'Albatross','-2':'Eagle','-1':'Birdie','0':'Par','1':'Bogey','2':'Double','3':'Triple'}[d]||(d>=4?'Quad+':'Par'));
+  const B_=[];
+  B_.push(card('Bounce-back rate',pct(bbHit,bbOpp),
+    '<em>'+bbHit+' of '+bbOpp+'</em> doubles-or-worse followed by par or better'));
+  if(bestBB) B_.push(card('Best bounce-back',nm(bestBB.da)+' → '+nm(bestBB.db),
+    roundRef(bestBB.r,'holes '+bestBB.a.n+'–'+bestBB.b.n+' · '+bestBB.swing+'-stroke swing'),bestBB.r.id));
+  B_.push(card('Drop-off rate',pct(drHit,drOpp),
+    '<em>'+drHit+' of '+drOpp+'</em> birdies-or-better followed by double or worse'));
+  if(worstDR) B_.push(card('Worst drop-off',nm(worstDR.da)+' → '+nm(worstDR.db),
+    roundRef(worstDR.r,'holes '+worstDR.a.n+'–'+worstDR.b.n+' · '+worstDR.swing+'-stroke swing'),worstDR.r.id));
+  const r18=rs.filter(r=>r.nHoles===18&&r.holes.length===18);
+  if(r18.length){
+    const f9=r=>r.holes.slice(0,9).reduce((a,h)=>a+(h.raw-h.par),0);
+    const bk=r=>r.holes.slice(9).reduce((a,h)=>a+(h.raw-h.par),0);
+    const comeback=argBest(r18,r=>f9(r)-bk(r),1);
+    const collapse=argBest(r18,r=>bk(r)-f9(r),1);
+    if(comeback&&comeback.val>0) B_.push(card('Biggest comeback',sgn(f9(comeback.item))+' → '+sgn(bk(comeback.item)),
+      roundRef(comeback.item,comeback.val+' strokes better on the back nine'),comeback.item.id));
+    if(collapse&&collapse.val>0) B_.push(card('Biggest collapse',sgn(f9(collapse.item))+' → '+sgn(bk(collapse.item)),
+      roundRef(collapse.item,collapse.val+' strokes worse on the back nine'),collapse.item.id));
+  }
+  B.innerHTML=B_.join('');
+
+  const C_=[];
+  const bestDiff=argBest(rs.filter(r=>r.diff!=null),r=>r.diff,-1);
+  if(bestDiff) C_.push(card('Best round by differential',f1(bestDiff.val),roundRef(bestDiff.item,bestDiff.item.score+' strokes · '+bestDiff.item.tee+' tees')+tieNote(rs.filter(r=>r.diff===bestDiff.val).length),bestDiff.item.id));
+  const mostB=argBest(rs,r=>r.holes.filter(h=>h.raw-h.par<=-1).length,1);
+  if(mostB&&mostB.val>0) C_.push(card('Most birdies in a round',mostB.val,roundRef(mostB.item,mostB.item.score+' strokes')+tieNote(rs.filter(r=>r.holes.filter(h=>h.raw-h.par<=-1).length===mostB.val).length),mostB.item.id));
+  const mostP=argBest(rs,r=>r.holes.filter(h=>h.raw-h.par<=0).length,1);
+  if(mostP) C_.push(card('Most pars or better in a round',mostP.val+' of '+mostP.item.holes.length,
+    roundRef(mostP.item,mostP.item.score+' strokes · '+mostP.item.holes.filter(h=>h.raw===h.par).length+
+      ' pars, '+mostP.item.holes.filter(h=>h.raw-h.par<=-1).length+' better')+tieNote(rs.filter(r=>r.holes.filter(h=>h.raw-h.par<=0).length===mostP.val).length),mostP.item.id));
+  const fewD=argBest(r18,r=>r.holes.filter(h=>h.raw-h.par>=2).length,-1);
+  if(fewD) C_.push(card('Fewest blow-ups in an 18',fewD.val+' hole'+(fewD.val===1?'':'s')+' at double+',roundRef(fewD.item,fewD.item.score+' strokes')+tieNote(r18.filter(r=>r.holes.filter(h=>h.raw-h.par>=2).length===fewD.val).length),fewD.item.id));
+  const avgBlow=mean(r18.map(r=>r.holes.filter(h=>h.raw-h.par>=2).length));
+  C_.push(card('Blow-up holes per 18',f1(avgBlow),'doubles or worse per complete 18-hole round'));
+  const bestStart=argBest(r18,r=>r.holes.slice(0,3).reduce((a,h)=>a+(h.raw-h.par),0),-1);
+  if(bestStart) C_.push(card('Best start (holes 1–3)',sgn(bestStart.val)+' to par',roundRef(bestStart.item)+tieNote(r18.filter(r=>r.holes.slice(0,3).reduce((a,h)=>a+(h.raw-h.par),0)===bestStart.val).length),bestStart.item.id));
+  const bestFin=argBest(r18,r=>r.holes.slice(15).reduce((a,h)=>a+(h.raw-h.par),0),-1);
+  if(bestFin) C_.push(card('Best finish (holes 16–18)',sgn(bestFin.val)+' to par',roundRef(bestFin.item)+tieNote(r18.filter(r=>r.holes.slice(15).reduce((a,h)=>a+(h.raw-h.par),0)===bestFin.val).length),bestFin.item.id));
+  const eag=rs.flatMap(r=>r.holes.filter(h=>h.raw-h.par<=-2).map(h=>({r,h})));
+  C_.push(card('Eagles',eag.length, eag.length? eag.map(x=>'<em>'+x.r.course+'</em> hole '+x.h.n+' (par '+x.h.par+', '+x.h.raw+') · '+shortDate(x.r.date)).join('<br>') : 'none yet'));
+  C.innerHTML=C_.join('');
+  renderCleanRounds();
+  renderNineDist();
+}
+
+/* --- the war on double bogeys --- */
+function renderCleanRounds(){
+  const g=$('#cleanTiles'); g.innerHTML='';
+  const full=VIEW_NG.filter(r=>r.nHoles===18&&r.holes.length===18);
+  const blow=r=>r.holes.filter(h=>h.raw-h.par>=2).length;
+  if(!full.length){ g.innerHTML='<div class="empty">No complete 18-hole rounds in this slice.</div>'; }
+  else{
+    [[0,'Zero doubles or worse','a clean card — nothing worse than bogey'],
+     [1,'1 or fewer','one blow-up hole at most'],
+     [2,'2 or fewer','two blow-up holes at most'],
+     [3,'3 or fewer','three blow-up holes at most']]
+    .forEach(([lim,title,sub])=>{
+      const sel=full.filter(r=>blow(r)<=lim);
+      const key='blow:'+lim;
+      const t=el('div','tile'+(sel.length?' click':'')+(S.group&&S.group.key===key?' sel':''),
+        '<div class="k">'+title+'</div><div class="v">'+sel.length+'</div>'+
+        '<div class="n">'+pct(sel.length,full.length)+' of complete 18s · '+sub+
+        (sel.length?'<br>most recent '+shortDate(sel[0].date)+' at '+sel[0].course:'')+'</div>');
+      if(sel.length) t.addEventListener('click',()=>setGroup({key,
+        label:(lim===0?'Zero':'≤'+lim)+' doubles or worse',
+        test:r=>r.nHoles===18&&r.holes.length===18&&blow(r)<=lim}));
+      g.appendChild(t);
+    });
+  }
+  /* counterfactual: cap every hole at bogey, leave everything else alone */
+  const cf=$('#ifNoBlowups'); cf.innerHTML='';
+  if(full.length){
+    const capped=r=>r.holes.reduce((a,h)=>a+Math.min(h.raw,h.par+1),0);
+    const lost=r=>r.holes.reduce((a,h)=>a+Math.max(0,(h.raw-h.par)-1),0);
+    const avgAct=mean(full.map(r=>r.score)), avgCap=mean(full.map(capped));
+    const saved=mean(full.map(lost));
+    // differential is (113/slope) x (score - rating - pcc); recompute per round on the capped score
+    const capDiff=mean(full.filter(r=>r.sr&&r.cr!=null).map(r=>(113/r.sr)*(capped(r)-r.cr-(r.pcc||0))));
+    const actDiff=mean(full.filter(r=>r.diff!=null).map(r=>r.diff));
+    const best=argBest(full,capped,-1);
+    [['Strokes lost to blow-ups', f1(saved), 'per complete 18, beyond a bogey on those holes'],
+     ['Average 18 if capped at bogey', f1(avgCap), 'versus '+f1(avgAct)+' actual — '+f1(avgAct-avgCap)+' strokes better'],
+     ['Average differential if capped', f1(capDiff), 'versus '+f1(actDiff)+' actual — a '+f1(actDiff-capDiff)+' shift'],
+     ['Best round if capped', best?capped(best.item):'—',
+      best? best.item.course+' · '+shortDate(best.item.date)+' (played '+best.item.score+')':'']]
+    .forEach(([k,v,n])=>cf.appendChild(el('div','tile','<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div>')));
+  }
+
+  // trend of blow-up holes
+  const box=$('#blowChart'); box.innerHTML='';
+  const rs=[...VIEW.filter(r=>r.nHoles===18&&r.holes.length===18)].sort((a,b)=>a.date<b.date?-1:1);
+  if(rs.length<2){ box.innerHTML='<div class="empty">Not enough complete 18-hole rounds in this slice.</div>'; $('#blowTbl').innerHTML=''; return; }
+  const vals=rs.map(blow);
+  const W=880,H=250,P={t:14,r:16,b:34,l:34};
+  const s=SVG(W,H);
+  const t0=new Date(rs[0].date).getTime(), t1=new Date(rs[rs.length-1].date).getTime();
+  const top=Math.max(...vals,1);
+  const X=t=>P.l+((t-t0)/Math.max(1,(t1-t0)))*(W-P.l-P.r);
+  const Y=v=>P.t+(1-v/top)*(H-P.t-P.b);
+  for(let v=0;v<=top;v+=Math.max(1,Math.ceil(top/6))){
+    s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),stroke:'var(--grid)','stroke-width':1}));
+    const tx=N('text',{x:P.l-8,y:Y(v)+4,'text-anchor':'end',fill:'var(--muted)','font-size':11}); tx.textContent=v; s.appendChild(tx);
+  }
+  const months=[...new Set(rs.map(r=>r.date.slice(0,7)))];
+  months.filter((_,i)=>i%Math.ceil(months.length/6)===0).forEach(ym=>{
+    const t=new Date(ym+'-01').getTime(); if(t<t0||t>t1) return;
+    const tx=N('text',{x:X(t),y:H-P.b+18,'text-anchor':'middle',fill:'var(--muted)','font-size':11});
+    tx.textContent=MONTHS[+ym.slice(5,7)-1]+' '+ym.slice(2,4); s.appendChild(tx);
+  });
+  const GAP=60*864e5; let d='',pen='M';
+  rs.forEach((r,i)=>{
+    const t=new Date(r.date).getTime();
+    const w=rs.slice(Math.max(0,i-4),i+1).map(blow);
+    if(i>0 && t-new Date(rs[i-1].date).getTime()>GAP) pen='M';
+    d+=pen+X(t).toFixed(1)+' '+Y(mean(w)).toFixed(1)+' '; pen='L';
+  });
+  s.appendChild(N('path',{d,fill:'none',stroke:'var(--series-2)','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  rs.forEach(r=>{
+    const t=new Date(r.date).getTime(), v=blow(r);
+    s.appendChild(N('circle',{cx:X(t),cy:Y(v),r:4,fill:'var(--series-1)',stroke:'var(--surface-1)','stroke-width':2}));
+    const hit=N('circle',{cx:X(t),cy:Y(v),r:11,fill:'transparent',style:'cursor:pointer'});
+    bindTip(hit,'<b>'+v+' blow-up hole'+(v===1?'':'s')+'</b><br>'+fmtDate(r.date)+'<br>'+r.course+' · '+r.tee+
+      '<br>'+r.score+' strokes · '+f1(r.diff)+' differential<br><span style="opacity:.75">Click to open the scorecard</span>');
+    hit.addEventListener('click',()=>openRound(r.id));
+    s.appendChild(hit);
+  });
+  s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:H-P.b,y2:H-P.b,stroke:'var(--axis)','stroke-width':1}));
+  box.appendChild(s);
+  $('#blowTbl').innerHTML=tableFrom([{t:'Date'},{t:'Course'},{t:'Score',num:1},{t:'Doubles+',num:1},{t:'Differential',num:1}],
+    [...rs].reverse().map(r=>[fmtDate(r.date),r.course,r.score,blow(r),f1(r.diff)]));
+}
+
+/* --- distribution of signed nines --- */
+function renderNineDist(){
+  const box=$('#nineDist'); box.innerHTML='';
+  const full=VIEW.filter(r=>r.nHoles===18&&r.holes.length===18);
+  if(!full.length){ box.innerHTML='<div class="empty">No complete 18-hole rounds in this slice.</div>'; $('#nineDistTbl').innerHTML=''; return; }
+  const F=r=>r.holes.slice(0,9).reduce((a,h)=>a+(h.raw-h.par),0);
+  const B=r=>r.holes.slice(9).reduce((a,h)=>a+(h.raw-h.par),0);
+  const fs=full.map(F), bs=full.map(B), all=fs.concat(bs);
+  const lo=Math.min(...all), hi=Math.max(...all);
+  const bins=[]; for(let v=lo;v<=hi;v++) bins.push({v,f:fs.filter(x=>x===v).length,b:bs.filter(x=>x===v).length});
+  const W=880,H=250,P={t:22,r:12,b:38,l:34};
+  const s=SVG(W,H);
+  const mx=Math.max(...bins.map(x=>x.f+x.b),1);
+  const bw=(W-P.l-P.r)/bins.length;
+  const Y=v=>P.t+(1-v/mx)*(H-P.t-P.b);
+  for(let v=0;v<=mx;v+=Math.max(1,Math.ceil(mx/5))){
+    s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),stroke:'var(--grid)','stroke-width':1}));
+    const tx=N('text',{x:P.l-8,y:Y(v)+4,'text-anchor':'end',fill:'var(--muted)','font-size':11}); tx.textContent=v; s.appendChild(tx);
+  }
+  bins.forEach((x,i)=>{
+    const bx=P.l+i*bw, tot=x.f+x.b;
+    const hF=(x.f/mx)*(H-P.t-P.b), hB=(x.b/mx)*(H-P.t-P.b);
+    if(x.f){ const r1=N('rect',{x:bx+2,y:Y(x.f),width:Math.max(1,bw-4),height:hF,rx:3,fill:'var(--series-1)'});
+      bindTip(r1,'<b>Front nine at '+sgn(x.v)+'</b><br>'+x.f+' round'+(x.f===1?'':'s')); s.appendChild(r1); }
+    if(x.b){ const r2=N('rect',{x:bx+2,y:Y(x.f+x.b)+ (x.f?2:0),width:Math.max(1,bw-4),height:Math.max(0,hB-(x.f?2:0)),rx:3,fill:'var(--series-2)'});
+      bindTip(r2,'<b>Back nine at '+sgn(x.v)+'</b><br>'+x.b+' round'+(x.b===1?'':'s')); s.appendChild(r2); }
+    if(tot){ const lb=N('text',{x:bx+bw/2,y:Y(tot)-5,'text-anchor':'middle',fill:'var(--text-secondary)','font-size':10}); lb.textContent=tot; s.appendChild(lb); }
+    const tx=N('text',{x:bx+bw/2,y:H-P.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10});
+    tx.textContent=sgn(x.v); s.appendChild(tx);
+  });
+  // mark the even-or-better zone
+  const evenIdx=bins.findIndex(x=>x.v>0);
+  if(evenIdx>0){
+    const xx=P.l+evenIdx*bw;
+    s.appendChild(N('line',{x1:xx,x2:xx,y1:P.t-8,y2:H-P.b,stroke:'var(--good)','stroke-width':1.5}));
+    const lab=N('text',{x:xx-5,y:P.t-12,'text-anchor':'end',fill:'var(--good)','font-size':10.5,'font-weight':600});
+    const n=bins.slice(0,evenIdx).reduce((a,x)=>a+x.f+x.b,0);
+    lab.textContent='even or better: '+n+' of '+(full.length*2); s.appendChild(lab);
+  }
+  s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:H-P.b,y2:H-P.b,stroke:'var(--axis)','stroke-width':1}));
+  const al=N('text',{x:(W+P.l)/2,y:H-4,'text-anchor':'middle',fill:'var(--muted)','font-size':10.5});
+  al.textContent='Nine-hole score to par'; s.appendChild(al);
+  box.appendChild(s);
+  $('#nineDistTbl').innerHTML=tableFrom([{t:'To par'},{t:'Front',num:1},{t:'Back',num:1},{t:'Total',num:1}],
+    bins.filter(x=>x.f+x.b).map(x=>[sgn(x.v),x.f,x.b,x.f+x.b]));
+}
+
+/* --- stretch explorer --- */
+const SX={type:'s3',order:'best',q:'',sortKey:'val',sortDir:1};
+const SX_LIMIT=200;
+const SX_TYPES={s3:'Any 3-hole stretch',s9:'Any 9-hole stretch',front:'Front nine',back:'Back nine',
+                turn:'Front → back turnaround',t3:'3-hole transition','run:par':'Par streak',
+                'run:parbetter':'Par-or-better streak','run:bird':'Birdie streak',
+                'run:bogeyfree':'Bogey-free streak','run:bogey':'Bogey-or-worse streak',
+                'run:blowfree':'Blow-up-free streak'};
+function renderStretches(){
+  const t=$('#stretchTbl'), note=$('#sNote');
+  const swingType = SX.type==='turn'||SX.type==='t3';
+  const runType = SX.type.startsWith('run:');
+  let rows=buildStretches(VIEW.filter(r=>r.hasCard),SX.type);
+  const total=rows.length;
+  const q=SX.q.trim().toLowerCase();
+  if(q) rows=rows.filter(x=>(x.r.course+' '+x.r.facility+' '+x.r.tee+' '+x.r.date).toLowerCase().includes(q));
+  const matched=rows.length;
+
+  // "best" means lowest to-par for stretches, largest positive swing for turnaround/transition
+  const baseDir = SX.order==='best' ? ((swingType||runType)?-1:1) : ((swingType||runType)?1:-1);
+  const cols = runType
+    ? [{k:'val',t:'Length',num:1},{k:'date',t:'Date'},{k:'course',t:'Course'},{k:'tee',t:'Tees'},
+       {k:'holes',t:'Holes'},{k:'strokes',t:'Strokes',num:1},{k:'par',t:'Par',num:1},
+       {k:'seq',t:'Scores'},{k:'diff',t:'Round diff',num:1}]
+    : swingType
+    ? [{k:'val',t:'Swing',num:1},{k:'date',t:'Date'},{k:'course',t:'Course'},{k:'tee',t:'Tees'},
+       {k:'holes',t:'Holes'},{k:'first',t:'First half',num:1},{k:'second',t:'Second half',num:1},
+       {k:'seq',t:'Scores'},{k:'diff',t:'Round diff',num:1}]
+    : [{k:'val',t:'To par',num:1},{k:'date',t:'Date'},{k:'course',t:'Course'},{k:'tee',t:'Tees'},
+       {k:'holes',t:'Holes'},{k:'strokes',t:'Strokes',num:1},{k:'par',t:'Par',num:1},
+       {k:'seq',t:'Scores'},{k:'diff',t:'Round diff',num:1}];
+  const sv={
+    val:x=>x.val, date:x=>x.r.date, course:x=>x.r.course, tee:x=>x.r.tee, holes:x=>x.start,
+    strokes:x=>x.strokes, par:x=>x.par, diff:x=>x.r.diff??999,
+    first:x=>(x.a||x.front).toPar, second:x=>(x.b||x.back).toPar,
+    seq:x=>x.seq||((x.a||x.front).seq)
+  };
+  const key = SX.sortKey, dir = key==='val' ? baseDir : SX.sortDir;
+  rows.sort((p,q2)=>{ const a=sv[key](p), b=sv[key](q2);
+    if(a<b) return -1*dir; if(a>b) return 1*dir; return p.r.date<q2.r.date?1:-1; });
+  const shown=rows.slice(0,SX_LIMIT);
+
+  note.innerHTML='<b>'+matched.toLocaleString()+'</b> '+SX_TYPES[SX.type].toLowerCase()+(runType?'s of 2+ holes':'')+
+    (q?' matching “'+SX.q+'”':'')+' across '+VIEW.filter(r=>r.hasCard).length+' carded rounds'+
+    (matched!==total?' (of '+total.toLocaleString()+' before search)':'')+'. '+
+    (matched>SX_LIMIT? 'Showing the top <b>'+SX_LIMIT+'</b> by the current sort — narrow with the search box or the page filters to see the rest.'
+                     : 'All of them are listed below.')+' Click a row to open that round.';
+
+  const cell=x=>{
+    const holes='Holes '+x.start+'–'+x.end;
+    if(swingType){
+      const A=x.a||x.front, B=x.b||x.back;
+      return [ (x.val>0?'+':'')+x.val, fmtDate(x.r.date), x.r.course, x.r.tee, holes,
+               sgn(A.toPar), sgn(B.toPar), A.seq+' → '+B.seq, f1(x.r.diff) ];
+    }
+    return [ (runType? x.val+' hole'+(x.val===1?'':'s') : sgn(x.val)),
+             fmtDate(x.r.date), x.r.course, x.r.tee, holes,
+             x.strokes, x.par, x.seq, f1(x.r.diff) ];
+  };
+  t.innerHTML='<thead><tr>'+cols.map(c=>'<th data-k="'+c.k+'" class="'+(c.num?'num':'')+'">'+c.t+
+      (key===c.k?' <span class="sortarrow">'+(dir>0?'▲':'▼')+'</span>':'')+'</th>').join('')+'</tr></thead><tbody>'+
+    (shown.length? shown.map(x=>'<tr class="rowlink" data-rid="'+x.r.id+'">'+cell(x).map((v,i)=>'<td class="'+(cols[i].num?'num ':'')+
+      (i===2?'name':'')+'">'+v+'</td>').join('')+'</tr>').join('')
+      : '<tr><td colspan="'+cols.length+'" style="color:var(--muted);padding:26px">Nothing matches. Try a different stretch type or clear the search.</td></tr>')+
+    '</tbody>';
+  t.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
+    const k=th.dataset.k;
+    if(k==='val'){ SX.order = SX.order==='best'?'worst':'best'; $('#sOrder').value=SX.order; SX.sortKey='val'; }
+    else { if(SX.sortKey===k) SX.sortDir*=-1; else { SX.sortKey=k; SX.sortDir=1; } }
+    renderStretches();
+  }));
+}
+
+/* --- courses --- */
+function renderCourses(){
+  const byC={}, byT={};
+  VIEW.forEach(r=>{
+    (byC[r.course]=byC[r.course]||[]).push(r);
+    const k=r.course+' · '+r.tee; (byT[k]=byT[k]||[]).push(r);
+  });
+  const mk=(obj,keyLabel)=>Object.entries(obj).map(([k,rs])=>{
+    const ds=rs.map(r=>r.diff).filter(v=>v!=null);
+    const carded=rs.filter(r=>r.hasCard);
+    const blow=carded.length? mean(carded.map(r=>r.holes.filter(h=>h.raw-h.par>=2).length/r.holes.length*18)) : null;
+    return {k,n:rs.length,avg:mean(ds),best:ds.length?Math.min(...ds):null,worst:ds.length?Math.max(...ds):null,blow,rs};
+  }).sort((a,b)=> (b.n-a.n)||((a.avg??99)-(b.avg??99)));
+
+  const renderTbl=(id,rows,isTee)=>{
+    const t=$(id);
+    t.innerHTML='<thead><tr><th>'+(isTee?'Course · tees':'Course')+'</th><th class="num">Rds</th>'+
+      '<th class="num">Avg</th><th class="num">Best</th><th class="num">Worst</th>'+
+      '<th class="num" title="Doubles or worse per 18 holes">Dbl+/18</th></tr></thead><tbody>'+
+      rows.map(r=>'<tr data-k="'+r.k.replace(/"/g,'&quot;')+'" class="expandable" title="Click to filter the page to this"><td class="name" title="'+r.k+'">'+r.k+'</td>'+
+        '<td class="num">'+r.n+'</td><td class="num">'+f1(r.avg)+'</td>'+
+        '<td class="num">'+f1(r.best)+'</td><td class="num">'+f1(r.worst)+'</td>'+
+        '<td class="num">'+f1(r.blow)+'</td></tr>').join('')+'</tbody>';
+    t.querySelectorAll('tbody tr').forEach(tr=>tr.addEventListener('click',()=>{
+      const k=tr.dataset.k;
+      if(isTee){ S.tee = (S.tee===k?'':k); if(S.tee) S.course=''; }
+      else { S.course = (S.course===k?'':k); if(S.course) S.tee=''; }
+      syncControls(); render(); document.querySelector('#courses').scrollIntoView({behavior:'smooth',block:'start'});
+    }));
+  };
+  renderTbl('#courseTbl',mk(byC),false);
+  renderTbl('#teeTbl',mk(byT),true);
+
+  const box=$('#courseChart'); box.innerHTML='';
+  const rows=mk(byC).filter(r=>r.n>=3&&r.avg!=null).sort((a,b)=>a.avg-b.avg);
+  if(!rows.length){ box.innerHTML='<div class="empty">Need a course played 3+ times in this slice.</div>'; return; }
+  const rowH=26, W=880, P={t:8,r:56,b:26,l:210}, H=P.t+P.b+rows.length*rowH;
+  const s=SVG(W,H);
+  const mn=Math.min(...rows.map(r=>r.best))-1, mx=Math.max(...rows.map(r=>r.avg))+1;
+  const X=v=>P.l+((v-mn)/(mx-mn))*(W-P.l-P.r);
+  for(let v=Math.ceil(mn);v<=mx;v+=2){
+    s.appendChild(N('line',{x1:X(v),x2:X(v),y1:P.t,y2:H-P.b,stroke:'var(--grid)','stroke-width':1}));
+    const tx=N('text',{x:X(v),y:H-P.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10.5}); tx.textContent=v; s.appendChild(tx);
+  }
+  rows.forEach((r,i)=>{
+    const y=P.t+i*rowH;
+    const lb=N('text',{x:P.l-10,y:y+rowH/2+4,'text-anchor':'end',fill:'var(--text-secondary)','font-size':11.5});
+    lb.textContent=r.k.length>30?r.k.slice(0,29)+'…':r.k; s.appendChild(lb);
+    const x0=X(mn), w=X(r.avg)-x0;
+    const rct=N('rect',{x:x0,y:y+6,width:Math.max(2,w),height:rowH-12,rx:4,fill:'var(--seq-450)'});
+    bindTip(rct,'<b>'+r.k+'</b><br>'+r.n+' rounds<br>avg '+f1(r.avg)+' · best '+f1(r.best)+' · worst '+f1(r.worst));
+    s.appendChild(rct);
+    const dot=N('circle',{cx:X(r.best),cy:y+rowH/2,r:5,fill:'var(--series-2)',stroke:'var(--surface-1)','stroke-width':2});
+    bindTip(dot,'<b>Best at '+r.k+'</b><br>'+f1(r.best)+' differential');
+    s.appendChild(dot);
+    const v=N('text',{x:W-P.r+8,y:y+rowH/2+4,fill:'var(--text-primary)','font-size':11,'font-weight':600}); v.textContent=f1(r.avg); s.appendChild(v);
+  });
+  box.appendChild(s);
+}
+
+/* --- holes --- */
+function renderHoles(){
+  const hs=holesOf(VIEW);
+  const siBox=$('#siChart'); siBox.innerHTML='';
+  const si=[]; for(let i=1;i<=18;i++){ const sel=hs.filter(h=>h.si===i); si.push({i,n:sel.length,over:mean(sel.map(h=>h.raw-h.par))}); }
+  drawOverBars(siBox,'#siTbl',si.filter(x=>x.n>0),'Stroke index','SI');
+  const hb=$('#holeChart'); hb.innerHTML='';
+  const r18=VIEW.filter(r=>r.nHoles===18);
+  const hh=holesOf(r18);
+  const hn=[]; for(let i=1;i<=18;i++){ const sel=hh.filter(h=>h.n===i); hn.push({i,n:sel.length,over:mean(sel.map(h=>h.raw-h.par))}); }
+  drawOverBars(hb,'#holeTbl',hn.filter(x=>x.n>0),'Hole number','Hole');
+
+  const nt=$('#nineTiles'); nt.innerHTML='';
+  const full18=VIEW.filter(r=>r.nHoles===18&&r.holes.length===18);
+  if(full18.length){
+    const f9=mean(full18.map(r=>r.holes.slice(0,9).reduce((a,h)=>a+(h.raw-h.par),0)));
+    const b9=mean(full18.map(r=>r.holes.slice(9).reduce((a,h)=>a+(h.raw-h.par),0)));
+    const first3=mean(full18.map(r=>r.holes.slice(0,3).reduce((a,h)=>a+(h.raw-h.par),0)));
+    const last3=mean(full18.map(r=>r.holes.slice(15).reduce((a,h)=>a+(h.raw-h.par),0)));
+    [['Front nine',sgn(f1(f9)),'average strokes over par'],
+     ['Back nine',sgn(f1(b9)),'average strokes over par'],
+     ['Opening 3 holes',sgn(f1(first3)),'average strokes over par'],
+     ['Closing 3 holes',sgn(f1(last3)),'average strokes over par']]
+    .forEach(([k,v,n])=>nt.appendChild(el('div','tile','<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div>')));
+  }
+
+  // nemesis / comfort
+  const key=h=>h.r.course+'|'+h.r.tee+'|'+h.n;   // same key shape the outcome explorer pins on
+  const map={};
+  hs.forEach(h=>{ const k=key(h); (map[k]=map[k]||{key:k,course:h.r.course,tee:h.r.tee,n:h.n,par:h.par,vals:[]}).vals.push(h.raw-h.par); });
+  const list=Object.values(map).filter(x=>x.vals.length>=4)
+    .map(x=>({...x,avg:mean(x.vals),plays:x.vals.length,
+              blow:x.vals.filter(v=>v>=2).length,good:x.vals.filter(v=>v<=0).length}))
+    .sort((a,b)=>b.avg-a.avg);
+  const mkH=(id,rows,label)=>{
+    $(id).innerHTML='<thead><tr><th>'+label+'</th><th class="num">Par</th><th class="num">Plays</th>'+
+      '<th class="num">Avg to par</th><th class="num">Dbl+</th><th class="num">Par+</th></tr></thead><tbody>'+
+      (rows.length?rows.map(x=>'<tr class="rowlink" data-pin="'+x.key+'" title="Click to list every time you have played this hole">'+
+      '<td class="name" title="'+x.course+' · '+x.tee+'">'+x.course+' <span style="color:var(--muted)">#'+x.n+'</span></td>'+
+      '<td class="num">'+x.par+'</td><td class="num">'+x.plays+'</td><td class="num">'+(x.avg>=0?'+':'')+f2(x.avg)+'</td>'+
+      '<td class="num">'+x.blow+'</td><td class="num">'+x.good+'</td></tr>').join('')
+      :'<tr><td colspan="6" style="color:var(--muted)">Need a hole played 4+ times in this slice.</td></tr>')+'</tbody>';
+    $(id).querySelectorAll('tr[data-pin]').forEach(tr=>tr.addEventListener('click',()=>{
+      OX.pin=tr.dataset.pin; OX.type='all'; OX.view='list'; OX.par=''; OX.min='1';
+      $('#oType').value='all'; $('#oPar').value=''; $('#oMin').value='1';
+      $('#oView').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='list'));
+      renderOutHoles();
+      document.querySelector('#outHoleTbl').closest('.tablewrap').scrollIntoView({behavior:'smooth',block:'center'});
+    }));
+  };
+  mkH('#nemesisTbl',list.slice(0,12),'Hardest holes');
+  mkH('#comfortTbl',[...list].reverse().slice(0,12),'Easiest holes');
+}
+function drawOverBars(box,tblId,data,axisLabel,short){
+  if(!data.length){ box.innerHTML='<div class="empty">No data in this slice.</div>'; $(tblId).innerHTML=''; return; }
+  const W=420,H=230,P={t:12,r:8,b:36,l:34};
+  const s=SVG(W,H);
+  const mx=Math.max(...data.map(d=>d.over)), mn=Math.min(0,Math.min(...data.map(d=>d.over)));
+  const top=Math.ceil(mx*10)/10+0.1, bot=Math.floor(mn*10)/10;
+  const Y=v=>P.t+(1-(v-bot)/(top-bot))*(H-P.t-P.b);
+  [0,0.25,0.5,0.75,1,1.25].filter(v=>v>=bot&&v<=top).forEach(v=>{
+    s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),stroke:'var(--grid)','stroke-width':1}));
+    const tx=N('text',{x:P.l-7,y:Y(v)+4,'text-anchor':'end',fill:'var(--muted)','font-size':10.5}); tx.textContent=v; s.appendChild(tx);
+  });
+  const bw=(W-P.l-P.r)/data.length;
+  data.forEach((d,i)=>{
+    const x=P.l+i*bw, y=Y(Math.max(d.over,0)), h=Math.abs(Y(d.over)-Y(0));
+    const rct=N('rect',{x:x+1.5,y:y,width:Math.max(1,bw-3),height:Math.max(1,h),rx:4,fill:'var(--seq-450)',style:'cursor:pointer'});
+    bindTip(rct,'<b>'+short+' '+d.i+'</b><br>'+(d.over>=0?'+':'')+f2(d.over)+' strokes to par<br>'+d.n+' holes played'+
+      '<br><span style="opacity:.75">Click to break this down by result</span>');
+    rct.addEventListener('click',()=>{
+      OX.view = short==='SI' ? 'si' : 'num'; OX.pin=null; OX.min='1'; $('#oMin').value='1';
+      $('#oView').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===OX.view));
+      renderOutHoles();
+      document.querySelector('#outHoleTbl').closest('.tablewrap').scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    s.appendChild(rct);
+    if(i%2===0||data.length<=18){const tx=N('text',{x:x+bw/2,y:H-P.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10}); tx.textContent=d.i; s.appendChild(tx);}
+  });
+  s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:Y(0),y2:Y(0),stroke:'var(--axis)','stroke-width':1}));
+  const al=N('text',{x:(W+P.l)/2,y:H-2,'text-anchor':'middle',fill:'var(--muted)','font-size':10.5}); al.textContent=axisLabel; s.appendChild(al);
+  box.appendChild(s);
+  $(tblId).innerHTML=tableFrom([{t:short},{t:'Holes played',num:1},{t:'Avg to par',num:1}],
+    data.map(d=>[d.i,d.n,(d.over>=0?'+':'')+f2(d.over)]));
+}
+
+/* --- rounds table --- */
+const COLS=[
+  {k:'date',t:'Date',v:r=>fmtDate(r.date),sv:r=>r.date},
+  {k:'course',t:'Course',v:r=>'<span title="'+r.facility+'">'+r.course+'</span>'+
+     (r.pending?' <span class="chip" style="padding:1px 7px;font-size:10.5px;background:var(--warning);color:#0b0b0b;font-weight:650">NOT POSTED</span>':''),
+   sv:r=>r.course,cls:'name'},
+  {k:'tee',t:'Tees',v:r=>r.tee,sv:r=>r.tee},
+  {k:'nHoles',t:'Holes',v:r=>r.nHoles,sv:r=>r.nHoles,num:1},
+  {k:'score',t:'Score',v:r=>r.score,sv:r=>r.score,num:1},
+  {k:'toPar',t:'To par',v:r=>r.hasCard?sgn(r.toPar):'—',sv:r=>r.hasCard?r.toPar:999,num:1},
+  {k:'diff',t:'Differential',v:r=>f1(r.diff)+(r.pending?'<span title="Estimated — not yet posted to GHIN" style="color:var(--warning);font-weight:700">*</span>':''),sv:r=>r.diff??999,num:1},
+  {k:'cr',t:'Rating',v:r=>f1(r.cr),sv:r=>r.cr,num:1},
+  {k:'sr',t:'Slope',v:r=>r.sr,sv:r=>r.sr,num:1},
+  {k:'birdies',t:'Bird',v:r=>r.holes.filter(h=>h.raw-h.par<=-1).length,sv:r=>r.holes.filter(h=>h.raw-h.par<=-1).length,num:1},
+  {k:'pars',t:'Pars',v:r=>r.holes.filter(h=>h.raw===h.par).length,sv:r=>r.holes.filter(h=>h.raw===h.par).length,num:1},
+  {k:'blowups',t:'Dbl+',v:r=>r.holes.filter(h=>h.raw-h.par>=2).length,sv:r=>r.holes.filter(h=>h.raw-h.par>=2).length,num:1},
+  {k:'hi',t:'Index then',v:r=>f1(r.hi),sv:r=>r.hi??999,num:1}
+];
+function renderRounds(){
+  const t=$('#roundTbl');
+  const col=COLS.find(c=>c.k===S.sortKey)||COLS[0];
+  const rows=[...VIEW].sort((a,b)=>{
+    const av=col.sv(a), bv=col.sv(b);
+    if(av<bv) return -1*S.sortDir; if(av>bv) return 1*S.sortDir; return a.date<b.date?1:-1;
+  });
+  let h='<thead><tr>'+COLS.map(c=>'<th data-k="'+c.k+'" class="'+(c.num?'num':'')+'">'+c.t+
+    (S.sortKey===c.k?' <span class="sortarrow">'+(S.sortDir>0?'▲':'▼')+'</span>':'')+'</th>').join('')+'</tr></thead><tbody>';
+  rows.forEach(r=>{
+    h+='<tr class="expandable" data-id="'+r.id+'">'+COLS.map(c=>'<td class="'+(c.num?'num ':'')+(c.cls||'')+'">'+c.v(r)+'</td>').join('')+'</tr>';
+    if(S.expanded.has(r.id)) h+='<tr class="miniwrap"><td colspan="'+COLS.length+'"><div class="detail">'+scorecard(r)+'</div></td></tr>';
+  });
+  t.innerHTML=h+'</tbody>';
+  t.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
+    const k=th.dataset.k; if(!k) return;
+    if(S.sortKey===k) S.sortDir*=-1; else { S.sortKey=k; S.sortDir = (k==='diff'||k==='score'||k==='toPar')?1:-1; }
+    renderRounds();
+  }));
+  t.querySelectorAll('tbody tr.expandable').forEach(tr=>tr.addEventListener('click',()=>{
+    const id=+tr.dataset.id; S.expanded.has(id)?S.expanded.delete(id):S.expanded.add(id); renderRounds();
+  }));
+}
+function scorecard(r){
+  if(!r.hasCard) return '<div style="color:var(--muted);font-size:13px">No hole-by-hole card was posted for this round — GHIN has the total ('+r.score+') and the differential only.</div>';
+  const nines = r.holes.length>9 ? [r.holes.slice(0,9),r.holes.slice(9)] : [r.holes];
+  let out='<div style="font-size:12.5px;color:var(--text-secondary);margin-bottom:10px">'+r.facility+
+    ' · '+r.tee+' tees · rating '+f1(r.cr)+' / slope '+r.sr+' · differential <b style="color:var(--text-primary)">'+f1(r.diff)+'</b>'+
+    (r.pending?' <span style="color:var(--warning)">(estimated — not yet posted to GHIN)</span>':'')+
+    (r.pcc?' · PCC '+sgn(r.pcc):'')+'</div>';
+  nines.forEach((nine,ni)=>{
+    const tot=nine.reduce((a,h)=>a+h.raw,0), ptot=nine.reduce((a,h)=>a+h.par,0);
+    out+='<div class="sc" style="margin-bottom:8px">';
+    out+='<div class="lab">Hole</div>'+nine.map(h=>'<div class="hd">'+h.n+'</div>').join('')+'<div class="hd">'+(nines.length>1?(ni?'In':'Out'):'Tot')+'</div>';
+    out+='<div class="lab">Par</div>'+nine.map(h=>'<div class="hd">'+h.par+'</div>').join('')+'<div class="hd">'+ptot+'</div>';
+    out+='<div class="lab">Score</div>'+nine.map(h=>{const d=h.raw-h.par;
+      return '<div style="background:'+relColor(d)+';color:'+relInk(d)+';font-weight:600'+(d===0?';border:1px solid var(--border)':'')+'">'+h.raw+'</div>';}).join('')+
+      '<div class="hd" style="font-weight:700;color:var(--text-primary)">'+tot+'</div>';
+    out+='<div class="lab">SI</div>'+nine.map(h=>'<div class="hd" style="font-size:10px">'+h.si+'</div>').join('')+'<div class="hd"></div>';
+    out+='</div>';
+  });
+  const c={}; REL_LABELS.forEach(o=>c[o.k]=0); r.holes.forEach(h=>c[relKey(h.raw-h.par)]++);
+  out+='<div class="chips">'+REL_LABELS.filter(o=>c[o.k]).map(o=>'<span class="chip">'+c[o.k]+' '+o.label.toLowerCase()+'</span>').join('')+
+    '<span class="chip">'+sgn(r.toPar)+' to par</span></div>';
+  if(r.sg){
+    const keys=Object.keys(r.sg).filter(k=>k!=='vs');
+    out+='<div style="margin-top:12px;border-top:1px solid var(--grid);padding-top:10px">'+
+      '<div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px">'+
+      'Strokes gained <span style="text-transform:none;letter-spacing:0;font-weight:500">(Shot Pattern, vs '+r.sg.vs+' — not from GHIN)</span></div>'+
+      '<div class="chips">'+keys.map(k=>'<span class="chip" style="font-variant-numeric:tabular-nums">'+k+' <b style="color:'+
+        (r.sg[k]>=0?'var(--good)':'var(--critical)')+'">'+(r.sg[k]>0?'+':'')+f1(r.sg[k])+'</b></span>').join('')+'</div></div>';
+  }
+  return out;
+}
+
+/* ============================ controls ============================ */
+function buildControls(){
+  const courses=[...new Set(ALL.map(r=>r.course))].sort();
+  $('#fCourse').innerHTML='<option value="">All courses</option>'+courses.map(c=>'<option>'+c+'</option>').join('');
+  const tees=[...new Set(ALL.map(r=>r.course+' · '+r.tee))].sort();
+  $('#fTee').innerHTML='<option value="">All tees</option>'+tees.map(c=>'<option>'+c+'</option>').join('');
+  const years=[...new Set(ALL.map(r=>r.y))].sort((a,b)=>b-a);
+  $('#fYear').innerHTML='<option value="">All time</option>'+
+    '<option value="l10">Last 10 rounds</option><option value="l20">Last 20 rounds</option><option value="l365">Last 12 months</option>'+
+    years.map(y=>'<option value="y'+y+'">'+y+' season</option>').join('');
+  const dates=ALL.map(r=>r.date).sort();
+  $('#fFrom').min=$('#fTo').min=dates[0]; $('#fFrom').max=$('#fTo').max=dates[dates.length-1];
+  $('#subline').textContent = ALL.length+' rounds · '+fmtDate(dates[0])+' – '+fmtDate(dates[dates.length-1])+
+    ' · '+[...new Set(ALL.map(r=>r.course))].length+' courses';
+
+  $('#fCourse').addEventListener('change',e=>{S.course=e.target.value; S.tee=''; syncControls(); render();});
+  $('#fTee').addEventListener('change',e=>{S.tee=e.target.value; S.course=''; syncControls(); render();});
+  $('#fFrom').addEventListener('change',e=>{S.from=e.target.value; render();});
+  $('#fTo').addEventListener('change',e=>{S.to=e.target.value; render();});
+  $('#fHoles').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    S.holes=b.dataset.v; $('#fHoles').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); render();
+  }));
+  $('#fYear').addEventListener('change',e=>{
+    const v=e.target.value;
+    if(!v){S.from='';S.to='';}
+    else if(v.startsWith('y')){S.from=v.slice(1)+'-01-01'; S.to=v.slice(1)+'-12-31';}
+    else if(v==='l365'){const d=new Date(dates[dates.length-1]); d.setFullYear(d.getFullYear()-1); S.from=d.toISOString().slice(0,10); S.to='';}
+    else {const n=v==='l10'?10:20; const sorted=[...ALL].sort((a,b)=>a.date<b.date?1:-1); S.from=sorted[Math.min(n,sorted.length)-1].date; S.to='';}
+    syncControls(); render();
+  });
+  $('#fReset').addEventListener('click',()=>{S.course='';S.tee='';S.from='';S.to='';S.holes='all';S.group=null;S.expanded.clear();
+    $('#fYear').value=''; $('#fHoles').querySelectorAll('button').forEach((x,i)=>x.classList.toggle('on',i===0)); syncControls(); render();});
+
+  document.querySelectorAll('[data-tbl]').forEach(b=>b.addEventListener('click',()=>{
+    const el2=$('#'+b.dataset.tbl); el2.classList.toggle('on'); b.textContent=el2.classList.contains('on')?'Hide table':'Table view';
+  }));
+
+  const qs=[['Best rounds','diff',1],['Worst rounds','diff',-1],['Lowest scores','score',1],['Most birdies','birdies',-1],
+            ['Most pars','pars',-1],['Fewest blow-ups','blowups',1],['Newest first','date',-1],['Oldest first','date',1]];
+  $('#quickSorts').innerHTML=qs.map((q,i)=>'<span class="chip" style="cursor:pointer" data-i="'+i+'">'+q[0]+'</span>').join('');
+  $('#quickSorts').querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+    const q=qs[+c.dataset.i]; S.sortKey=q[1]; S.sortDir=q[2]; renderRounds();
+    document.querySelector('#rounds .tablewrap').scrollTop=0;
+  }));
+
+  $('#oType').addEventListener('change',e=>{OX.type=e.target.value; OX.pin=null; renderOutHoles();});
+  $('#oPar').addEventListener('change',e=>{OX.par=e.target.value; OX.pin=null; renderOutHoles();});
+  $('#oMin').addEventListener('change',e=>{OX.min=e.target.value; renderOutHoles();});
+  $('#oView').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    OX.view=b.dataset.v; OX.pin=null;
+    $('#oView').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    renderOutHoles();
+  }));
+  let oTimer; $('#oSearch').addEventListener('input',e=>{
+    clearTimeout(oTimer); const v=e.target.value; oTimer=setTimeout(()=>{OX.q=v; renderOutHoles();},160);
+  });
+
+  $('#sType').addEventListener('change',e=>{SX.type=e.target.value; SX.sortKey='val'; renderStretches();});
+  $('#sOrder').addEventListener('change',e=>{SX.order=e.target.value; SX.sortKey='val'; renderStretches();});
+  let sTimer; $('#sSearch').addEventListener('input',e=>{
+    clearTimeout(sTimer); const v=e.target.value; sTimer=setTimeout(()=>{SX.q=v; renderStretches();},160);
+  });
+
+  $('#themebtn').addEventListener('click',()=>{
+    const dark=document.documentElement.dataset.theme==='dark';
+    document.documentElement.dataset.theme=dark?'light':'dark';
+    $('#themebtn').textContent=dark?'Dark':'Light';
+    render();
+  });
+
+  // nav highlight
+  const links=[...document.querySelectorAll('nav.jump a')];
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id)); } });
+  },{rootMargin:'-110px 0px -70% 0px'});
+  document.querySelectorAll('section').forEach(s=>obs.observe(s));
+}
+function syncControls(){
+  $('#fCourse').value=S.course; $('#fTee').value=S.tee;
+  $('#fFrom').value=S.from; $('#fTo').value=S.to;
+}
+function renderQuality(){
+  let h='<b>What is and isn\'t in here.</b><br>';
+  const pend=ALL.filter(r=>r.pending);
+  h+=(RAW.length-pend.length)+' rounds were pulled from your GHIN record. ';
+  if(pend.length){
+    h+='<b>'+pend.length+' round'+(pend.length===1?' is':'s are')+' hand-entered and not yet posted to GHIN</b>, '+
+       'flagged NOT POSTED in the rounds table:<br><ul style="margin:8px 0 8px 18px;padding:0">'+
+       pend.map(r=>'<li>'+fmtDate(r.date)+' — '+r.course+' at '+r.facility+', '+r.score+' ('+sgn(r.toPar)+
+         '). Differential shown as <b>'+f1(r.diff)+'*</b> is my own calculation, (113 ÷ '+r.sr+') × ('+r.score+' − '+f1(r.cr)+
+         '), assuming PCC 0 — GHIN will confirm its own once you post it. Stroke indexes are borrowed from your '+
+         'City Park Gold-tee cards, since the scorecard doesn\'t print them; pars were checked against those cards and match.</li>').join('')+'</ul>';
+  }
+  if(EXCLUDED.length){
+    h+='<b>'+EXCLUDED.length+' round'+(EXCLUDED.length===1?' is':'s are')+' excluded</b> from every number on this page:<br>';
+    h+='<ul style="margin:8px 0 8px 18px;padding:0">'+EXCLUDED.map(e=>'<li>'+fmtDate(e.date)+' — '+e.course+', posted as '+e.score+
+      ' on an 18-hole course rated '+e.cr+', giving a differential of '+e.diff+'. Status on GHIN is <b>'+e.status+
+      '</b> and only '+e.played+' holes were recorded. It looks like a 9-hole score entered as 18 — worth correcting on GHIN.</li>').join('')+'</ul>';
+  }
+  const noCard=ALL.filter(r=>!r.hasCard);
+  if(noCard.length) h+='<b>'+noCard.length+' rounds have no hole-by-hole card</b> ('+noCard.map(r=>r.course+', '+shortDate(r.date)).join('; ')+
+    '). They count toward differentials, courses and round totals, but not toward outcomes, streaks or par-type averages.<br>';
+  const partial=ALL.filter(r=>r.hasCard&&r.holes.length<r.nHoles);
+  if(partial.length) h+='<br><b>'+partial.length+' round'+(partial.length===1?' has':'s have')+' an unplayed hole</b> ('+
+    partial.map(r=>r.course+', '+shortDate(r.date)+' — '+r.holes.length+' of '+r.nHoles).join('; ')+
+    '). The recorded holes are used; the blanks are skipped rather than guessed.<br>';
+  h+='<br>Outcomes and streaks use your <b>raw</b> hole scores, not GHIN\'s net-double-bogey-capped adjusted scores, so a real quad shows as a quad. '+
+     'Differentials are GHIN\'s own values and do use the adjusted scores — that\'s how the handicap system works.';
+  $('#qualityNote').innerHTML=h;
+}
+
+buildControls(); renderQuality(); render();
+</script>
+</body>
+</html>
