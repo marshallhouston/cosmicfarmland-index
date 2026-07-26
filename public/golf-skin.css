@@ -106,3 +106,58 @@ nav.jump a.cf-home:hover { color: var(--gold); }
 :root[data-theme="light"] .grain { display: none; }
 @keyframes cf-twinkle { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .stars { animation: none; } }
+
+/* ---------- depth pass: pull the page toward the index hero ---------- */
+
+/* Hero: Fraunces light, gold italic tail, gold glow. Mirrors the index h1. */
+header.top { padding: 26px 0 18px; }
+h1 { font-size: clamp(40px, 6vw, 68px); line-height: 0.98; letter-spacing: -0.02em; }
+h1 em { font-style: italic; color: var(--gold); }
+:root[data-theme="dark"] h1 { text-shadow: 0 0 24px rgba(243, 195, 100, 0.35); }
+.sub { font-size: 15px; }
+
+/* Surfaces: translucent soil over the aurora instead of flat panels. */
+.card, .tile, .chart, .tablewrap, .notable, .note { border-radius: 16px; }
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .tile,
+:root[data-theme="dark"] .chart,
+:root[data-theme="dark"] .tablewrap,
+:root[data-theme="dark"] .notable,
+:root[data-theme="dark"] .detail {
+  background: rgba(22, 16, 49, 0.62);
+  backdrop-filter: blur(6px);
+}
+:root[data-theme="dark"] th { background: rgba(14, 11, 29, 0.94); }
+.tile { padding: 16px 18px; }
+.tile .v { font-size: 30px; }
+.tile.click, .card { transition: border-color 0.25s, transform 0.25s; }
+.tile.click:hover { transform: translateY(-3px); }
+
+/* Chrome: mono pills, translucent sticky bars. */
+nav.jump, .filters {
+  background: rgba(8, 7, 15, 0.82);
+  backdrop-filter: blur(10px);
+}
+:root[data-theme="light"] nav.jump,
+:root[data-theme="light"] .filters { background: rgba(244, 237, 220, 0.9); }
+nav.jump { padding: 10px 0; gap: 4px; }
+nav.jump a { border-radius: 999px; font-size: 12px; letter-spacing: 0.06em; }
+.btn, .seg, .themebtn, .f select, .f input { border-radius: 999px; }
+.seg button { padding: 8px 14px; }
+.themebtn { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* Voice: the index runs all-lowercase interface copy. */
+h2 { text-transform: lowercase; font-size: 24px; }
+h3 { font-size: 17px; }
+section { margin-bottom: 60px; }
+
+/* Footer, matching the index hairline + mono credit. */
+.cf-footer {
+  margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+}
+.cf-footer a { color: var(--cf-glow-deep); text-decoration: none; }
+:root[data-theme="dark"] .cf-footer a { color: var(--cf-glow); }
+.cf-footer a:hover { color: var(--gold); }

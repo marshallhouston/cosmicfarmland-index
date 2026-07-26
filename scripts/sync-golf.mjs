@@ -33,6 +33,11 @@ const ATMOSPHERE = `<div class="sky"></div><div class="stars"></div><div class="
 
 const BACK_LINK = `\n  <a class="cf-home" href="https://cosmicfarmland.wtf">&#8592; cosmic farmland</a>`
 
+const FOOTER = `<div class="cf-footer">
+  <span>grown by marshall</span>
+  <a href="https://cosmicfarmland.wtf">cosmicfarmland.wtf &#8599;</a>
+</div>`
+
 // Each step is (html) => html | null. null means the anchor moved: warn, skip,
 // keep going. A missing back-link anchor should not block the whole deploy.
 const steps = [
@@ -41,6 +46,10 @@ const steps = [
   ['atmosphere + home link', (h) => h.replace(/<body[^>]*>/, (m) => `${m}\n${ATMOSPHERE}`)],
   ['theme button label', (h) => h.replace(/(<button[^>]*id="themebtn"[^>]*>)Dark(<\/button>)/, '$1Light$2')],
   ['nav back link', (h) => h.replace(/(<nav class="jump"[^>]*>)/, `$1${BACK_LINK}`)],
+  // Gold italic on the last two words of the title, the way the index hero
+  // italicises "Farmland". Skipped silently if the title is a single word.
+  ['hero accent', (h) => h.replace(/<h1>(.*?)(\s+\S+\s+\S+)<\/h1>/, '<h1>$1<em>$2</em></h1>')],
+  ['footer', (h) => h.replace(/(\s*<\/body>)/, `\n${FOOTER}$1`)],
 ]
 
 const src = readFileSync(SRC, 'utf8')
