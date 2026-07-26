@@ -1,48 +1,56 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9971;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <title>The War on Double Bogeys — GHIN Deep Dive</title>
 <style>
 :root{
   color-scheme: light;
-  --surface-1:#fcfcfb; --plane:#f9f9f7;
-  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
-  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --surface-1:#fbf7ec; --plane:#f4eddc;
+  --text-primary:#1b1633; --text-secondary:#4a4360; --muted:#7c7490;
+  --grid:#e4dcc7; --axis:#c9bfa4; --border:rgba(27,22,51,0.12);
   --series-1:#2a78d6; --series-2:#eb6834; --series-3:#1baf7a;
   --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
   --seq-100:#cde2fb; --seq-250:#86b6ef; --seq-350:#5598e7; --seq-450:#2a78d6; --seq-600:#184f95;
-  --div-mid:#f0efec;
+  --div-mid:#e4dcc7;
   --u1:#b7d3f6; --u2:#5598e7; --u3:#184f95;
   --o1:#f7d2d1; --o2c:#eb9c9a; --o3:#dd5c5a; --o4:#a82322;
-  --chip:#f0efec;
+  --chip:#efe6d1;
   --ink-eagle:#ffffff; --ink-birdie:#0b0b0b; --ink-par:#0b0b0b; --ink-bogey:#0b0b0b;
   --ink-double:#0b0b0b; --ink-triple:#ffffff; --ink-quad:#ffffff;
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
-  --surface-1:#1a1a19; --plane:#0d0d0d;
-  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
-  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --surface-1:#161031; --plane:#08070f;
+  --text-primary:#f1ead9; --text-secondary:#b6ad97; --muted:#8f8878;
+  --grid:#241a45; --axis:#3a2c68; --border:rgba(241,234,217,0.12);
   --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70;
   --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
   --seq-100:#104281; --seq-250:#184f95; --seq-350:#256abf; --seq-450:#3987e5; --seq-600:#86b6ef;
-  --div-mid:#383835;
+  --div-mid:#241a45;
   --u1:#1c3f68; --u2:#2a6fbe; --u3:#86b6ef;
   --o1:#5a2422; --o2c:#8e3634; --o3:#c94a48; --o4:#f08a88;
-  --chip:#242422;
+  --chip:#1c1440;
   --ink-eagle:#0b0b0b; --ink-birdie:#ffffff; --ink-par:#ffffff; --ink-bogey:#ffffff;
   --ink-double:#0b0b0b; --ink-triple:#0b0b0b; --ink-quad:#0b0b0b;
 }
+:root{--gold:#f3c364;--gold-deep:#d99b3e;--cf-glow:#8ce6b6;--cf-glow-deep:#4cc88a;--violet:#a78be0;
+  --font-display:'Fraunces',Georgia,serif;--font-body:'Familjen Grotesk',system-ui,sans-serif;
+  --font-mono:'DM Mono',ui-monospace,monospace}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
   background:var(--plane); color:var(--text-primary);
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-family:var(--font-body);
   font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
 }
-a{color:var(--series-1)}
+a{color:var(--gold-deep)}
+:root[data-theme="dark"] a{color:var(--gold)}
 .wrap{max-width:1240px;margin:0 auto;padding:0 20px 96px}
 
 /* ---------- header ---------- */
@@ -60,6 +68,8 @@ nav.jump{position:sticky;top:0;z-index:40;background:var(--plane);border-bottom:
   display:flex;gap:2px;overflow-x:auto;padding:8px 0;margin-bottom:0}
 nav.jump a{padding:6px 11px;border-radius:7px;font-size:13px;text-decoration:none;color:var(--text-secondary);white-space:nowrap}
 nav.jump a:hover{background:var(--chip);color:var(--text-primary)}
+nav.jump a.home{color:var(--cf-glow)}
+nav.jump a.home:hover{color:var(--gold)}
 nav.jump a.on{background:var(--text-primary);color:var(--surface-1)}
 
 /* ---------- filters ---------- */
@@ -167,14 +177,60 @@ tbody tr.hl>td{animation:flash 1.8s ease-out}
 .tblview table{font-size:12.5px}
 .empty{padding:40px;text-align:center;color:var(--muted);font-size:14px}
 footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);font-size:12.5px}
+
+/* ---------- cosmic farmland skin ---------- */
+h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.015em}
+h1{font-size:38px;font-weight:300}
+h1 em{font-style:italic;color:var(--gold);font-weight:300}
+.eyebrow,.f label,.tile .k,th,.legend,.chip,nav.jump a,.btn,.seg button,.fcount{font-family:var(--font-mono)}
+.eyebrow{color:var(--cf-glow);letter-spacing:.28em}
+.tile .v{font-family:var(--font-mono);color:var(--gold);font-weight:500}
+:root[data-theme="dark"] h2{color:var(--gold)}
+.btn.active,.seg button.on,nav.jump a.on{background:var(--gold);color:#08070f;border-color:var(--gold)}
+.tile.click:hover,.card:hover{border-color:var(--cf-glow-deep)}
+::selection{background:var(--gold);color:#08070f}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--plane)}
+::-webkit-scrollbar-thumb{background:var(--grid);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--cf-glow-deep)}
+
+/* brand bar: link home to cosmicfarmland.wtf */
+.brand{display:flex;align-items:center;gap:8px;padding:18px 0 0;font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--cf-glow);text-decoration:none}
+.brand:hover{color:var(--gold)}
+:root[data-theme="dark"] .brand{color:var(--cf-glow)}
+
+/* fixed atmosphere layers, dark theme only (see cosmicfarmland.wtf src/index.css) */
+.sky,.stars,.grain{position:fixed;inset:0;pointer-events:none}
+.sky{z-index:-2;background:
+  radial-gradient(60% 50% at 75% 8%, rgba(243,195,100,.16), transparent 70%),
+  radial-gradient(55% 45% at 18% 22%, rgba(140,230,182,.12), transparent 70%),
+  radial-gradient(80% 60% at 50% 120%, rgba(76,200,138,.18), transparent 65%),
+  linear-gradient(180deg,#08070f 0%,#0e0b1d 45%,#161031 100%)}
+.stars{z-index:-2;animation:twinkle 7s ease-in-out infinite;background-image:
+  radial-gradient(1px 1px at 20% 30%, rgba(241,234,217,.9), transparent),
+  radial-gradient(1px 1px at 70% 18%, rgba(241,234,217,.7), transparent),
+  radial-gradient(1.5px 1.5px at 40% 12%, rgba(243,195,100,.8), transparent),
+  radial-gradient(1px 1px at 88% 40%, rgba(241,234,217,.6), transparent),
+  radial-gradient(1px 1px at 33% 48%, rgba(241,234,217,.5), transparent),
+  radial-gradient(1.5px 1.5px at 62% 36%, rgba(140,230,182,.7), transparent),
+  radial-gradient(1px 1px at 12% 60%, rgba(241,234,217,.5), transparent)}
+.grain{z-index:-1;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root[data-theme="light"] .sky,:root[data-theme="light"] .stars,:root[data-theme="light"] .grain{display:none}
+@keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.stars{animation:none}}
 </style>
 </head>
 <body>
+<div class="sky"></div>
+<div class="stars"></div>
+<div class="grain"></div>
 <div class="tt" id="tt"></div>
 <div class="wrap">
 
 <div class="topbar">
-  <button class="themebtn" id="themebtn">Dark</button>
+  <a class="brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a>
+  <button class="themebtn" id="themebtn">Light</button>
   <header class="top">
     <div class="eyebrow" id="eyebrow">Deep Dive: GHIN Scores</div>
     <h1>The War on Double Bogeys</h1>
@@ -183,6 +239,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
 </div>
 
 <nav class="jump" id="jump">
+  <a class="home" href="https://cosmicfarmland.wtf">&#8592; cosmic farmland</a>
   <a href="#overview">Overview</a>
   <a href="#trend">Trend</a>
   <a href="#highlights">Highlights</a>
