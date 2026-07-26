@@ -1131,8 +1131,14 @@ function renderTrend(){
       hs.appendChild(rct);
       const lb=N('text',{x:x+bw/2,y:y-5,'text-anchor':'middle',fill:'var(--text-secondary)','font-size':10.5}); lb.textContent=b.n; hs.appendChild(lb);
     }
-    if(i%2===0){const tx=N('text',{x:x+bw/2,y:hH-hP.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10.5}); tx.textContent=b.lo; hs.appendChild(tx);}
+    // Ticks sit on the bin edges, not under the bar centre: a bar spanning
+    // 2 to 4 reads as "2-4", never as a bar labelled "2".
+    if(i%2===0){const tx=N('text',{x:x,y:hH-hP.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10.5}); tx.textContent=b.lo; hs.appendChild(tx);}
   });
+  if(bins.length%2===0){
+    const tx=N('text',{x:hP.l+bins.length*bw,y:hH-hP.b+16,'text-anchor':'middle',fill:'var(--muted)','font-size':10.5});
+    tx.textContent=bh; hs.appendChild(tx);
+  }
   hs.appendChild(N('line',{x1:hP.l,x2:hW-hP.r,y1:hH-hP.b,y2:hH-hP.b,stroke:'var(--axis)','stroke-width':1}));
   hb.appendChild(hs);
   $('#histTbl').innerHTML=tableFrom([{t:'Differential band'},{t:'Rounds',num:1},{t:'Share',num:1}],
