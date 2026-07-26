@@ -65,7 +65,7 @@
       "slug": "golf-record",
       "name": "Golf Record",
       "blurb": "Every round from my GHIN history - scoring trends, hole-by-hole splits, and where the strokes actually go.",
-      "url": "/golf.html",
+      "url": "/golf",
       "status": "live",
       "tags": ["golf", "data", "personal"]
     }

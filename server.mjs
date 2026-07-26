@@ -21,6 +21,11 @@ serve({
     if (safe !== '/' && (await asset.exists())) {
       return new Response(asset)
     }
+    // Pretty URL for standalone pages: /golf serves dist/golf.html.
+    const page = file(join(DIST, `${safe}.html`))
+    if (!safe.includes('.') && (await page.exists())) {
+      return new Response(page)
+    }
     return new Response(file(join(DIST, 'index.html')), {
       headers: { 'content-type': 'text/html' },
     })
