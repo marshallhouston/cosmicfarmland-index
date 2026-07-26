@@ -185,8 +185,15 @@ export default function App() {
       <div className="field" />
 
       <main className="mx-auto max-w-5xl px-6 pb-32">
+        {/* Nav */}
+        <nav className="flex gap-6 pt-8 font-mono text-xs uppercase tracking-[0.25em] text-[var(--color-cream-dim)]">
+          <a href="#apps" className="hover:text-[var(--color-gold)]">apps</a>
+          <a href="#catalog" className="hover:text-[var(--color-gold)]">toolshed</a>
+          <a href="/golf" className="hover:text-[var(--color-gold)]">golf</a>
+        </nav>
+
         {/* Hero */}
-        <header className="flex min-h-[78vh] flex-col justify-center">
+        <header className="flex min-h-[70vh] flex-col justify-center">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
