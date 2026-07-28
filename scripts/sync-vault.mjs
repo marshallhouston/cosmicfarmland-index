@@ -8,7 +8,7 @@
 //   node scripts/sync-vault.mjs golf        # write one page
 //   node scripts/sync-vault.mjs --check     # report what would be injected, write nothing
 import { createHash } from 'node:crypto'
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -71,6 +71,8 @@ const PAGES = [
     src: join(VAULT, 'denver-city-park-golf-tournament-2026', 'Denver_City_Am_2026_Sunday_Hole_By_Hole.html'),
     out: pub('golf', 'city-am-2026.html'),
     skins: ['golf-skin.css', 'city-am-skin.css'],
+    // Copied next to the page so one relative src works in the vault and here.
+    assets: ['city-am-2026-champion.jpg'],
     steps: [
       ['dark default', (h) => h.replace(/<html([^>]*)>/, '<html$1 data-theme="dark">')],
       ['fonts + skin stylesheets', (h) => h.replace('</head>', `${head('golf-skin.css', 'city-am-skin.css')}\n</head>`)],
@@ -115,7 +117,10 @@ for (const page of PAGES) {
   if (check) { console.log(`${page.slug}: ${applied}`); continue }
   mkdirSync(dirname(page.out), { recursive: true })
   writeFileSync(page.out, out)
-  console.log(`wrote ${page.out} (${applied})`)
+  for (const asset of page.assets || []) {
+    copyFileSync(join(dirname(page.src), asset), join(dirname(page.out), asset))
+  }
+  console.log(`wrote ${page.out} (${applied}${page.assets ? `, ${page.assets.length} asset(s)` : ''})`)
 }
 
 if (check && failed) process.exit(1)
