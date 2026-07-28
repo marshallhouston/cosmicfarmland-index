@@ -90,7 +90,6 @@
   input[type=range]{flex:1;min-width:220px;accent-color:var(--series-1)}
   .thru{font-size:13px;color:var(--text-secondary);font-variant-numeric:tabular-nums;min-width:170px}
   .board{position:relative;margin-top:10px;transition:height .35s}
-  @media(prefers-reduced-motion:reduce){ .brow,.board{transition:none} }
   .brow{position:absolute;left:0;right:0;height:34px;display:grid;grid-template-columns:52px 1fr 62px 74px 60px;align-items:center;
     gap:8px;padding:0 10px;border-radius:8px;background:var(--surface-2);border:1px solid transparent;
     transition:transform .45s cubic-bezier(.4,0,.2,1),opacity .3s;font-variant-numeric:tabular-nums}
@@ -144,6 +143,7 @@
   .notes h3{margin:22px 0 6px;font-size:15px}
   .notes h3:first-child{margin-top:0}
   .notes p{margin:0 0 12px;color:var(--text-secondary);line-height:1.75}
+  @media(prefers-reduced-motion:reduce){ .brow,.board{transition:none} }
   .foot{color:var(--text-muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:14px}
   a{color:var(--series-1)}
   @media(max-width:700px){
@@ -163,8 +163,11 @@
 <meta property="og:url" content="https://cosmicfarmland.wtf/golf/city-am-2026">
 <meta property="og:title" content="Sunday, hole by hole - 2026 Denver City Am, Flight 2">
 <meta property="og:description" content="The final round of Flight 2, hole by hole: live 36-hole positions across the full 39-player field, every scorecard, and the notes written that morning.">
-<meta property="og:image" content="https://cosmicfarmland.wtf/golf/city-am-2026-champion.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://cosmicfarmland.wtf/golf/city-am-2026-champion.jpg?v=efe4e463">
+<meta property="og:image:width" content="392">
+<meta property="og:image:height" content="480">
+<meta property="og:image:alt" content="Marshall Houston holding the 2026 Denver City Amateur men's second flight trophy">
+<meta name="twitter:card" content="summary">
 </head>
 <body>
 <div class="sky"></div><div class="stars"></div><div class="grain"></div>
@@ -329,7 +332,7 @@ pick.innerHTML = P.map(p=>
    </button>`).join('');
 function syncPicker(){
   pick.querySelectorAll('.pchip').forEach(b=>{
-    const on = SEL.has(b.dataset.p);
+    const on = MODE!=='live' && SEL.has(b.dataset.p);   // live mode has no fixed selection to show
     b.setAttribute('aria-pressed', on);
     b.querySelector('i').style.background = on ? colorOf[b.dataset.p] : 'var(--line-dim)';
   });
@@ -342,8 +345,9 @@ function syncPicker(){
 pick.addEventListener('click', e=>{
   const b = e.target.closest('.pchip'); if(!b) return;
   const n = b.dataset.p;
-  if(MODE==='live'){ MODE='fixed'; }                   // touching a name pins the selection
-  if(SEL.has(n)){ if(SEL.size===1) return; SEL.delete(n); } else SEL.add(n);
+  if(MODE==='live'){ MODE='fixed'; SEL = new Set([n]); }   // first name pins the selection to it
+  else if(SEL.has(n)){ if(SEL.size===1) return; SEL.delete(n); }
+  else SEL.add(n);
   redraw();
 });
 document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{

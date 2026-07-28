@@ -48,6 +48,25 @@ const strip = (here) => {
 </nav>`
 }
 
+const CITY_AM_URL = 'https://cosmicfarmland.wtf/golf/city-am-2026'
+// The unversioned photo URL can be pinned to a stale edge-cached response, so
+// the card points at the same versioned URL the page itself renders.
+const CHAMP = 'city-am-2026-champion.jpg'
+const champVersion = createHash('sha1')
+  .update(readFileSync(join(VAULT, 'denver-city-park-golf-tournament-2026', CHAMP)))
+  .digest('hex').slice(0, 8)
+const SHARE_META = `<link rel="canonical" href="${CITY_AM_URL}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="cosmic farmland">
+<meta property="og:url" content="${CITY_AM_URL}">
+<meta property="og:title" content="Sunday, hole by hole - 2026 Denver City Am, Flight 2">
+<meta property="og:description" content="The final round of Flight 2, hole by hole: live 36-hole positions across the full 39-player field, every scorecard, and the notes written that morning.">
+<meta property="og:image" content="${CITY_AM_URL.replace(/\/city-am-2026$/, '')}/${CHAMP}?v=${champVersion}">
+<meta property="og:image:width" content="392">
+<meta property="og:image:height" content="480">
+<meta property="og:image:alt" content="Marshall Houston holding the 2026 Denver City Amateur men's second flight trophy">
+<meta name="twitter:card" content="summary">`
+
 const PAGES = [
   {
     slug: 'golf',
@@ -76,14 +95,13 @@ const PAGES = [
     steps: [
       ['dark default', (h) => h.replace(/<html([^>]*)>/, '<html$1 data-theme="dark">')],
       ['fonts + skin stylesheets', (h) => h.replace('</head>', `${head('golf-skin.css', 'city-am-skin.css')}\n</head>`)],
+      ['share metadata', (h) => h.replace('</head>', `${SHARE_META}\n</head>`)],
       ['atmosphere + home link', (h) => h.replace(/<body[^>]*>/, (m) => `${m}\n${ATMOSPHERE}`)],
-      ['golf nav strip', (h) => h.replace(/(<div class="wrap">)/, `$1\n${strip('/golf/city-am-2026')}`)],
+      ['golf nav strip', (h) => h.replace(/(<main class="wrap">)/, `$1\n${strip('/golf/city-am-2026')}`)],
       // Same Cloudflare edge-cache trap as the stylesheets: a URL polled before
       // the deploy lands caches the SPA fallback under an image extension for
       // hours. Version the src so a new file is always a new URL.
-      ['version the champion photo', (h) => h.replace(
-        /src="(city-am-2026-champion\.jpg)"/,
-        (m, f) => `src="${f}?v=${createHash('sha1').update(readFileSync(join(VAULT, 'denver-city-park-golf-tournament-2026', f))).digest('hex').slice(0, 8)}"`)],
+      ['version the champion photo', (h) => h.replace(/src="(city-am-2026-champion\.jpg)"/, `src="$1?v=${champVersion}"`)],
       // The scouting report is deliberately vault-only: it carries other players'
       // GHIN histories. Drop the link rather than shipping a 404 to it.
       ['drop the private back-link', (h) => h.replace(/<p class="lede"[^>]*><a href="Denver_City_Am_2026_Flight2_Report\.html">[\s\S]*?<\/p>\n?/, '')],
