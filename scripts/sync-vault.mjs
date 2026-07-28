@@ -106,6 +106,16 @@ const PAGES = [
       // GHIN histories. Drop the link rather than shipping a 404 to it.
       ['drop the private back-link', (h) => h.replace(/<p class="lede"[^>]*><a href="Denver_City_Am_2026_Flight2_Report\.html">[\s\S]*?<\/p>\n?/, '')],
       ['hero accent', (h) => h.replace(/(<h1>Sunday, hole by hole)( —[^<]*)(<\/h1>)/, '$1<em>$2</em>$3')],
+      // "Checkpoint" for a per-hole board read confused readers; say "after each
+      // hole" everywhere it appeared (hero chip, two stat tiles, the moments list).
+      ['rename checkpoints to per-hole language', (h) => h
+        .replace('in front at 16 of the 19 checkpoints', 'in front after 16 of the 19 holes')
+        .replace("lab:'Checkpoints in front'", "lab:'In front after each hole'")
+        .replace("note:'only 3 were in it at all 19 checkpoints'", "note:'only 3 were in it after every hole'")
+        .replace(
+          'were inside at all 19 checkpoints. Nathan Bartell spent 11 checkpoints in it and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 checkpoints and finished 9th.',
+          'were inside after every hole. Nathan Bartell held a spot after 11 holes and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 holes and finished 9th.',
+        )],
       ['footer', (h) => h.replace(/(\s*<\/body>)/, `\n${FOOTER}$1`)],
     ],
   },
