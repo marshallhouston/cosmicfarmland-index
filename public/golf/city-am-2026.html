@@ -106,6 +106,9 @@
   /* charts */
   .chartwrap{overflow-x:auto}
   svg text{font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;fill:var(--text-secondary)}
+  svg text.endlab{cursor:pointer}
+  svg text.endlab:hover{text-decoration:underline}
+  svg text.endlab:focus-visible{outline:2px solid var(--series-1)}
 
   /* hole grid */
   .sc{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:600}
@@ -233,7 +236,7 @@
 </div>
 
 <h2>Position, every hole</h2>
-<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up.</p>
+<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up. <b>Click a name</b> at the right edge to follow that player alone; click another shown name to drop it, and add more players from the chips above.</p>
 <div class="card chartwrap"><div id="bump"></div></div>
 
 <h2>Strokes, every hole</h2>
@@ -249,7 +252,7 @@
 
 
 <div class="foot">
-  Sources: Golf Genius 2026 Denver Men's City Amateur — hole-by-hole scorecards for all 40 Flight 2 players, Round 2 tee sheet, final results and purse summary, pulled July 28, 2026. Hole yardages, pars and difficulty ranks from the event's own Round 2 course statistics. Positions are gross 36-hole totals with ties sharing a position, tracked by holes played rather than wall clock: the flight went off in ten-minute intervals from 7:50 to 9:00 AM, so a player two groups ahead was physically further along at the same moment.
+  Sources: <a href="https://www.golfgenius.com/pages/12341412527161217363">Golf Genius — 2026 Denver Men's City Amateur results</a> (hole-by-hole scorecards for all 40 Flight 2 players, Round 2 tee sheet, final results and purse summary, pulled July 28, 2026) and <a href="https://www.cityofdenvergolf.com/denver_city_amateur/">Denver Golf — Denver City Amateur</a>. Hole yardages, pars and difficulty ranks from the event's own Round 2 course statistics. Positions are gross 36-hole totals with ties sharing a position, tracked by holes played rather than wall clock: the flight went off in ten-minute intervals from 7:50 to 9:00 AM, so a player two groups ahead was physically further along at the same moment.
 </div>
 </div>
 <script id="data" type="application/json">{"par":[4,3,4,4,3,4,4,3,5,4,4,3,5,4,4,5,3,4],"meta":[{"hole":1,"yards":"365-424","par":4,"avg":4.63,"rank":13},{"hole":2,"yards":"157-239","par":3,"avg":3.8,"rank":6},{"hole":3,"yards":"315-368","par":4,"avg":4.76,"rank":8},{"hole":4,"yards":"364-438","par":4,"avg":4.93,"rank":3},{"hole":5,"yards":"124-207","par":3,"avg":3.8,"rank":7},{"hole":6,"yards":"286-332","par":4,"avg":4.3,"rank":18},{"hole":7,"yards":"302-359","par":4,"avg":4.3,"rank":17},{"hole":8,"yards":"142-192","par":3,"avg":3.6,"rank":14},{"hole":9,"yards":"496-589","par":5,"avg":5.95,"rank":2},{"hole":10,"yards":"330-376","par":4,"avg":4.73,"rank":9},{"hole":11,"yards":"364-450","par":4,"avg":5.06,"rank":1},{"hole":12,"yards":"103-148","par":3,"avg":3.41,"rank":16},{"hole":13,"yards":"419-455","par":5,"avg":5.69,"rank":11},{"hole":14,"yards":"345-388","par":4,"avg":4.9,"rank":4},{"hole":15,"yards":"380-492","par":4,"avg":4.85,"rank":5},{"hole":16,"yards":"499-588","par":5,"avg":5.44,"rank":15},{"hole":17,"yards":"160-209","par":3,"avg":3.72,"rank":10},{"hole":18,"yards":"354-404","par":4,"avg":4.69,"rank":12}],"players":[{"player":"Houston, Marshall","r1":74,"r2":[3,5,3,6,4,4,4,4,4,5,5,4,4,4,4,6,3,4],"start":1,"tee":"9:00 AM","pos":1,"total":150,"purse":700},{"player":"Welton, Marshall","r1":77,"r2":[6,2,4,4,4,5,4,3,5,4,4,3,5,5,4,6,3,3],"start":1,"tee":"8:40 AM","pos":2,"total":151,"purse":500},{"player":"Pathak, Pratiek","r1":77,"r2":[4,4,5,5,3,4,4,4,7,5,4,3,4,4,4,4,3,4],"start":1,"tee":"8:50 AM","pos":3,"total":152,"purse":375},{"player":"Gorgevski-Sharpe, Eli","r1":76,"r2":[5,4,4,4,4,2,4,4,6,6,4,4,5,4,4,5,3,4],"start":1,"tee":"9:00 AM","pos":4,"total":152,"purse":275},{"player":"Giordano, Louis","r1":77,"r2":[4,4,5,4,3,4,5,4,6,4,4,4,5,5,3,4,3,5],"start":1,"tee":"8:50 AM","pos":5,"total":153,"purse":210},{"player":"Senger, Scott","r1":77,"r2":[4,4,5,5,3,4,4,3,4,4,5,4,4,6,4,5,3,5],"start":1,"tee":"8:30 AM","pos":6,"total":153,"purse":170},{"player":"Rogers, Connor","r1":77,"r2":[6,3,4,4,2,4,4,3,5,4,5,4,5,4,4,6,4,5],"start":1,"tee":"8:30 AM","pos":7,"total":153,"purse":145},{"player":"Thesing, Russell","r1":76,"r2":[4,3,4,5,3,4,3,3,6,7,5,4,5,4,5,5,3,4],"start":1,"tee":"8:50 AM","pos":8,"total":153,"purse":130},{"player":"Seppala, Adam","r1":78,"r2":[4,3,4,7,3,4,4,4,7,5,3,3,4,3,5,5,5,3],"start":1,"tee":"8:00 AM","pos":9,"total":154,"purse":120},{"player":"Davis, Cameron","r1":79,"r2":[4,4,5,4,3,4,3,3,6,5,4,3,4,4,6,6,3,4],"start":1,"tee":"8:00 AM","pos":10,"total":154,"purse":110},{"player":"Buckley, Eric","r1":79,"r2":[6,3,4,4,2,4,4,3,5,4,4,4,6,6,3,5,4,4],"start":1,"tee":"7:50 AM","pos":11,"total":154,"purse":105},{"player":"Newton, Russell","r1":78,"r2":[3,3,4,4,3,4,4,3,7,4,4,3,5,7,5,6,3,4],"start":1,"tee":"8:10 AM","pos":12,"total":154,"purse":100},{"player":"Colaric, Warren","r1":80,"r2":[5,2,5,4,3,4,6,3,6,4,5,3,4,4,4,6,4,5],"start":1,"tee":"7:40 AM","pos":13,"total":157,"purse":0},{"player":"Betts, Jack","r1":76,"r2":[5,5,5,4,4,6,4,3,5,6,4,3,5,4,4,5,3,6],"start":1,"tee":"9:00 AM","pos":14,"total":157,"purse":0},{"player":"Curtin, Nicholas","r1":78,"r2":[4,4,4,4,4,4,5,4,5,4,4,3,5,5,5,5,4,6],"start":1,"tee":"8:10 AM","pos":15,"total":157,"purse":0},{"player":"Fowler, Stephen Kyle","r1":78,"r2":[4,3,5,4,3,3,3,3,9,5,4,3,4,4,7,6,4,5],"start":1,"tee":"8:10 AM","pos":16,"total":157,"purse":0},{"player":"Brady, Jared","r1":77,"r2":[4,4,4,4,4,4,3,4,7,5,4,3,5,4,5,5,4,7],"start":1,"tee":"8:30 AM","pos":17,"total":157,"purse":0},{"player":"McKee, Anthony","r1":83,"r2":[4,3,4,4,3,4,4,4,5,4,4,3,5,5,5,7,3,4],"start":1,"tee":"7:20 AM","pos":18,"total":158,"purse":0},{"player":"Grove, Spencer","r1":77,"r2":[4,3,5,5,4,5,4,4,5,6,5,3,6,5,4,6,3,4],"start":1,"tee":"8:40 AM","pos":19,"total":158,"purse":0},{"player":"Davoudpour, Damon","r1":79,"r2":[4,4,4,5,3,3,4,4,5,4,5,4,7,5,5,6,3,4],"start":1,"tee":"7:50 AM","pos":20,"total":158,"purse":0},{"player":"McErlane, Joesph","r1":77,"r2":[4,4,4,4,3,4,4,2,7,6,7,3,7,5,4,5,4,4],"start":1,"tee":"8:40 AM","pos":21,"total":158,"purse":0},{"player":"Palamar, Chris","r1":85,"r2":[4,3,4,4,3,3,4,4,6,5,4,3,6,4,5,5,3,4],"start":1,"tee":"7:00 AM","pos":22,"total":159,"purse":0},{"player":"Korenjak, Christopher","r1":82,"r2":[4,3,4,4,4,4,4,3,5,5,5,3,7,4,5,6,3,5],"start":1,"tee":"7:30 AM","pos":23,"total":160,"purse":0},{"player":"Bartell, Nathan","r1":78,"r2":[4,4,4,4,4,3,4,3,5,5,5,3,9,6,5,5,3,6],"start":1,"tee":"8:20 AM","pos":24,"total":160,"purse":0},{"player":"Carnahan, Chance","r1":84,"r2":[4,5,4,5,4,3,3,3,5,4,5,2,6,7,4,5,4,4],"start":1,"tee":"7:20 AM","pos":25,"total":161,"purse":0},{"player":"Shaw, Ryan","r1":78,"r2":[6,3,4,5,4,4,3,4,5,7,6,3,7,4,4,4,4,6],"start":1,"tee":"8:20 AM","pos":26,"total":161,"purse":0},{"player":"Jackson, Jared","r1":82,"r2":[4,3,4,6,3,4,4,3,5,4,9,3,6,4,4,6,3,5],"start":1,"tee":"7:20 AM","pos":27,"total":162,"purse":0},{"player":"Young, John","r1":87,"r2":[4,5,4,5,3,4,5,2,5,5,4,3,5,4,3,6,4,6],"start":1,"tee":"7:00 AM","pos":28,"total":164,"purse":0},{"player":"Erwin-Svoboda, Jim","r1":80,"r2":[4,4,4,5,4,4,4,4,6,5,5,4,11,4,5,5,2,4],"start":1,"tee":"7:50 AM","pos":29,"total":164,"purse":0},{"player":"O'Malley, Tom","r1":84,"r2":[5,4,3,5,4,4,4,4,5,3,4,3,8,5,5,5,4,6],"start":1,"tee":"7:10 AM","pos":30,"total":165,"purse":0},{"player":"Monasterski, Raymond","r1":79,"r2":[5,4,4,5,4,5,4,2,6,7,8,3,7,5,5,5,3,4],"start":1,"tee":"8:00 AM","pos":31,"total":165,"purse":0},{"player":"Evans, Niko","r1":88,"r2":[6,4,5,4,3,4,4,4,5,4,4,3,6,4,4,5,4,5],"start":10,"tee":"7:00 AM","pos":32,"total":166,"purse":0},{"player":"Orlady, Levi","r1":84,"r2":[4,4,5,5,4,6,4,3,7,5,4,4,5,5,5,5,3,4],"start":1,"tee":"7:10 AM","pos":33,"total":166,"purse":0},{"player":"Sharps, Daniel","r1":82,"r2":[4,3,5,4,4,5,5,3,6,4,5,4,6,7,5,5,4,5],"start":1,"tee":"7:30 AM","pos":34,"total":166,"purse":0},{"player":"Neurohr, Matthew","r1":88,"r2":[4,3,4,6,3,4,5,3,4,5,5,3,5,5,5,7,4,4],"start":1,"tee":"7:00 AM","pos":35,"total":167,"purse":0},{"player":"Croak, Michael","r1":81,"r2":[4,3,5,4,3,4,4,4,8,4,8,2,5,6,5,5,5,7],"start":1,"tee":"7:40 AM","pos":36,"total":167,"purse":0},{"player":"Scheuber, Edward","r1":85,"r2":[6,3,5,5,5,4,4,4,5,5,5,4,5,4,5,6,4,4],"start":1,"tee":"7:10 AM","pos":37,"total":168,"purse":0},{"player":"Tresslar, Tom","r1":82,"r2":[5,3,5,5,4,4,6,4,6,5,6,3,5,4,5,7,4,5],"start":1,"tee":"7:30 AM","pos":38,"total":168,"purse":0},{"player":"Knutsen, Hunter","r1":82,"r2":[5,5,5,6,5,6,4,3,6,6,6,3,6,5,6,6,4,4],"start":1,"tee":"7:40 AM","pos":39,"total":173,"purse":0}],"wd":{"player":"Pribble, Casey","r1":78}}</script>
@@ -513,7 +516,8 @@ function lineChart(el, yOf, tickFn, kind){
     const me = l.p.player===ME;
     if(Math.abs(l.yl-l.y0) > 1)
       g += `<line x1="${x(N)+4}" y1="${l.y0.toFixed(1)}" x2="${x(N)+8}" y2="${l.yl.toFixed(1)}" stroke="${colorOf[l.p.player]}" stroke-width="1" opacity=".7"/>`;
-    g += `<text x="${x(N)+11}" y="${(l.yl+3.5).toFixed(1)}" font-size="${labs.length>20?9.5:11}"
+    g += `<text class="endlab" data-p="${l.p.player}" role="button" tabindex="0"
+      x="${x(N)+11}" y="${(l.yl+3.5).toFixed(1)}" font-size="${labs.length>20?9.5:11}"
       fill="${me?'var(--text-primary)':'var(--text-secondary)'}" font-weight="${me?700:400}">${short(l.p.player)}</text>`;
   });
   g += `<line x1="${L}" x2="${L}" y1="${T}" y2="${H-B}" stroke="var(--border)"/>`;
@@ -525,6 +529,19 @@ function lineChart(el, yOf, tickFn, kind){
   g += `<rect class="hitbox" x="${L}" y="${T}" width="${W-L-R}" height="${H-T-B}" fill="transparent" style="cursor:crosshair"/></svg>`;
   el.innerHTML = g;
   attachHover(el, {x, y, yOf, L, R, W, T, B, H});
+  // click a name on the chart to isolate it; click more names to compare
+  el.querySelectorAll('.endlab').forEach(lab=>{
+    const pick = ()=>{
+      const n = lab.dataset.p;
+      if(MODE==='live'){ MODE='fixed'; SEL = new Set([n]); }
+      else if(SEL.has(n)){ if(SEL.size>1) SEL.delete(n); }
+      else SEL.add(n);
+      redraw();
+      el.scrollIntoView({block:'nearest'});
+    };
+    lab.addEventListener('click', pick);
+    lab.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
+  });
 }
 function attachHover(el, s){
   const svg = el.querySelector('svg');
