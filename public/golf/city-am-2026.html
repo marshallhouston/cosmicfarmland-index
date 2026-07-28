@@ -112,6 +112,8 @@
 
   /* hole grid */
   .sc{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:600}
+  .hcell{display:inline-flex;align-items:center;justify-content:center;width:24px}
+  #grid th.hole,#grid td.hole{text-align:center}
   .s-eagle{background:var(--eagle);color:#fff} .s-birdie{background:var(--birdie);color:#fff}
   .s-par{color:var(--par-ink)} .s-bogey{background:var(--bogey);color:#1a1a19} .s-dbl{background:var(--dbl);color:#fff}
   #grid td.stick,#grid th.stick{position:sticky;background:var(--card);z-index:2}
@@ -602,15 +604,15 @@ function drawCharts(){
 function drawGrid(){
   const cls = (s,i)=>{ const d = s-PAR[i]; return d<=-2?'s-eagle':d===-1?'s-birdie':d===0?'s-par':d===1?'s-bogey':'s-dbl'; };
   let h = `<thead><tr><th class="stick c0">Pos</th><th class="stick c1">Player</th><th class="num">Sat</th>`;
-  for(let i=0;i<9;i++) h += `<th class="num">${i+1}</th>`;
+  for(let i=0;i<9;i++) h += `<th class="hole"><span class="hcell">${i+1}</span></th>`;
   h += `<th class="num">Out</th>`;
-  for(let i=9;i<18;i++) h += `<th class="num">${i+1}</th>`;
+  for(let i=9;i<18;i++) h += `<th class="hole"><span class="hcell">${i+1}</span></th>`;
   h += `<th class="num">In</th><th class="num">Sun</th><th class="num">Total</th><th class="num">$</th>`
      + (MODE==='live'?`<th class="num">In top 12</th>`:'') + `</tr>
         <tr><th class="stick c0"></th><th class="stick c1 sub2">par</th><th></th>`;
-  for(let i=0;i<9;i++) h += `<th class="num sub2">${PAR[i]}</th>`;
+  for(let i=0;i<9;i++) h += `<th class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
   h += `<th class="num sub2">34</th>`;
-  for(let i=9;i<18;i++) h += `<th class="num sub2">${PAR[i]}</th>`;
+  for(let i=9;i<18;i++) h += `<th class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
   h += `<th class="num sub2">36</th><th class="num sub2">70</th><th class="num sub2">140</th><th></th>`
      + (MODE==='live'?`<th class="num sub2">of 19</th>`:'') + `</tr></thead><tbody>`;
   sel().forEach(p=>{
@@ -618,9 +620,9 @@ function drawGrid(){
     const me = p.player===ME;
     h += `<tr class="${me?'meRow':''}" style="${me?'background:var(--me);font-weight:600':''}">
       <td class="stick c0">${p.pos}</td><td class="stick c1">${short(p.player)}${p.start===10?' <span class="sub2">(10th tee)</span>':''}</td><td class="num">${p.r1}</td>`;
-    for(let i=0;i<9;i++) h += `<td class="num"><span class="sc ${cls(p.r2[i],i)}">${p.r2[i]}</span></td>`;
+    for(let i=0;i<9;i++) h += `<td class="hole"><span class="sc ${cls(p.r2[i],i)}">${p.r2[i]}</span></td>`;
     h += `<td class="num">${out}</td>`;
-    for(let i=9;i<18;i++) h += `<td class="num"><span class="sc ${cls(p.r2[i],i)}">${p.r2[i]}</span></td>`;
+    for(let i=9;i<18;i++) h += `<td class="hole"><span class="sc ${cls(p.r2[i],i)}">${p.r2[i]}</span></td>`;
     h += `<td class="num">${inn}</td><td class="num">${out+inn}</td><td class="num"><b>${p.total}</b></td>`
        + `<td class="num">${p.purse?'$'+p.purse.toLocaleString():'—'}</td>`
        + (MODE==='live'?`<td class="num">${holesInTop(p)}</td>`:'') + `</tr>`;
