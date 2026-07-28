@@ -106,9 +106,13 @@
 
   /* charts */
   .chartwrap{overflow-x:auto}
+  .chartbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+  .chartbar .btn{padding:5px 12px;font-size:12px}
+  .chartbar .sub2{margin-right:auto}
   svg text{font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;fill:var(--text-secondary)}
   svg text.endlab{cursor:pointer}
-  svg text.endlab:hover{text-decoration:underline}
+  svg text.endlab:hover{text-decoration:underline;fill:var(--text-primary)}
+  svg text.endlab.on{text-decoration:underline;text-underline-offset:3px}
   svg text.endlab:focus-visible{outline:2px solid var(--series-1)}
 
   /* hole grid */
@@ -224,12 +228,16 @@
 
 
 <h2>Position, every hole</h2>
-<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up. <b>Click a name</b> at the right edge to follow that player alone; click another shown name to drop it, and add more players from the picker below.</p>
-<div class="card chartwrap"><div id="bump"></div></div>
+<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up. <b>Click a name</b> at the right edge to follow that player alone. Every other name stays on the edge, dimmed: click one to add it back, click a lit one to drop it, or use the buttons to go back to the whole board.</p>
+<div class="card chartwrap"><div class="chartbar"><span class="sub2" id="bumpCount"></span>
+  <button class="btn sec" data-preset="live">Show the live top 12</button>
+  <button class="btn sec" data-preset="all">Show all 39</button></div><div id="bump"></div></div>
 
 <h2>Strokes, every hole</h2>
 <p class="lede">Position hides how close it actually was. This is cumulative score to par across 36 holes, best at the top. <b>Hover for the standings and hole scores</b> at any point in the round.</p>
-<div class="card chartwrap"><div id="strokes"></div></div>
+<div class="card chartwrap"><div class="chartbar"><span class="sub2" id="strokesCount"></span>
+  <button class="btn sec" data-preset="live">Show the live top 12</button>
+  <button class="btn sec" data-preset="all">Show all 39</button></div><div id="strokes"></div></div>
 
 <h2>Playback</h2>
 <p class="lede">Step through Sunday one hole at a time with the arrows (or the ← → keys), drag the slider, or hit play and watch it run. Rows appear and disappear as players enter and leave the top 12, and the right-hand column tracks how many places each one moved on the hole just played.</p>
@@ -317,6 +325,9 @@ const holesInTop = p => TOP.filter(s=>s.has(p.player)).length;
 let MODE = 'live';                                     // 'live' = rolling top 12, 'fixed' = whatever is picked
 let SEL = new Set(TOP_UNION);
 const sel = () => P.filter(p=>SEL.has(p.player));      // charts + grid: always in finishing order
+// the chart keeps every name in the pool on its right edge, so a filtered view
+// still shows who else there is to add back
+const pool = () => P.filter(p=>TOP_UNION.includes(p.player) || SEL.has(p.player));
 const board12 = k => P.filter(p=>TOP[k].has(p.player));// the board itself: who is actually in it right now
 
 // colour: stable hue per player, Marshall gold
@@ -478,12 +489,13 @@ function tipHTML(k, focus){
 
 // ---- charts ----
 function lineChart(el, yOf, tickFn, kind){
-  const list = sel();
-  const GAP = list.length>20 ? 11 : 13;
+  const list = sel(), all = pool();
+  const GAP = all.length>20 ? 11 : 13;
   const W = 900, L = 46, R = 132, T = 16, B = 34;
-  const H = Math.max(340, T + B + 16 + list.length*GAP);   // tall enough that every end label fits
+  const H = Math.max(340, T + B + 16 + all.length*GAP);   // tall enough that every end label fits
   const x = k => L + k*(W-L-R)/N;
-  const ys = list.flatMap(p=>[...Array(N+1).keys()].map(k=>yOf(p,k)));
+  // scale on the whole pool so unselected names still land in the right place
+  const ys = all.flatMap(p=>[...Array(N+1).keys()].map(k=>yOf(p,k)));
   const lo = Math.min(...ys), hi = Math.max(...ys);
   const y = v => T + (v-lo)*(H-T-B)/(hi-lo||1);         // both charts: better is higher
   let g = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:720px" role="img"
@@ -528,19 +540,20 @@ function lineChart(el, yOf, tickFn, kind){
        + `<text x="${L+6}" y="${(y(12.5)-5).toFixed(1)}" font-size="10">top 12 cut</text>`;
   }
   // end labels, dodged so tied players stay readable
-  const labs = list.map(p=>({p, y0:y(yOf(p,N))})).sort((a,b)=>a.y0-b.y0);
+  const labs = all.map(p=>({p, y0:y(yOf(p,N))})).sort((a,b)=>a.y0-b.y0);
   labs.forEach((l,i)=>{ l.yl = (i && l.y0 - labs[i-1].yl < GAP) ? labs[i-1].yl + GAP : l.y0; });
   // the downward pass can run the stack off the bottom; walk back up so the last
   // label sits inside the plot and every one above it keeps a full gap
   if(labs.length) labs[labs.length-1].yl = Math.min(labs[labs.length-1].yl, H-B);
   for(let i=labs.length-2; i>=0; i--) labs[i].yl = Math.min(labs[i].yl, labs[i+1].yl - GAP);
   labs.forEach(l=>{
-    const me = l.p.player===ME;
-    if(Math.abs(l.yl-l.y0) > 1)
+    const me = l.p.player===ME, on = SEL.has(l.p.player);
+    if(on && Math.abs(l.yl-l.y0) > 1)
       g += `<line x1="${x(N)+4}" y1="${l.y0.toFixed(1)}" x2="${x(N)+8}" y2="${l.yl.toFixed(1)}" stroke="${colorOf[l.p.player]}" stroke-width="1" opacity=".7"/>`;
-    g += `<text class="endlab" data-p="${l.p.player}" role="button" tabindex="0"
-      x="${x(N)+11}" y="${(l.yl+3.5).toFixed(1)}" font-size="${labs.length>20?9.5:11}"
-      fill="${me?'var(--text-primary)':'var(--text-secondary)'}" font-weight="${me?700:400}">${short(l.p.player)}</text>`;
+    g += `<text class="endlab${on?' on':''}" data-p="${l.p.player}" role="button" tabindex="0"
+      aria-pressed="${on}" x="${x(N)+11}" y="${(l.yl+3.5).toFixed(1)}" font-size="${labs.length>20?9.5:11}"
+      fill="${on ? (me?'var(--text-primary)':'var(--text-secondary)') : 'var(--line-dim)'}"
+      font-weight="${me&&on?700:400}">${short(l.p.player)}</text>`;
   });
   g += `<line x1="${L}" x2="${L}" y1="${T}" y2="${H-B}" stroke="var(--border)"/>`;
   g += `<g class="hoverG" style="display:none">
@@ -555,11 +568,10 @@ function lineChart(el, yOf, tickFn, kind){
   el.querySelectorAll('.endlab').forEach(lab=>{
     const pick = ()=>{
       const n = lab.dataset.p;
-      if(MODE==='live'){ MODE='fixed'; SEL = new Set([n]); }
-      else if(SEL.has(n)){ if(SEL.size>1) SEL.delete(n); }
-      else SEL.add(n);
+      if(MODE==='live'){ MODE='fixed'; SEL = new Set([n]); }   // first click isolates
+      else if(SEL.has(n)){ if(SEL.size>1) SEL.delete(n); }     // click a shown name to drop it
+      else SEL.add(n);                                          // click a dimmed name to add it back
       redraw();
-      el.scrollIntoView({block:'nearest'});
     };
     lab.addEventListener('click', pick);
     lab.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
@@ -662,7 +674,14 @@ function drawGrid(){
   grid.querySelectorAll('.c1').forEach(el=>{ el.style.left = w + 'px'; });
 }
 
-function redraw(){ syncPicker(); renderBoard(+slider.value); drawCharts(); drawGrid(); }
+function redraw(){
+  syncPicker(); renderBoard(+slider.value); drawCharts(); drawGrid();
+  const msg = MODE==='live'
+    ? `Following the live top 12. Click any name on a chart to pin it.`
+    : `Showing ${SEL.size} of ${pool().length} names on the chart. Click a dimmed name to add it, a lit one to drop it.`;
+  document.getElementById('bumpCount').textContent = msg;
+  document.getElementById('strokesCount').textContent = msg;
+}
 redraw();
 
 // ---- moments ----
