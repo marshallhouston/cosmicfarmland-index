@@ -9,9 +9,11 @@ import {
   Search,
   Circle,
   CircleDot,
+  Flag,
 } from 'lucide-react'
 import appsData from '../data/apps.json'
 import catalogData from '../data/catalog.json'
+import golfData from '../data/golf.json'
 
 const KINDS = [
   { id: 'skill', label: 'Skills', icon: Wand2 },
@@ -27,6 +29,33 @@ function Stat({ value, label }) {
         {label}
       </span>
     </div>
+  )
+}
+
+function PageCard({ page, index }) {
+  return (
+    <motion.a
+      href={page.url}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6, delay: index * 0.08 }}
+      whileHover={{ y: -4 }}
+      className="group flex flex-col gap-1 rounded-xl border border-[var(--color-haze)] bg-[var(--color-soil-2)]/60 px-5 py-4 transition-colors hover:border-[var(--color-glow-deep)]"
+    >
+      <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-glow)]">
+        {page.kicker}
+      </span>
+      <span className="flex items-center gap-2 text-lg text-[var(--color-cream)]">
+        {page.name}
+        <ArrowUpRight
+          size={15}
+          aria-hidden="true"
+          className="text-[var(--color-cream-dim)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+      </span>
+      <span className="text-sm text-[var(--color-cream-dim)]">{page.blurb}</span>
+    </motion.a>
   )
 }
 
@@ -189,7 +218,7 @@ export default function App() {
         <nav className="flex gap-6 pt-8 font-mono text-xs uppercase tracking-[0.25em] text-[var(--color-cream-dim)]">
           <a href="#apps" className="hover:text-[var(--color-gold)]">apps</a>
           <a href="#catalog" className="hover:text-[var(--color-gold)]">toolshed</a>
-          <a href="/golf" className="hover:text-[var(--color-gold)]">golf</a>
+          <a href="#golf" className="hover:text-[var(--color-gold)]">golf</a>
         </nav>
 
         {/* Hero */}
@@ -241,6 +270,22 @@ export default function App() {
           <div className="grid gap-5 sm:grid-cols-2">
             {appsData.apps.map((app, i) => (
               <AppCard key={app.slug} app={app} index={i} />
+            ))}
+          </div>
+        </section>
+
+        {/* Golf */}
+        <section id="golf" className="mt-24">
+          <h2 className="mb-2 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-cream-dim)]">
+            <Flag size={16} aria-hidden="true" className="text-[var(--color-glow)]" /> the back forty
+          </h2>
+          <p className="mb-8 max-w-lg text-sm text-[var(--color-cream-dim)]">
+            golf, counted properly. every round i post and every hole of the
+            tournaments worth writing down.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {golfData.pages.map((page, i) => (
+              <PageCard key={page.slug} page={page} index={i} />
             ))}
           </div>
         </section>

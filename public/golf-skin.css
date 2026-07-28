@@ -161,3 +161,19 @@ section { margin-bottom: 60px; }
 .cf-footer a { color: var(--cf-glow-deep); text-decoration: none; }
 :root[data-theme="dark"] .cf-footer a { color: var(--cf-glow); }
 .cf-footer a:hover { color: var(--gold); }
+
+/* ---------- shared golf nav strip (both golf pages) ---------- */
+.cf-golf-nav {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  padding: 14px 0 2px; font-family: var(--font-mono);
+}
+.cf-golf-link {
+  border-radius: 999px; padding: 5px 12px; font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; text-decoration: none; color: var(--muted);
+  border: 1px solid transparent;
+}
+.cf-golf-link:hover { color: var(--gold); border-color: var(--grid); }
+.cf-golf-link.on { color: var(--gold); border-color: var(--gold); }
+.cf-golf-link.cf-home { color: var(--cf-glow-deep); padding-left: 0; }
+:root[data-theme="dark"] .cf-golf-link.cf-home { color: var(--cf-glow); }
+.cf-golf-link.cf-home:hover { color: var(--gold); border-color: transparent; }
