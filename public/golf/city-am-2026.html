@@ -111,8 +111,7 @@
   .chartbar .sub2{margin-right:auto}
   svg text{font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;fill:var(--text-secondary)}
   svg text.endlab{cursor:pointer}
-  svg text.endlab:hover{text-decoration:underline;fill:var(--text-primary)}
-  svg text.endlab.on{text-decoration:underline;text-underline-offset:3px}
+  svg text.endlab:hover{fill:var(--text-primary)}
   svg text.endlab:focus-visible{outline:2px solid var(--series-1)}
 
   /* hole grid */
@@ -228,7 +227,7 @@
 
 
 <h2>Position, every hole</h2>
-<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up. <b>Click a name</b> at the right edge to follow that player alone. Every other name stays on the edge, dimmed: click one to add it back, click a lit one to drop it, or use the buttons to go back to the whole board.</p>
+<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up. <b>Click a name</b> at the right edge to follow that player alone. Every other name stays on the edge, dimmed: click one to add it to the comparison, click a lit one to drop it, and clicking the last lit name puts everyone back.</p>
 <div class="card chartwrap"><div class="chartbar"><span class="sub2" id="bumpCount"></span>
   <button class="btn sec" data-preset="live">Show the live top 12</button>
   <button class="btn sec" data-preset="all">Show all 39</button></div><div id="bump"></div></div>
@@ -569,7 +568,10 @@ function lineChart(el, yOf, tickFn, kind){
     const pick = ()=>{
       const n = lab.dataset.p;
       if(MODE==='live'){ MODE='fixed'; SEL = new Set([n]); }   // first click isolates
-      else if(SEL.has(n)){ if(SEL.size>1) SEL.delete(n); }     // click a shown name to drop it
+      else if(SEL.has(n)){
+        if(SEL.size>1) SEL.delete(n);                           // click a shown name to drop it
+        else { MODE='live'; SEL = new Set(TOP_UNION); }         // clicking the last one goes back
+      }
       else SEL.add(n);                                          // click a dimmed name to add it back
       redraw();
     };
@@ -678,7 +680,7 @@ function redraw(){
   syncPicker(); renderBoard(+slider.value); drawCharts(); drawGrid();
   const msg = MODE==='live'
     ? `Following the live top 12. Click any name on a chart to pin it.`
-    : `Showing ${SEL.size} of ${pool().length} names on the chart. Click a dimmed name to add it, a lit one to drop it.`;
+    : `Showing ${SEL.size} of ${pool().length} names. Click a dimmed name to add it, a lit one to drop it, the last one to go back.`;
   document.getElementById('bumpCount').textContent = msg;
   document.getElementById('strokesCount').textContent = msg;
 }
