@@ -148,6 +148,9 @@ td.name{max-width:340px;overflow:hidden;text-overflow:ellipsis}
 .tile.sel{border-color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--text-primary)}
 .tile.click::after{content:"Filter to these →";display:block;margin-top:9px;font-size:11.5px;color:var(--series-1);font-weight:600}
 .tile.sel.click::after{content:"Filtering — click to clear ×";color:var(--text-primary)}
+.tile.roundlink{cursor:pointer}
+.tile.roundlink:hover{border-color:var(--axis);background:var(--chip)}
+.tile.roundlink::after{content:"View round →";display:block;margin-top:9px;font-size:11.5px;color:var(--series-1);font-weight:600}
 @keyframes flash{0%,100%{background:transparent}18%{background:var(--seq-100)}}
 tbody tr.hl>td{animation:flash 1.8s ease-out}
 :root[data-theme="dark"] tbody tr.hl>td{animation:flashd 1.8s ease-out}
@@ -782,6 +785,12 @@ const pct=(n,d)=>d?((n/d*100).toFixed(1)+'%'):'—';
 function fmtDate(d){const [y,m,dd]=d.split('-');return MONTHS[+m-1]+' '+(+dd)+', '+y;}
 function shortDate(d){const [y,m,dd]=d.split('-');return MONTHS[+m-1]+' '+(+dd)+' '+y.slice(2);}
 function el(t,c,h){const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;}
+/* a stat tile whose subtitle names one round — clicking it opens that round's scorecard */
+function roundTile(k,v,n,rid){
+  const t=el('div','tile'+(rid?' roundlink':''),'<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+(n||'&nbsp;')+'</div>');
+  if(rid) t.setAttribute('data-rid',rid);
+  return t;
+}
 function SVG(w,h){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
   s.setAttribute('viewBox','0 0 '+w+' '+h); s.setAttribute('width','100%'); return s;}
 function N(tag,attrs){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
@@ -995,19 +1004,19 @@ function renderHero(){
 
   const tiles=[
     ['Rounds', rs.length, [...new Set(rs.map(r=>r.course))].length+' courses · '+[...new Set(rs.map(r=>r.course+r.tee))].length+' tee setups'],
-    ['Best differential', f1(best), bestR? bestR.course+' · '+shortDate(bestR.date):''],
+    ['Best differential', f1(best), bestR? bestR.course+' · '+shortDate(bestR.date):'', bestR&&bestR.id],
     ['Average differential', f1(mean(ds)), 'median '+f1(ds[Math.floor(ds.length/2)])],
-    ['Worst differential', f1(worst), worstR? worstR.course+' · '+shortDate(worstR.date):'']
+    ['Worst differential', f1(worst), worstR? worstR.course+' · '+shortDate(worstR.date):'', worstR&&worstR.id]
   ];
   const tiles2=[
     ['Lowest 18-hole round', lowToPar==null?'—':sgn(lowToPar)+' to par',
-      lowR? lowR.score+' at '+lowR.course+' · '+shortDate(lowR.date):''],
+      lowR? lowR.score+' at '+lowR.course+' · '+shortDate(lowR.date):'', lowR&&lowR.id],
     ['Last 10 rounds', f1(mean(last10)), 'average differential'],
     ['Consistency', f1(sd), 'std deviation of differential'],
     ['Pars or better', pct(oc.par+oc.birdie+oc.eagle,on), (oc.par+oc.birdie+oc.eagle)+' of '+on+' holes']
   ];
   const put=(id,arr)=>{ const g=$(id); g.innerHTML='';
-    arr.forEach(([k,v,n])=>g.appendChild(el('div','tile','<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+(n||'&nbsp;')+'</div>'))); };
+    arr.forEach(([k,v,n,rid])=>g.appendChild(roundTile(k,v,n,rid))); };
   put('#heroTiles',tiles); put('#heroTiles2',tiles2);
   renderClimb();
 }
@@ -1040,8 +1049,9 @@ function renderClimb(){
   }
   counting.forEach((r,i)=>{
     const y=P.t+i*rowH, met=r.diff<=TARGET;
-    const lb=N('text',{x:P.l-10,y:y+rowH/2+4,'text-anchor':'end',fill:'var(--text-secondary)','font-size':11.5});
-    lb.textContent=(r.course.length>26?r.course.slice(0,25)+'…':r.course)+' · '+shortDate(r.date); s.appendChild(lb);
+    const lb=N('text',{x:P.l-10,y:y+rowH/2+4,'text-anchor':'end',fill:'var(--text-secondary)','font-size':11.5,style:'cursor:pointer'});
+    lb.textContent=(r.course.length>26?r.course.slice(0,25)+'…':r.course)+' · '+shortDate(r.date);
+    lb.addEventListener('click',()=>openRound(r.id)); s.appendChild(lb);
     const rct=N('rect',{x:P.l,y:y+6,width:Math.max(2,X(r.diff)-P.l),height:rowH-12,rx:4,
       fill: met?'var(--good)':'var(--seq-450)', style:'cursor:pointer'});
     bindTip(rct,'<b>'+f1(r.diff)+' differential</b><br>'+fmtDate(r.date)+'<br>'+r.course+' · '+r.tee+
@@ -1905,8 +1915,8 @@ function renderCleanRounds(){
      ['Average 18 if capped at bogey', f1(avgCap), 'versus '+f1(avgAct)+' actual — '+f1(avgAct-avgCap)+' strokes better'],
      ['Average differential if capped', f1(capDiff), 'versus '+f1(actDiff)+' actual — a '+f1(actDiff-capDiff)+' shift'],
      ['Best round if capped', best?capped(best.item):'—',
-      best? best.item.course+' · '+shortDate(best.item.date)+' (played '+best.item.score+')':'']]
-    .forEach(([k,v,n])=>cf.appendChild(el('div','tile','<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div>')));
+      best? best.item.course+' · '+shortDate(best.item.date)+' (played '+best.item.score+')':'', best&&best.item.id]]
+    .forEach(([k,v,n,rid])=>cf.appendChild(roundTile(k,v,n,rid)));
   }
 
   // trend of blow-up holes
