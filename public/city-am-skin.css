@@ -77,6 +77,13 @@ input[type=range] { accent-color: var(--gold); }
 
 /* Champion photo in the hero: soil frame, gold hairline, mono caption. */
 .champ img { border: 1px solid var(--grid); border-radius: 14px; box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45); }
+/* Single-column layout (below the hero's 820px two-column breakpoint): the
+   figure's 320px cap left it hugging the left edge of the full-width column.
+   Let it fill the column so it lines up with the chips above and tiles below,
+   reading as a centered hero rather than an offset box. */
+@media (max-width: 819px) {
+  .champ { max-width: none; margin-inline: auto; }
+}
 .champ figcaption {
   margin-top: 14px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--text-muted); opacity: 1; line-height: 2.1;
