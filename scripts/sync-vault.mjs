@@ -78,6 +78,12 @@ const PAGES = [
       ['fonts + skin stylesheets', (h) => h.replace('</head>', `${head('golf-skin.css', 'city-am-skin.css')}\n</head>`)],
       ['atmosphere + home link', (h) => h.replace(/<body[^>]*>/, (m) => `${m}\n${ATMOSPHERE}`)],
       ['golf nav strip', (h) => h.replace(/(<div class="wrap">)/, `$1\n${strip('/golf/city-am-2026')}`)],
+      // Same Cloudflare edge-cache trap as the stylesheets: a URL polled before
+      // the deploy lands caches the SPA fallback under an image extension for
+      // hours. Version the src so a new file is always a new URL.
+      ['version the champion photo', (h) => h.replace(
+        /src="(city-am-2026-champion\.jpg)"/,
+        (m, f) => `src="${f}?v=${createHash('sha1').update(readFileSync(join(VAULT, 'denver-city-park-golf-tournament-2026', f))).digest('hex').slice(0, 8)}"`)],
       // The scouting report is deliberately vault-only: it carries other players'
       // GHIN histories. Drop the link rather than shipping a 404 to it.
       ['drop the private back-link', (h) => h.replace(/<p class="lede"[^>]*><a href="Denver_City_Am_2026_Flight2_Report\.html">[\s\S]*?<\/p>\n?/, '')],
