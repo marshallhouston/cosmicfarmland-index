@@ -636,11 +636,11 @@ function drawGrid(){
   for(let i=9;i<18;i++) h += `<th scope="col" class="hole"><span class="hcell">${i+1}</span></th>`;
   h += `<th scope="col" class="num">In</th><th scope="col" class="num">Sun</th><th scope="col" class="num">Total</th><th scope="col" class="num">$</th>`
      + (MODE==='live'?`<th class="num">In top 12</th>`:'') + `</tr>
-        <tr><th class="stick c0"></th><th class="stick c1 sub2">par</th><th></th>`;
-  for(let i=0;i<9;i++) h += `<th class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
-  h += `<th class="num sub2">34</th>`;
-  for(let i=9;i<18;i++) h += `<th class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
-  h += `<th class="num sub2">36</th><th class="num sub2">70</th><th class="num sub2">140</th><th></th>`
+        <tr><th class="stick c0"></th><th scope="row" class="stick c1 sub2">par</th><th></th>`;
+  for(let i=0;i<9;i++) h += `<th scope="col" class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
+  h += `<th scope="col" class="num sub2">34</th>`;
+  for(let i=9;i<18;i++) h += `<th scope="col" class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
+  h += `<th scope="col" class="num sub2">36</th><th scope="col" class="num sub2">70</th><th scope="col" class="num sub2">140</th><th></th>`
      + (MODE==='live'?`<th class="num sub2">of 19</th>`:'') + `</tr></thead><tbody>`;
   sel().forEach(p=>{
     const out = p.r2.slice(0,9).reduce((a,b)=>a+b,0), inn = p.r2.slice(9).reduce((a,b)=>a+b,0);
