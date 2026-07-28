@@ -139,10 +139,17 @@
   .tiptbl tr.focus td{background:var(--surface-2)}
   .tiptbl tr.focus td:first-child{border-radius:5px 0 0 5px} .tiptbl tr.focus td:last-child{border-radius:0 5px 5px 0}
   .tiptbl .sc{width:20px;height:20px;font-size:11px}
-  .notes{max-width:82ch;margin-left:0}
-  .notes h3{margin:22px 0 6px;font-size:15px}
-  .notes h3:first-child{margin-top:0}
-  .notes p{margin:0 0 12px;color:var(--text-secondary);line-height:1.75}
+  /* the long section holds one column, the two short ones stack beside it, so
+     the block fills the page without a cliff of empty space under the short ones */
+  .notegrid{display:grid;gap:14px;align-items:start;grid-template-columns:1fr}
+  @media(min-width:760px){
+    .notegrid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+    .notecard:first-child{grid-row:span 2}
+  }
+  .notecard{margin:0}
+  .notecard h3{margin:0 0 10px;font-size:15px}
+  .notecard p{margin:0 0 12px;color:var(--text-secondary);line-height:1.75}
+  .notecard p:last-child{margin-bottom:0}
   @media(prefers-reduced-motion:reduce){ .brow,.board{transition:none} }
   .foot{color:var(--text-muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:14px}
   a{color:var(--series-1)}
@@ -156,7 +163,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/golf-skin.css?v=eadfbd31">
-<link rel="stylesheet" href="/city-am-skin.css?v=f99edabb">
+<link rel="stylesheet" href="/city-am-skin.css?v=1e0a0adf">
 <link rel="canonical" href="https://cosmicfarmland.wtf/golf/city-am-2026">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="cosmic farmland">
@@ -202,23 +209,27 @@
 
 <h2>Sunday morning, before the round</h2>
 <p class="lede">Written the morning of the final round, two shots in front, before any of what follows happened. Unedited.</p>
-<div class="card notes">
-  <h3>Mentally</h3>
+<div class="notegrid">
+  <section class="card notecard">
+    <h3>Mentally</h3>
   <p>absolutely locked in. My goal of being the toughest mentally out on the course gave me courage to pursue, accept outcomes, and focus on the process.</p>
   <p>It was hot as fuck out there, and I knew that it would make some people melt; not me bc I embraced it. Hydrated a ton and followed my eating plan.</p>
   <p>When the wind picked up with 7 holes to play, I told myself, &#8220;this is great. Everyone else has to deal with it. It&#8217;s a new challenge that you live for,&#8221; and gosh that helped me see it as a positive vs frustrating. I was sooo drained for the couple hours afterwards.</p>
   <p>My goal doesn&#8217;t change today. Be the toughest mentally out on the course. Embrace the process: joy and gratitude to be outside moving my body and open to connection with others (thank volunteers, celebrate good shots from other players), lock in on shot tactic, target, and strategy (where's trouble, where's safe miss), commit to a shot and visualize, pre-shot routine, execute (step away and reset if not full commitment), accept results, and adjust moving forward as needed.</p>
   <p>Do i want to win? fuck yes. but that's an outcome i don't control. it's me vs. the course. all i can control is how i show up.</p>
   <p>Will i be disappointed if i don't win? it depends. was it b/c i was playing out of fear? inability to accept adversity (it will come... just depends on how i respond)? playing not to lose vs. pursuing and playing my game? or did i focus on my mental goal and process and not get the outcome i wanted? i will not be disappointed if i do all the things in my control.</p>
-
-  <h3>Physically</h3>
+  </section>
+  <section class="card notecard">
+    <h3>Physically</h3>
   <p>definitely sore (expected). ran through a nice recovery routine last night, and i'm currently icing. stretching, eating well (yogurt, chia seeds, and peaches from CSA fruit share + lentil stew and rice is my jam).</p>
   <p>warm up properly (range is for moving body, not hitting perfect shots) today, and I'll be good to go. 9am tee off. final group. playing with the guys in 2nd and 3rd (two shots back).</p>
-
-  <h3>Emotionally</h3>
+  </section>
+  <section class="card notecard">
+    <h3>Emotionally</h3>
   <p>So fucking proud. Elated to put myself in a position to accomplish my goals. This is _exactly_ where I wanted to be. Learning opportunity: about myself, my game, how i respond to adversity, how I go pursue the best version myself with something I want to do.</p>
   <p>No matter what happens today, I've put myself in the exact position I want to be. I'll learn a lot.</p>
   <p>I'm grateful to have played with some elite golfers this year (women's 67th best amateur, former d1 golfer, other top amateurs) b/c it gave me confidence to just play my game and be comfortable in my own skin. this is a me vs. course scenario.</p>
+  </section>
 </div>
 
 <div class="tiles" id="tiles"></div>

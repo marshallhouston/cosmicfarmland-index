@@ -85,9 +85,7 @@ input[type=range] { accent-color: var(--gold); }
 .champ figcaption br { line-height: 2.4; }
 .champ figcaption a { color: var(--cf-glow); }
 
-/* Pre-round notes: his own words, so give them reading measure and warmth. */
-.notes h3 { color: var(--gold); font-size: 17px; letter-spacing: 0; text-transform: none; }
-.notes p { font-size: 15px; line-height: 1.85; color: var(--text-secondary); }
-.notes { border-left: 2px solid var(--grid); border-radius: 0 16px 16px 0; padding-left: 22px; }
-/* card edge and text measure are the same width, so the copy fills its panel */
-.notes p { max-width: none; }
+/* Pre-round notes: his own words, in three columns that collapse on a phone. */
+.notecard h3 { color: var(--gold); font-size: 17px; letter-spacing: 0; text-transform: none; }
+.notecard p { font-size: 14.5px; line-height: 1.8; color: var(--text-secondary); }
+.notecard { border-top: 2px solid var(--gold-deep); border-radius: 4px 4px 16px 16px; }
