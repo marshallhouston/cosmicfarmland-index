@@ -223,24 +223,15 @@
 </div>
 
 
-<h2>Who's on the board</h2>
-<p class="lede">By default the board is the <b>live top 12</b>: after every hole it holds whoever is actually in the top 12 at that moment, so players drop in and out as they play. Pick names or a preset instead to pin a fixed set. Either way positions are computed against all 39 players who finished, so a pinned pair still shows their real place in the tournament. Ties at the cut are all kept, so the board sometimes carries more than 12.</p>
-<div class="card">
-  <div class="presets">
-    <button class="btn sec" data-preset="live">Live top 12 (rolling)</button>
-    <button class="btn sec" data-preset="money">The 12 who cashed</button>
-    <button class="btn sec" data-preset="podium">Top 4</button>
-    <button class="btn sec" data-preset="lead">Everyone who led</button>
-    <button class="btn sec" data-preset="movers">Biggest movers</button>
-    <button class="btn sec" data-preset="all">Whole flight (39)</button>
-    <button class="btn sec" data-preset="me">Marshall only</button>
-    <span class="sub2" id="selCount"></span>
-  </div>
-  <div class="pick" id="pick"></div>
-  <div class="sub2" style="margin-top:10px">Casey Pribble withdrew during the round and is not tracked. Niko Evans started on the 10th tee; his card is rotated into the order he actually played, so "thru 9" means his ninth hole for everyone.</div>
-</div>
+<h2>Position, every hole</h2>
+<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up. <b>Click a name</b> at the right edge to follow that player alone; click another shown name to drop it, and add more players from the picker below.</p>
+<div class="card chartwrap"><div id="bump"></div></div>
 
-<h2>Scrub the round</h2>
+<h2>Strokes, every hole</h2>
+<p class="lede">Position hides how close it actually was. This is cumulative score to par across 36 holes, best at the top. <b>Hover for the standings and hole scores</b> at any point in the round.</p>
+<div class="card chartwrap"><div id="strokes"></div></div>
+
+<h2>Playback</h2>
 <p class="lede">Step through Sunday one hole at a time with the arrows (or the ← → keys), drag the slider, or hit play and watch it run. Rows appear and disappear as players enter and leave the top 12, and the right-hand column tracks how many places each one moved on the hole just played.</p>
 <div class="card">
   <div class="ctrls">
@@ -255,13 +246,22 @@
   <div class="board" id="board"></div>
 </div>
 
-<h2>Position, every hole</h2>
-<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up. <b>Click a name</b> at the right edge to follow that player alone; click another shown name to drop it, and add more players from the chips above.</p>
-<div class="card chartwrap"><div id="bump"></div></div>
-
-<h2>Strokes, every hole</h2>
-<p class="lede">Position hides how close it actually was. This is cumulative score to par across 36 holes, best at the top. <b>Hover for the standings and hole scores</b> at any point in the round.</p>
-<div class="card chartwrap"><div id="strokes"></div></div>
+<h2>Who's on the board</h2>
+<p class="lede">By default the board is the <b>live top 12</b>: after every hole it holds whoever is actually in the top 12 at that moment, so players drop in and out as they play. Pick names or a preset instead to pin a fixed set, and every section on this page follows the choice. Either way positions are computed against all 39 players who finished, so a pinned pair still shows their real place in the tournament. Ties at the cut are all kept, so the board sometimes carries more than 12.</p>
+<div class="card">
+  <div class="presets">
+    <button class="btn sec" data-preset="live">Live top 12 (rolling)</button>
+    <button class="btn sec" data-preset="money">The 12 who cashed</button>
+    <button class="btn sec" data-preset="podium">Top 4</button>
+    <button class="btn sec" data-preset="lead">Everyone who led</button>
+    <button class="btn sec" data-preset="movers">Biggest movers</button>
+    <button class="btn sec" data-preset="all">Whole flight (39)</button>
+    <button class="btn sec" data-preset="me">Marshall only</button>
+    <span class="sub2" id="selCount"></span>
+  </div>
+  <div class="pick" id="pick"></div>
+  <div class="sub2" style="margin-top:10px">Casey Pribble withdrew during the round and is not tracked. Niko Evans started on the 10th tee; his card is rotated into the order he actually played, so "thru 9" means his ninth hole for everyone.</div>
+</div>
 
 <h2>The scorecards</h2>
 <p class="lede">Sunday only. <span class="sc s-birdie">3</span> birdie or better, <span class="sc s-par">4</span> par, <span class="sc s-bogey">5</span> bogey, <span class="sc s-dbl">6</span> double or worse. Sorted by final position.</p>
