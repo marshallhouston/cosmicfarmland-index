@@ -133,14 +133,10 @@ h1 em { font-style: italic; color: var(--gold); }
 .tile.click, .card { transition: border-color 0.25s, transform 0.25s; }
 .tile.click:hover { transform: translateY(-3px); }
 
-/* Chrome: mono pills, translucent sticky bars. */
-nav.jump, .filters {
-  background: rgba(8, 7, 15, 0.82);
-  backdrop-filter: blur(10px);
-}
-:root[data-theme="light"] nav.jump,
-:root[data-theme="light"] .filters { background: rgba(244, 237, 220, 0.9); }
-nav.jump { padding: 10px 0; gap: 4px; }
+/* Chrome: mono pills, opaque sticky bars. Translucent + blur let the page
+   scroll through the bars, which read as a smeared blob over the active pill. */
+nav.jump, .filters { background: var(--plane); }
+nav.jump { padding: 10px 0; gap: 4px; align-items: center; }
 nav.jump a { border-radius: 999px; font-size: 12px; letter-spacing: 0.06em; }
 .btn, .seg, .themebtn, .f select, .f input { border-radius: 999px; }
 .seg button { padding: 8px 14px; }
