@@ -444,8 +444,10 @@ function lineChart(el, yOf, tickFn, kind){
   // end labels, dodged so tied players stay readable
   const labs = list.map(p=>({p, y0:y(yOf(p,N))})).sort((a,b)=>a.y0-b.y0);
   labs.forEach((l,i)=>{ l.yl = (i && l.y0 - labs[i-1].yl < GAP) ? labs[i-1].yl + GAP : l.y0; });
-  for(let i=labs.length-1; i>0; i--)                       // pull back up if the stack ran off the bottom
-    if(labs[i].yl > H-B) labs[i-1].yl = Math.min(labs[i-1].yl, (labs[i].yl = Math.min(labs[i].yl, H-B)) - GAP);
+  // the downward pass can run the stack off the bottom; walk back up so the last
+  // label sits inside the plot and every one above it keeps a full gap
+  if(labs.length) labs[labs.length-1].yl = Math.min(labs[labs.length-1].yl, H-B);
+  for(let i=labs.length-2; i>=0; i--) labs[i].yl = Math.min(labs[i].yl, labs[i+1].yl - GAP);
   labs.forEach(l=>{
     const me = l.p.player===ME;
     if(Math.abs(l.yl-l.y0) > 1)
