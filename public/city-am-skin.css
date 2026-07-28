@@ -89,3 +89,5 @@ input[type=range] { accent-color: var(--gold); }
 .notes h3 { color: var(--gold); font-size: 17px; letter-spacing: 0; text-transform: none; }
 .notes p { font-size: 15px; line-height: 1.85; color: var(--text-secondary); }
 .notes { border-left: 2px solid var(--grid); border-radius: 0 16px 16px 0; padding-left: 22px; }
+/* card edge and text measure are the same width, so the copy fills its panel */
+.notes p { max-width: none; }
