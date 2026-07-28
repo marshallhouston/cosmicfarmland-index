@@ -78,7 +78,9 @@ input[type=range] { accent-color: var(--gold); }
 /* Champion photo in the hero: soil frame, gold hairline, mono caption. */
 .champ img { border: 1px solid var(--grid); border-radius: 14px; box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45); }
 .champ figcaption {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--text-muted); opacity: 1; line-height: 1.6;
+  margin-top: 14px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-muted); opacity: 1; line-height: 2.1;
+  text-wrap: balance;
 }
+.champ figcaption br { line-height: 2.4; }
 .champ figcaption a { color: var(--cf-glow); }

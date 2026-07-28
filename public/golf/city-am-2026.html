@@ -94,7 +94,7 @@
   .brow .pos{font-weight:700}
   .brow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .brow .tp{text-align:right;font-weight:600}
-  .brow .bar{height:8px;border-radius:4px;background:var(--series-1);opacity:.75}
+  .brow .back{text-align:right;font-size:12px;color:var(--text-muted)}
   .brow .mv{font-size:11px;text-align:right;color:var(--text-muted)}
   .up{color:var(--good)} .down{color:var(--bad)}
   .holecard{display:grid;grid-template-columns:repeat(auto-fit,minmax(94px,1fr));gap:8px;margin:12px 0 4px}
@@ -129,8 +129,8 @@
   .foot{color:var(--text-muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:14px}
   a{color:var(--series-1)}
   @media(max-width:700px){
-    .brow{grid-template-columns:44px 1fr 54px 46px;font-size:12.5px}
-    .brow > div:nth-child(4){display:none}   /* the gap-to-leader bar needs width the phone doesn't have */
+    .brow{grid-template-columns:44px 1fr 52px 60px 44px;font-size:12.5px}
+    .brow .back{font-size:11px}
   }
 </style>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9971;</text></svg>">
@@ -138,7 +138,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/golf-skin.css?v=cc3b3a30">
-<link rel="stylesheet" href="/city-am-skin.css?v=248d5390">
+<link rel="stylesheet" href="/city-am-skin.css?v=eff403fc">
 </head>
 <body>
 <div class="sky"></div><div class="stars"></div><div class="grain"></div>
@@ -191,7 +191,7 @@
 </div>
 
 <h2>Scrub the round</h2>
-<p class="lede">Drag the slider (or hit play) to move through Sunday one hole at a time. Rows appear and disappear as players enter and leave the top 12. The bar is how far off the lead each player was at that moment.</p>
+<p class="lede">Drag the slider (or hit play) to move through Sunday one hole at a time. Rows appear and disappear as players enter and leave the top 12, and the right-hand column tracks how many places each one moved on the hole just played.</p>
 <div class="card">
   <div class="ctrls">
     <button class="btn" id="play">▶ Play</button>
@@ -326,8 +326,7 @@ P.forEach(p=>{
   const el = document.createElement('div');
   el.className = 'brow' + (p.player===ME?' me':'');
   el.innerHTML = `<div class="pos"></div><div class="nm">${short(p.player)}</div>
-    <div class="tp"></div><div><div class="bar" title="shots behind the leader"></div></div><div class="mv"></div>`;
-  el.querySelector('.bar').style.background = colorOf[p.player];
+    <div class="tp"></div><div class="back" title="shots behind the leader"></div><div class="mv"></div>`;
   board.appendChild(el); rowEls[p.player]=el;
 });
 function renderBoard(k){
@@ -336,7 +335,6 @@ function renderBoard(k){
   const on = new Set(list.map(p=>p.player));
   P.forEach(p=>{ if(!on.has(p.player)) rowEls[p.player].style.display='none'; });
   const lead = Math.min(...P.map(p=>v[p.player]));      // full-field leader, even if unselected
-  const worst = Math.max(...list.map(p=>v[p.player]));
   list.slice().sort((a,b)=> (v[a.player]-v[b.player]) || a.player.localeCompare(b.player))
     .forEach((p,i)=>{
       const el = rowEls[p.player];
@@ -344,8 +342,8 @@ function renderBoard(k){
       const tied = P.filter(q=>v[q.player]===v[p.player]).length>1;
       el.querySelector('.pos').textContent = (tied?'T':'') + pos[p.player];
       el.querySelector('.tp').textContent = fmt(v[p.player]);
-      const back = v[p.player]-lead, span = Math.max(worst-lead,1);
-      el.querySelector('.bar').style.width = (100 - back/span*88)+'%';
+      const back = v[p.player]-lead;
+      el.querySelector('.back').textContent = back===0 ? 'leader' : `${back} back`;
       const mv = k===0 ? 0 : POS[k-1][p.player]-pos[p.player];
       const mvEl = el.querySelector('.mv');
       mvEl.textContent = k===0 ? `${p.r1}` : (mv>0?`▲ ${mv}`:mv<0?`▼ ${-mv}`:'—');
