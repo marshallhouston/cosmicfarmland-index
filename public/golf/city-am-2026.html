@@ -188,7 +188,7 @@
   <h1>Sunday, hole by hole<em> — 2026 Denver City Am, Flight 2</em></h1>
   <div class="sub">The top 12 of the 36-hole leaderboard after every hole of the final round, the way a live board would have shown it. Membership is not fixed: 20 of the 39 players who finished Sunday passed through the top 12 at some point, and 4 of the 12 who started inside it were gone by the end.</div>
   <div class="chips">
-    <span class="chip" style="background:rgba(255,215,80,.25);border-color:rgba(255,215,80,.6)"><b>🏆 Marshall Houston — in front at 16 of the 19 checkpoints</b></span>
+    <span class="chip" style="background:rgba(255,215,80,.25);border-color:rgba(255,215,80,.6)"><b>🏆 Marshall Houston — in front after 16 of the 19 holes</b></span>
     <span class="chip">20 players cycled through the top 12</span>
     <span class="chip">Won by 1 · 150 (+10)</span>
     <span class="chip">Par 70 · City Park GC · Gold tees</span>
@@ -373,10 +373,10 @@ document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click'
   const me = byName[ME];
   const bird = me.r2.filter((s,i)=>s<PAR[i]).length;
   const t = [
-    {lab:'Checkpoints in front', val:`${led} / 19`, note:'including the last one'},
+    {lab:'In front after each hole', val:`${led} / 19`, note:'including the last one'},
     {lab:'Low point', val:`T${worst}`, note:'through 8 holes, two off the lead'},
     {lab:'Sunday card', val:`${bird} birdies`, note:'6 bogeys, 2 doubles, both before the turn'},
-    {lab:'Through the top 12', val:`${TOP_UNION.length} players`, note:'only 3 were in it at all 19 checkpoints'},
+    {lab:'Through the top 12', val:`${TOP_UNION.length} players`, note:'only 3 were in it after every hole'},
     {lab:'Held a share of the lead', val:`${LEADERS.length} players`, note:'of the 39 who finished'},
   ];
   document.getElementById('tiles').innerHTML = t.map(x=>
@@ -692,7 +692,7 @@ document.getElementById('moments').innerHTML = `
   <li><b>The wobble came in twos.</b> Doubles at the par-3 2nd and the par-4 4th cost four shots in six holes, and the bogey at 8 dropped him furthest back he would ever be: Thesing alone at +6, three players at +7, Marshall tied 5th at +8. Two shots off the lead, eight holes in.</li>
   <li><b>The 9th settled it.</b> The par-5 9th was the second-hardest hole on the course (field average 5.95). Marshall birdied it. Thesing made 6, Pathak and Seppala made 7, and Stephen Kyle Fowler — tied 2nd at that moment — made <b>9</b> and was gone. One hole, and the lead was back.</li>
   <li><b>Hole 12 was the last flicker.</b> Marshall bogeyed 10, 11 and 12 while Newton parred along; Newton led alone at +9 for exactly one hole. Then Newton played 14-16 in five over (7-5-6) and finished 9th.</li>
-  <li><b>The top 12 churned all day.</b> Twenty different players held a spot in it, but only three — Houston, Gorgevski-Sharpe and Thesing — were inside at all 19 checkpoints. Nathan Bartell spent 11 checkpoints in it and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 checkpoints and finished 9th.</li>
+  <li><b>The top 12 churned all day.</b> Twenty different players held a spot in it, but only three — Houston, Gorgevski-Sharpe and Thesing — were inside after every hole. Nathan Bartell held a spot after 11 holes and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 holes and finished 9th.</li>
   <li><b>Only five players in a 39-man flight ever held even a share of the lead</b> — Houston, Thesing, Newton, Gorgevski-Sharpe and Rogers. Everyone who cashed outside that group did it by climbing over people, not by leading.</li>
   <li><b>Welton was the closer nobody scouted.</b> After the opening 6 he played the last 17 holes in two over, birdied the 2nd and the 18th, and posted 74 — co-low round of Sunday with Chris Palamar, who shot 74 from 35th place and still only reached 22nd.</li>
   <li><b>The back nine was won by boredom.</b> From the 13th in, Marshall went birdie-par-par-bogey-par-par, level for the stretch. Exactly one player in the money gained on him over those six holes — Pathak, by two, from four shots back.</li>`;
