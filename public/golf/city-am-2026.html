@@ -84,6 +84,8 @@
   .btn{background:var(--series-1);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
   .btn.sec{background:var(--surface-2);color:var(--text-primary);border:1px solid var(--border)}
   .btn:focus-visible{outline:2px solid var(--series-1);outline-offset:2px}
+  .btn[disabled]{opacity:.35;cursor:default}
+  #prev,#next{padding:8px 13px;font-size:12px}
   input[type=range]{flex:1;min-width:220px;accent-color:var(--series-1)}
   .thru{font-size:13px;color:var(--text-secondary);font-variant-numeric:tabular-nums;min-width:170px}
   .board{position:relative;margin-top:10px;transition:height .35s}
@@ -216,10 +218,12 @@
 </div>
 
 <h2>Scrub the round</h2>
-<p class="lede">Drag the slider (or hit play) to move through Sunday one hole at a time. Rows appear and disappear as players enter and leave the top 12, and the right-hand column tracks how many places each one moved on the hole just played.</p>
+<p class="lede">Step through Sunday one hole at a time with the arrows (or the ← → keys), drag the slider, or hit play and watch it run. Rows appear and disappear as players enter and leave the top 12, and the right-hand column tracks how many places each one moved on the hole just played.</p>
 <div class="card">
   <div class="ctrls">
+    <button class="btn sec" id="prev" aria-label="previous hole" title="previous hole (←)">◀</button>
     <button class="btn" id="play">▶ Play</button>
+    <button class="btn sec" id="next" aria-label="next hole" title="next hole (→)">▶</button>
     <button class="btn sec" id="reset">Reset</button>
     <input type="range" id="slider" min="0" max="18" value="0" step="1" aria-label="holes played">
     <div class="thru" id="thru"></div>
@@ -376,6 +380,8 @@ function renderBoard(k){
       mvEl.className = 'mv ' + (k===0?'':mv>0?'up':mv<0?'down':'');
     });
   const m = k===0 ? null : D.meta[holeAt(byName[ME],k)];
+  document.getElementById('prev').disabled = k===0;
+  document.getElementById('next').disabled = k===N;
   const leaders = P.filter(p=>pos[p.player]===1).map(p=>short(p.player));
   document.getElementById('thru').textContent =
     (k===0 ? 'After Saturday · thru 0' : `Thru ${k} hole${k>1?'s':''}`)
@@ -402,6 +408,21 @@ playBtn.addEventListener('click',()=>{
   }, 750);
 });
 document.getElementById('reset').addEventListener('click',()=>{ stop(); slider.value=0; renderBoard(0); });
+
+// step one hole at a time: buttons, and arrow keys once you have used either
+const prevBtn = document.getElementById('prev'), nextBtn = document.getElementById('next');
+function step(d){
+  stop();
+  const k = Math.max(0, Math.min(N, +slider.value + d));
+  slider.value = k; renderBoard(k);
+}
+prevBtn.addEventListener('click',()=>step(-1));
+nextBtn.addEventListener('click',()=>step(1));
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,select,textarea')) return;      // the slider handles its own arrows
+  if(e.key==='ArrowLeft'){ step(-1); e.preventDefault(); }
+  if(e.key==='ArrowRight'){ step(1); e.preventDefault(); }
+});
 
 // ---- shared hover tooltip ----
 const tip = document.createElement('div');
