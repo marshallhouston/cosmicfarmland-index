@@ -118,7 +118,12 @@
   .s-par{color:var(--par-ink)} .s-bogey{background:var(--bogey);color:#1a1a19} .s-dbl{background:var(--dbl);color:#fff}
   #grid td.stick,#grid th.stick{position:sticky;background:var(--card);z-index:2}
   #grid th.stick{background:var(--surface-2);z-index:3}
-  #grid .c0{left:0;width:42px} #grid .c1{left:42px;box-shadow:1px 0 0 var(--border)}
+  #grid .c0{left:0} #grid .c1{box-shadow:1px 0 0 var(--border)}
+  /* the scroller clips at its padding edge, so scrolled chips would show in the
+     card's gutter beside the sticky columns: drop the gutter, pad the cells */
+  .card.tbl-scroll{padding-left:0;padding-right:0}
+  #grid th:first-child,#grid td:first-child{padding-left:18px}
+  #grid th:last-child,#grid td:last-child{padding-right:18px}
   #grid tr.meRow td.stick{background:var(--me)}
 
   /* hover tooltip */
@@ -627,7 +632,12 @@ function drawGrid(){
        + `<td class="num">${p.purse?'$'+p.purse.toLocaleString():'—'}</td>`
        + (MODE==='live'?`<td class="num">${holesInTop(p)}</td>`:'') + `</tr>`;
   });
-  document.getElementById('grid').innerHTML = h + '</tbody>';
+  const grid = document.getElementById('grid');
+  grid.innerHTML = h + '</tbody>';
+  // pin the player column exactly at the pos column's real width: a hardcoded
+  // offset drifts with the font and slides the sticky cells over the next column
+  const w = grid.querySelector('.c0').getBoundingClientRect().width;
+  grid.querySelectorAll('.c1').forEach(el=>{ el.style.left = w + 'px'; });
 }
 
 function redraw(){ syncPicker(); renderBoard(+slider.value); drawCharts(); drawGrid(); }
