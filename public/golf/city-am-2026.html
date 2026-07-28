@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Denver City Am — Flight 2, Sunday hole by hole</title>
+<style>
+  :root{
+    color-scheme: light;
+    --surface-1:#fcfcfb; --surface-2:#f4f3f1; --card:#ffffff;
+    --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#807f7a;
+    --series-1:#2a78d6; --series-2:#eb6834; --series-3:#1baf7a;
+    --good:#008300; --warn:#c98500; --bad:#e34948;
+    --grid:#e7e6e3; --border:#e2e1de; --me:#fff2cc; --me-border:#eda100;
+    --eagle:#7c3aed; --birdie:#1baf7a; --par-ink:var(--text-secondary); --bogey:#e08e2a; --dbl:#d1483f;
+    --line-dim:#b9b8b4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:where(:not([data-theme="light"])){
+      color-scheme: dark;
+      --surface-1:#1a1a19; --surface-2:#232322; --card:#242423;
+      --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#8f8e86;
+      --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70;
+      --good:#3fae62; --warn:#c98500; --bad:#e66767;
+      --grid:#333331; --border:#3a3a38; --me:#3d3418; --me-border:#c98500;
+      --eagle:#a97bff; --birdie:#3fc596; --bogey:#e0a54a; --dbl:#e8756a;
+      --line-dim:#4d4c49;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --surface-1:#1a1a19; --surface-2:#232322; --card:#242423;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#8f8e86;
+    --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70;
+    --good:#3fae62; --warn:#c98500; --bad:#e66767;
+    --grid:#333331; --border:#3a3a38; --me:#3d3418; --me-border:#c98500;
+    --eagle:#a97bff; --birdie:#3fc596; --bogey:#e0a54a; --dbl:#e8756a;
+    --line-dim:#4d4c49;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--surface-1);color:var(--text-primary);
+    font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:1160px;margin:0 auto;padding:28px 20px 80px;}
+  header.hero{padding:26px 24px;border-radius:14px;background:linear-gradient(135deg,#12365e,#1f5c9e);color:#fff;margin-bottom:20px;}
+  header.hero h1{margin:0 0 6px;font-size:25px;font-weight:700;}
+  header.hero .sub{opacity:.92;font-size:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+  .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;font-size:12.5px}
+  h2{font-size:19px;margin:32px 0 6px}
+  h3{font-size:15px;margin:0 0 8px}
+  .lede{color:var(--text-secondary);margin:0 0 14px;max-width:900px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+  .tile{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .tile .lab{font-size:12px;color:var(--text-secondary)}
+  .tile .val{font-size:24px;font-weight:600;margin-top:2px}
+  .tile .note{font-size:11.5px;color:var(--text-muted);margin-top:2px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin:14px 0}
+  .sub2{color:var(--text-muted);font-size:11.5px}
+  .tbl-scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th{background:var(--surface-2);color:var(--text-secondary);text-align:left;font-weight:600;padding:7px 6px;border-bottom:1px solid var(--border);white-space:nowrap}
+  td{padding:6px;border-bottom:1px solid var(--grid);white-space:nowrap}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  ul.tight{margin:6px 0;padding-left:20px} ul.tight li{margin:6px 0}
+
+  /* player picker */
+  .pick{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pchip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;border-radius:999px;
+    border:1px solid var(--border);background:var(--surface-2);color:var(--text-secondary);
+    font:inherit;font-size:12px;cursor:pointer;line-height:1.7}
+  .pchip i{width:10px;height:10px;border-radius:3px;background:var(--line-dim);display:inline-block;flex:none}
+  .pchip[aria-pressed="true"]{background:var(--card);color:var(--text-primary);border-color:var(--text-muted)}
+  .pchip:focus-visible{outline:2px solid var(--series-1);outline-offset:2px}
+  .pchip .fin{color:var(--text-muted);font-size:11px;font-variant-numeric:tabular-nums}
+  .presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+  /* scrubber + live board */
+  .ctrls{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .btn{background:var(--series-1);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.sec{background:var(--surface-2);color:var(--text-primary);border:1px solid var(--border)}
+  .btn:focus-visible{outline:2px solid var(--series-1);outline-offset:2px}
+  input[type=range]{flex:1;min-width:220px;accent-color:var(--series-1)}
+  .thru{font-size:13px;color:var(--text-secondary);font-variant-numeric:tabular-nums;min-width:170px}
+  .board{position:relative;margin-top:10px;transition:height .35s}
+  .brow{position:absolute;left:0;right:0;height:34px;display:grid;grid-template-columns:52px 1fr 62px 74px 60px;align-items:center;
+    gap:8px;padding:0 10px;border-radius:8px;background:var(--surface-2);border:1px solid transparent;
+    transition:transform .45s cubic-bezier(.4,0,.2,1),opacity .3s;font-variant-numeric:tabular-nums}
+  .brow.me{background:var(--me);border-color:var(--me-border);font-weight:600}
+  .brow .pos{font-weight:700}
+  .brow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .brow .tp{text-align:right;font-weight:600}
+  .brow .bar{height:8px;border-radius:4px;background:var(--series-1);opacity:.75}
+  .brow .mv{font-size:11px;text-align:right;color:var(--text-muted)}
+  .up{color:var(--good)} .down{color:var(--bad)}
+  .holecard{display:grid;grid-template-columns:repeat(auto-fit,minmax(94px,1fr));gap:8px;margin:12px 0 4px}
+  .hb{background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:7px 9px;font-size:12px}
+  .hb b{display:block;font-size:15px}
+
+  /* charts */
+  .chartwrap{overflow-x:auto}
+  svg text{font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;fill:var(--text-secondary)}
+
+  /* hole grid */
+  .sc{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:600}
+  .s-eagle{background:var(--eagle);color:#fff} .s-birdie{background:var(--birdie);color:#fff}
+  .s-par{color:var(--par-ink)} .s-bogey{background:var(--bogey);color:#1a1a19} .s-dbl{background:var(--dbl);color:#fff}
+  #grid td.stick,#grid th.stick{position:sticky;background:var(--card);z-index:2}
+  #grid th.stick{background:var(--surface-2);z-index:3}
+  #grid .c0{left:0;width:42px} #grid .c1{left:42px;box-shadow:1px 0 0 var(--border)}
+  #grid tr.meRow td.stick{background:var(--me)}
+
+  /* hover tooltip */
+  .tip{position:fixed;z-index:50;pointer-events:none;background:var(--card);border:1px solid var(--border);
+    border-radius:10px;padding:10px 12px;box-shadow:0 8px 26px rgba(0,0,0,.18);max-width:340px}
+  .tiphead{font-size:12.5px;font-weight:600;margin-bottom:6px}
+  .tiphead .sub2{font-weight:400;display:block}
+  .tiptbl{font-size:11.5px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .tiptbl td{padding:2px 6px 2px 0;border:0;white-space:nowrap}
+  .tiptbl td:first-child{color:var(--text-muted);text-align:right;width:30px}
+  .tiptbl tr.meRow td{font-weight:600}
+  .tiptbl tr.focus td{background:var(--surface-2)}
+  .tiptbl tr.focus td:first-child{border-radius:5px 0 0 5px} .tiptbl tr.focus td:last-child{border-radius:0 5px 5px 0}
+  .tiptbl .sc{width:20px;height:20px;font-size:11px}
+  .foot{color:var(--text-muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:14px}
+  a{color:var(--series-1)}
+  @media(max-width:700px){
+    .brow{grid-template-columns:44px 1fr 54px 46px;font-size:12.5px}
+    .brow > div:nth-child(4){display:none}   /* the gap-to-leader bar needs width the phone doesn't have */
+  }
+</style>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9971;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/golf-skin.css?v=cc3b3a30">
+<link rel="stylesheet" href="/city-am-skin.css?v=6d50960d">
+</head>
+<body>
+<div class="sky"></div><div class="stars"></div><div class="grain"></div>
+<a class="cf-brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a>
+<div class="wrap">
+<nav class="cf-golf-nav" aria-label="golf pages">
+  <a class="cf-golf-link cf-home" href="https://cosmicfarmland.wtf">&#8592; cosmic farmland</a>
+  <a class="cf-golf-link" href="/golf">the record</a>
+  <a class="cf-golf-link on" href="/golf/city-am-2026">city am 2026</a>
+</nav>
+<header class="hero">
+  <h1>Sunday, hole by hole<em> — 2026 Denver City Am, Flight 2</em></h1>
+  <div class="sub">The top 12 of the 36-hole leaderboard after every hole of the final round, the way a live board would have shown it. Membership is not fixed: 20 of the 39 players who finished Sunday passed through the top 12 at some point, and 4 of the 12 who started inside it were gone by the end.</div>
+  <div class="chips">
+    <span class="chip" style="background:rgba(255,215,80,.25);border-color:rgba(255,215,80,.6)"><b>🏆 Marshall Houston — in front at 16 of the 19 checkpoints</b></span>
+    <span class="chip">20 players cycled through the top 12</span>
+    <span class="chip">Won by 1 · 150 (+10)</span>
+    <span class="chip">Par 70 · City Park GC · Gold tees</span>
+  </div>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<h2>Who's on the board</h2>
+<p class="lede">By default the board is the <b>live top 12</b>: after every hole it holds whoever is actually in the top 12 at that moment, so players drop in and out as they play. Pick names or a preset instead to pin a fixed set. Either way positions are computed against all 39 players who finished, so a pinned pair still shows their real place in the tournament. Ties at the cut are all kept, so the board sometimes carries more than 12.</p>
+<div class="card">
+  <div class="presets">
+    <button class="btn sec" data-preset="live">Live top 12 (rolling)</button>
+    <button class="btn sec" data-preset="money">The 12 who cashed</button>
+    <button class="btn sec" data-preset="podium">Top 4</button>
+    <button class="btn sec" data-preset="lead">Everyone who led</button>
+    <button class="btn sec" data-preset="movers">Biggest movers</button>
+    <button class="btn sec" data-preset="all">Whole flight (39)</button>
+    <button class="btn sec" data-preset="me">Marshall only</button>
+    <span class="sub2" id="selCount"></span>
+  </div>
+  <div class="pick" id="pick"></div>
+  <div class="sub2" style="margin-top:10px">Casey Pribble withdrew during the round and is not tracked. Niko Evans started on the 10th tee; his card is rotated into the order he actually played, so "thru 9" means his ninth hole for everyone.</div>
+</div>
+
+<h2>Scrub the round</h2>
+<p class="lede">Drag the slider (or hit play) to move through Sunday one hole at a time. Rows appear and disappear as players enter and leave the top 12. The bar is how far off the lead each player was at that moment.</p>
+<div class="card">
+  <div class="ctrls">
+    <button class="btn" id="play">▶ Play</button>
+    <button class="btn sec" id="reset">Reset</button>
+    <input type="range" id="slider" min="0" max="18" value="0" step="1" aria-label="holes played">
+    <div class="thru" id="thru"></div>
+  </div>
+  <div class="holecard" id="holecard"></div>
+  <div class="board" id="board"></div>
+</div>
+
+<h2>Position, every hole</h2>
+<p class="lede">Every player who reached the top 12 at any point, plotted by their place in the 39-man flight. A line runs solid while that player is inside the top 12 and ghosts out when they fall through the dashed cut line. Hole 0 is where they stood after Saturday. <b>Hover anywhere on the chart</b> for the board at that hole, including what everyone made on it; the line nearest your cursor lights up.</p>
+<div class="card chartwrap"><div id="bump"></div></div>
+
+<h2>Strokes, every hole</h2>
+<p class="lede">Position hides how close it actually was. This is cumulative score to par across 36 holes, best at the top. <b>Hover for the standings and hole scores</b> at any point in the round.</p>
+<div class="card chartwrap"><div id="strokes"></div></div>
+
+<h2>The scorecards</h2>
+<p class="lede">Sunday only. <span class="sc s-birdie">3</span> birdie or better, <span class="sc s-par">4</span> par, <span class="sc s-bogey">5</span> bogey, <span class="sc s-dbl">6</span> double or worse. Sorted by final position.</p>
+<div class="card tbl-scroll"><table id="grid"></table></div>
+
+<h2>Moments</h2>
+<div class="card"><ul class="tight" id="moments"></ul></div>
+
+<div class="foot">
+  Sources: Golf Genius 2026 Denver Men's City Amateur — hole-by-hole scorecards for all 40 Flight 2 players, Round 2 tee sheet, final results and purse summary, pulled July 28, 2026. Hole yardages, pars and difficulty ranks from the event's own Round 2 course statistics. Positions are gross 36-hole totals with ties sharing a position, tracked by holes played rather than wall clock: the flight went off in ten-minute intervals from 7:50 to 9:00 AM, so a player two groups ahead was physically further along at the same moment.
+</div>
+</div>
+<script id="data" type="application/json">{"par":[4,3,4,4,3,4,4,3,5,4,4,3,5,4,4,5,3,4],"meta":[{"hole":1,"yards":"365-424","par":4,"avg":4.63,"rank":13},{"hole":2,"yards":"157-239","par":3,"avg":3.8,"rank":6},{"hole":3,"yards":"315-368","par":4,"avg":4.76,"rank":8},{"hole":4,"yards":"364-438","par":4,"avg":4.93,"rank":3},{"hole":5,"yards":"124-207","par":3,"avg":3.8,"rank":7},{"hole":6,"yards":"286-332","par":4,"avg":4.3,"rank":18},{"hole":7,"yards":"302-359","par":4,"avg":4.3,"rank":17},{"hole":8,"yards":"142-192","par":3,"avg":3.6,"rank":14},{"hole":9,"yards":"496-589","par":5,"avg":5.95,"rank":2},{"hole":10,"yards":"330-376","par":4,"avg":4.73,"rank":9},{"hole":11,"yards":"364-450","par":4,"avg":5.06,"rank":1},{"hole":12,"yards":"103-148","par":3,"avg":3.41,"rank":16},{"hole":13,"yards":"419-455","par":5,"avg":5.69,"rank":11},{"hole":14,"yards":"345-388","par":4,"avg":4.9,"rank":4},{"hole":15,"yards":"380-492","par":4,"avg":4.85,"rank":5},{"hole":16,"yards":"499-588","par":5,"avg":5.44,"rank":15},{"hole":17,"yards":"160-209","par":3,"avg":3.72,"rank":10},{"hole":18,"yards":"354-404","par":4,"avg":4.69,"rank":12}],"players":[{"player":"Houston, Marshall","r1":74,"r2":[3,5,3,6,4,4,4,4,4,5,5,4,4,4,4,6,3,4],"start":1,"tee":"9:00 AM","pos":1,"total":150,"purse":700},{"player":"Welton, Marshall","r1":77,"r2":[6,2,4,4,4,5,4,3,5,4,4,3,5,5,4,6,3,3],"start":1,"tee":"8:40 AM","pos":2,"total":151,"purse":500},{"player":"Pathak, Pratiek","r1":77,"r2":[4,4,5,5,3,4,4,4,7,5,4,3,4,4,4,4,3,4],"start":1,"tee":"8:50 AM","pos":3,"total":152,"purse":375},{"player":"Gorgevski-Sharpe, Eli","r1":76,"r2":[5,4,4,4,4,2,4,4,6,6,4,4,5,4,4,5,3,4],"start":1,"tee":"9:00 AM","pos":4,"total":152,"purse":275},{"player":"Giordano, Louis","r1":77,"r2":[4,4,5,4,3,4,5,4,6,4,4,4,5,5,3,4,3,5],"start":1,"tee":"8:50 AM","pos":5,"total":153,"purse":210},{"player":"Senger, Scott","r1":77,"r2":[4,4,5,5,3,4,4,3,4,4,5,4,4,6,4,5,3,5],"start":1,"tee":"8:30 AM","pos":6,"total":153,"purse":170},{"player":"Rogers, Connor","r1":77,"r2":[6,3,4,4,2,4,4,3,5,4,5,4,5,4,4,6,4,5],"start":1,"tee":"8:30 AM","pos":7,"total":153,"purse":145},{"player":"Thesing, Russell","r1":76,"r2":[4,3,4,5,3,4,3,3,6,7,5,4,5,4,5,5,3,4],"start":1,"tee":"8:50 AM","pos":8,"total":153,"purse":130},{"player":"Seppala, Adam","r1":78,"r2":[4,3,4,7,3,4,4,4,7,5,3,3,4,3,5,5,5,3],"start":1,"tee":"8:00 AM","pos":9,"total":154,"purse":120},{"player":"Davis, Cameron","r1":79,"r2":[4,4,5,4,3,4,3,3,6,5,4,3,4,4,6,6,3,4],"start":1,"tee":"8:00 AM","pos":10,"total":154,"purse":110},{"player":"Buckley, Eric","r1":79,"r2":[6,3,4,4,2,4,4,3,5,4,4,4,6,6,3,5,4,4],"start":1,"tee":"7:50 AM","pos":11,"total":154,"purse":105},{"player":"Newton, Russell","r1":78,"r2":[3,3,4,4,3,4,4,3,7,4,4,3,5,7,5,6,3,4],"start":1,"tee":"8:10 AM","pos":12,"total":154,"purse":100},{"player":"Colaric, Warren","r1":80,"r2":[5,2,5,4,3,4,6,3,6,4,5,3,4,4,4,6,4,5],"start":1,"tee":"7:40 AM","pos":13,"total":157,"purse":0},{"player":"Betts, Jack","r1":76,"r2":[5,5,5,4,4,6,4,3,5,6,4,3,5,4,4,5,3,6],"start":1,"tee":"9:00 AM","pos":14,"total":157,"purse":0},{"player":"Curtin, Nicholas","r1":78,"r2":[4,4,4,4,4,4,5,4,5,4,4,3,5,5,5,5,4,6],"start":1,"tee":"8:10 AM","pos":15,"total":157,"purse":0},{"player":"Fowler, Stephen Kyle","r1":78,"r2":[4,3,5,4,3,3,3,3,9,5,4,3,4,4,7,6,4,5],"start":1,"tee":"8:10 AM","pos":16,"total":157,"purse":0},{"player":"Brady, Jared","r1":77,"r2":[4,4,4,4,4,4,3,4,7,5,4,3,5,4,5,5,4,7],"start":1,"tee":"8:30 AM","pos":17,"total":157,"purse":0},{"player":"McKee, Anthony","r1":83,"r2":[4,3,4,4,3,4,4,4,5,4,4,3,5,5,5,7,3,4],"start":1,"tee":"7:20 AM","pos":18,"total":158,"purse":0},{"player":"Grove, Spencer","r1":77,"r2":[4,3,5,5,4,5,4,4,5,6,5,3,6,5,4,6,3,4],"start":1,"tee":"8:40 AM","pos":19,"total":158,"purse":0},{"player":"Davoudpour, Damon","r1":79,"r2":[4,4,4,5,3,3,4,4,5,4,5,4,7,5,5,6,3,4],"start":1,"tee":"7:50 AM","pos":20,"total":158,"purse":0},{"player":"McErlane, Joesph","r1":77,"r2":[4,4,4,4,3,4,4,2,7,6,7,3,7,5,4,5,4,4],"start":1,"tee":"8:40 AM","pos":21,"total":158,"purse":0},{"player":"Palamar, Chris","r1":85,"r2":[4,3,4,4,3,3,4,4,6,5,4,3,6,4,5,5,3,4],"start":1,"tee":"7:00 AM","pos":22,"total":159,"purse":0},{"player":"Korenjak, Christopher","r1":82,"r2":[4,3,4,4,4,4,4,3,5,5,5,3,7,4,5,6,3,5],"start":1,"tee":"7:30 AM","pos":23,"total":160,"purse":0},{"player":"Bartell, Nathan","r1":78,"r2":[4,4,4,4,4,3,4,3,5,5,5,3,9,6,5,5,3,6],"start":1,"tee":"8:20 AM","pos":24,"total":160,"purse":0},{"player":"Carnahan, Chance","r1":84,"r2":[4,5,4,5,4,3,3,3,5,4,5,2,6,7,4,5,4,4],"start":1,"tee":"7:20 AM","pos":25,"total":161,"purse":0},{"player":"Shaw, Ryan","r1":78,"r2":[6,3,4,5,4,4,3,4,5,7,6,3,7,4,4,4,4,6],"start":1,"tee":"8:20 AM","pos":26,"total":161,"purse":0},{"player":"Jackson, Jared","r1":82,"r2":[4,3,4,6,3,4,4,3,5,4,9,3,6,4,4,6,3,5],"start":1,"tee":"7:20 AM","pos":27,"total":162,"purse":0},{"player":"Young, John","r1":87,"r2":[4,5,4,5,3,4,5,2,5,5,4,3,5,4,3,6,4,6],"start":1,"tee":"7:00 AM","pos":28,"total":164,"purse":0},{"player":"Erwin-Svoboda, Jim","r1":80,"r2":[4,4,4,5,4,4,4,4,6,5,5,4,11,4,5,5,2,4],"start":1,"tee":"7:50 AM","pos":29,"total":164,"purse":0},{"player":"O'Malley, Tom","r1":84,"r2":[5,4,3,5,4,4,4,4,5,3,4,3,8,5,5,5,4,6],"start":1,"tee":"7:10 AM","pos":30,"total":165,"purse":0},{"player":"Monasterski, Raymond","r1":79,"r2":[5,4,4,5,4,5,4,2,6,7,8,3,7,5,5,5,3,4],"start":1,"tee":"8:00 AM","pos":31,"total":165,"purse":0},{"player":"Evans, Niko","r1":88,"r2":[6,4,5,4,3,4,4,4,5,4,4,3,6,4,4,5,4,5],"start":10,"tee":"7:00 AM","pos":32,"total":166,"purse":0},{"player":"Orlady, Levi","r1":84,"r2":[4,4,5,5,4,6,4,3,7,5,4,4,5,5,5,5,3,4],"start":1,"tee":"7:10 AM","pos":33,"total":166,"purse":0},{"player":"Sharps, Daniel","r1":82,"r2":[4,3,5,4,4,5,5,3,6,4,5,4,6,7,5,5,4,5],"start":1,"tee":"7:30 AM","pos":34,"total":166,"purse":0},{"player":"Neurohr, Matthew","r1":88,"r2":[4,3,4,6,3,4,5,3,4,5,5,3,5,5,5,7,4,4],"start":1,"tee":"7:00 AM","pos":35,"total":167,"purse":0},{"player":"Croak, Michael","r1":81,"r2":[4,3,5,4,3,4,4,4,8,4,8,2,5,6,5,5,5,7],"start":1,"tee":"7:40 AM","pos":36,"total":167,"purse":0},{"player":"Scheuber, Edward","r1":85,"r2":[6,3,5,5,5,4,4,4,5,5,5,4,5,4,5,6,4,4],"start":1,"tee":"7:10 AM","pos":37,"total":168,"purse":0},{"player":"Tresslar, Tom","r1":82,"r2":[5,3,5,5,4,4,6,4,6,5,6,3,5,4,5,7,4,5],"start":1,"tee":"7:30 AM","pos":38,"total":168,"purse":0},{"player":"Knutsen, Hunter","r1":82,"r2":[5,5,5,6,5,6,4,3,6,6,6,3,6,5,6,6,4,4],"start":1,"tee":"7:40 AM","pos":39,"total":173,"purse":0}],"wd":{"player":"Pribble, Casey","r1":78}}</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const ME = 'Houston, Marshall';
+const PAR = D.par, N = 18;
+const P = D.players;                                   // all 39, already sorted by final position
+const byName = {}; P.forEach(p=>byName[p.player]=p);
+const short = n => n.split(', ')[1].split(' ')[0] + ' ' + n.split(', ')[0];
+const fmt = v => v>0?'+'+v:(v===0?'E':''+v);
+// played order: a 10th-tee start plays 10-18 then 1-9
+const orderOf = p => p.start===10 ? [...Array(9).keys()].map(i=>i+9).concat([...Array(9).keys()]) : [...Array(18).keys()];
+const holeAt = (p,k) => orderOf(p)[k-1];               // card index of a player's kth hole
+
+// full-field standings after every hole
+const VAL = [], POS = [];
+for(let k=0;k<=N;k++){
+  const v = {};
+  P.forEach(p=>{
+    const o = orderOf(p).slice(0,k);
+    v[p.player] = p.r1 - 70 + o.reduce((a,i)=>a+p.r2[i],0) - o.reduce((a,i)=>a+PAR[i],0);
+  });
+  VAL.push(v);
+  POS.push(Object.fromEntries(P.map(p=>[p.player, 1 + P.filter(q=>v[q.player]<v[p.player]).length])));
+}
+
+// ---- selection ----
+const MONEY = P.filter(p=>p.purse>0).map(p=>p.player);
+const LEADERS = P.filter(p=>POS.some(x=>x[p.player]===1)).map(p=>p.player);
+const MOVERS = P.map(p=>({p, d:POS[0][p.player]-POS[18][p.player]}))
+  .sort((a,b)=>Math.abs(b.d)-Math.abs(a.d)).slice(0,8).map(x=>x.p.player);
+const PRESETS = {
+  money: MONEY, podium: P.slice(0,4).map(p=>p.player), lead: LEADERS,
+  movers: [...new Set([ME, ...MOVERS])], all: P.map(p=>p.player), me: [ME],
+};
+// the live top 12 after every hole; ties at the cut are all kept, so a set can run past 12
+const TOP = POS.map(pos => new Set(P.filter(p=>pos[p.player]<=12).map(p=>p.player)));
+const TOP_UNION = P.filter(p=>TOP.some(s=>s.has(p.player))).map(p=>p.player);
+const holesInTop = p => TOP.filter(s=>s.has(p.player)).length;
+let MODE = 'live';                                     // 'live' = rolling top 12, 'fixed' = whatever is picked
+let SEL = new Set(TOP_UNION);
+const sel = () => P.filter(p=>SEL.has(p.player));      // charts + grid: always in finishing order
+const board12 = k => P.filter(p=>TOP[k].has(p.player));// the board itself: who is actually in it right now
+
+// colour: stable hue per player, Marshall gold
+const colorOf = {};
+P.forEach((p,i)=>{ colorOf[p.player] = p.player===ME ? 'var(--me-border)' : `hsl(${(i*67)%360} ${58+(i%3)*7}% ${44+(i%2)*8}%)`; });
+
+// ---- picker ----
+const pick = document.getElementById('pick');
+pick.innerHTML = P.map(p=>
+  `<button class="pchip" role="button" aria-pressed="false" data-p="${p.player}">
+     <i style="background:${colorOf[p.player]}"></i>${short(p.player)}
+     <span class="fin">${p.pos}${p.purse?' · $'+p.purse.toLocaleString():''}</span>
+   </button>`).join('');
+function syncPicker(){
+  pick.querySelectorAll('.pchip').forEach(b=>{
+    const on = SEL.has(b.dataset.p);
+    b.setAttribute('aria-pressed', on);
+    b.querySelector('i').style.background = on ? colorOf[b.dataset.p] : 'var(--line-dim)';
+  });
+  document.querySelectorAll('[data-preset]').forEach(b=>
+    b.style.borderColor = (b.dataset.preset==='live' && MODE==='live') ? 'var(--series-1)' : '');
+  document.getElementById('selCount').textContent = MODE==='live'
+    ? `live top 12 — ${SEL.size} players pass through it`
+    : `${SEL.size} of ${P.length} selected`;
+}
+pick.addEventListener('click', e=>{
+  const b = e.target.closest('.pchip'); if(!b) return;
+  const n = b.dataset.p;
+  if(MODE==='live'){ MODE='fixed'; }                   // touching a name pins the selection
+  if(SEL.has(n)){ if(SEL.size===1) return; SEL.delete(n); } else SEL.add(n);
+  redraw();
+});
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{
+  MODE = b.dataset.preset==='live' ? 'live' : 'fixed';
+  SEL = new Set(MODE==='live' ? TOP_UNION : PRESETS[b.dataset.preset]);
+  redraw();
+}));
+
+// ---- tiles (fixed facts, full field) ----
+(function(){
+  const led = POS.filter(x=>x[ME]===1).length;
+  const worst = Math.max(...POS.map(x=>x[ME]));
+  const me = byName[ME];
+  const bird = me.r2.filter((s,i)=>s<PAR[i]).length;
+  const t = [
+    {lab:'Checkpoints in front', val:`${led} / 19`, note:'including the last one'},
+    {lab:'Low point', val:`T${worst}`, note:'through 8 holes, two off the lead'},
+    {lab:'Sunday card', val:`${bird} birdies`, note:'6 bogeys, 2 doubles, both before the turn'},
+    {lab:'Through the top 12', val:`${TOP_UNION.length} players`, note:'only 3 were in it at all 19 checkpoints'},
+    {lab:'Held a share of the lead', val:`${LEADERS.length} players`, note:'of the 39 who finished'},
+  ];
+  document.getElementById('tiles').innerHTML = t.map(x=>
+    `<div class="tile"><div class="lab">${x.lab}</div><div class="val">${x.val}</div><div class="note">${x.note}</div></div>`).join('');
+})();
+
+// ---- live board ----
+const ROW_H = 38;
+const board = document.getElementById('board');
+const rowEls = {};
+P.forEach(p=>{
+  const el = document.createElement('div');
+  el.className = 'brow' + (p.player===ME?' me':'');
+  el.innerHTML = `<div class="pos"></div><div class="nm">${short(p.player)}</div>
+    <div class="tp"></div><div><div class="bar" title="shots behind the leader"></div></div><div class="mv"></div>`;
+  el.querySelector('.bar').style.background = colorOf[p.player];
+  board.appendChild(el); rowEls[p.player]=el;
+});
+function renderBoard(k){
+  const v = VAL[k], pos = POS[k], list = MODE==='live' ? board12(k) : sel();
+  board.style.height = (list.length*ROW_H)+'px';
+  const on = new Set(list.map(p=>p.player));
+  P.forEach(p=>{ if(!on.has(p.player)) rowEls[p.player].style.display='none'; });
+  const lead = Math.min(...P.map(p=>v[p.player]));      // full-field leader, even if unselected
+  const worst = Math.max(...list.map(p=>v[p.player]));
+  list.slice().sort((a,b)=> (v[a.player]-v[b.player]) || a.player.localeCompare(b.player))
+    .forEach((p,i)=>{
+      const el = rowEls[p.player];
+      el.style.display=''; el.style.transform = `translateY(${i*ROW_H}px)`;
+      const tied = P.filter(q=>v[q.player]===v[p.player]).length>1;
+      el.querySelector('.pos').textContent = (tied?'T':'') + pos[p.player];
+      el.querySelector('.tp').textContent = fmt(v[p.player]);
+      const back = v[p.player]-lead, span = Math.max(worst-lead,1);
+      el.querySelector('.bar').style.width = (100 - back/span*88)+'%';
+      const mv = k===0 ? 0 : POS[k-1][p.player]-pos[p.player];
+      const mvEl = el.querySelector('.mv');
+      mvEl.textContent = k===0 ? `${p.r1}` : (mv>0?`▲ ${mv}`:mv<0?`▼ ${-mv}`:'—');
+      mvEl.className = 'mv ' + (k===0?'':mv>0?'up':mv<0?'down':'');
+    });
+  const m = k===0 ? null : D.meta[holeAt(byName[ME],k)];
+  const leaders = P.filter(p=>pos[p.player]===1).map(p=>short(p.player));
+  document.getElementById('thru').textContent =
+    (k===0 ? 'After Saturday · thru 0' : `Thru ${k} hole${k>1?'s':''}`)
+    + (MODE==='live' ? ` · top 12${list.length>12?` (${list.length} with ties)`:''}` : '');
+  document.getElementById('holecard').innerHTML = k===0
+    ? `<div class="hb"><b>Round 1 standings</b>Saturday's gross scores, before a ball was struck on Sunday</div>`
+    : `<div class="hb">Hole<b>${m.hole}</b>${byName[ME].start===10?'as Marshall played it':'same for all but one player'}</div>
+       <div class="hb">Par<b>${m.par}</b>${m.yards} yds</div>
+       <div class="hb">Difficulty<b>#${m.rank} of 18</b>field avg ${m.avg.toFixed(2)}</div>
+       <div class="hb">Flight lead<b>${fmt(Math.min(...P.map(p=>v[p.player])))}</b>${leaders.join(', ')}</div>`;
+}
+const slider = document.getElementById('slider');
+slider.addEventListener('input',()=>renderBoard(+slider.value));
+let timer = null;
+const playBtn = document.getElementById('play');
+function stop(){ clearInterval(timer); timer=null; playBtn.textContent='▶ Play'; }
+playBtn.addEventListener('click',()=>{
+  if(timer){ stop(); return; }
+  if(+slider.value>=N) slider.value=0;
+  playBtn.textContent='❚❚ Pause';
+  timer = setInterval(()=>{
+    if(+slider.value>=N){ stop(); return; }
+    slider.value = +slider.value+1; renderBoard(+slider.value);
+  }, 750);
+});
+document.getElementById('reset').addEventListener('click',()=>{ stop(); slider.value=0; renderBoard(0); });
+
+// ---- shared hover tooltip ----
+const tip = document.createElement('div');
+tip.className = 'tip'; tip.style.display = 'none';
+document.body.appendChild(tip);
+function tipHTML(k, focus){
+  const v = VAL[k], pos = POS[k], list = MODE==='live' ? board12(k) : sel();
+  const m = k===0 ? null : D.meta[holeAt(byName[ME],k)];
+  const head = k===0
+    ? `<div class="tiphead">After Saturday <span class="sub2">36-hole standings before Sunday</span></div>`
+    : `<div class="tiphead">Hole ${m.hole} <span class="sub2">par ${m.par} · ${m.yards} yds · #${m.rank} hardest · field avg ${m.avg.toFixed(2)}</span></div>`;
+  const rows = list.slice().sort((a,b)=> (v[a.player]-v[b.player]) || a.player.localeCompare(b.player)).map(p=>{
+    const tied = P.filter(q=>v[q.player]===v[p.player]).length>1;
+    const i = k===0 ? null : holeAt(p,k);
+    const d = i===null ? null : p.r2[i]-PAR[i];
+    const scCls = d===null?'':d<=-1?'s-birdie':d===0?'s-par':d===1?'s-bogey':'s-dbl';
+    const mv = k===0 ? 0 : POS[k-1][p.player]-pos[p.player];
+    const mvTxt = k===0 ? `<span class="sub2">R1 ${p.r1}</span>`
+      : mv>0?`<span class="up">▲${mv}</span>`:mv<0?`<span class="down">▼${-mv}</span>`:'<span class="sub2">—</span>';
+    return `<tr class="${p.player===focus?'focus':''}${p.player===ME?' meRow':''}">
+      <td>${tied?'T':''}${pos[p.player]}</td><td>${short(p.player)}</td>
+      <td class="num">${fmt(v[p.player])}</td>
+      <td class="num">${i===null?'':`<span class="sc ${scCls}">${p.r2[i]}</span>`}</td>
+      <td class="num">${mvTxt}</td></tr>`;
+  }).join('');
+  return head + `<table class="tiptbl">${rows}</table>`;
+}
+
+// ---- charts ----
+function lineChart(el, yOf, tickFn, kind){
+  const list = sel();
+  const GAP = list.length>20 ? 11 : 13;
+  const W = 900, L = 46, R = 132, T = 16, B = 34;
+  const H = Math.max(340, T + B + 16 + list.length*GAP);   // tall enough that every end label fits
+  const x = k => L + k*(W-L-R)/N;
+  const ys = list.flatMap(p=>[...Array(N+1).keys()].map(k=>yOf(p,k)));
+  const lo = Math.min(...ys), hi = Math.max(...ys);
+  const y = v => T + (v-lo)*(H-T-B)/(hi-lo||1);         // both charts: better is higher
+  let g = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:720px" role="img"
+    aria-label="${kind==='pos'?'leaderboard position':'score to par'} after each hole for the selected players">`;
+  for(const t of tickFn(lo,hi)){
+    g += `<line x1="${L}" x2="${W-R}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`
+       + `<text x="${L-8}" y="${(y(t)+4).toFixed(1)}" text-anchor="end">${kind==='pos'?t:fmt(t)}</text>`;
+  }
+  for(let k=0;k<=N;k++){
+    if(k%2===0 || k===N) g += `<text x="${x(k).toFixed(1)}" y="${H-12}" text-anchor="middle">${k===0?'Sat':k}</text>`;
+  }
+  g += `<text x="${L}" y="${H-1}" font-size="10.5">hole played →</text>`;
+  list.forEach(p=>{
+    const pt = k => `${x(k).toFixed(1)},${y(yOf(p,k)).toFixed(1)}`;
+    const all = [...Array(N+1).keys()];
+    const me = p.player===ME, w = me?4:2;
+    const base = me?1:(list.length>16?.6:.85);
+    if(MODE==='live'){
+      // full track stays visible but ghosted; the stretch inside the top 12 is drawn solid on top
+      g += `<polyline points="${all.map(pt).join(' ')}" fill="none" stroke="${colorOf[p.player]}"
+        stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round" opacity=".16"
+        stroke-dasharray="${me?'':'4 4'}"/>`;
+      let run = [];
+      const flush = ()=>{ if(run.length>1) g += `<polyline points="${run.join(' ')}" fill="none"
+        stroke="${colorOf[p.player]}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round" opacity="${base}"/>`; run=[]; };
+      all.forEach(k=>{
+        const inTop = TOP[k].has(p.player);
+        if(inTop){ if(!run.length && k>0) run.push(pt(k-1)); run.push(pt(k)); }
+        else { if(run.length) run.push(pt(k)); flush(); }
+      });
+      flush();
+    } else {
+      g += `<polyline points="${all.map(pt).join(' ')}" fill="none" stroke="${colorOf[p.player]}" stroke-width="${w}"
+        stroke-linejoin="round" stroke-linecap="round" opacity="${base}"/>`;
+    }
+    g += `<circle cx="${x(N)}" cy="${y(yOf(p,N)).toFixed(1)}" r="${me?5:3.5}" fill="${colorOf[p.player]}"
+      opacity="${MODE==='live' && !TOP[N].has(p.player) ? .3 : 1}"/>`;
+  });
+  if(kind==='pos' && MODE==='live' && 12>=lo && 12<=hi){
+    g += `<line x1="${L}" x2="${W-R}" y1="${y(12.5).toFixed(1)}" y2="${y(12.5).toFixed(1)}"
+      stroke="var(--text-muted)" stroke-width="1" stroke-dasharray="6 4" opacity=".8"/>`
+       + `<text x="${L+6}" y="${(y(12.5)-5).toFixed(1)}" font-size="10">top 12 cut</text>`;
+  }
+  // end labels, dodged so tied players stay readable
+  const labs = list.map(p=>({p, y0:y(yOf(p,N))})).sort((a,b)=>a.y0-b.y0);
+  labs.forEach((l,i)=>{ l.yl = (i && l.y0 - labs[i-1].yl < GAP) ? labs[i-1].yl + GAP : l.y0; });
+  for(let i=labs.length-1; i>0; i--)                       // pull back up if the stack ran off the bottom
+    if(labs[i].yl > H-B) labs[i-1].yl = Math.min(labs[i-1].yl, (labs[i].yl = Math.min(labs[i].yl, H-B)) - GAP);
+  labs.forEach(l=>{
+    const me = l.p.player===ME;
+    if(Math.abs(l.yl-l.y0) > 1)
+      g += `<line x1="${x(N)+4}" y1="${l.y0.toFixed(1)}" x2="${x(N)+8}" y2="${l.yl.toFixed(1)}" stroke="${colorOf[l.p.player]}" stroke-width="1" opacity=".7"/>`;
+    g += `<text x="${x(N)+11}" y="${(l.yl+3.5).toFixed(1)}" font-size="${labs.length>20?9.5:11}"
+      fill="${me?'var(--text-primary)':'var(--text-secondary)'}" font-weight="${me?700:400}">${short(l.p.player)}</text>`;
+  });
+  g += `<line x1="${L}" x2="${L}" y1="${T}" y2="${H-B}" stroke="var(--border)"/>`;
+  g += `<g class="hoverG" style="display:none">
+      <line class="cross" y1="${T}" y2="${H-B}" stroke="var(--text-muted)" stroke-width="1" stroke-dasharray="3 3"/>
+      <polyline class="hiline" fill="none" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity=".95"/>
+      ${list.map(p=>`<circle class="hd" data-p="${p.player}" r="3.5" fill="${colorOf[p.player]}" stroke="var(--card)" stroke-width="1.5"/>`).join('')}
+    </g>`;
+  g += `<rect class="hitbox" x="${L}" y="${T}" width="${W-L-R}" height="${H-T-B}" fill="transparent" style="cursor:crosshair"/></svg>`;
+  el.innerHTML = g;
+  attachHover(el, {x, y, yOf, L, R, W, T, B, H});
+}
+function attachHover(el, s){
+  const svg = el.querySelector('svg');
+  const hoverG = svg.querySelector('.hoverG'), cross = svg.querySelector('.cross');
+  const hiline = svg.querySelector('.hiline'), hit = svg.querySelector('.hitbox');
+  const dots = [...svg.querySelectorAll('.hd')];
+  function move(ev){
+    const r = svg.getBoundingClientRect();
+    const sx = (ev.clientX - r.left) * (s.W / r.width);
+    const sy = (ev.clientY - r.top) * (s.H / r.height);
+    const k = Math.max(0, Math.min(N, Math.round((sx - s.L) / ((s.W-s.L-s.R)/N))));
+    let focus = null, best = 1e9;
+    sel().forEach(p=>{ const d = Math.abs(s.y(s.yOf(p,k)) - sy); if(d < best){ best = d; focus = p.player; } });
+    if(best > 22) focus = null;
+    hoverG.style.display = '';
+    cross.setAttribute('x1', s.x(k)); cross.setAttribute('x2', s.x(k));
+    dots.forEach(c=>{
+      const p = byName[c.dataset.p];
+      c.setAttribute('cx', s.x(k)); c.setAttribute('cy', s.y(s.yOf(p,k)));
+      c.setAttribute('r', p.player===focus?5.5:3.5);
+    });
+    if(focus){
+      const p = byName[focus];
+      hiline.setAttribute('points', [...Array(N+1).keys()].map(i=>`${s.x(i).toFixed(1)},${s.y(s.yOf(p,i)).toFixed(1)}`).join(' '));
+      hiline.setAttribute('stroke', colorOf[focus]); hiline.style.display='';
+    } else hiline.style.display='none';
+    tip.innerHTML = tipHTML(k, focus);
+    tip.style.display = 'block';
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let lx = ev.clientX + 18;
+    if(lx + tw > window.innerWidth - 10) lx = Math.max(8, ev.clientX - tw - 18);
+    tip.style.left = lx+'px';
+    tip.style.top = Math.max(8, Math.min(window.innerHeight - th - 8, ev.clientY - th/2))+'px';
+  }
+  const hide = ()=>{ hoverG.style.display='none'; tip.style.display='none'; };
+  hit.addEventListener('mousemove', move);
+  hit.addEventListener('mouseleave', hide);
+  hit.addEventListener('touchmove', e=>{ e.preventDefault(); move(e.touches[0]); }, {passive:false});
+  hit.addEventListener('touchend', hide);
+}
+function posTicks(lo,hi){
+  const span = hi-lo, step = span<=6?1:span<=14?2:span<=25?5:10;
+  const out = [];
+  for(let v=Math.ceil(lo); v<=Math.floor(hi); v++) if(v===1 || (v-Math.ceil(lo))%step===0) out.push(v);
+  return [...new Set(out)];
+}
+function parTicks(lo,hi){
+  const step = (hi-lo)<=8?1:2, out=[];
+  for(let v=Math.ceil(lo); v<=Math.floor(hi); v++) if((v-Math.ceil(lo))%step===0) out.push(v);
+  return out;
+}
+function drawCharts(){
+  lineChart(document.getElementById('bump'), (p,k)=>POS[k][p.player], posTicks, 'pos');
+  lineChart(document.getElementById('strokes'), (p,k)=>VAL[k][p.player], parTicks, 'par');
+}
+
+// ---- scorecard grid ----
+function drawGrid(){
+  const cls = (s,i)=>{ const d = s-PAR[i]; return d<=-2?'s-eagle':d===-1?'s-birdie':d===0?'s-par':d===1?'s-bogey':'s-dbl'; };
+  let h = `<thead><tr><th class="stick c0">Pos</th><th class="stick c1">Player</th><th class="num">Sat</th>`;
+  for(let i=0;i<9;i++) h += `<th class="num">${i+1}</th>`;
+  h += `<th class="num">Out</th>`;
+  for(let i=9;i<18;i++) h += `<th class="num">${i+1}</th>`;
+  h += `<th class="num">In</th><th class="num">Sun</th><th class="num">Total</th><th class="num">$</th>`
+     + (MODE==='live'?`<th class="num">In top 12</th>`:'') + `</tr>
+        <tr><th class="stick c0"></th><th class="stick c1 sub2">par</th><th></th>`;
+  for(let i=0;i<9;i++) h += `<th class="num sub2">${PAR[i]}</th>`;
+  h += `<th class="num sub2">34</th>`;
+  for(let i=9;i<18;i++) h += `<th class="num sub2">${PAR[i]}</th>`;
+  h += `<th class="num sub2">36</th><th class="num sub2">70</th><th class="num sub2">140</th><th></th>`
+     + (MODE==='live'?`<th class="num sub2">of 19</th>`:'') + `</tr></thead><tbody>`;
+  sel().forEach(p=>{
+    const out = p.r2.slice(0,9).reduce((a,b)=>a+b,0), inn = p.r2.slice(9).reduce((a,b)=>a+b,0);
+    const me = p.player===ME;
+    h += `<tr class="${me?'meRow':''}" style="${me?'background:var(--me);font-weight:600':''}">
+      <td class="stick c0">${p.pos}</td><td class="stick c1">${short(p.player)}${p.start===10?' <span class="sub2">(10th tee)</span>':''}</td><td class="num">${p.r1}</td>`;
+    for(let i=0;i<9;i++) h += `<td class="num"><span class="sc ${cls(p.r2[i],i)}">${p.r2[i]}</span></td>`;
+    h += `<td class="num">${out}</td>`;
+    for(let i=9;i<18;i++) h += `<td class="num"><span class="sc ${cls(p.r2[i],i)}">${p.r2[i]}</span></td>`;
+    h += `<td class="num">${inn}</td><td class="num">${out+inn}</td><td class="num"><b>${p.total}</b></td>`
+       + `<td class="num">${p.purse?'$'+p.purse.toLocaleString():'—'}</td>`
+       + (MODE==='live'?`<td class="num">${holesInTop(p)}</td>`:'') + `</tr>`;
+  });
+  document.getElementById('grid').innerHTML = h + '</tbody>';
+}
+
+function redraw(){ syncPicker(); renderBoard(+slider.value); drawCharts(); drawGrid(); }
+redraw();
+
+// ---- moments ----
+document.getElementById('moments').innerHTML = `
+  <li><b>Hole 1 blew the board up before anyone settled.</b> Welton and Rogers both opened with a double bogey 6. Marshall and Newton birdied it, and Marshall went to +3 — his low-water mark of the whole tournament.</li>
+  <li><b>The wobble came in twos.</b> Doubles at the par-3 2nd and the par-4 4th cost four shots in six holes, and the bogey at 8 dropped him furthest back he would ever be: Thesing alone at +6, three players at +7, Marshall tied 5th at +8. Two shots off the lead, eight holes in.</li>
+  <li><b>The 9th settled it.</b> The par-5 9th was the second-hardest hole on the course (field average 5.95). Marshall birdied it. Thesing made 6, Pathak and Seppala made 7, and Stephen Kyle Fowler — tied 2nd at that moment — made <b>9</b> and was gone. One hole, and the lead was back.</li>
+  <li><b>Hole 12 was the last flicker.</b> Marshall bogeyed 10, 11 and 12 while Newton parred along; Newton led alone at +9 for exactly one hole. Then Newton played 14-16 in five over (7-5-6) and finished 9th.</li>
+  <li><b>The top 12 churned all day.</b> Twenty different players held a spot in it, but only three — Houston, Gorgevski-Sharpe and Thesing — were inside at all 19 checkpoints. Nathan Bartell spent 11 checkpoints in it and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 checkpoints and finished 9th.</li>
+  <li><b>Only five players in a 39-man flight ever held even a share of the lead</b> — Houston, Thesing, Newton, Gorgevski-Sharpe and Rogers. Everyone who cashed outside that group did it by climbing over people, not by leading.</li>
+  <li><b>Welton was the closer nobody scouted.</b> After the opening 6 he played the last 17 holes in two over, birdied the 2nd and the 18th, and posted 74 — co-low round of Sunday with Chris Palamar, who shot 74 from 35th place and still only reached 22nd.</li>
+  <li><b>The back nine was won by boredom.</b> From the 13th in, Marshall went birdie-par-par-bogey-par-par, level for the stretch. Exactly one player in the money gained on him over those six holes — Pathak, by two, from four shots back.</li>`;
+</script>
+<div class="cf-footer">
+  <span>grown by marshall</span>
+  <a href="https://cosmicfarmland.wtf">cosmicfarmland.wtf &#8599;</a>
+</div>
+</body>
+</html>

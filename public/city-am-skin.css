@@ -1,0 +1,76 @@
+/* Cosmic Farmland skin for the City Am hole-by-hole page.
+   Loaded after golf-skin.css (shared palette, atmosphere, brand, footer) and
+   after the page's own inline <style>, so same-specificity rules win. Nothing
+   here may live in the vault source: that file is regenerated wholesale. */
+
+:root[data-theme="dark"] {
+  /* the page ships its own token names; point them at the farm palette */
+  --surface-1: transparent;
+  --surface-2: rgba(14, 11, 29, 0.72);
+  --card: rgba(22, 16, 49, 0.62);
+  --text-primary: #f1ead9;
+  --text-secondary: #b6ad97;
+  --text-muted: #8f8878;
+  --grid: #241a45;
+  --border: rgba(241, 234, 217, 0.14);
+  --me: rgba(243, 195, 100, 0.14);
+  --me-border: #f3c364;
+  --series-1: #8ce6b6;
+  --good: #8ce6b6;
+  --bad: #e88f8f;
+  --line-dim: #3a2c68;
+  --birdie: #4cc88a;
+  --bogey: #d99b3e;
+  --dbl: #c9605a;
+  --eagle: #a78be0;
+}
+
+body { font-family: var(--font-body); background: #08070f; }
+.wrap { position: relative; z-index: 1; }
+a { color: var(--cf-glow); }
+a:hover { color: var(--gold); }
+
+/* Hero: no blue slab. The aurora is the background; the title carries the page. */
+header.hero {
+  background: none; border-bottom: 1px solid var(--border); border-radius: 0;
+  padding: 6px 0 26px; margin-bottom: 26px; color: var(--text-primary);
+}
+header.hero h1 {
+  font-family: var(--font-display); font-weight: 300; letter-spacing: -0.02em;
+  font-size: clamp(30px, 4.6vw, 50px); line-height: 1.02; text-transform: lowercase;
+  text-shadow: 0 0 24px rgba(243, 195, 100, 0.3);
+}
+header.hero h1 em { font-style: italic; color: var(--gold); }
+header.hero .sub { color: var(--text-secondary); opacity: 1; max-width: 68ch; }
+header.hero .chip {
+  background: rgba(22, 16, 49, 0.7); border-color: var(--grid);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+}
+
+/* Section headings + labels in the index voice: Fraunces gold, lowercase, mono labels. */
+h2 {
+  font-family: var(--font-display); font-weight: 400; font-size: 24px;
+  text-transform: lowercase; color: var(--gold); letter-spacing: -0.01em;
+}
+h3 { font-family: var(--font-display); font-weight: 400; text-transform: lowercase; }
+.tile .lab, .sub2, th, .thru, .fin, .hb, .brow, .tiptbl, .pchip, .btn {
+  font-family: var(--font-mono);
+}
+.tile .lab { text-transform: uppercase; letter-spacing: 0.16em; font-size: 10px; }
+.tile .val { color: var(--gold); font-weight: 500; }
+.tile, .card { backdrop-filter: blur(6px); border-radius: 16px; }
+th { background: rgba(8, 7, 15, 0.9); text-transform: lowercase; letter-spacing: 0.06em; }
+
+/* Controls: gold-on-soil pills, not blue buttons. */
+.btn { background: var(--gold); color: #08070f; border-radius: 999px; letter-spacing: 0.08em; }
+.btn.sec { background: rgba(22, 16, 49, 0.8); color: var(--text-primary); border-color: var(--grid); }
+.btn.sec:hover { border-color: var(--cf-glow-deep); }
+input[type=range] { accent-color: var(--gold); }
+.pchip { border-radius: 999px; letter-spacing: 0.04em; }
+.pchip[aria-pressed="true"] { border-color: var(--gold); background: rgba(243, 195, 100, 0.1); }
+.hb { background: rgba(8, 7, 15, 0.66); border-color: var(--grid); }
+.hb b { color: var(--gold); font-family: var(--font-mono); }
+.brow { background: rgba(14, 11, 29, 0.72); }
+.brow.me { background: rgba(243, 195, 100, 0.14); }
+.tip { background: rgba(14, 11, 29, 0.96); backdrop-filter: blur(8px); }
+::selection { background: var(--gold); color: #08070f; }

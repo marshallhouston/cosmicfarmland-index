@@ -1,0 +1,18 @@
+{
+  "pages": [
+    {
+      "slug": "golf-record",
+      "kicker": "the record",
+      "name": "the war on double bogeys",
+      "blurb": "every round on my GHIN record, filterable: handicap arc, scoring buckets, and where the shots actually go.",
+      "url": "/golf"
+    },
+    {
+      "slug": "city-am-2026",
+      "kicker": "2026 denver city am",
+      "name": "sunday, hole by hole",
+      "blurb": "the final round of flight 2 — which i won — replayed one hole at a time, with the live top 12 moving as it happened.",
+      "url": "/golf/city-am-2026"
+    }
+  ]
+}
