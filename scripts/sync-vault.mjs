@@ -11,6 +11,7 @@ import { createHash } from 'node:crypto'
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { statsSteps } from './inject-city-am-stats.mjs'
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..')
 const VAULT = process.env.VAULT || join(process.env.HOME, 'marshall.notes')
@@ -116,6 +117,9 @@ const PAGES = [
           'were inside at all 19 checkpoints. Nathan Bartell spent 11 checkpoints in it and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 checkpoints and finished 9th.',
           'were inside after every hole. Nathan Bartell held a spot after 11 holes and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 holes and finished 9th.',
         )],
+      // Full-field scoring breakdown + per-hole detail at the foot of the page,
+      // computed in-browser from the cards already embedded above.
+      ...statsSteps,
       ['footer', (h) => h.replace(/(\s*<\/body>)/, `\n${FOOTER}$1`)],
     ],
   },
