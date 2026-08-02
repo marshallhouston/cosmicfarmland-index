@@ -1,27 +1,87 @@
 @import 'tailwindcss';
 
-@theme {
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Familjen Grotesk', system-ui, sans-serif;
-  --font-mono: 'DM Mono', ui-monospace, monospace;
+/* ============================================================
+   Grayton Beach — the design system for cosmicfarmland.wtf.
 
-  /* Cosmic Farmland palette: midnight indigo soil, harvest-gold moon,
-     bioluminescent crop glow. Warm dark, not cold sci-fi. */
-  --color-void: #08070f;
-  --color-soil: #0e0b1d;
-  --color-soil-2: #161031;
-  --color-haze: #241a45;
-  --color-cream: #f1ead9;
-  --color-cream-dim: #b6ad97;
-  --color-gold: #f3c364;
-  --color-gold-deep: #d99b3e;
-  --color-glow: #8ce6b6;
-  --color-glow-deep: #4cc88a;
-  --color-violet: #a78be0;
+   Grounded in one photograph: a hand-painted WELCOME TO GRAYTON
+   BEACH sign, dark-stained reclaimed board, letters in marigold,
+   forest green and bone, propped on weathered fence rails in wet
+   Florida foliage over pine straw. Two readings of that photo:
+   the board (dark, default) and the daylight around it (light).
+
+   Slogan, and the whole point: nice dogs, strange people.
+   ============================================================ */
+
+@theme {
+  --font-display: 'Rye', 'Rockwell', Georgia, serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  /* Paint + material constants, sampled from the sign. These never
+     change between themes; the semantic tokens below choose from them. */
+  --paint-gold: #edb32a;       /* the marigold letters */
+  --paint-gold-deep: #b9760f;  /* their shaded edge */
+  --paint-green: #2d6b31;      /* the forest-green letters */
+  --paint-green-leaf: #9ecf6a; /* new growth catching the light */
+  --paint-bone: #f4e8c8;       /* the pale "WELCOME TO" letters */
+  --board-stain: #150e07;      /* the darkest stain on the board */
+  --board-wood: #241708;       /* the board itself */
+  --board-raised: #33220f;     /* where the plane skipped */
+  --fence-gray: #b9b0a0;       /* the weathered rails behind it */
+  --straw-rust: #8a5a30;       /* pine straw and bark mulch */
+  --overcast: #eceadf;         /* the flat white sky that day */
 }
+
+/* ---------- semantic tokens: dark is the board, and the default ---------- */
 
 :root {
   color-scheme: dark;
+
+  --color-bg: var(--board-stain);
+  --color-surface: #1d1309;
+  --color-surface-2: #2a1c0e;
+  --color-line: #4a3520;
+  --color-line-soft: rgba(244, 232, 200, 0.14);
+
+  --color-ink: var(--paint-bone);
+  --color-ink-dim: #c0ab85;
+
+  --color-gold: var(--paint-gold);
+  --color-gold-strong: #f7c948;
+  --color-moss: var(--paint-green-leaf);
+  --color-moss-strong: #78b04c;
+  --color-fence: var(--fence-gray);
+  --color-straw: #c9793d;
+
+  --color-on-gold: var(--board-stain);
+  --grain-opacity: 0.07;
+  --canopy-opacity: 1;
+}
+
+/* ---------- light is the daylight the sign stands in ---------- */
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --color-bg: var(--overcast);
+  --color-surface: #f6f3e9;
+  --color-surface-2: #fdfbf2;
+  --color-line: #cfc7b4;
+  --color-line-soft: rgba(36, 23, 8, 0.14);
+
+  --color-ink: #241708;
+  --color-ink-dim: #5f5040;
+
+  --color-gold: #8a5b06;
+  --color-gold-strong: #6d4704;
+  --color-moss: var(--paint-green);
+  --color-moss-strong: #1f4f24;
+  --color-fence: #6d6558;
+  --color-straw: #7a4a26;
+
+  --color-on-gold: var(--board-stain);
+  --grain-opacity: 0.05;
+  --canopy-opacity: 0.7;
 }
 
 * {
@@ -30,92 +90,186 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--color-bg);
 }
 
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: var(--color-void);
-  color: var(--color-cream);
+  background: transparent;
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
-/* Atmosphere: layered aurora mesh + drifting glow over the soil. */
-.sky {
+/* ============================================================
+   Atmosphere: four fixed layers, all read off the photo.
+   .board (stain + grain) → .canopy (foliage) → .straw (mulch
+   horizon) → .grain (film). Dark and light both get all four;
+   the light theme just turns the daylight up.
+   ============================================================ */
+
+.board {
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: -3;
   background:
-    radial-gradient(60% 50% at 75% 8%, rgba(243, 195, 100, 0.16), transparent 70%),
-    radial-gradient(55% 45% at 18% 22%, rgba(140, 230, 182, 0.12), transparent 70%),
-    radial-gradient(80% 60% at 50% 120%, rgba(76, 200, 138, 0.18), transparent 65%),
-    linear-gradient(180deg, var(--color-void) 0%, var(--color-soil) 45%, var(--color-soil-2) 100%);
+    /* worn spots where the stain thinned */
+    radial-gradient(60% 40% at 78% 6%, rgba(237, 179, 42, 0.10), transparent 70%),
+    radial-gradient(50% 40% at 14% 30%, rgba(158, 207, 106, 0.07), transparent 72%),
+    /* the long grain, three passes at different periods */
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.22) 0 1px,
+      transparent 1px 9px,
+      rgba(244, 232, 200, 0.035) 9px 10px,
+      transparent 10px 27px,
+      rgba(0, 0, 0, 0.14) 27px 28px,
+      transparent 28px 53px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.16) 0 2px,
+      transparent 2px 71px,
+      rgba(51, 34, 15, 0.5) 71px 74px,
+      transparent 74px 163px
+    ),
+    linear-gradient(180deg, var(--board-wood) 0%, var(--board-stain) 55%, #100a05 100%);
 }
 
-/* Starfield: cheap, crisp, twinkling. */
-.stars {
+:root[data-theme='light'] .board {
+  background:
+    radial-gradient(70% 45% at 50% -5%, rgba(255, 255, 255, 0.85), transparent 70%),
+    radial-gradient(55% 40% at 82% 10%, rgba(237, 179, 42, 0.10), transparent 72%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(36, 23, 8, 0.035) 0 1px,
+      transparent 1px 11px,
+      rgba(36, 23, 8, 0.02) 11px 12px,
+      transparent 12px 31px
+    ),
+    linear-gradient(180deg, #f3f1e7 0%, var(--overcast) 50%, #e2ddcc 100%);
+}
+
+/* Foliage crowding in from the edges, the way it does around the sign. */
+.canopy {
   position: fixed;
-  inset: 0;
+  inset: -8%;
+  z-index: -3;
+  pointer-events: none;
+  opacity: var(--canopy-opacity);
+  background:
+    radial-gradient(42% 34% at 4% -4%, rgba(120, 176, 76, 0.34), transparent 70%),
+    radial-gradient(38% 30% at 96% 4%, rgba(45, 107, 49, 0.32), transparent 70%),
+    radial-gradient(55% 34% at 50% 106%, rgba(45, 107, 49, 0.24), transparent 72%);
+  filter: blur(6px);
+  animation: sway 19s ease-in-out infinite alternate;
+}
+
+:root[data-theme='light'] .canopy {
+  background:
+    radial-gradient(44% 36% at 2% -6%, rgba(88, 140, 58, 0.30), transparent 72%),
+    radial-gradient(40% 32% at 98% 2%, rgba(45, 107, 49, 0.26), transparent 72%),
+    radial-gradient(58% 36% at 50% 108%, rgba(60, 120, 52, 0.20), transparent 72%);
+}
+
+@keyframes sway {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-1.2%, 0.8%, 0) scale(1.04); }
+}
+
+/* Pine straw and bark mulch banked along the bottom. */
+.straw {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -2;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(241, 234, 217, 0.9), transparent),
-    radial-gradient(1px 1px at 70% 18%, rgba(241, 234, 217, 0.7), transparent),
-    radial-gradient(1.5px 1.5px at 40% 12%, rgba(243, 195, 100, 0.8), transparent),
-    radial-gradient(1px 1px at 88% 40%, rgba(241, 234, 217, 0.6), transparent),
-    radial-gradient(1px 1px at 33% 48%, rgba(241, 234, 217, 0.5), transparent),
-    radial-gradient(1.5px 1.5px at 62% 36%, rgba(140, 230, 182, 0.7), transparent),
-    radial-gradient(1px 1px at 12% 60%, rgba(241, 234, 217, 0.5), transparent);
-  animation: twinkle 7s ease-in-out infinite;
+  height: 34vh;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      74deg,
+      rgba(138, 90, 48, 0.10) 0 1px,
+      transparent 1px 7px
+    ),
+    linear-gradient(180deg, transparent, rgba(60, 36, 16, 0.45) 65%, rgba(21, 14, 7, 0.85));
+  /* Feathered, not a hard arc: the mulch banks up, it doesn't cut a line. */
+  -webkit-mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
+          mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
+:root[data-theme='light'] .straw {
+  background:
+    repeating-linear-gradient(
+      74deg,
+      rgba(122, 74, 38, 0.09) 0 1px,
+      transparent 1px 7px
+    ),
+    linear-gradient(180deg, transparent, rgba(138, 90, 48, 0.16) 62%, rgba(122, 74, 38, 0.26));
 }
 
-/* Grain overlay for texture / film depth. */
+/* Film grain: sawdust and humidity. */
 .grain {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.06;
+  opacity: var(--grain-opacity);
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Rolling field silhouette anchored to the bottom horizon. */
-.field {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  height: 22vh;
-  pointer-events: none;
-  background: linear-gradient(180deg, transparent, rgba(8, 7, 15, 0.85) 60%, var(--color-void));
-  -webkit-mask: radial-gradient(120% 100% at 50% 100%, #000 60%, transparent 61%);
-          mask: radial-gradient(120% 100% at 50% 100%, #000 60%, transparent 61%);
+/* ============================================================
+   Painted type: letters sit *on* the board, with a routed edge
+   below them and a little sun bounce above. The light theme
+   loses the glow and keeps the carve.
+   ============================================================ */
+
+.painted {
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.55),
+    0 2px 1px rgba(0, 0, 0, 0.35),
+    0 0 34px rgba(237, 179, 42, 0.22);
+}
+
+:root[data-theme='light'] .painted {
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6),
+    0 2px 2px rgba(36, 23, 8, 0.18);
+}
+
+/* A brushed hairline, for use under kickers and section heads. */
+.brushrule {
+  background: linear-gradient(
+    90deg,
+    var(--color-gold) 0%,
+    var(--color-moss) 45%,
+    transparent 100%
+  );
+  height: 2px;
+  border-radius: 2px;
+  opacity: 0.8;
 }
 
 ::selection {
-  background: var(--color-gold);
-  color: var(--color-void);
+  background: var(--paint-gold);
+  color: var(--color-on-gold);
 }
 
-/* Custom scrollbar to stay in-world. */
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--color-soil); }
+::-webkit-scrollbar-track { background: var(--color-surface); }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-haze);
+  background: var(--color-line);
   border-radius: 99px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--color-glow-deep); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-moss-strong); }
 
-.glow-text {
-  text-shadow: 0 0 24px rgba(243, 195, 100, 0.35);
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @keyframes rise {
@@ -126,6 +280,6 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .stars { animation: none; }
+  .canopy { animation: none; }
   .rise { animation: none; opacity: 1; transform: none; }
 }

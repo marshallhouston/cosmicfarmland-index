@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, MotionConfig } from 'motion/react'
 import {
   ArrowUpRight,
@@ -10,6 +10,8 @@ import {
   Circle,
   CircleDot,
   Flag,
+  Sun,
+  Moon,
 } from 'lucide-react'
 import appsData from '../data/apps.json'
 import catalogData from '../data/catalog.json'
@@ -21,13 +23,57 @@ const KINDS = [
   { id: 'plugin', label: 'Plugins', icon: Puzzle },
 ]
 
+/** Board (dark) is the default reading of the sign; daylight is the other one. */
+function useTheme() {
+  const [theme, setTheme] = useState(
+    () =>
+      (typeof document !== 'undefined' && document.documentElement.dataset.theme) ||
+      'dark'
+  )
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    try {
+      localStorage.setItem('cf-theme', theme)
+    } catch {
+      /* private mode: the board just comes back next visit */
+    }
+  }, [theme])
+  return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))]
+}
+
+function ThemeToggle() {
+  const [theme, toggle] = useTheme()
+  const dark = theme === 'dark'
+  return (
+    <button
+      onClick={toggle}
+      aria-label={dark ? 'switch to daylight' : 'switch to the board'}
+      className="ml-auto inline-flex items-center gap-2 rounded-full border border-[var(--color-line)] px-3 py-1.5 text-[var(--color-ink-dim)] transition-colors hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
+    >
+      {dark ? <Sun size={13} aria-hidden="true" /> : <Moon size={13} aria-hidden="true" />}
+      <span className="hidden sm:inline">{dark ? 'daylight' : 'board'}</span>
+    </button>
+  )
+}
+
 function Stat({ value, label }) {
   return (
     <div className="flex flex-col items-center">
       <span className="font-mono text-2xl text-[var(--color-gold)]">{value}</span>
-      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-cream-dim)]">
+      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-dim)]">
         {label}
       </span>
+    </div>
+  )
+}
+
+function SectionHead({ icon: Icon, tint, children }) {
+  return (
+    <div className="mb-6">
+      <h2 className="flex items-center gap-3 font-display text-2xl lowercase text-[var(--color-ink)]">
+        <Icon size={17} aria-hidden="true" className={tint} /> {children}
+      </h2>
+      <div className="brushrule mt-3 w-28" />
     </div>
   )
 }
@@ -41,20 +87,20 @@ function PageCard({ page, index }) {
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay: index * 0.08 }}
       whileHover={{ y: -4 }}
-      className="group flex flex-col gap-1 rounded-xl border border-[var(--color-haze)] bg-[var(--color-soil-2)]/60 px-5 py-4 transition-colors hover:border-[var(--color-glow-deep)]"
+      className="group flex min-w-0 flex-col gap-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-surface-2)]/70 px-5 py-4 shadow-[inset_0_1px_0_var(--color-line-soft)] transition-colors hover:border-[var(--color-moss-strong)]"
     >
-      <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-glow)]">
+      <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-moss)]">
         {page.kicker}
       </span>
-      <span className="flex items-center gap-2 text-lg text-[var(--color-cream)]">
+      <span className="flex items-center gap-2 text-lg font-medium text-[var(--color-ink)]">
         {page.name}
         <ArrowUpRight
           size={15}
           aria-hidden="true"
-          className="text-[var(--color-cream-dim)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          className="text-[var(--color-ink-dim)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
       </span>
-      <span className="text-sm text-[var(--color-cream-dim)]">{page.blurb}</span>
+      <span className="text-sm text-[var(--color-ink-dim)]">{page.blurb}</span>
     </motion.a>
   )
 }
@@ -71,41 +117,41 @@ function AppCard({ app, index }) {
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay: index * 0.08 }}
       whileHover={live ? { y: -6 } : {}}
-      className={`group relative block overflow-hidden rounded-2xl border p-6 backdrop-blur-sm transition-colors ${
+      className={`group relative block min-w-0 overflow-hidden rounded-2xl border p-6 backdrop-blur-sm transition-colors ${
         live
-          ? 'cursor-pointer border-[var(--color-haze)] bg-[var(--color-soil-2)]/60 hover:border-[var(--color-glow-deep)]'
-          : 'border-dashed border-[var(--color-haze)]/60 bg-[var(--color-soil)]/40'
+          ? 'cursor-pointer border-[var(--color-line)] bg-[var(--color-surface-2)]/70 shadow-[inset_0_1px_0_var(--color-line-soft)] hover:border-[var(--color-moss-strong)]'
+          : 'border-dashed border-[var(--color-line)]/70 bg-[var(--color-surface)]/50'
       }`}
     >
       <div
         className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: live ? 'var(--color-glow)' : 'transparent' }}
+        style={{ background: live ? 'var(--paint-green-leaf)' : 'transparent' }}
       />
       <div className="mb-4 flex items-center justify-between">
         <Sprout
           aria-hidden="true"
-          className={live ? 'text-[var(--color-glow)]' : 'text-[var(--color-cream-dim)]'}
+          className={live ? 'text-[var(--color-moss)]' : 'text-[var(--color-ink-dim)]'}
           size={22}
         />
         <span
           className={`font-mono text-[10px] uppercase tracking-[0.2em] ${
-            live ? 'text-[var(--color-glow)]' : 'text-[var(--color-cream-dim)]'
+            live ? 'text-[var(--color-moss)]' : 'text-[var(--color-ink-dim)]'
           }`}
         >
           {live ? '● live' : '○ soon'}
         </span>
       </div>
-      <h3 className="mb-2 font-[var(--font-display)] text-2xl font-semibold leading-tight">
+      <h3 className="mb-2 text-2xl font-semibold leading-tight tracking-tight">
         {app.name}
       </h3>
-      <p className="mb-5 text-sm leading-relaxed text-[var(--color-cream-dim)]">
+      <p className="mb-5 text-sm leading-relaxed text-[var(--color-ink-dim)]">
         {app.blurb}
       </p>
       <div className="flex flex-wrap items-center gap-3">
         {(app.tags || []).map((t) => (
           <span
             key={t}
-            className="rounded-full border border-[var(--color-haze)] px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-cream-dim)]"
+            className="rounded-full border border-[var(--color-line)] px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-ink-dim)]"
           >
             {t}
           </span>
@@ -113,7 +159,7 @@ function AppCard({ app, index }) {
         {live && (
           <ArrowUpRight
             size={18}
-            className="ml-auto text-[var(--color-cream-dim)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--color-gold)]"
+            className="ml-auto text-[var(--color-ink-dim)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--color-gold)]"
           />
         )}
       </div>
@@ -125,10 +171,10 @@ function CatalogCard({ entry }) {
   const [open, setOpen] = useState(false)
   return (
     <div
-      className={`rounded-xl border transition-colors ${
+      className={`min-w-0 rounded-xl border transition-colors ${
         open
-          ? 'border-[var(--color-glow-deep)] bg-[var(--color-soil-2)]/70'
-          : 'border-[var(--color-haze)]/70 bg-[var(--color-soil)]/40 hover:border-[var(--color-violet)]'
+          ? 'border-[var(--color-moss-strong)] bg-[var(--color-surface-2)]/80'
+          : 'border-[var(--color-line)]/70 bg-[var(--color-surface)]/50 hover:border-[var(--color-straw)]'
       }`}
     >
       <button
@@ -137,19 +183,19 @@ function CatalogCard({ entry }) {
         className="flex w-full items-start gap-3 p-4 text-left"
       >
         {open ? (
-          <CircleDot size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-glow)]" />
+          <CircleDot size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-moss)]" />
         ) : (
-          <Circle size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-cream-dim)]" />
+          <Circle size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-ink-dim)]" />
         )}
         <span className="min-w-0 flex-1">
-          <span className="flex items-baseline gap-2">
-            <span className="font-mono text-sm text-[var(--color-cream)]">{entry.slug}</span>
-            <span className="truncate font-[var(--font-display)] text-sm italic text-[var(--color-cream-dim)]">
+          <span className="flex min-w-0 items-baseline gap-2">
+            <span className="shrink-0 font-mono text-sm text-[var(--color-ink)]">{entry.slug}</span>
+            <span className="truncate text-sm italic text-[var(--color-ink-dim)]">
               {entry.name}
             </span>
           </span>
           {!open && (
-            <span className="mt-1 block truncate text-xs text-[var(--color-cream-dim)]">
+            <span className="mt-1 block truncate text-xs text-[var(--color-ink-dim)]">
               {entry.blurb}
             </span>
           )}
@@ -157,7 +203,7 @@ function CatalogCard({ entry }) {
       </button>
       {open && (
         <div className="px-4 pb-4 pl-11">
-          <p className="mb-3 text-sm leading-relaxed text-[var(--color-cream)]">{entry.blurb}</p>
+          <p className="mb-3 text-sm leading-relaxed text-[var(--color-ink)]">{entry.blurb}</p>
           {entry.argumentHint && (
             <p className="mb-3 font-mono text-xs text-[var(--color-gold)]">
               args: {entry.argumentHint}
@@ -168,7 +214,7 @@ function CatalogCard({ entry }) {
               {entry.triggers.map((t) => (
                 <span
                   key={t}
-                  className="rounded-md bg-[var(--color-haze)]/50 px-2 py-0.5 font-mono text-[11px] text-[var(--color-violet)]"
+                  className="rounded-md border border-[var(--color-line)] bg-[var(--color-surface)]/70 px-2 py-0.5 font-mono text-[11px] text-[var(--color-straw)]"
                 >
                   {t}
                 </span>
@@ -179,7 +225,7 @@ function CatalogCard({ entry }) {
             href={entry.source}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 font-mono text-xs text-[var(--color-cream-dim)] transition-colors hover:text-[var(--color-gold)]"
+            className="inline-flex items-center gap-1 font-mono text-xs text-[var(--color-ink-dim)] transition-colors hover:text-[var(--color-gold)]"
           >
             view source <ArrowUpRight size={13} />
           </a>
@@ -208,17 +254,18 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="sky" />
-      <div className="stars" />
+      <div className="board" />
+      <div className="canopy" />
+      <div className="straw" />
       <div className="grain" />
-      <div className="field" />
 
       <main className="mx-auto max-w-5xl px-6 pb-32">
         {/* Nav */}
-        <nav className="flex gap-6 pt-8 font-mono text-xs uppercase tracking-[0.25em] text-[var(--color-cream-dim)]">
+        <nav className="flex items-center gap-4 pt-8 font-mono text-xs uppercase tracking-[0.25em] text-[var(--color-ink-dim)] sm:gap-6">
           <a href="#apps" className="hover:text-[var(--color-gold)]">apps</a>
           <a href="#catalog" className="hover:text-[var(--color-gold)]">toolshed</a>
           <a href="#golf" className="hover:text-[var(--color-gold)]">golf</a>
+          <ThemeToggle />
         </nav>
 
         {/* Hero */}
@@ -227,7 +274,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="mb-6 font-mono text-xs uppercase tracking-[0.4em] text-[var(--color-glow)]"
+            className="mb-6 font-mono text-xs uppercase tracking-[0.4em] text-[var(--color-moss)]"
           >
             ✧ cosmicfarmland.wtf
           </motion.p>
@@ -235,17 +282,17 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1 }}
-            className="glow-text font-[var(--font-display)] text-6xl font-light leading-[0.95] tracking-tight sm:text-8xl"
+            className="painted font-display text-5xl leading-[1.02] sm:text-7xl"
           >
             Cosmic
             <br />
-            <span className="italic text-[var(--color-gold)]">Farmland</span>
+            <span className="text-[var(--color-gold-strong)]">Farmland</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25 }}
-            className="mt-8 max-w-md text-lg leading-relaxed text-[var(--color-cream-dim)]"
+            className="mt-8 max-w-md text-lg leading-relaxed text-[var(--color-ink-dim)]"
           >
             apps, tools, and writing. entrypoint to the cosmic farmland
           </motion.p>
@@ -264,9 +311,9 @@ export default function App() {
 
         {/* Apps */}
         <section id="apps" className="mt-12">
-          <h2 className="mb-8 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-cream-dim)]">
-            <Sprout size={16} aria-hidden="true" className="text-[var(--color-glow)]" /> apps
-          </h2>
+          <SectionHead icon={Sprout} tint="text-[var(--color-moss)]">
+            apps
+          </SectionHead>
           <div className="grid gap-5 sm:grid-cols-2">
             {appsData.apps.map((app, i) => (
               <AppCard key={app.slug} app={app} index={i} />
@@ -276,10 +323,10 @@ export default function App() {
 
         {/* Golf */}
         <section id="golf" className="mt-24">
-          <h2 className="mb-2 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-cream-dim)]">
-            <Flag size={16} aria-hidden="true" className="text-[var(--color-glow)]" /> the back forty
-          </h2>
-          <p className="mb-8 max-w-lg text-sm text-[var(--color-cream-dim)]">
+          <SectionHead icon={Flag} tint="text-[var(--color-moss)]">
+            the back forty
+          </SectionHead>
+          <p className="mb-8 max-w-lg text-sm text-[var(--color-ink-dim)]">
             golf, counted properly. every round i post and every hole of the
             tournaments worth writing down.
           </p>
@@ -292,10 +339,10 @@ export default function App() {
 
         {/* Catalog */}
         <section id="catalog" className="mt-24">
-          <h2 className="mb-2 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.3em] text-[var(--color-cream-dim)]">
-            <Terminal size={16} aria-hidden="true" className="text-[var(--color-gold)]" /> the toolshed
-          </h2>
-          <p className="mb-8 max-w-lg text-sm text-[var(--color-cream-dim)]">
+          <SectionHead icon={Terminal} tint="text-[var(--color-gold)]">
+            the toolshed
+          </SectionHead>
+          <p className="mb-8 max-w-lg text-sm text-[var(--color-ink-dim)]">
             the skills, commands, and plugins i use across every project. browse here,
             then jump to source on github when you want the code.
           </p>
@@ -312,7 +359,7 @@ export default function App() {
                   className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-xs transition-colors ${
                     active
                       ? 'border-[var(--color-gold)] bg-[var(--color-gold)]/10 text-[var(--color-gold)]'
-                      : 'border-[var(--color-haze)] text-[var(--color-cream-dim)] hover:border-[var(--color-violet)]'
+                      : 'border-[var(--color-line)] text-[var(--color-ink-dim)] hover:border-[var(--color-straw)]'
                   }`}
                 >
                   <Icon size={14} aria-hidden="true" /> {k.label}
@@ -324,7 +371,7 @@ export default function App() {
               <Search
                 size={14}
                 aria-hidden="true"
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-cream-dim)]"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-ink-dim)]"
               />
               <input
                 type="search"
@@ -332,7 +379,7 @@ export default function App() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="filter…"
-                className="w-40 rounded-full border border-[var(--color-haze)] bg-[var(--color-soil)]/60 py-2 pl-9 pr-3 font-mono text-xs text-[var(--color-cream)] outline-none placeholder:text-[var(--color-cream-dim)] focus:border-[var(--color-glow-deep)] focus-visible:ring-2 focus-visible:ring-[var(--color-glow-deep)]/60"
+                className="w-40 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)]/70 py-2 pl-9 pr-3 font-mono text-xs text-[var(--color-ink)] outline-none placeholder:text-[var(--color-ink-dim)] focus:border-[var(--color-moss-strong)]"
               />
             </div>
           </div>
@@ -343,15 +390,18 @@ export default function App() {
             ))}
           </div>
           {filtered.length === 0 && (
-            <p className="py-12 text-center font-mono text-sm text-[var(--color-cream-dim)]">
+            <p className="py-12 text-center font-mono text-sm text-[var(--color-ink-dim)]">
               nothing in this patch yet.
             </p>
           )}
         </section>
 
-        <footer className="mt-28 border-t border-[var(--color-haze)]/50 pt-8 font-mono text-xs text-[var(--color-cream-dim)]">
+        <footer className="mt-28 border-t border-[var(--color-line)]/60 pt-8 font-mono text-xs text-[var(--color-ink-dim)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <span>grown by marshall · {new Date().getFullYear()}</span>
+            <span className="uppercase tracking-[0.28em] text-[var(--color-gold)]">
+              nice dogs, strange people
+            </span>
             <div className="flex gap-5">
               <a
                 href="https://github.com/marshallhouston/cosmic-farmland"

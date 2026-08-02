@@ -1,133 +1,229 @@
-/* Cosmic Farmland skin for the golf page.
+/* Grayton Beach skin for the golf page.
    Lives here, not in the vault source, so regenerating the vault HTML can't
    wipe it. Loaded after the page's inline <style>, so same-specificity rules
-   win. Tokens mirror src/index.css. */
+   win. Tokens mirror src/index.css.
+
+   The page ships light-first (bare :root) and dark under [data-theme="dark"],
+   the inverse of the index — that's the page's own toggle, left alone. Both
+   themes read off the same photograph: dark is the stained board, light is
+   the overcast day it was standing in. */
 
 :root {
-  --gold: #f3c364;
-  --gold-deep: #d99b3e;
-  --cf-glow: #8ce6b6;
-  --cf-glow-deep: #4cc88a;
-  --violet: #a78be0;
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Familjen Grotesk', system-ui, sans-serif;
-  --font-mono: 'DM Mono', ui-monospace, monospace;
+  --gold: #edb32a;
+  --gold-deep: #8a5b06;
+  --moss: #2d6b31;
+  --moss-deep: #1f4f24;
+  --straw: #7a4a26;
+  --font-display: 'Rye', 'Rockwell', Georgia, serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
 
-  /* light theme: parchment, not gray */
-  --surface-1: #fbf7ec;
-  --plane: #f4eddc;
-  --text-primary: #1b1633;
-  --text-secondary: #4a4360;
-  --muted: #7c7490;
-  --grid: #e4dcc7;
-  --axis: #c9bfa4;
-  --border: rgba(27, 22, 51, 0.12);
-  --chip: #efe6d1;
-  --div-mid: #e4dcc7;
+  /* light theme: the overcast sky and the fence rails, not gray UI chrome */
+  --surface-1: #f6f3e9;
+  --plane: #eceadf;
+  --text-primary: #241708;
+  --text-secondary: #5f5040;
+  --muted: #6d6558;
+  --grid: #ded7c5;
+  --axis: #c4bba6;
+  --border: rgba(36, 23, 8, 0.14);
+  --chip: #eae4d3;
+  --div-mid: #ded7c5;
 }
 
 :root[data-theme="dark"] {
-  --surface-1: #161031;
-  --plane: #08070f;
-  --text-primary: #f1ead9;
-  --text-secondary: #b6ad97;
-  --muted: #8f8878;
-  --grid: #241a45;
-  --axis: #3a2c68;
-  --border: rgba(241, 234, 217, 0.12);
-  --chip: #1c1440;
-  --div-mid: #241a45;
+  --gold: #edb32a;
+  --gold-deep: #b9760f;
+  --moss: #9ecf6a;
+  --moss-deep: #78b04c;
+  --straw: #c9793d;
+
+  --surface-1: #1d1309;
+  --plane: #150e07;
+  --text-primary: #f4e8c8;
+  --text-secondary: #c0ab85;
+  --muted: #9c8a6c;
+  --grid: #4a3520;
+  --axis: #6a4d2c;
+  --border: rgba(244, 232, 200, 0.14);
+  --chip: #2a1c0e;
+  --div-mid: #4a3520;
+}
+
+/* Charts: the page ships a blue/orange series palette. Repaint the categorical
+   series and status colors in the sign's three paints — green data, gold
+   emphasis, straw third — and swap the blue "under par" ramp for a foliage
+   ramp. The red "over par" ramp stays red: over-par severity has to read as a
+   warning, and that's the one hue the photograph doesn't supply. */
+:root {
+  --series-1: #2d6b31;
+  --series-2: #b9760f;
+  --series-3: #7a4a26;
+  --good: #1f4f24;
+  --warning: #b9760f;
+  --serious: #a0631f;
+  --critical: #a33f38;
+  --seq-100: #dcecc9;
+  --seq-250: #a8cf88;
+  --seq-350: #7cb85c;
+  --seq-450: #4d8a34;
+  --seq-600: #2d6b31;
+  --u1: #dcecc9;
+  --u2: #4d8a34;
+  --u3: #7cb85c;
+}
+:root[data-theme="dark"] {
+  --series-1: #9ecf6a;
+  --series-2: #edb32a;
+  --series-3: #c9793d;
+  --good: #78b04c;
+  --warning: #edb32a;
+  --serious: #d99a5a;
+  --critical: #cc655c;
+  --seq-100: #1f3d17;
+  --seq-250: #2c5420;
+  --seq-350: #47792f;
+  --seq-450: #6aa544;
+  --seq-600: #b3d98c;
+  --u1: #1f3d17;
+  --u2: #6aa544;
+  --u3: #b3d98c;
 }
 
 body { font-family: var(--font-body); }
 a { color: var(--gold-deep); }
 :root[data-theme="dark"] a { color: var(--gold); }
 
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; }
-h1 { font-size: 38px; font-weight: 300; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; }
+h1 { font-size: 38px; }
 :root[data-theme="dark"] h2 { color: var(--gold); }
 .eyebrow, .f label, .tile .k, th, .legend, .chip, nav.jump a, .btn, .seg button, .fcount, .themebtn {
   font-family: var(--font-mono);
 }
-.eyebrow { color: var(--cf-glow-deep); letter-spacing: 0.28em; }
-:root[data-theme="dark"] .eyebrow { color: var(--cf-glow); }
+.eyebrow { color: var(--moss); letter-spacing: 0.28em; }
 .tile .v { font-family: var(--font-mono); color: var(--gold-deep); font-weight: 500; }
 :root[data-theme="dark"] .tile .v { color: var(--gold); }
 
 .btn.active, .seg button.on, nav.jump a.on {
-  background: var(--gold); color: #08070f; border-color: var(--gold);
+  background: var(--gold); color: #150e07; border-color: var(--gold);
 }
-.tile.click:hover, .card:hover { border-color: var(--cf-glow-deep); }
-::selection { background: var(--gold); color: #08070f; }
+.tile.click:hover, .card:hover { border-color: var(--moss); }
+::selection { background: var(--gold); color: #150e07; }
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--plane); }
+::-webkit-scrollbar-track { background: var(--surface-1); }
 ::-webkit-scrollbar-thumb { background: var(--grid); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--cf-glow-deep); }
+::-webkit-scrollbar-thumb:hover { background: var(--moss); }
 
 /* home link, injected at the top of the page */
 .cf-brand {
   display: inline-block; padding: 18px 0 0; font-family: var(--font-mono);
   font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--cf-glow-deep); text-decoration: none;
+  color: var(--moss); text-decoration: none;
 }
-:root[data-theme="dark"] .cf-brand { color: var(--cf-glow); }
 .cf-brand:hover { color: var(--gold); }
-nav.jump a.cf-home { color: var(--cf-glow-deep); }
-:root[data-theme="dark"] nav.jump a.cf-home { color: var(--cf-glow); }
+nav.jump a.cf-home { color: var(--moss); }
 nav.jump a.cf-home:hover { color: var(--gold); }
 
-/* fixed atmosphere layers, dark only (mirrors src/index.css) */
-.sky, .stars, .grain { position: fixed; inset: 0; pointer-events: none; }
-.sky {
-  z-index: -2;
+/* ---------- fixed atmosphere layers (mirrors src/index.css) ---------- */
+.board, .canopy, .straw, .grain { position: fixed; pointer-events: none; }
+.board, .canopy, .grain { inset: 0; }
+
+.board {
+  z-index: -3;
   background:
-    radial-gradient(60% 50% at 75% 8%, rgba(243, 195, 100, 0.16), transparent 70%),
-    radial-gradient(55% 45% at 18% 22%, rgba(140, 230, 182, 0.12), transparent 70%),
-    radial-gradient(80% 60% at 50% 120%, rgba(76, 200, 138, 0.18), transparent 65%),
-    linear-gradient(180deg, #08070f 0%, #0e0b1d 45%, #161031 100%);
+    radial-gradient(70% 45% at 50% -5%, rgba(255, 255, 255, 0.85), transparent 70%),
+    radial-gradient(55% 40% at 82% 10%, rgba(237, 179, 42, 0.10), transparent 72%),
+    repeating-linear-gradient(90deg,
+      rgba(36, 23, 8, 0.035) 0 1px, transparent 1px 11px,
+      rgba(36, 23, 8, 0.02) 11px 12px, transparent 12px 31px),
+    linear-gradient(180deg, #f3f1e7 0%, #eceadf 50%, #e2ddcc 100%);
 }
-.stars {
-  z-index: -2; animation: cf-twinkle 7s ease-in-out infinite;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(241, 234, 217, 0.9), transparent),
-    radial-gradient(1px 1px at 70% 18%, rgba(241, 234, 217, 0.7), transparent),
-    radial-gradient(1.5px 1.5px at 40% 12%, rgba(243, 195, 100, 0.8), transparent),
-    radial-gradient(1px 1px at 88% 40%, rgba(241, 234, 217, 0.6), transparent),
-    radial-gradient(1px 1px at 33% 48%, rgba(241, 234, 217, 0.5), transparent),
-    radial-gradient(1.5px 1.5px at 62% 36%, rgba(140, 230, 182, 0.7), transparent),
-    radial-gradient(1px 1px at 12% 60%, rgba(241, 234, 217, 0.5), transparent);
+:root[data-theme="dark"] .board {
+  background:
+    radial-gradient(60% 40% at 78% 6%, rgba(237, 179, 42, 0.10), transparent 70%),
+    radial-gradient(50% 40% at 14% 30%, rgba(158, 207, 106, 0.07), transparent 72%),
+    repeating-linear-gradient(90deg,
+      rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 9px,
+      rgba(244, 232, 200, 0.035) 9px 10px, transparent 10px 27px,
+      rgba(0, 0, 0, 0.14) 27px 28px, transparent 28px 53px),
+    repeating-linear-gradient(90deg,
+      rgba(0, 0, 0, 0.16) 0 2px, transparent 2px 71px,
+      rgba(51, 34, 15, 0.5) 71px 74px, transparent 74px 163px),
+    linear-gradient(180deg, #241708 0%, #150e07 55%, #100a05 100%);
 }
+
+.canopy {
+  inset: -8%; z-index: -3; filter: blur(6px); opacity: 0.7;
+  background:
+    radial-gradient(44% 36% at 2% -6%, rgba(88, 140, 58, 0.30), transparent 72%),
+    radial-gradient(40% 32% at 98% 2%, rgba(45, 107, 49, 0.26), transparent 72%),
+    radial-gradient(58% 36% at 50% 108%, rgba(60, 120, 52, 0.20), transparent 72%);
+  animation: cf-sway 19s ease-in-out infinite alternate;
+}
+:root[data-theme="dark"] .canopy {
+  opacity: 1;
+  background:
+    radial-gradient(42% 34% at 4% -4%, rgba(120, 176, 76, 0.34), transparent 70%),
+    radial-gradient(38% 30% at 96% 4%, rgba(45, 107, 49, 0.32), transparent 70%),
+    radial-gradient(55% 34% at 50% 106%, rgba(45, 107, 49, 0.24), transparent 72%);
+}
+
+.straw {
+  left: 0; right: 0; bottom: 0; height: 34vh; z-index: -2;
+  background:
+    repeating-linear-gradient(74deg, rgba(122, 74, 38, 0.09) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, transparent, rgba(138, 90, 48, 0.16) 62%, rgba(122, 74, 38, 0.26));
+  -webkit-mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
+          mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
+}
+:root[data-theme="dark"] .straw {
+  background:
+    repeating-linear-gradient(74deg, rgba(138, 90, 48, 0.10) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, transparent, rgba(60, 36, 16, 0.45) 65%, rgba(21, 14, 7, 0.85));
+}
+
 .grain {
   z-index: -1; opacity: 0.05; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-:root[data-theme="light"] .sky,
-:root[data-theme="light"] .stars,
-:root[data-theme="light"] .grain { display: none; }
-@keyframes cf-twinkle { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .stars { animation: none; } }
+:root[data-theme="dark"] .grain { opacity: 0.07; }
+
+@keyframes cf-sway {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-1.2%, 0.8%, 0) scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) { .canopy { animation: none; } }
 
 /* ---------- depth pass: pull the page toward the index hero ---------- */
 
-/* Hero: Fraunces light, gold italic tail, gold glow. Mirrors the index h1. */
+/* Hero: painted woodtype, gold tail, routed edge. Mirrors the index h1. */
 header.top { padding: 26px 0 18px; }
-h1 { font-size: clamp(40px, 6vw, 68px); line-height: 0.98; letter-spacing: -0.02em; }
-h1 em { font-style: italic; color: var(--gold); }
-:root[data-theme="dark"] h1 { text-shadow: 0 0 24px rgba(243, 195, 100, 0.35); }
+h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.04; letter-spacing: 0; }
+h1 em { font-style: normal; color: var(--gold-deep); }
+:root[data-theme="dark"] h1 em { color: var(--gold); }
+h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 2px rgba(36, 23, 8, 0.18); }
+:root[data-theme="dark"] h1 {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55), 0 2px 1px rgba(0, 0, 0, 0.35),
+               0 0 34px rgba(237, 179, 42, 0.22);
+}
 .sub { font-size: 15px; }
 
-/* Surfaces: translucent soil over the aurora instead of flat panels. */
+/* Surfaces: translucent board panels over the foliage instead of flat slabs. */
 .card, .tile, .chart, .tablewrap, .notable, .note { border-radius: 16px; }
+.card, .tile, .chart, .tablewrap, .notable, .detail {
+  background: rgba(246, 243, 233, 0.78);
+  backdrop-filter: blur(6px);
+}
 :root[data-theme="dark"] .card,
 :root[data-theme="dark"] .tile,
 :root[data-theme="dark"] .chart,
 :root[data-theme="dark"] .tablewrap,
 :root[data-theme="dark"] .notable,
 :root[data-theme="dark"] .detail {
-  background: rgba(22, 16, 49, 0.62);
-  backdrop-filter: blur(6px);
+  background: rgba(42, 28, 14, 0.66);
 }
-:root[data-theme="dark"] th { background: rgba(14, 11, 29, 0.94); }
+th { background: rgba(236, 234, 223, 0.94); }
+:root[data-theme="dark"] th { background: rgba(21, 14, 7, 0.94); }
 .tile { padding: 16px 18px; }
 .tile .v { font-size: 30px; }
 .tile.click, .card { transition: border-color 0.25s, transform 0.25s; }
@@ -143,8 +239,8 @@ nav.jump a { border-radius: 999px; font-size: 12px; letter-spacing: 0.06em; }
 .themebtn { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
 
 /* Voice: the index runs all-lowercase interface copy. */
-h2 { text-transform: lowercase; font-size: 24px; }
-h3 { font-size: 17px; }
+h2 { text-transform: lowercase; font-size: 22px; }
+h3 { font-size: 16px; }
 section { margin-bottom: 60px; }
 
 /* Footer, matching the index hairline + mono credit. */
@@ -154,9 +250,10 @@ section { margin-bottom: 60px; }
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--muted);
 }
-.cf-footer a { color: var(--cf-glow-deep); text-decoration: none; }
-:root[data-theme="dark"] .cf-footer a { color: var(--cf-glow); }
+.cf-footer a { color: var(--moss); text-decoration: none; }
 .cf-footer a:hover { color: var(--gold); }
+.cf-footer .cf-slogan { color: var(--gold-deep); letter-spacing: 0.28em; }
+:root[data-theme="dark"] .cf-footer .cf-slogan { color: var(--gold); }
 
 /* ---------- shared golf nav strip (both golf pages) ---------- */
 .cf-golf-nav {
@@ -168,8 +265,10 @@ section { margin-bottom: 60px; }
   text-transform: uppercase; text-decoration: none; color: var(--muted);
   border: 1px solid transparent;
 }
-.cf-golf-link:hover { color: var(--gold); border-color: var(--grid); }
-.cf-golf-link.on { color: var(--gold); border-color: var(--gold); }
-.cf-golf-link.cf-home { color: var(--cf-glow-deep); padding-left: 0; }
-:root[data-theme="dark"] .cf-golf-link.cf-home { color: var(--cf-glow); }
-.cf-golf-link.cf-home:hover { color: var(--gold); border-color: transparent; }
+.cf-golf-link:hover { color: var(--gold-deep); border-color: var(--grid); }
+:root[data-theme="dark"] .cf-golf-link:hover { color: var(--gold); }
+.cf-golf-link.on { color: var(--gold-deep); border-color: var(--gold-deep); }
+:root[data-theme="dark"] .cf-golf-link.on { color: var(--gold); border-color: var(--gold); }
+.cf-golf-link.cf-home { color: var(--moss); padding-left: 0; }
+.cf-golf-link.cf-home:hover { color: var(--gold-deep); border-color: transparent; }
+:root[data-theme="dark"] .cf-golf-link.cf-home:hover { color: var(--gold); }
