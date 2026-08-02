@@ -19,6 +19,7 @@ source of truth. Everything else is a consumer:
 | File | Owns |
 |---|---|
 | `public/grayton.css` | the system: tokens, type, atmosphere, sign treatment, chrome |
+| `public/grayton.html` | `/grayton` — the source photo and the system, built *with* the system |
 | `src/index.css` | Tailwind entry: imports the system, maps its font namespace |
 | `src/App.jsx` | the index's own components |
 | `public/golf-skin.css` | maps the golf pages' token names onto Grayton, styles their components |
@@ -83,6 +84,11 @@ Atmosphere is four fixed layers behind the content, present in both themes:
 way the real one does), `.canopy` (the shrub crowding the edges, 19s sway),
 `.straw` (mulch banked and feathered along the bottom), `.grain` (film noise).
 
+`public/board.jpg` is a seamless tile cut from a bare patch of the sign's own
+board, mirrored four ways. It backs the daylight `.plank` so the wordmark sits on
+photographed wood rather than a flat dark rectangle. It is deliberately *not*
+tiled across the page: at full-viewport scale the repeat is obvious.
+
 ## Color
 
 Two token layers in `public/grayton.css`: materials sampled from the photo,
@@ -114,23 +120,30 @@ written once and is correct in both themes.
 
 | Token | board | daylight | Role |
 |---|---|---|---|
-| `--color-bg` | `#1b191c` | `#e4e5df` | page ground |
-| `--color-surface` | `#232025` | `#eeefe9` | recessed surface (closed rows, inputs) |
-| `--color-surface-2` | `#2d292f` | `#f8f8f3` | raised surface (cards, open rows) |
-| `--color-line` | `#4a464e` | `#c8c8c0` | borders, scrollbar thumb |
+| `--color-bg` | `#2a2621` | `#e4e5df` | page ground |
+| `--color-surface` | `#332e27` | `#eeefe9` | recessed surface (closed rows, inputs) |
+| `--color-surface-2` | `#3d372f` | `#f8f8f3` | raised surface (cards, open rows) |
+| `--color-line` | `#5b5346` | `#c8c8c0` | borders, scrollbar thumb |
 | `--color-line-soft` | cream 12% | ink 12% | hairlines |
 | `--color-ink` | `#f3e7c9` | `#24222a` | primary text |
-| `--color-ink-dim` | `#b6ac97` | `#575360` | secondary text |
+| `--color-ink-dim` | `#c2b8a3` | `#575360` | secondary text |
 | `--color-gold` | `#e9bb47` | `#7d5a0c` | active state, stats, links on hover |
 | `--color-gold-strong` | `#f2c95f` | `#6e4f08` | emphasis |
-| `--color-moss` | `#9db38c` | `#3f5c3f` | live status, kickers, sprouts |
-| `--color-moss-strong` | `#7d9a70` | `#2f4a30` | hover borders |
-| `--color-post` | `#a9a5a0` | `#615e58` | tertiary neutral (trigger chips) |
+| `--color-moss` | `#a8bd97` | `#3f5c3f` | live status, kickers, sprouts |
+| `--color-moss-strong` | `#8aa87c` | `#2f4a30` | hover borders |
+| `--color-post` | `#b4b0aa` | `#615e58` | tertiary neutral (trigger chips) |
 | `--card-shadow` | inset cream lip | white lip + paper shadow | how a card sits on its ground |
 
-Contrast against each theme's page ground: ink 14.2 / 12.4, ink-dim 7.8 / 5.9,
-gold 9.7 / 4.6, moss 7.7 / 5.9, post 7.1 / 4.6. All body and accent text clears
-WCAG AA in both themes. `--paint-green` at 3.4 on the board is a *fill* color
+The board ground is deliberately a step **warmer and deeper** than the sampled
+board face. The sampled values stay in the materials layer, but a page painted
+literally `#363841` reads as a black screen rather than as wood — so the ground
+runs `#37322c → #2a2621 → #201d1a` with the shrub washing green in from the
+edges. Warm wood and verdant green, which is what the photo *feels* like even
+though a colour-picker on a single pixel doesn't say so.
+
+Contrast against each theme's page ground: ink 11.8 / 12.4, ink-dim 7.4 / 5.9,
+gold 8.1 / 5.0, moss 7.2 / 5.9, post 6.7 / 5.1. All body and accent text clears
+WCAG AA in both themes, on the ground and on raised surfaces. `--paint-green` at 3.4 on the board is a *fill* color
 only — it never carries text.
 
 ### Interaction language

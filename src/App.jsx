@@ -325,6 +325,20 @@ export default function App() {
           >
             apps, tools, and writing. entrypoint to the cosmic farmland
           </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.9, delay: 0.35 }}
+            className="mt-4 font-mono text-xs tracking-[0.12em] text-[var(--color-ink-dim)]"
+          >
+            inspired by{' '}
+            <a
+              href="/grayton"
+              className="text-[var(--color-moss)] underline decoration-[var(--color-moss)]/40 underline-offset-4 transition-colors hover:text-[var(--color-gold)] hover:decoration-[var(--color-gold)]/60"
+            >
+              grayton beach ↗
+            </a>
+          </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -432,6 +446,9 @@ export default function App() {
               nice dogs, strange people
             </span>
             <div className="flex gap-5">
+              <a href="/grayton" className="hover:text-[var(--color-gold)]">
+                grayton beach ↗
+              </a>
               <a
                 href="https://github.com/marshallhouston/cosmic-farmland"
                 className="hover:text-[var(--color-gold)]"
