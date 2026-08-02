@@ -1,8 +1,32 @@
 # Design — Grayton Beach
 
-Visual system for cosmicfarmland.wtf, captured from the shipped code
-(`src/index.css`, `src/App.jsx`, `public/golf-skin.css`,
-`public/city-am-skin.css`).
+Visual system for cosmicfarmland.wtf.
+
+## Where it lives
+
+**`public/grayton.css` is the design system.** Tokens, type, the atmosphere
+layers, the sign treatment and the interface chrome — one plain stylesheet, no
+Tailwind at-rules, no build step, so any page can adopt it with one line:
+
+```html
+<link rel="stylesheet" href="https://cosmicfarmland.wtf/grayton.css">
+<html data-theme="dark">   <!-- or "light"; board is the default -->
+```
+
+The SPA imports that same file from `src/index.css`, so there is exactly one
+source of truth. Everything else is a consumer:
+
+| File | Owns |
+|---|---|
+| `public/grayton.css` | the system: tokens, type, atmosphere, sign treatment, chrome |
+| `src/index.css` | Tailwind entry: imports the system, maps its font namespace |
+| `src/App.jsx` | the index's own components |
+| `public/golf-skin.css` | maps the golf pages' token names onto Grayton, styles their components |
+| `public/city-am-skin.css` | the City Am page's own components |
+
+A page skin never redefines a system value. Note that the vault pages declare
+their own tokens under `[data-theme=...]`, so a skin's mappings have to match
+that specificity to win on source order — a bare `:root` loses.
 
 ## Origin
 
@@ -61,9 +85,9 @@ way the real one does), `.canopy` (the shrub crowding the edges, 19s sway),
 
 ## Color
 
-Two token layers in `src/index.css`: materials sampled from the photo in
-`@theme`, then semantic tokens in `:root` (board) and `:root[data-theme='light']`
-(daylight). Components reference only the semantic layer, so each component is
+Two token layers in `public/grayton.css`: materials sampled from the photo,
+then semantic tokens under `:root, :root[data-theme='dark']` (board) and
+`:root[data-theme='light']` (daylight). Components reference only the semantic layer, so each component is
 written once and is correct in both themes.
 
 ### Materials (sampled; never change per theme)
@@ -142,7 +166,9 @@ Apply the display face with the `font-display` utility, **not**
 
 ## The sign treatment
 
-Three CSS pieces, in `src/index.css`, reproduce how the board was painted:
+Three pieces reproduce how the board was painted. The CSS is in `grayton.css`,
+so any page can use it — one `.glyph` per letter, `.glyph-space` for the gaps,
+the per-letter rotation inline, all wrapped in `.plank`:
 
 - **`.glyph`** — one per letter. Cream `-webkit-text-stroke` with
   `paint-order: stroke fill` so the outline sits behind the fill, over a
@@ -228,6 +254,11 @@ deliberate; don't "fix" it by making bad scores sage.
 fonts, atmosphere and footer to the golf pages. Those pages ship light-first
 (bare `:root` = daylight, `[data-theme="dark"]` = board), the inverse of the
 index — that's the vault page's own toggle and it stays that way. The injected
-font links, atmosphere divs and slogan footer live in `scripts/sync-vault.mjs`;
-the published HTML in `public/` is stamped to match, with `?v=` hashes refreshed
-whenever a skin changes.
+font links, `grayton.css`, the atmosphere divs and the slogan footer live in
+`scripts/sync-vault.mjs`; the published HTML in `public/` is stamped to match,
+with `?v=` hashes refreshed whenever a stylesheet changes.
+
+A *new* vault page inherits the palette, type and atmosphere for free from
+`grayton.css`, but its own components are its own problem: `golf-skin.css` is
+written against the golf pages' class names. Give a genuinely different page its
+own thin skin rather than widening the golf one.

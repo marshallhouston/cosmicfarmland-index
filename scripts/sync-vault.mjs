@@ -26,8 +26,10 @@ const FONT_LINKS = `<link rel="icon" href="data:image/svg+xml,<svg xmlns='http:/
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Figtree:ital,wght@0,300..800;1,300..800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">`
 
+// grayton.css is the design system itself and always comes first; the page
+// skins after it only map that page's own token names and components.
 const head = (...skins) =>
-  [FONT_LINKS, ...skins.map((s) => `<link rel="stylesheet" href="/${s}?v=${version(s)}">`)].join('\n')
+  [FONT_LINKS, ...['grayton.css', ...skins].map((s) => `<link rel="stylesheet" href="/${s}?v=${version(s)}">`)].join('\n')
 
 const ATMOSPHERE = `<div class="board"></div><div class="canopy"></div><div class="straw"></div><div class="grain"></div>
 <a class="cf-brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a>`

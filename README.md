@@ -16,6 +16,22 @@ bun run build      # static SPA -> dist/
 bun run start      # serve dist/ + /api/health (prod, Bun)
 ```
 
+## Design system
+
+**`public/grayton.css` is the Grayton Beach design system** — tokens, type, the
+atmosphere layers, the hand-painted sign treatment and the interface chrome, in
+one plain stylesheet with no build step. Any page can adopt it:
+
+```html
+<link rel="stylesheet" href="https://cosmicfarmland.wtf/grayton.css">
+<html data-theme="dark">   <!-- or "light"; board is the default -->
+```
+
+The SPA imports the same file from `src/index.css`, so there is one source of
+truth. `golf-skin.css` and `city-am-skin.css` sit on top of it and only map the
+vault pages' own token names and style their components. `DESIGN.md` is the
+spec — palette provenance, type, components, voice.
+
 ## Vault pages
 
 Standalone HTML pages written in the Obsidian vault (`~/marshall.notes`) are

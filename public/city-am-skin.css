@@ -1,6 +1,7 @@
 /* Grayton Beach skin for the City Am hole-by-hole page.
-   Loaded after golf-skin.css (shared palette, atmosphere, brand, footer) and
-   after the page's own inline <style>, so same-specificity rules win. Nothing
+   Loaded after grayton.css (the design system) and golf-skin.css (shared golf
+   mappings, brand, footer), and after the page's own inline <style>, so
+   same-specificity rules win. Nothing
    here may live in the vault source: that file is regenerated wholesale. */
 
 :root {

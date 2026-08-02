@@ -1,12 +1,14 @@
-/* Grayton Beach skin for the golf page.
+/* Golf-page skin. The design system itself is in grayton.css, which the sync
+   injects first; this file maps the vault page's own token names onto Grayton
+   values and styles the page's own components.
+
    Lives here, not in the vault source, so regenerating the vault HTML can't
    wipe it. Loaded after the page's inline <style>, so same-specificity rules
-   win. Tokens mirror src/index.css.
+   win. The page's own tokens are declared under [data-theme=...], so the
+   mappings below have to match that specificity to win on source order.
 
    The page ships light-first (bare :root) and dark under [data-theme="dark"],
-   the inverse of the index — that's the page's own toggle, left alone. Both
-   themes read off the same photograph: dark is the stained board, light is
-   the overcast day it was standing in. */
+   the inverse of the index — that's the page's own toggle, left alone. */
 
 :root {
   --gold: #e9bb47;
@@ -14,10 +16,6 @@
   --moss: #3f5c3f;
   --moss-deep: #2f4a30;
   --post: #615e58;
-  --font-display: 'Amarante', 'Palatino Linotype', Georgia, serif;
-  --font-body: 'Figtree', system-ui, sans-serif;
-  --font-mono: 'Space Mono', ui-monospace, monospace;
-
   /* light theme: the overcast sky and the fence rails, not gray UI chrome */
   --surface-1: #eeefe9;
   --plane: #e4e5df;
@@ -108,12 +106,6 @@ h1 { font-size: 38px; }
   background: var(--gold); color: #1b191c; border-color: var(--gold);
 }
 .tile.click:hover, .card:hover { border-color: var(--moss); }
-::selection { background: var(--gold); color: #1b191c; }
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--surface-1); }
-::-webkit-scrollbar-thumb { background: var(--grid); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--moss); }
-
 /* home link, injected at the top of the page */
 .cf-brand {
   display: inline-block; padding: 18px 0 0; font-family: var(--font-mono);
@@ -124,77 +116,6 @@ h1 { font-size: 38px; }
 nav.jump a.cf-home { color: var(--moss); }
 nav.jump a.cf-home:hover { color: var(--gold); }
 
-/* ---------- fixed atmosphere layers (mirrors src/index.css) ---------- */
-.board, .canopy, .straw, .grain { position: fixed; pointer-events: none; }
-.board, .canopy, .grain { inset: 0; }
-
-.board {
-  z-index: -3;
-  background:
-    radial-gradient(72% 46% at 50% -6%, rgba(255, 255, 255, 0.9), transparent 72%),
-    radial-gradient(54% 40% at 84% 10%, rgba(233, 187, 71, 0.09), transparent 74%),
-    repeating-linear-gradient(0deg,
-      rgba(36, 34, 42, 0.028) 0 1px, transparent 1px 13px,
-      rgba(36, 34, 42, 0.016) 13px 14px, transparent 14px 37px),
-    linear-gradient(180deg, #ecede7 0%, #e4e5df 52%, #d6d8ce 100%);
-}
-:root[data-theme="dark"] .board {
-  background:
-    radial-gradient(60% 42% at 76% 6%, rgba(233, 187, 71, 0.07), transparent 72%),
-    radial-gradient(52% 40% at 12% 28%, rgba(113, 136, 101, 0.09), transparent 74%),
-    repeating-linear-gradient(0deg,
-      rgba(0, 0, 0, 0.20) 0 1px, transparent 1px 11px,
-      rgba(243, 231, 201, 0.022) 11px 12px, transparent 12px 33px,
-      rgba(0, 0, 0, 0.12) 33px 34px, transparent 34px 67px),
-    repeating-linear-gradient(0deg,
-      rgba(0, 0, 0, 0.14) 0 2px, transparent 2px 97px,
-      rgba(77, 72, 76, 0.34) 97px 100px, transparent 100px 233px),
-    linear-gradient(180deg, #322f34 0%, #1b191c 58%, #121013 100%);
-}
-
-.canopy {
-  inset: -8%; z-index: -3; filter: blur(6px); opacity: 0.75;
-  background:
-    radial-gradient(48% 42% at 0% -8%, rgba(72, 92, 75, 0.40), transparent 74%),
-    radial-gradient(44% 36% at 100% 0%, rgba(46, 58, 43, 0.34), transparent 74%),
-    radial-gradient(32% 26% at 82% 32%, rgba(113, 136, 101, 0.20), transparent 74%),
-    radial-gradient(58% 36% at 50% 108%, rgba(113, 136, 101, 0.30), transparent 74%);
-  animation: cf-sway 19s ease-in-out infinite alternate;
-}
-:root[data-theme="dark"] .canopy {
-  opacity: 1;
-  background:
-    radial-gradient(46% 40% at 2% -6%, rgba(113, 136, 101, 0.44), transparent 72%),
-    radial-gradient(42% 34% at 98% 2%, rgba(72, 92, 75, 0.42), transparent 72%),
-    radial-gradient(34% 26% at 78% 34%, rgba(113, 136, 101, 0.18), transparent 74%),
-    radial-gradient(56% 34% at 50% 106%, rgba(46, 58, 43, 0.34), transparent 74%);
-}
-
-.straw {
-  left: 0; right: 0; bottom: 0; height: 34vh; z-index: -2;
-  background:
-    repeating-linear-gradient(74deg, rgba(82, 79, 69, 0.14) 0 1px, transparent 1px 7px),
-    linear-gradient(180deg, transparent, rgba(82, 79, 69, 0.18) 62%, rgba(82, 79, 69, 0.3));
-  -webkit-mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
-          mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
-}
-:root[data-theme="dark"] .straw {
-  background:
-    repeating-linear-gradient(74deg, rgba(82, 79, 69, 0.22) 0 1px, transparent 1px 7px),
-    linear-gradient(180deg, transparent, rgba(60, 57, 50, 0.5) 65%, rgba(21, 20, 18, 0.85));
-}
-
-.grain {
-  z-index: -1; opacity: 0.05; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-:root[data-theme="dark"] .grain { opacity: 0.07; }
-
-@keyframes cf-sway {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(-1.2%, 0.8%, 0) scale(1.04); }
-}
-@media (prefers-reduced-motion: reduce) { .canopy { animation: none; } }
 
 /* ---------- depth pass: pull the page toward the index hero ---------- */
 
