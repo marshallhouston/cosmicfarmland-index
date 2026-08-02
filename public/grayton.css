@@ -254,29 +254,11 @@
   padding: 0;
 }
 
-/* In board mode the page is already the plank. In daylight the letters need
-   stained wood behind them — a cream outline over an overcast sky is no
-   outline at all — so the wordmark gets its own board, at the slight tilt the
-   real one has. */
-:root[data-theme='light'] .plank {
-  padding: 0.46em 0.78em 0.54em;
-  border-radius: 10px;
-  transform: rotate(-0.7deg);
-  /* A photographed slice of the sign's own board, warmed and darkened just
-     enough to carry a cream outline. Not a black rectangle: the edges catch
-     light the way a sawn board does, and the corners are eased. */
-  background:
-    linear-gradient(176deg, rgba(243, 231, 201, 0.10) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.35) 100%),
-    linear-gradient(180deg, rgba(62, 56, 52, 0.86), rgba(43, 39, 40, 0.94)),
-    url('/board.jpg') repeat center / 340px 68px,
-    #3a3439;
-  box-shadow:
-    inset 0 1px 0 rgba(243, 231, 201, 0.22),
-    inset 0 0 0 1px rgba(243, 231, 201, 0.07),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.45),
-    0 18px 38px -18px rgba(36, 34, 42, 0.5),
-    0 2px 6px -2px rgba(36, 34, 42, 0.28);
-}
+/* No board behind the wordmark in either theme: a dark slab dropped into a
+   light page reads as a separate object, narrower than the column it sits in.
+   The letters carry themselves instead. In daylight the cream outline needs
+   something to hold it — that is a tight dark halo hugging the letterforms,
+   not a rectangle. Same job the board was doing, none of the furniture. */
 
 .glyph {
   display: inline-block;
@@ -296,6 +278,13 @@
   -webkit-text-stroke: 0.042em var(--paint-cream);
   paint-order: stroke fill;
   filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.55));
+}
+
+:root[data-theme='light'] .glyph {
+  filter:
+    drop-shadow(0 0 1.2px rgba(37, 33, 28, 0.95))
+    drop-shadow(0 1px 0 rgba(37, 33, 28, 0.5))
+    drop-shadow(0 3px 7px rgba(36, 34, 42, 0.26));
 }
 
 /* No background-clip:text (rare, but it would render nothing): paint the

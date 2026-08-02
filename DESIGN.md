@@ -85,9 +85,10 @@ way the real one does), `.canopy` (the shrub crowding the edges, 19s sway),
 `.straw` (mulch banked and feathered along the bottom), `.grain` (film noise).
 
 `public/board.jpg` is a seamless tile cut from a bare patch of the sign's own
-board, mirrored four ways. It backs the daylight `.plank` so the wordmark sits on
-photographed wood rather than a flat dark rectangle. It is deliberately *not*
-tiled across the page: at full-viewport scale the repeat is obvious.
+board, mirrored four ways. It is kept for any surface that wants photographed
+wood, but nothing currently uses it: the page background reads better as a warm
+gradient (at full-viewport scale the tile's repeat is obvious), and the wordmark
+no longer sits on a board at all.
 
 ## Color
 
@@ -193,8 +194,15 @@ the per-letter rotation inline, all wrapped in `.plank`:
   and vertical offset from `LETTER_JITTER`. Fixed, not random: the wordmark must
   be identical on every load. This is what separates "hand-painted" from "a font
   with an effect".
-- **`.plank`** — the stained board. Padding, horizontal grain, a lit top edge, a
-  shadow, and a 0.7° tilt. Daylight only.
+- **`.plank`** — the wrapper around the wordmark. It carries no board in either
+  theme. A dark slab behind the letters in daylight reads as a separate object
+  sitting in the page, narrower than the column around it, and two rounds of
+  trying to make it a convincing board (rounded, photographed grain, lit edge,
+  tilt) did not fix that — it is the rectangle itself that is wrong. In daylight
+  the cream outline is instead held by a tight dark halo hugging the letterforms
+  (`drop-shadow` at ~1px with no offset), which does the board's job with none
+  of its furniture and keeps the wordmark on the same left margin as everything
+  else.
 
 The wordmark's visible letters are `aria-hidden` and `user-select: none`; an
 `sr-only` "Cosmic Farmland" carries the accessible name and the copy buffer. The
