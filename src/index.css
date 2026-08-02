@@ -238,7 +238,7 @@ body {
 }
 
 :root[data-theme='light'] .plank {
-  padding: 0.4em 0.62em 0.48em;
+  padding: 0.4em 0.72em 0.48em;
   border-radius: 3px;
   transform: rotate(-0.7deg);
   background:
