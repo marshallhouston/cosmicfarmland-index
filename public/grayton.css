@@ -59,20 +59,20 @@
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --color-bg: var(--board-dark);
-  --color-surface: #232025;
-  --color-surface-2: #2d292f;
-  --color-line: #4a464e;
+  --color-bg: #2a2621;
+  --color-surface: #332e27;
+  --color-surface-2: #3d372f;
+  --color-line: #5b5346;
   --color-line-soft: rgba(243, 231, 201, 0.12);
 
   --color-ink: var(--paint-cream);
-  --color-ink-dim: #b6ac97;
+  --color-ink-dim: #c2b8a3;
 
   --color-gold: var(--paint-gold);
   --color-gold-strong: #f2c95f;
-  --color-moss: #9db38c;
-  --color-moss-strong: #7d9a70;
-  --color-post: #a9a5a0;
+  --color-moss: #a8bd97;
+  --color-moss-strong: #8aa87c;
+  --color-post: #b4b0aa;
 
   --color-on-gold: var(--board-dark);
   --card-shadow: inset 0 1px 0 rgba(243, 231, 201, 0.08);
@@ -131,15 +131,20 @@
 
 .board {
   z-index: -3;
+  /* Warm stained wood with the shrub washing in green from the edges. The
+     ground is a step warmer and deeper than the sampled board face: sampled
+     values live in the materials layer above, but a page that is literally
+     #363841 reads as a black screen rather than as wood. */
   background:
-    radial-gradient(60% 42% at 76% 6%, rgba(233, 187, 71, 0.07), transparent 72%),
-    radial-gradient(52% 40% at 12% 28%, rgba(113, 136, 101, 0.09), transparent 74%),
-    /* the long grain, running along the board the way the real one does */
+    radial-gradient(58% 42% at 78% 4%, rgba(233, 187, 71, 0.10), transparent 72%),
+    radial-gradient(56% 48% at 6% 22%, rgba(113, 136, 101, 0.22), transparent 74%),
+    radial-gradient(50% 40% at 96% 72%, rgba(72, 92, 75, 0.20), transparent 76%),
+    radial-gradient(70% 40% at 50% 108%, rgba(46, 58, 43, 0.30), transparent 76%),
     repeating-linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.20) 0 1px,
       transparent 1px 11px,
-      rgba(243, 231, 201, 0.022) 11px 12px,
+      rgba(243, 231, 201, 0.026) 11px 12px,
       transparent 12px 33px,
       rgba(0, 0, 0, 0.12) 33px 34px,
       transparent 34px 67px
@@ -148,10 +153,10 @@
       0deg,
       rgba(0, 0, 0, 0.14) 0 2px,
       transparent 2px 97px,
-      rgba(77, 72, 76, 0.34) 97px 100px,
+      rgba(90, 79, 64, 0.34) 97px 100px,
       transparent 100px 233px
     ),
-    linear-gradient(180deg, var(--board) 0%, var(--board-dark) 58%, #121013 100%);
+    linear-gradient(180deg, #37322c 0%, #2a2621 55%, #201d1a 100%);
 }
 
 :root[data-theme='light'] .board {
@@ -168,11 +173,21 @@
     linear-gradient(180deg, #ecede7 0%, var(--overcast) 52%, #d6d8ce 100%);
 }
 
-/* The shrub, pressing in from the edges the way it does around the sign. */
+/* The shrub, pressing in from the edges the way it does around the sign.
+   The bleed lives on a clipped child: a fixed layer that is itself wider than
+   the viewport adds to the document's scroll width on any page that doesn't
+   set overflow-x: hidden, and this stylesheet has to be safe to drop into a
+   page it knows nothing about. */
 .canopy {
-  inset: -8%;
   z-index: -3;
+  overflow: hidden;
   opacity: var(--canopy-opacity);
+}
+
+.canopy::before {
+  content: '';
+  position: absolute;
+  inset: -8%;
   filter: blur(6px);
   background:
     radial-gradient(46% 40% at 2% -6%, rgba(113, 136, 101, 0.44), transparent 72%),
@@ -182,7 +197,7 @@
   animation: gb-sway 19s ease-in-out infinite alternate;
 }
 
-:root[data-theme='light'] .canopy {
+:root[data-theme='light'] .canopy::before {
   background:
     radial-gradient(48% 42% at 0% -8%, rgba(72, 92, 75, 0.40), transparent 74%),
     radial-gradient(44% 36% at 100% 0%, rgba(46, 58, 43, 0.34), transparent 74%),
@@ -244,24 +259,23 @@
    outline at all — so the wordmark gets its own board, at the slight tilt the
    real one has. */
 :root[data-theme='light'] .plank {
-  padding: 0.4em 0.72em 0.48em;
-  border-radius: 3px;
+  padding: 0.46em 0.78em 0.54em;
+  border-radius: 10px;
   transform: rotate(-0.7deg);
+  /* A photographed slice of the sign's own board, warmed and darkened just
+     enough to carry a cream outline. Not a black rectangle: the edges catch
+     light the way a sawn board does, and the corners are eased. */
   background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.22) 0 1px,
-      transparent 1px 7px,
-      rgba(243, 231, 201, 0.035) 7px 8px,
-      transparent 8px 19px,
-      rgba(0, 0, 0, 0.14) 19px 20px,
-      transparent 20px 41px
-    ),
-    linear-gradient(178deg, #3a3439 0%, #262327 45%, #1d1a1e 100%);
+    linear-gradient(176deg, rgba(243, 231, 201, 0.10) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.35) 100%),
+    linear-gradient(180deg, rgba(62, 56, 52, 0.86), rgba(43, 39, 40, 0.94)),
+    url('/board.jpg') repeat center / 340px 68px,
+    #3a3439;
   box-shadow:
-    inset 0 1px 0 rgba(243, 231, 201, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.5),
-    0 16px 34px -16px rgba(36, 34, 42, 0.55);
+    inset 0 1px 0 rgba(243, 231, 201, 0.22),
+    inset 0 0 0 1px rgba(243, 231, 201, 0.07),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.45),
+    0 18px 38px -18px rgba(36, 34, 42, 0.5),
+    0 2px 6px -2px rgba(36, 34, 42, 0.28);
 }
 
 .glyph {
@@ -358,6 +372,6 @@ input[type='search']::-webkit-search-cancel-button:hover { background-color: var
 .rise { animation: gb-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .canopy { animation: none; }
+  .canopy::before { animation: none; }
   .rise { animation: none; opacity: 1; transform: none; }
 }
