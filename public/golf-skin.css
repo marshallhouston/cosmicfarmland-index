@@ -1,133 +1,151 @@
-/* Cosmic Farmland skin for the golf page.
+/* Golf-page skin. The design system itself is in grayton.css, which the sync
+   injects first; this file maps the vault page's own token names onto Grayton
+   values and styles the page's own components.
+
    Lives here, not in the vault source, so regenerating the vault HTML can't
    wipe it. Loaded after the page's inline <style>, so same-specificity rules
-   win. Tokens mirror src/index.css. */
+   win. The page's own tokens are declared under [data-theme=...], so the
+   mappings below have to match that specificity to win on source order.
+
+   The page ships light-first (bare :root) and dark under [data-theme="dark"],
+   the inverse of the index — that's the page's own toggle, left alone. */
 
 :root {
-  --gold: #f3c364;
-  --gold-deep: #d99b3e;
-  --cf-glow: #8ce6b6;
-  --cf-glow-deep: #4cc88a;
-  --violet: #a78be0;
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Familjen Grotesk', system-ui, sans-serif;
-  --font-mono: 'DM Mono', ui-monospace, monospace;
-
-  /* light theme: parchment, not gray */
-  --surface-1: #fbf7ec;
-  --plane: #f4eddc;
-  --text-primary: #1b1633;
-  --text-secondary: #4a4360;
-  --muted: #7c7490;
-  --grid: #e4dcc7;
-  --axis: #c9bfa4;
-  --border: rgba(27, 22, 51, 0.12);
-  --chip: #efe6d1;
-  --div-mid: #e4dcc7;
+  --gold: #e9bb47;
+  --gold-deep: #7d5a0c;
+  --moss: #3f5c3f;
+  --moss-deep: #2f4a30;
+  --post: #615e58;
+  /* light theme: the overcast sky and the fence rails, not gray UI chrome */
+  --surface-1: #eeefe9;
+  --plane: #e4e5df;
+  --text-primary: #24222a;
+  --text-secondary: #575360;
+  --muted: #615e58;
+  --grid: #d5d5cd;
+  --axis: #bcbcb4;
+  --border: rgba(36, 34, 42, 0.14);
+  --chip: #e7e8e1;
+  --div-mid: #d5d5cd;
 }
 
 :root[data-theme="dark"] {
-  --surface-1: #161031;
-  --plane: #08070f;
-  --text-primary: #f1ead9;
-  --text-secondary: #b6ad97;
-  --muted: #8f8878;
-  --grid: #241a45;
-  --axis: #3a2c68;
-  --border: rgba(241, 234, 217, 0.12);
-  --chip: #1c1440;
-  --div-mid: #241a45;
+  --gold: #e9bb47;
+  --gold-deep: #b98a1e;
+  --moss: #9db38c;
+  --moss-deep: #7d9a70;
+  --post: #a9a5a0;
+
+  --surface-1: #232025;
+  --plane: #1b191c;
+  --text-primary: #f3e7c9;
+  --text-secondary: #b6ac97;
+  --muted: #948d80;
+  --grid: #4a464e;
+  --axis: #665f68;
+  --border: rgba(243, 231, 201, 0.14);
+  --chip: #2d292f;
+  --div-mid: #4a464e;
+}
+
+/* Charts: the page ships a blue/orange series palette. Repaint the categorical
+   series and status colors in the sign's three paints — green data, gold
+   emphasis, straw third — and swap the blue "under par" ramp for a foliage
+   ramp. The red "over par" ramp stays red: over-par severity has to read as a
+   warning, and that's the one hue the photograph doesn't supply. */
+:root {
+  --series-1: #3f5c3f;
+  --series-2: #7d5a0c;
+  --series-3: #615e58;
+  --good: #2f4a30;
+  --warning: #7d5a0c;
+  --serious: #96631b;
+  --critical: #9c443c;
+  --seq-100: #dde3d5;
+  --seq-250: #aebfa4;
+  --seq-350: #849a79;
+  --seq-450: #5b7454;
+  --seq-600: #3f5c3f;
+  --u1: #dde3d5;
+  --u2: #5b7454;
+  --u3: #849a79;
+}
+:root[data-theme="dark"] {
+  --series-1: #9db38c;
+  --series-2: #e9bb47;
+  --series-3: #a9a5a0;
+  --good: #7d9a70;
+  --warning: #e9bb47;
+  --serious: #d3a463;
+  --critical: #c9736a;
+  --seq-100: #2a3527;
+  --seq-250: #3d4f38;
+  --seq-350: #5b7454;
+  --seq-450: #7d9a70;
+  --seq-600: #b3c4a6;
+  --u1: #2a3527;
+  --u2: #7d9a70;
+  --u3: #b3c4a6;
 }
 
 body { font-family: var(--font-body); }
 a { color: var(--gold-deep); }
 :root[data-theme="dark"] a { color: var(--gold); }
 
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; }
-h1 { font-size: 38px; font-weight: 300; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; }
+h1 { font-size: 38px; }
 :root[data-theme="dark"] h2 { color: var(--gold); }
 .eyebrow, .f label, .tile .k, th, .legend, .chip, nav.jump a, .btn, .seg button, .fcount, .themebtn {
   font-family: var(--font-mono);
 }
-.eyebrow { color: var(--cf-glow-deep); letter-spacing: 0.28em; }
-:root[data-theme="dark"] .eyebrow { color: var(--cf-glow); }
+.eyebrow { color: var(--moss); letter-spacing: 0.28em; }
 .tile .v { font-family: var(--font-mono); color: var(--gold-deep); font-weight: 500; }
 :root[data-theme="dark"] .tile .v { color: var(--gold); }
 
 .btn.active, .seg button.on, nav.jump a.on {
-  background: var(--gold); color: #08070f; border-color: var(--gold);
+  background: var(--gold); color: #1b191c; border-color: var(--gold);
 }
-.tile.click:hover, .card:hover { border-color: var(--cf-glow-deep); }
-::selection { background: var(--gold); color: #08070f; }
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--plane); }
-::-webkit-scrollbar-thumb { background: var(--grid); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--cf-glow-deep); }
-
+.tile.click:hover, .card:hover { border-color: var(--moss); }
 /* home link, injected at the top of the page */
 .cf-brand {
   display: inline-block; padding: 18px 0 0; font-family: var(--font-mono);
   font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--cf-glow-deep); text-decoration: none;
+  color: var(--moss); text-decoration: none;
 }
-:root[data-theme="dark"] .cf-brand { color: var(--cf-glow); }
 .cf-brand:hover { color: var(--gold); }
-nav.jump a.cf-home { color: var(--cf-glow-deep); }
-:root[data-theme="dark"] nav.jump a.cf-home { color: var(--cf-glow); }
+nav.jump a.cf-home { color: var(--moss); }
 nav.jump a.cf-home:hover { color: var(--gold); }
 
-/* fixed atmosphere layers, dark only (mirrors src/index.css) */
-.sky, .stars, .grain { position: fixed; inset: 0; pointer-events: none; }
-.sky {
-  z-index: -2;
-  background:
-    radial-gradient(60% 50% at 75% 8%, rgba(243, 195, 100, 0.16), transparent 70%),
-    radial-gradient(55% 45% at 18% 22%, rgba(140, 230, 182, 0.12), transparent 70%),
-    radial-gradient(80% 60% at 50% 120%, rgba(76, 200, 138, 0.18), transparent 65%),
-    linear-gradient(180deg, #08070f 0%, #0e0b1d 45%, #161031 100%);
-}
-.stars {
-  z-index: -2; animation: cf-twinkle 7s ease-in-out infinite;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(241, 234, 217, 0.9), transparent),
-    radial-gradient(1px 1px at 70% 18%, rgba(241, 234, 217, 0.7), transparent),
-    radial-gradient(1.5px 1.5px at 40% 12%, rgba(243, 195, 100, 0.8), transparent),
-    radial-gradient(1px 1px at 88% 40%, rgba(241, 234, 217, 0.6), transparent),
-    radial-gradient(1px 1px at 33% 48%, rgba(241, 234, 217, 0.5), transparent),
-    radial-gradient(1.5px 1.5px at 62% 36%, rgba(140, 230, 182, 0.7), transparent),
-    radial-gradient(1px 1px at 12% 60%, rgba(241, 234, 217, 0.5), transparent);
-}
-.grain {
-  z-index: -1; opacity: 0.05; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-:root[data-theme="light"] .sky,
-:root[data-theme="light"] .stars,
-:root[data-theme="light"] .grain { display: none; }
-@keyframes cf-twinkle { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .stars { animation: none; } }
 
 /* ---------- depth pass: pull the page toward the index hero ---------- */
 
-/* Hero: Fraunces light, gold italic tail, gold glow. Mirrors the index h1. */
+/* Hero: painted woodtype, gold tail, routed edge. Mirrors the index h1. */
 header.top { padding: 26px 0 18px; }
-h1 { font-size: clamp(40px, 6vw, 68px); line-height: 0.98; letter-spacing: -0.02em; }
-h1 em { font-style: italic; color: var(--gold); }
-:root[data-theme="dark"] h1 { text-shadow: 0 0 24px rgba(243, 195, 100, 0.35); }
+h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.04; letter-spacing: 0; }
+h1 em { font-style: normal; color: var(--gold-deep); }
+:root[data-theme="dark"] h1 em { color: var(--gold); }
+h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7); }
+:root[data-theme="dark"] h1 {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5), 0 2px 2px rgba(0, 0, 0, 0.3);
+}
 .sub { font-size: 15px; }
 
-/* Surfaces: translucent soil over the aurora instead of flat panels. */
+/* Surfaces: translucent board panels over the foliage instead of flat slabs. */
 .card, .tile, .chart, .tablewrap, .notable, .note { border-radius: 16px; }
+.card, .tile, .chart, .tablewrap, .notable, .detail {
+  background: rgba(238, 239, 233, 0.82);
+  backdrop-filter: blur(6px);
+}
 :root[data-theme="dark"] .card,
 :root[data-theme="dark"] .tile,
 :root[data-theme="dark"] .chart,
 :root[data-theme="dark"] .tablewrap,
 :root[data-theme="dark"] .notable,
 :root[data-theme="dark"] .detail {
-  background: rgba(22, 16, 49, 0.62);
-  backdrop-filter: blur(6px);
+  background: rgba(45, 41, 47, 0.7);
 }
-:root[data-theme="dark"] th { background: rgba(14, 11, 29, 0.94); }
+th { background: rgba(228, 229, 223, 0.94); }
+:root[data-theme="dark"] th { background: rgba(27, 25, 28, 0.94); }
 .tile { padding: 16px 18px; }
 .tile .v { font-size: 30px; }
 .tile.click, .card { transition: border-color 0.25s, transform 0.25s; }
@@ -143,8 +161,8 @@ nav.jump a { border-radius: 999px; font-size: 12px; letter-spacing: 0.06em; }
 .themebtn { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
 
 /* Voice: the index runs all-lowercase interface copy. */
-h2 { text-transform: lowercase; font-size: 24px; }
-h3 { font-size: 17px; }
+h2 { text-transform: lowercase; font-size: 22px; }
+h3 { font-size: 16px; }
 section { margin-bottom: 60px; }
 
 /* Footer, matching the index hairline + mono credit. */
@@ -154,9 +172,10 @@ section { margin-bottom: 60px; }
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--muted);
 }
-.cf-footer a { color: var(--cf-glow-deep); text-decoration: none; }
-:root[data-theme="dark"] .cf-footer a { color: var(--cf-glow); }
+.cf-footer a { color: var(--moss); text-decoration: none; }
 .cf-footer a:hover { color: var(--gold); }
+.cf-footer .cf-slogan { color: var(--gold-deep); letter-spacing: 0.28em; }
+:root[data-theme="dark"] .cf-footer .cf-slogan { color: var(--gold); }
 
 /* ---------- shared golf nav strip (both golf pages) ---------- */
 .cf-golf-nav {
@@ -168,8 +187,10 @@ section { margin-bottom: 60px; }
   text-transform: uppercase; text-decoration: none; color: var(--muted);
   border: 1px solid transparent;
 }
-.cf-golf-link:hover { color: var(--gold); border-color: var(--grid); }
-.cf-golf-link.on { color: var(--gold); border-color: var(--gold); }
-.cf-golf-link.cf-home { color: var(--cf-glow-deep); padding-left: 0; }
-:root[data-theme="dark"] .cf-golf-link.cf-home { color: var(--cf-glow); }
-.cf-golf-link.cf-home:hover { color: var(--gold); border-color: transparent; }
+.cf-golf-link:hover { color: var(--gold-deep); border-color: var(--grid); }
+:root[data-theme="dark"] .cf-golf-link:hover { color: var(--gold); }
+.cf-golf-link.on { color: var(--gold-deep); border-color: var(--gold-deep); }
+:root[data-theme="dark"] .cf-golf-link.on { color: var(--gold); border-color: var(--gold); }
+.cf-golf-link.cf-home { color: var(--moss); padding-left: 0; }
+.cf-golf-link.cf-home:hover { color: var(--gold-deep); border-color: transparent; }
+:root[data-theme="dark"] .cf-golf-link.cf-home:hover { color: var(--gold); }

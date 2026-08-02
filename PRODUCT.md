@@ -30,19 +30,32 @@ One person's working farm of apps and tools, shown as a living catalog rather th
 
 ## Brand Personality
 
-Nocturnal, homegrown, quietly weird. A midnight farm under an aurora: warm dark, harvest gold, bioluminescent green. Voice is lowercase and plainspoken ("grown by marshall", "nothing in this patch yet"), never corporate.
+Hand-painted, homegrown, openly weird — the Grayton Beach design system. The
+whole identity comes off one photograph of a hand-lettered welcome sign: a
+stained board on fence posts, art-nouveau letters running marigold into sage
+inside a cream outline, wet shrub, pine straw, flat overcast light. The palette
+is sampled from that photo's pixels, which means it is cool and desaturated
+everywhere except the gold. It answers to that town's slogan, **nice dogs,
+strange people**: friendly and unguarded in how it talks, unsanded in how it
+looks. Voice is lowercase and plainspoken ("grown by marshall", "nothing in this
+patch yet"), never corporate.
 
 ## Anti-references
 
-Not a SaaS landing page: no pricing-tier grids, no hero metrics selling growth, no testimonial walls. Not a cold sci-fi terminal aesthetic; the dark is warm soil, not a hacker screen. Not a LinkedIn-style portfolio with headshots and skill badges.
+Not a SaaS landing page: no pricing-tier grids, no hero metrics selling growth,
+no testimonial walls. Not a cold sci-fi terminal aesthetic; the dark is stained
+wood, not a hacker screen. Not a LinkedIn-style portfolio with headshots and
+skill badges. Not beach-town kitsch either: no surfboards, no seashells, no
+script-font "coastal" clip art — the reference is the sign, not the gift shop.
 
 ## Design Principles
 
 - The farm metaphor is load-bearing: crops, soil, patches, the toolshed. Copy and iconography stay in-world.
 - Everything shown is real: counts are generated from the actual plugin repo, statuses reflect deployed apps.
-- Small site, full atmosphere: starfield, grain, and glow do the brand work so the content can stay plain.
+- Small site, full atmosphere: wood grain, foliage, mulch and film grain do the brand work so the content can stay plain.
+- Sample, don't remember: every colour comes from the photograph, so the site keeps that morning's cool, muted light instead of drifting warm.
 - Route, don't retain: the page succeeds when the visitor leaves for an app or a repo.
 
 ## Accessibility & Inclusion
 
-Target WCAG AA. Dark-only theme, so contrast is checked against the soil palette. Respect prefers-reduced-motion for the entrance animations and twinkle loop. All interactive controls keyboard-operable with visible focus.
+Target WCAG AA. Two themes — board (dark, default) and daylight (light) — so contrast is checked against both grounds. Respect prefers-reduced-motion for the entrance animations and the canopy sway. All interactive controls keyboard-operable with visible focus.

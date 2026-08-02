@@ -24,16 +24,19 @@ const version = (f) => createHash('sha1').update(readFileSync(pub(f))).digest('h
 const FONT_LINKS = `<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9971;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">`
+<link href="https://fonts.googleapis.com/css2?family=Amarante&family=Figtree:ital,wght@0,300..800;1,300..800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">`
 
+// grayton.css is the design system itself and always comes first; the page
+// skins after it only map that page's own token names and components.
 const head = (...skins) =>
-  [FONT_LINKS, ...skins.map((s) => `<link rel="stylesheet" href="/${s}?v=${version(s)}">`)].join('\n')
+  [FONT_LINKS, ...['grayton.css', ...skins].map((s) => `<link rel="stylesheet" href="/${s}?v=${version(s)}">`)].join('\n')
 
-const ATMOSPHERE = `<div class="sky"></div><div class="stars"></div><div class="grain"></div>
+const ATMOSPHERE = `<div class="board"></div><div class="canopy"></div><div class="straw"></div><div class="grain"></div>
 <a class="cf-brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a>`
 
 const FOOTER = `<div class="cf-footer">
   <span>grown by marshall</span>
+  <span class="cf-slogan">nice dogs, strange people</span>
   <a href="https://cosmicfarmland.wtf">cosmicfarmland.wtf &#8599;</a>
 </div>`
 
