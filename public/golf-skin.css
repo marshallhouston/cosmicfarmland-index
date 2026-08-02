@@ -9,45 +9,45 @@
    the overcast day it was standing in. */
 
 :root {
-  --gold: #edb32a;
-  --gold-deep: #8a5b06;
-  --moss: #2d6b31;
-  --moss-deep: #1f4f24;
-  --straw: #7a4a26;
-  --font-display: 'Rye', 'Rockwell', Georgia, serif;
+  --gold: #e9bb47;
+  --gold-deep: #7d5a0c;
+  --moss: #3f5c3f;
+  --moss-deep: #2f4a30;
+  --post: #615e58;
+  --font-display: 'Amarante', 'Palatino Linotype', Georgia, serif;
   --font-body: 'Figtree', system-ui, sans-serif;
   --font-mono: 'Space Mono', ui-monospace, monospace;
 
   /* light theme: the overcast sky and the fence rails, not gray UI chrome */
-  --surface-1: #f6f3e9;
-  --plane: #eceadf;
-  --text-primary: #241708;
-  --text-secondary: #5f5040;
-  --muted: #6d6558;
-  --grid: #ded7c5;
-  --axis: #c4bba6;
-  --border: rgba(36, 23, 8, 0.14);
-  --chip: #eae4d3;
-  --div-mid: #ded7c5;
+  --surface-1: #eeefe9;
+  --plane: #e4e5df;
+  --text-primary: #24222a;
+  --text-secondary: #575360;
+  --muted: #615e58;
+  --grid: #d5d5cd;
+  --axis: #bcbcb4;
+  --border: rgba(36, 34, 42, 0.14);
+  --chip: #e7e8e1;
+  --div-mid: #d5d5cd;
 }
 
 :root[data-theme="dark"] {
-  --gold: #edb32a;
-  --gold-deep: #b9760f;
-  --moss: #9ecf6a;
-  --moss-deep: #78b04c;
-  --straw: #c9793d;
+  --gold: #e9bb47;
+  --gold-deep: #b98a1e;
+  --moss: #9db38c;
+  --moss-deep: #7d9a70;
+  --post: #a9a5a0;
 
-  --surface-1: #1d1309;
-  --plane: #150e07;
-  --text-primary: #f4e8c8;
-  --text-secondary: #c0ab85;
-  --muted: #9c8a6c;
-  --grid: #4a3520;
-  --axis: #6a4d2c;
-  --border: rgba(244, 232, 200, 0.14);
-  --chip: #2a1c0e;
-  --div-mid: #4a3520;
+  --surface-1: #232025;
+  --plane: #1b191c;
+  --text-primary: #f3e7c9;
+  --text-secondary: #b6ac97;
+  --muted: #948d80;
+  --grid: #4a464e;
+  --axis: #665f68;
+  --border: rgba(243, 231, 201, 0.14);
+  --chip: #2d292f;
+  --div-mid: #4a464e;
 }
 
 /* Charts: the page ships a blue/orange series palette. Repaint the categorical
@@ -56,38 +56,38 @@
    ramp. The red "over par" ramp stays red: over-par severity has to read as a
    warning, and that's the one hue the photograph doesn't supply. */
 :root {
-  --series-1: #2d6b31;
-  --series-2: #b9760f;
-  --series-3: #7a4a26;
-  --good: #1f4f24;
-  --warning: #b9760f;
-  --serious: #a0631f;
-  --critical: #a33f38;
-  --seq-100: #dcecc9;
-  --seq-250: #a8cf88;
-  --seq-350: #7cb85c;
-  --seq-450: #4d8a34;
-  --seq-600: #2d6b31;
-  --u1: #dcecc9;
-  --u2: #4d8a34;
-  --u3: #7cb85c;
+  --series-1: #3f5c3f;
+  --series-2: #7d5a0c;
+  --series-3: #615e58;
+  --good: #2f4a30;
+  --warning: #7d5a0c;
+  --serious: #96631b;
+  --critical: #9c443c;
+  --seq-100: #dde3d5;
+  --seq-250: #aebfa4;
+  --seq-350: #849a79;
+  --seq-450: #5b7454;
+  --seq-600: #3f5c3f;
+  --u1: #dde3d5;
+  --u2: #5b7454;
+  --u3: #849a79;
 }
 :root[data-theme="dark"] {
-  --series-1: #9ecf6a;
-  --series-2: #edb32a;
-  --series-3: #c9793d;
-  --good: #78b04c;
-  --warning: #edb32a;
-  --serious: #d99a5a;
-  --critical: #cc655c;
-  --seq-100: #1f3d17;
-  --seq-250: #2c5420;
-  --seq-350: #47792f;
-  --seq-450: #6aa544;
-  --seq-600: #b3d98c;
-  --u1: #1f3d17;
-  --u2: #6aa544;
-  --u3: #b3d98c;
+  --series-1: #9db38c;
+  --series-2: #e9bb47;
+  --series-3: #a9a5a0;
+  --good: #7d9a70;
+  --warning: #e9bb47;
+  --serious: #d3a463;
+  --critical: #c9736a;
+  --seq-100: #2a3527;
+  --seq-250: #3d4f38;
+  --seq-350: #5b7454;
+  --seq-450: #7d9a70;
+  --seq-600: #b3c4a6;
+  --u1: #2a3527;
+  --u2: #7d9a70;
+  --u3: #b3c4a6;
 }
 
 body { font-family: var(--font-body); }
@@ -105,10 +105,10 @@ h1 { font-size: 38px; }
 :root[data-theme="dark"] .tile .v { color: var(--gold); }
 
 .btn.active, .seg button.on, nav.jump a.on {
-  background: var(--gold); color: #150e07; border-color: var(--gold);
+  background: var(--gold); color: #1b191c; border-color: var(--gold);
 }
 .tile.click:hover, .card:hover { border-color: var(--moss); }
-::selection { background: var(--gold); color: #150e07; }
+::selection { background: var(--gold); color: #1b191c; }
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--surface-1); }
 ::-webkit-scrollbar-thumb { background: var(--grid); border-radius: 99px; }
@@ -131,55 +131,57 @@ nav.jump a.cf-home:hover { color: var(--gold); }
 .board {
   z-index: -3;
   background:
-    radial-gradient(70% 45% at 50% -5%, rgba(255, 255, 255, 0.85), transparent 70%),
-    radial-gradient(55% 40% at 82% 10%, rgba(237, 179, 42, 0.10), transparent 72%),
-    repeating-linear-gradient(90deg,
-      rgba(36, 23, 8, 0.035) 0 1px, transparent 1px 11px,
-      rgba(36, 23, 8, 0.02) 11px 12px, transparent 12px 31px),
-    linear-gradient(180deg, #f3f1e7 0%, #eceadf 50%, #e2ddcc 100%);
+    radial-gradient(72% 46% at 50% -6%, rgba(255, 255, 255, 0.9), transparent 72%),
+    radial-gradient(54% 40% at 84% 10%, rgba(233, 187, 71, 0.09), transparent 74%),
+    repeating-linear-gradient(0deg,
+      rgba(36, 34, 42, 0.028) 0 1px, transparent 1px 13px,
+      rgba(36, 34, 42, 0.016) 13px 14px, transparent 14px 37px),
+    linear-gradient(180deg, #ecede7 0%, #e4e5df 52%, #d6d8ce 100%);
 }
 :root[data-theme="dark"] .board {
   background:
-    radial-gradient(60% 40% at 78% 6%, rgba(237, 179, 42, 0.10), transparent 70%),
-    radial-gradient(50% 40% at 14% 30%, rgba(158, 207, 106, 0.07), transparent 72%),
-    repeating-linear-gradient(90deg,
-      rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 9px,
-      rgba(244, 232, 200, 0.035) 9px 10px, transparent 10px 27px,
-      rgba(0, 0, 0, 0.14) 27px 28px, transparent 28px 53px),
-    repeating-linear-gradient(90deg,
-      rgba(0, 0, 0, 0.16) 0 2px, transparent 2px 71px,
-      rgba(51, 34, 15, 0.5) 71px 74px, transparent 74px 163px),
-    linear-gradient(180deg, #241708 0%, #150e07 55%, #100a05 100%);
+    radial-gradient(60% 42% at 76% 6%, rgba(233, 187, 71, 0.07), transparent 72%),
+    radial-gradient(52% 40% at 12% 28%, rgba(113, 136, 101, 0.09), transparent 74%),
+    repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.20) 0 1px, transparent 1px 11px,
+      rgba(243, 231, 201, 0.022) 11px 12px, transparent 12px 33px,
+      rgba(0, 0, 0, 0.12) 33px 34px, transparent 34px 67px),
+    repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.14) 0 2px, transparent 2px 97px,
+      rgba(77, 72, 76, 0.34) 97px 100px, transparent 100px 233px),
+    linear-gradient(180deg, #322f34 0%, #1b191c 58%, #121013 100%);
 }
 
 .canopy {
-  inset: -8%; z-index: -3; filter: blur(6px); opacity: 0.7;
+  inset: -8%; z-index: -3; filter: blur(6px); opacity: 0.75;
   background:
-    radial-gradient(44% 36% at 2% -6%, rgba(88, 140, 58, 0.30), transparent 72%),
-    radial-gradient(40% 32% at 98% 2%, rgba(45, 107, 49, 0.26), transparent 72%),
-    radial-gradient(58% 36% at 50% 108%, rgba(60, 120, 52, 0.20), transparent 72%);
+    radial-gradient(48% 42% at 0% -8%, rgba(72, 92, 75, 0.40), transparent 74%),
+    radial-gradient(44% 36% at 100% 0%, rgba(46, 58, 43, 0.34), transparent 74%),
+    radial-gradient(32% 26% at 82% 32%, rgba(113, 136, 101, 0.20), transparent 74%),
+    radial-gradient(58% 36% at 50% 108%, rgba(113, 136, 101, 0.30), transparent 74%);
   animation: cf-sway 19s ease-in-out infinite alternate;
 }
 :root[data-theme="dark"] .canopy {
   opacity: 1;
   background:
-    radial-gradient(42% 34% at 4% -4%, rgba(120, 176, 76, 0.34), transparent 70%),
-    radial-gradient(38% 30% at 96% 4%, rgba(45, 107, 49, 0.32), transparent 70%),
-    radial-gradient(55% 34% at 50% 106%, rgba(45, 107, 49, 0.24), transparent 72%);
+    radial-gradient(46% 40% at 2% -6%, rgba(113, 136, 101, 0.44), transparent 72%),
+    radial-gradient(42% 34% at 98% 2%, rgba(72, 92, 75, 0.42), transparent 72%),
+    radial-gradient(34% 26% at 78% 34%, rgba(113, 136, 101, 0.18), transparent 74%),
+    radial-gradient(56% 34% at 50% 106%, rgba(46, 58, 43, 0.34), transparent 74%);
 }
 
 .straw {
   left: 0; right: 0; bottom: 0; height: 34vh; z-index: -2;
   background:
-    repeating-linear-gradient(74deg, rgba(122, 74, 38, 0.09) 0 1px, transparent 1px 7px),
-    linear-gradient(180deg, transparent, rgba(138, 90, 48, 0.16) 62%, rgba(122, 74, 38, 0.26));
+    repeating-linear-gradient(74deg, rgba(82, 79, 69, 0.14) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, transparent, rgba(82, 79, 69, 0.18) 62%, rgba(82, 79, 69, 0.3));
   -webkit-mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
           mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
 }
 :root[data-theme="dark"] .straw {
   background:
-    repeating-linear-gradient(74deg, rgba(138, 90, 48, 0.10) 0 1px, transparent 1px 7px),
-    linear-gradient(180deg, transparent, rgba(60, 36, 16, 0.45) 65%, rgba(21, 14, 7, 0.85));
+    repeating-linear-gradient(74deg, rgba(82, 79, 69, 0.22) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, transparent, rgba(60, 57, 50, 0.5) 65%, rgba(21, 20, 18, 0.85));
 }
 
 .grain {
@@ -201,17 +203,16 @@ header.top { padding: 26px 0 18px; }
 h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.04; letter-spacing: 0; }
 h1 em { font-style: normal; color: var(--gold-deep); }
 :root[data-theme="dark"] h1 em { color: var(--gold); }
-h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 2px rgba(36, 23, 8, 0.18); }
+h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7); }
 :root[data-theme="dark"] h1 {
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55), 0 2px 1px rgba(0, 0, 0, 0.35),
-               0 0 34px rgba(237, 179, 42, 0.22);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5), 0 2px 2px rgba(0, 0, 0, 0.3);
 }
 .sub { font-size: 15px; }
 
 /* Surfaces: translucent board panels over the foliage instead of flat slabs. */
 .card, .tile, .chart, .tablewrap, .notable, .note { border-radius: 16px; }
 .card, .tile, .chart, .tablewrap, .notable, .detail {
-  background: rgba(246, 243, 233, 0.78);
+  background: rgba(238, 239, 233, 0.82);
   backdrop-filter: blur(6px);
 }
 :root[data-theme="dark"] .card,
@@ -220,10 +221,10 @@ h1 { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 2px rgba(36, 23, 8, 0.
 :root[data-theme="dark"] .tablewrap,
 :root[data-theme="dark"] .notable,
 :root[data-theme="dark"] .detail {
-  background: rgba(42, 28, 14, 0.66);
+  background: rgba(45, 41, 47, 0.7);
 }
-th { background: rgba(236, 234, 223, 0.94); }
-:root[data-theme="dark"] th { background: rgba(21, 14, 7, 0.94); }
+th { background: rgba(228, 229, 223, 0.94); }
+:root[data-theme="dark"] th { background: rgba(27, 25, 28, 0.94); }
 .tile { padding: 16px 18px; }
 .tile .v { font-size: 30px; }
 .tile.click, .card { transition: border-color 0.25s, transform 0.25s; }

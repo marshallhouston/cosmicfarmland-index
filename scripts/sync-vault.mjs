@@ -24,7 +24,7 @@ const version = (f) => createHash('sha1').update(readFileSync(pub(f))).digest('h
 const FONT_LINKS = `<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9971;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rye&family=Figtree:ital,wght@0,300..800;1,300..800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">`
+<link href="https://fonts.googleapis.com/css2?family=Amarante&family=Figtree:ital,wght@0,300..800;1,300..800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">`
 
 const head = (...skins) =>
   [FONT_LINKS, ...skins.map((s) => `<link rel="stylesheet" href="/${s}?v=${version(s)}">`)].join('\n')

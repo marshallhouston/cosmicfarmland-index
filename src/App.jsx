@@ -56,11 +56,35 @@ function ThemeToggle() {
   )
 }
 
+/* No two letters on the sign sit on the same baseline or the same angle.
+   Fixed offsets, not random ones, so the wordmark is the same every load. */
+const LETTER_JITTER = [
+  [-2, 2], [1.5, -3], [-1, 1.5], [2, -1.5], [-1.5, 3], [1, -2], [-2.5, 1],
+  [1.8, 2], [-1.2, -1.5], [2.2, 1.5], [-1.8, -2], [1, 3], [-2, -1],
+]
+
+/** A hand-lettered word: cream outline, marigold-into-sage fill, per-letter bounce. */
+function SignWord({ children, offset = 0 }) {
+  return [...children].map((ch, i) => {
+    if (ch === ' ') return <span key={i} className="glyph-space" aria-hidden="true"> </span>
+    const [rot, dy] = LETTER_JITTER[(i + offset) % LETTER_JITTER.length]
+    return (
+      <span
+        key={i}
+        className="glyph"
+        style={{ transform: `rotate(${rot}deg) translateY(${dy}px)` }}
+      >
+        {ch}
+      </span>
+    )
+  })
+}
+
 function Stat({ value, label }) {
   return (
     <div className="flex flex-col items-center">
       <span className="font-mono text-2xl text-[var(--color-gold)]">{value}</span>
-      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-dim)]">
+      <span className="whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-ink-dim)]">
         {label}
       </span>
     </div>
@@ -70,7 +94,7 @@ function Stat({ value, label }) {
 function SectionHead({ icon: Icon, tint, children }) {
   return (
     <div className="mb-6">
-      <h2 className="flex items-center gap-3 font-display text-2xl lowercase text-[var(--color-ink)]">
+      <h2 className="painted-cream flex items-center gap-3 font-display text-2xl lowercase text-[var(--color-ink)]">
         <Icon size={17} aria-hidden="true" className={tint} /> {children}
       </h2>
       <div className="brushrule mt-3 w-28" />
@@ -87,7 +111,7 @@ function PageCard({ page, index }) {
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay: index * 0.08 }}
       whileHover={{ y: -4 }}
-      className="group flex min-w-0 flex-col gap-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-surface-2)]/70 px-5 py-4 shadow-[inset_0_1px_0_var(--color-line-soft)] transition-colors hover:border-[var(--color-moss-strong)]"
+      className="group flex min-w-0 flex-col gap-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-surface-2)]/70 px-5 py-4 shadow-[var(--card-shadow)] transition-colors hover:border-[var(--color-moss-strong)]"
     >
       <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-moss)]">
         {page.kicker}
@@ -119,13 +143,13 @@ function AppCard({ app, index }) {
       whileHover={live ? { y: -6 } : {}}
       className={`group relative block min-w-0 overflow-hidden rounded-2xl border p-6 backdrop-blur-sm transition-colors ${
         live
-          ? 'cursor-pointer border-[var(--color-line)] bg-[var(--color-surface-2)]/70 shadow-[inset_0_1px_0_var(--color-line-soft)] hover:border-[var(--color-moss-strong)]'
+          ? 'cursor-pointer border-[var(--color-line)] bg-[var(--color-surface-2)]/70 shadow-[var(--card-shadow)] hover:border-[var(--color-moss-strong)]'
           : 'border-dashed border-[var(--color-line)]/70 bg-[var(--color-surface)]/50'
       }`}
     >
       <div
         className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: live ? 'var(--paint-green-leaf)' : 'transparent' }}
+        style={{ background: live ? 'var(--foliage-lit)' : 'transparent' }}
       />
       <div className="mb-4 flex items-center justify-between">
         <Sprout
@@ -173,8 +197,8 @@ function CatalogCard({ entry }) {
     <div
       className={`min-w-0 rounded-xl border transition-colors ${
         open
-          ? 'border-[var(--color-moss-strong)] bg-[var(--color-surface-2)]/80'
-          : 'border-[var(--color-line)]/70 bg-[var(--color-surface)]/50 hover:border-[var(--color-straw)]'
+          ? 'border-[var(--color-gold)] bg-[var(--color-surface-2)]/90'
+          : 'border-[var(--color-line)] bg-[var(--color-surface)]/70 hover:border-[var(--color-moss-strong)]'
       }`}
     >
       <button
@@ -183,7 +207,7 @@ function CatalogCard({ entry }) {
         className="flex w-full items-start gap-3 p-4 text-left"
       >
         {open ? (
-          <CircleDot size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-moss)]" />
+          <CircleDot size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-gold)]" />
         ) : (
           <Circle size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-ink-dim)]" />
         )}
@@ -214,7 +238,7 @@ function CatalogCard({ entry }) {
               {entry.triggers.map((t) => (
                 <span
                   key={t}
-                  className="rounded-md border border-[var(--color-line)] bg-[var(--color-surface)]/70 px-2 py-0.5 font-mono text-[11px] text-[var(--color-straw)]"
+                  className="rounded-md border border-[var(--color-line)] bg-[var(--color-surface)]/70 px-2 py-0.5 font-mono text-[11px] text-[var(--color-post)]"
                 >
                   {t}
                 </span>
@@ -282,11 +306,16 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1 }}
-            className="painted font-display text-5xl leading-[1.02] sm:text-7xl"
+            className="font-display text-[clamp(2.6rem,10vw,5.5rem)] font-normal leading-[1.25] tracking-[-0.015em]"
           >
-            Cosmic
-            <br />
-            <span className="text-[var(--color-gold-strong)]">Farmland</span>
+            <span className="plank">
+              <span className="sr-only">Cosmic Farmland</span>
+              <span aria-hidden="true">
+                <SignWord>COSMIC</SignWord>
+                <br />
+                <SignWord offset={6}>FARMLAND</SignWord>
+              </span>
+            </span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -300,7 +329,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.5 }}
-            className="mt-12 flex gap-10"
+            className="mt-12 flex flex-wrap gap-x-8 gap-y-5"
           >
             <Stat value={appsData.apps.filter((a) => a.status === 'live').length} label="apps live" />
             <Stat value={counts.skill || 0} label="skills" />
@@ -314,7 +343,7 @@ export default function App() {
           <SectionHead icon={Sprout} tint="text-[var(--color-moss)]">
             apps
           </SectionHead>
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid items-start gap-5 sm:grid-cols-2">
             {appsData.apps.map((app, i) => (
               <AppCard key={app.slug} app={app} index={i} />
             ))}
@@ -330,7 +359,7 @@ export default function App() {
             golf, counted properly. every round i post and every hole of the
             tournaments worth writing down.
           </p>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid items-start gap-3 sm:grid-cols-2">
             {golfData.pages.map((page, i) => (
               <PageCard key={page.slug} page={page} index={i} />
             ))}
@@ -359,7 +388,7 @@ export default function App() {
                   className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-xs transition-colors ${
                     active
                       ? 'border-[var(--color-gold)] bg-[var(--color-gold)]/10 text-[var(--color-gold)]'
-                      : 'border-[var(--color-line)] text-[var(--color-ink-dim)] hover:border-[var(--color-straw)]'
+                      : 'border-[var(--color-line)] text-[var(--color-ink-dim)] hover:border-[var(--color-moss-strong)]'
                   }`}
                 >
                   <Icon size={14} aria-hidden="true" /> {k.label}
@@ -379,12 +408,12 @@ export default function App() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="filter…"
-                className="w-40 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)]/70 py-2 pl-9 pr-3 font-mono text-xs text-[var(--color-ink)] outline-none placeholder:text-[var(--color-ink-dim)] focus:border-[var(--color-moss-strong)]"
+                className="w-40 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)]/70 py-2 pl-9 pr-3 font-mono text-xs text-[var(--color-ink)] outline-none placeholder:text-[var(--color-ink-dim)] focus:border-[var(--color-gold)]"
               />
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid items-start gap-3 sm:grid-cols-2">
             {filtered.map((entry) => (
               <CatalogCard key={`${entry.kind}-${entry.slug}`} entry={entry} />
             ))}

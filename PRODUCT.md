@@ -32,10 +32,13 @@ One person's working farm of apps and tools, shown as a living catalog rather th
 
 Hand-painted, homegrown, openly weird — the Grayton Beach design system. The
 whole identity comes off one photograph of a hand-lettered welcome sign: a
-stained board, marigold and forest-green letters, wet foliage, pine straw. It
-answers to that town's slogan, **nice dogs, strange people**: friendly and
-unguarded in how it talks, unsanded in how it looks. Voice is lowercase and
-plainspoken ("grown by marshall", "nothing in this patch yet"), never corporate.
+stained board on fence posts, art-nouveau letters running marigold into sage
+inside a cream outline, wet shrub, pine straw, flat overcast light. The palette
+is sampled from that photo's pixels, which means it is cool and desaturated
+everywhere except the gold. It answers to that town's slogan, **nice dogs,
+strange people**: friendly and unguarded in how it talks, unsanded in how it
+looks. Voice is lowercase and plainspoken ("grown by marshall", "nothing in this
+patch yet"), never corporate.
 
 ## Anti-references
 
@@ -50,6 +53,7 @@ script-font "coastal" clip art — the reference is the sign, not the gift shop.
 - The farm metaphor is load-bearing: crops, soil, patches, the toolshed. Copy and iconography stay in-world.
 - Everything shown is real: counts are generated from the actual plugin repo, statuses reflect deployed apps.
 - Small site, full atmosphere: wood grain, foliage, mulch and film grain do the brand work so the content can stay plain.
+- Sample, don't remember: every colour comes from the photograph, so the site keeps that morning's cool, muted light instead of drifting warm.
 - Route, don't retain: the page succeeds when the visitor leaves for an app or a repo.
 
 ## Accessibility & Inclusion

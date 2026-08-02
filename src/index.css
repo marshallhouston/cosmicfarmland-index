@@ -3,85 +3,92 @@
 /* ============================================================
    Grayton Beach — the design system for cosmicfarmland.wtf.
 
-   Grounded in one photograph: a hand-painted WELCOME TO GRAYTON
-   BEACH sign, dark-stained reclaimed board, letters in marigold,
-   forest green and bone, propped on weathered fence rails in wet
-   Florida foliage over pine straw. Two readings of that photo:
-   the board (dark, default) and the daylight around it (light).
+   Every value here is sampled from one photograph: a hand-painted
+   WELCOME TO GRAYTON BEACH sign, shot on an overcast morning.
+   That light matters. The board is not chocolate brown, it is a
+   cool near-neutral gray-brown; the painted green is a muted sage,
+   not a leaf green; the mulch is gray taupe, not rust. The only
+   saturated thing in the whole frame is the marigold lettering,
+   which is why gold is the only loud color in this system.
 
    Slogan, and the whole point: nice dogs, strange people.
    ============================================================ */
 
 @theme {
-  --font-display: 'Rye', 'Rockwell', Georgia, serif;
+  /* Display is the sign's lettering: art-nouveau, hand-painted,
+     flared stems and organic curves. Body and mono stay quiet. */
+  --font-display: 'Amarante', 'Palatino Linotype', Georgia, serif;
   --font-body: 'Figtree', system-ui, sans-serif;
   --font-mono: 'Space Mono', ui-monospace, monospace;
 
-  /* Paint + material constants, sampled from the sign. These never
-     change between themes; the semantic tokens below choose from them. */
-  --paint-gold: #edb32a;       /* the marigold letters */
-  --paint-gold-deep: #b9760f;  /* their shaded edge */
-  --paint-green: #2d6b31;      /* the forest-green letters */
-  --paint-green-leaf: #9ecf6a; /* new growth catching the light */
-  --paint-bone: #f4e8c8;       /* the pale "WELCOME TO" letters */
-  --board-stain: #150e07;      /* the darkest stain on the board */
-  --board-wood: #241708;       /* the board itself */
-  --board-raised: #33220f;     /* where the plane skipped */
-  --fence-gray: #b9b0a0;       /* the weathered rails behind it */
-  --straw-rust: #8a5a30;       /* pine straw and bark mulch */
-  --overcast: #eceadf;         /* the flat white sky that day */
+  /* --- materials, sampled from the photograph --- */
+  --paint-gold: #e9bb47;      /* the marigold letters, top half */
+  --paint-gold-deep: #b98a1e; /* their shaded edge */
+  --paint-green: #547554;     /* the letters' bottom half: muted sage */
+  --paint-cream: #f3e7c9;     /* the outline, and "WELCOME TO" */
+  --board-dark: #1b191c;      /* the board where the stain pooled */
+  --board: #322f34;           /* the board face */
+  --board-lit: #4d484c;       /* where the stain thinned */
+  --post: #9f9b97;            /* the weathered fence posts */
+  --post-shadow: #59575c;
+  --mulch: #524f45;           /* pine straw and bark */
+  --foliage-deep: #2e3a2b;    /* inside the shrub */
+  --foliage: #485c4b;
+  --foliage-lit: #718865;
+  --foliage-pale: #a7b79c;    /* new growth catching flat light */
+  --overcast: #e4e5df;        /* the sky that morning */
 }
 
-/* ---------- semantic tokens: dark is the board, and the default ---------- */
+/* ---------- board (dark) is the default reading of the sign ---------- */
 
 :root {
   color-scheme: dark;
 
-  --color-bg: var(--board-stain);
-  --color-surface: #1d1309;
-  --color-surface-2: #2a1c0e;
-  --color-line: #4a3520;
-  --color-line-soft: rgba(244, 232, 200, 0.14);
+  --color-bg: var(--board-dark);
+  --color-surface: #232025;
+  --color-surface-2: #2d292f;
+  --color-line: #4a464e;
+  --color-line-soft: rgba(243, 231, 201, 0.12);
 
-  --color-ink: var(--paint-bone);
-  --color-ink-dim: #c0ab85;
+  --color-ink: var(--paint-cream);
+  --color-ink-dim: #b6ac97;
 
   --color-gold: var(--paint-gold);
-  --color-gold-strong: #f7c948;
-  --color-moss: var(--paint-green-leaf);
-  --color-moss-strong: #78b04c;
-  --color-fence: var(--fence-gray);
-  --color-straw: #c9793d;
+  --color-gold-strong: #f2c95f;
+  --color-moss: #9db38c;
+  --color-moss-strong: #7d9a70;
+  --color-post: #a9a5a0;
 
-  --color-on-gold: var(--board-stain);
+  --color-on-gold: var(--board-dark);
+  --card-shadow: inset 0 1px 0 rgba(243, 231, 201, 0.08);
   --grain-opacity: 0.07;
   --canopy-opacity: 1;
 }
 
-/* ---------- light is the daylight the sign stands in ---------- */
+/* ---------- daylight is the overcast morning the sign stood in ---------- */
 
 :root[data-theme='light'] {
   color-scheme: light;
 
   --color-bg: var(--overcast);
-  --color-surface: #f6f3e9;
-  --color-surface-2: #fdfbf2;
-  --color-line: #cfc7b4;
-  --color-line-soft: rgba(36, 23, 8, 0.14);
+  --color-surface: #eeefe9;
+  --color-surface-2: #f8f8f3;
+  --color-line: #c8c8c0;
+  --color-line-soft: rgba(36, 34, 42, 0.12);
 
-  --color-ink: #241708;
-  --color-ink-dim: #5f5040;
+  --color-ink: #24222a;
+  --color-ink-dim: #575360;
 
-  --color-gold: #8a5b06;
-  --color-gold-strong: #6d4704;
-  --color-moss: var(--paint-green);
-  --color-moss-strong: #1f4f24;
-  --color-fence: #6d6558;
-  --color-straw: #7a4a26;
+  --color-gold: #7d5a0c;
+  --color-gold-strong: #6e4f08;
+  --color-moss: #3f5c3f;
+  --color-moss-strong: #2f4a30;
+  --color-post: #615e58;
 
-  --color-on-gold: var(--board-stain);
+  --color-on-gold: var(--board-dark);
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(36, 34, 42, 0.07);
   --grain-opacity: 0.05;
-  --canopy-opacity: 0.7;
+  --canopy-opacity: 0.75;
 }
 
 * {
@@ -104,10 +111,9 @@ body {
 }
 
 /* ============================================================
-   Atmosphere: four fixed layers, all read off the photo.
-   .board (stain + grain) → .canopy (foliage) → .straw (mulch
-   horizon) → .grain (film). Dark and light both get all four;
-   the light theme just turns the daylight up.
+   Atmosphere: four fixed layers, each one a thing in the frame.
+   .board (stain + grain) → .canopy (the shrub crowding in) →
+   .straw (mulch banked along the bottom) → .grain (film).
    ============================================================ */
 
 .board {
@@ -115,44 +121,42 @@ body {
   inset: 0;
   z-index: -3;
   background:
-    /* worn spots where the stain thinned */
-    radial-gradient(60% 40% at 78% 6%, rgba(237, 179, 42, 0.10), transparent 70%),
-    radial-gradient(50% 40% at 14% 30%, rgba(158, 207, 106, 0.07), transparent 72%),
-    /* the long grain, three passes at different periods */
+    radial-gradient(60% 42% at 76% 6%, rgba(233, 187, 71, 0.07), transparent 72%),
+    radial-gradient(52% 40% at 12% 28%, rgba(113, 136, 101, 0.09), transparent 74%),
     repeating-linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.22) 0 1px,
-      transparent 1px 9px,
-      rgba(244, 232, 200, 0.035) 9px 10px,
-      transparent 10px 27px,
-      rgba(0, 0, 0, 0.14) 27px 28px,
-      transparent 28px 53px
+      0deg,
+      rgba(0, 0, 0, 0.20) 0 1px,
+      transparent 1px 11px,
+      rgba(243, 231, 201, 0.022) 11px 12px,
+      transparent 12px 33px,
+      rgba(0, 0, 0, 0.12) 33px 34px,
+      transparent 34px 67px
     ),
     repeating-linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.16) 0 2px,
-      transparent 2px 71px,
-      rgba(51, 34, 15, 0.5) 71px 74px,
-      transparent 74px 163px
+      0deg,
+      rgba(0, 0, 0, 0.14) 0 2px,
+      transparent 2px 97px,
+      rgba(77, 72, 76, 0.34) 97px 100px,
+      transparent 100px 233px
     ),
-    linear-gradient(180deg, var(--board-wood) 0%, var(--board-stain) 55%, #100a05 100%);
+    linear-gradient(180deg, var(--board) 0%, var(--board-dark) 58%, #121013 100%);
 }
 
 :root[data-theme='light'] .board {
   background:
-    radial-gradient(70% 45% at 50% -5%, rgba(255, 255, 255, 0.85), transparent 70%),
-    radial-gradient(55% 40% at 82% 10%, rgba(237, 179, 42, 0.10), transparent 72%),
+    radial-gradient(72% 46% at 50% -6%, rgba(255, 255, 255, 0.9), transparent 72%),
+    radial-gradient(54% 40% at 84% 10%, rgba(233, 187, 71, 0.09), transparent 74%),
     repeating-linear-gradient(
-      90deg,
-      rgba(36, 23, 8, 0.035) 0 1px,
-      transparent 1px 11px,
-      rgba(36, 23, 8, 0.02) 11px 12px,
-      transparent 12px 31px
+      0deg,
+      rgba(36, 34, 42, 0.028) 0 1px,
+      transparent 1px 13px,
+      rgba(36, 34, 42, 0.016) 13px 14px,
+      transparent 14px 37px
     ),
-    linear-gradient(180deg, #f3f1e7 0%, var(--overcast) 50%, #e2ddcc 100%);
+    linear-gradient(180deg, #ecede7 0%, var(--overcast) 52%, #d6d8ce 100%);
 }
 
-/* Foliage crowding in from the edges, the way it does around the sign. */
+/* The shrub, pressing in from the edges the way it does around the sign. */
 .canopy {
   position: fixed;
   inset: -8%;
@@ -160,18 +164,20 @@ body {
   pointer-events: none;
   opacity: var(--canopy-opacity);
   background:
-    radial-gradient(42% 34% at 4% -4%, rgba(120, 176, 76, 0.34), transparent 70%),
-    radial-gradient(38% 30% at 96% 4%, rgba(45, 107, 49, 0.32), transparent 70%),
-    radial-gradient(55% 34% at 50% 106%, rgba(45, 107, 49, 0.24), transparent 72%);
+    radial-gradient(46% 40% at 2% -6%, rgba(113, 136, 101, 0.44), transparent 72%),
+    radial-gradient(42% 34% at 98% 2%, rgba(72, 92, 75, 0.42), transparent 72%),
+    radial-gradient(34% 26% at 78% 34%, rgba(113, 136, 101, 0.18), transparent 74%),
+    radial-gradient(56% 34% at 50% 106%, rgba(46, 58, 43, 0.34), transparent 74%);
   filter: blur(6px);
   animation: sway 19s ease-in-out infinite alternate;
 }
 
 :root[data-theme='light'] .canopy {
   background:
-    radial-gradient(44% 36% at 2% -6%, rgba(88, 140, 58, 0.30), transparent 72%),
-    radial-gradient(40% 32% at 98% 2%, rgba(45, 107, 49, 0.26), transparent 72%),
-    radial-gradient(58% 36% at 50% 108%, rgba(60, 120, 52, 0.20), transparent 72%);
+    radial-gradient(48% 42% at 0% -8%, rgba(72, 92, 75, 0.40), transparent 74%),
+    radial-gradient(44% 36% at 100% 0%, rgba(46, 58, 43, 0.34), transparent 74%),
+    radial-gradient(32% 26% at 82% 32%, rgba(113, 136, 101, 0.20), transparent 74%),
+    radial-gradient(58% 36% at 50% 108%, rgba(113, 136, 101, 0.30), transparent 74%);
 }
 
 @keyframes sway {
@@ -179,7 +185,7 @@ body {
   to { transform: translate3d(-1.2%, 0.8%, 0) scale(1.04); }
 }
 
-/* Pine straw and bark mulch banked along the bottom. */
+/* Pine straw and bark mulch, banked and feathered — not a hard horizon. */
 .straw {
   position: fixed;
   left: 0;
@@ -189,28 +195,18 @@ body {
   height: 34vh;
   pointer-events: none;
   background:
-    repeating-linear-gradient(
-      74deg,
-      rgba(138, 90, 48, 0.10) 0 1px,
-      transparent 1px 7px
-    ),
-    linear-gradient(180deg, transparent, rgba(60, 36, 16, 0.45) 65%, rgba(21, 14, 7, 0.85));
-  /* Feathered, not a hard arc: the mulch banks up, it doesn't cut a line. */
+    repeating-linear-gradient(74deg, rgba(82, 79, 69, 0.22) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, transparent, rgba(60, 57, 50, 0.5) 65%, rgba(21, 20, 18, 0.85));
   -webkit-mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
           mask: radial-gradient(150% 130% at 50% 132%, #000 28%, rgba(0, 0, 0, 0.5) 58%, transparent 86%);
 }
 
 :root[data-theme='light'] .straw {
   background:
-    repeating-linear-gradient(
-      74deg,
-      rgba(122, 74, 38, 0.09) 0 1px,
-      transparent 1px 7px
-    ),
-    linear-gradient(180deg, transparent, rgba(138, 90, 48, 0.16) 62%, rgba(122, 74, 38, 0.26));
+    repeating-linear-gradient(74deg, rgba(82, 79, 69, 0.14) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, transparent, rgba(82, 79, 69, 0.18) 62%, rgba(82, 79, 69, 0.3));
 }
 
-/* Film grain: sawdust and humidity. */
 .grain {
   position: fixed;
   inset: 0;
@@ -222,36 +218,109 @@ body {
 }
 
 /* ============================================================
-   Painted type: letters sit *on* the board, with a routed edge
-   below them and a little sun bounce above. The light theme
-   loses the glow and keeps the carve.
+   The sign itself. On the board, every big letter is a cream
+   outline around a fill that runs marigold at the top into sage
+   at the bottom, and no two letters sit on the same baseline.
+
+   The plank keeps the wordmark on stained wood in BOTH themes,
+   because that is what the photo shows: a dark board standing in
+   flat daylight. A cream outline needs something dark behind it.
    ============================================================ */
 
-.painted {
-  text-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.55),
-    0 2px 1px rgba(0, 0, 0, 0.35),
-    0 0 34px rgba(237, 179, 42, 0.22);
+/* In board mode the page is already the plank, so the letters are painted
+   straight onto it. In daylight they need stained wood behind them — a cream
+   outline over an overcast sky is no outline at all — so the wordmark gets its
+   own board, hung at the slight tilt the real one has. */
+.plank {
+  position: relative;
+  display: inline-block;
+  padding: 0;
 }
 
-:root[data-theme='light'] .painted {
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.6),
-    0 2px 2px rgba(36, 23, 8, 0.18);
+:root[data-theme='light'] .plank {
+  padding: 0.4em 0.62em 0.48em;
+  border-radius: 3px;
+  transform: rotate(-0.7deg);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.22) 0 1px,
+      transparent 1px 7px,
+      rgba(243, 231, 201, 0.035) 7px 8px,
+      transparent 8px 19px,
+      rgba(0, 0, 0, 0.14) 19px 20px,
+      transparent 20px 41px
+    ),
+    linear-gradient(178deg, #3a3439 0%, #262327 45%, #1d1a1e 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(243, 231, 201, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+    0 16px 34px -16px rgba(36, 34, 42, 0.55);
 }
 
-/* A brushed hairline, for use under kickers and section heads. */
-.brushrule {
-  background: linear-gradient(
-    90deg,
-    var(--color-gold) 0%,
-    var(--color-moss) 45%,
-    transparent 100%
+.glyph {
+  display: inline-block;
+  -webkit-user-select: none;
+  user-select: none;
+  background-image: linear-gradient(
+    180deg,
+    var(--paint-gold) 0%,
+    var(--paint-gold) 34%,
+    #8ea063 50%,
+    var(--paint-green) 64%,
+    #4a6a4a 100%
   );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 0.042em var(--paint-cream);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.55));
+}
+
+/* No background-clip:text (rare, but it would render nothing): paint the
+   letters solid gold with the cream outline instead. */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .glyph {
+    background-image: none;
+    color: var(--paint-gold);
+  }
+}
+
+.glyph-space {
+  display: inline-block;
+  width: 0.24em;
+  -webkit-text-stroke: 0;
+}
+
+/* "WELCOME TO": the same hand, smaller, cream, no fill. */
+.painted-cream {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45), 0 2px 2px rgba(0, 0, 0, 0.28);
+}
+:root[data-theme='light'] .painted-cream {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* A brushed hairline under section heads: gold into sage, like the letters. */
+.brushrule {
+  background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-moss) 45%, transparent 100%);
   height: 2px;
   border-radius: 2px;
-  opacity: 0.8;
+  opacity: 0.75;
 }
+
+/* The default search-clear button is a blue system glyph. Repaint it. */
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 11px;
+  width: 11px;
+  cursor: pointer;
+  background-color: var(--color-ink-dim);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 1l10 10M11 1L1 11' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 1l10 10M11 1L1 11' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+input[type='search']::-webkit-search-cancel-button:hover { background-color: var(--color-gold); }
 
 ::selection {
   background: var(--paint-gold);
