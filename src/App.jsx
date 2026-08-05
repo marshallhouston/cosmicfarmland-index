@@ -111,7 +111,7 @@ function PageCard({ page, index }) {
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay: index * 0.08 }}
       whileHover={{ y: -4 }}
-      className="group flex min-w-0 flex-col gap-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-surface-2)]/70 px-5 py-4 shadow-[var(--card-shadow)] transition-colors hover:border-[var(--color-moss-strong)]"
+      className="group flex h-full min-w-0 flex-col gap-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-surface-2)]/70 px-5 py-4 shadow-[var(--card-shadow)] transition-colors hover:border-[var(--color-moss-strong)]"
     >
       <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-moss)]">
         {page.kicker}
@@ -141,7 +141,7 @@ function AppCard({ app, index }) {
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay: index * 0.08 }}
       whileHover={live ? { y: -6 } : {}}
-      className={`group relative block min-w-0 overflow-hidden rounded-2xl border p-6 backdrop-blur-sm transition-colors ${
+      className={`group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border p-6 backdrop-blur-sm transition-colors ${
         live
           ? 'cursor-pointer border-[var(--color-line)] bg-[var(--color-surface-2)]/70 shadow-[var(--card-shadow)] hover:border-[var(--color-moss-strong)]'
           : 'border-dashed border-[var(--color-line)]/70 bg-[var(--color-surface)]/50'
@@ -171,7 +171,7 @@ function AppCard({ app, index }) {
       <p className="mb-5 text-sm leading-relaxed text-[var(--color-ink-dim)]">
         {app.blurb}
       </p>
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="mt-auto flex flex-wrap items-center gap-3">
         {(app.tags || []).map((t) => (
           <span
             key={t}
@@ -306,7 +306,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1 }}
-            className="font-display text-[clamp(2.6rem,10vw,5.5rem)] font-normal leading-[1.25] tracking-[-0.015em]"
+            className="font-display text-[clamp(2.6rem,11vw,7.5rem)] font-normal leading-[1.25] tracking-[-0.015em]"
           >
             <span className="plank">
               <span className="sr-only">Cosmic Farmland</span>
@@ -357,7 +357,7 @@ export default function App() {
           <SectionHead icon={Sprout} tint="text-[var(--color-moss)]">
             apps
           </SectionHead>
-          <div className="grid items-start gap-5 sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2">
             {appsData.apps.map((app, i) => (
               <AppCard key={app.slug} app={app} index={i} />
             ))}
@@ -367,13 +367,13 @@ export default function App() {
         {/* Golf */}
         <section id="golf" className="mt-24">
           <SectionHead icon={Flag} tint="text-[var(--color-moss)]">
-            the back forty
+            golf looping
           </SectionHead>
           <p className="mb-8 max-w-lg text-sm text-[var(--color-ink-dim)]">
             golf, counted properly. every round i post and every hole of the
             tournaments worth writing down.
           </p>
-          <div className="grid items-start gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {golfData.pages.map((page, i) => (
               <PageCard key={page.slug} page={page} index={i} />
             ))}

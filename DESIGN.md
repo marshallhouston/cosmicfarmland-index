@@ -221,7 +221,7 @@ used on section heads, and flipped to a white top-bounce in daylight.
   truncated blurb, open = gold border, gold CircleDot, full blurb, args in gold,
   trigger chips in post-gray. Grids use `items-start` so an open row doesn't
   stretch its neighbour into a tall empty box.
-- **PageCard** (back forty): moss kicker, medium-weight name, arrow nudge.
+- **PageCard** (golf looping): moss kicker, medium-weight name, arrow nudge.
 - **Filter pills**: rounded-full mono; active = gold border + gold/10 fill.
 - **Stat**: mono gold number over a 10px uppercase tracked label
   (`whitespace-nowrap`, so "apps live" doesn't break in half on a phone).
@@ -246,7 +246,7 @@ Reduced motion: honored via `MotionConfig reducedMotion="user"` and a
 ## Layout
 
 Single column, `max-w-5xl`, px-6. Hero fills ~70vh, then apps grid
-(`sm:grid-cols-2`, gap-5), back forty, toolshed (gap-3 two-col), footer with a
+(`sm:grid-cols-2`, gap-5), golf looping, toolshed (gap-3 two-col), footer with a
 top hairline. Section rhythm: mt-12 / mt-24 / mt-28.
 
 ## Voice
