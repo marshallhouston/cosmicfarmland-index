@@ -56,7 +56,7 @@ node scripts/sync-vault.mjs --check   # report injections, write nothing
 
 To add a page: drop an entry in the `PAGES` table in `scripts/sync-vault.mjs`
 (source, output, skins, injection steps, any sibling `assets` to copy), add a
-row to `data/golf.json` if it belongs in the back forty, and run the sync. Each
+row to `data/golf.json` if it belongs in golf looping, and run the sync. Each
 injection step is anchored to markup in the vault file; if an anchor moves the
 sync warns and skips that step rather than failing the deploy, so read the
 output. Missing skins and links to vault-only siblings are hard failures.
