@@ -91,7 +91,10 @@ h3{font-size:15px;font-weight:620;margin:22px 0 10px}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .g6{grid-template-columns:repeat(6,minmax(0,1fr))}
-@media(max-width:900px){.g4,.g6{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.g2{grid-template-columns:1fr}}
+/* minmax(0,1fr), never a bare 1fr: a bare 1fr keeps min-width:auto, so a wide
+   nowrap table inside a .tablewrap blows the track past the viewport and the
+   whole page scrolls sideways on a phone. */
+@media(max-width:900px){.g4,.g6{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.g2{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- stat tiles ---------- */
 .tile{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
@@ -103,7 +106,7 @@ h3{font-size:15px;font-weight:620;margin:22px 0 10px}
 
 /* ---------- charts ---------- */
 .chart{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 16px 12px}
-.chart h4{margin:0 0 2px;font-size:14px;font-weight:620}
+.chart h3.ch{margin:0 0 2px;font-size:14px;font-weight:620}
 .chart .cap{margin:0 0 12px;font-size:12.5px;color:var(--text-secondary)}
 svg{display:block;width:100%;height:auto;overflow:visible}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:12.5px;color:var(--text-secondary)}
@@ -169,7 +172,7 @@ tbody tr.hl>td{animation:flash 1.8s ease-out}
 .tblview.on{display:block}
 .tblview table{font-size:12.5px}
 .empty{padding:40px;text-align:center;color:var(--muted);font-size:14px}
-footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);font-size:12.5px}
+.prov{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);font-size:12.5px}
 </style>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9971;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -180,7 +183,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
 </head>
 <body>
 <div class="board"></div><div class="canopy"></div><div class="straw"></div><div class="grain"></div>
-<a class="cf-brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a>
+<nav aria-label="site"><a class="cf-brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a></nav>
 <div class="tt" id="tt"></div>
 <div class="wrap">
 
@@ -212,6 +215,8 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   <a href="#rounds">All rounds</a>
   <a href="#method">How it works</a>
 </nav>
+
+<main>
 
 <div class="filters" id="filters">
   <div class="f"><label for="fCourse">Course</label><select id="fCourse"></select></div>
@@ -247,7 +252,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   <b>differentials</b>, because that's the part a single round actually moves.</p>
   <div class="grid g4" id="climbTiles"></div>
   <div class="chart" style="margin-top:12px">
-    <h4>The eight rounds GHIN is counting right now</h4>
+    <h3 class="ch">The eight rounds GHIN is counting right now</h3>
     <p class="cap">Your index is built from the best 8 of your last 20. These are the ones carrying
     it — click any bar to open that round. Anything to the left of the line is already 5s pace.</p>
     <div id="countingChart"></div>
@@ -260,7 +265,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   <p class="lede">Each dot is one round. The line is your 5-round rolling average — the shape of your
   form, with the noise of any single round smoothed out.</p>
   <div class="chart">
-    <h4>Handicap differential by date</h4>
+    <h3 class="ch">Handicap differential by date</h3>
     <p class="cap">Lower is better. Hover any dot for the round.</p>
     <div id="trendChart"></div>
     <div class="legend">
@@ -268,39 +273,39 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
       <span><span class="ln" style="background:var(--series-2)"></span>5-round rolling average</span>
     </div>
     <button class="btn tblbtn" data-tbl="trendTbl">Table view</button>
-    <div class="tblview" id="trendTbl"></div>
+    <div class="tblview" tabindex="0" id="trendTbl"></div>
   </div>
   <div class="chart" style="margin-top:12px">
-    <h4>Percentiles</h4>
+    <h3 class="ch">Percentiles</h3>
     <p class="cap">Where each round sits in your own distribution. Lower is better, so the
     <b>low</b> percentiles are your good rounds — and since your index is built from the best 8 of
     your last 20, roughly the best 40%, P10 through P40 is the range that actually sets it.</p>
     <div id="pctChart"></div>
-    <div class="tblview on" style="margin-top:12px;max-height:none">
+    <div class="tblview on" tabindex="0" style="margin-top:12px;max-height:none">
       <table id="pctTbl"></table>
     </div>
   </div>
   <div class="grid g2" style="margin-top:12px">
     <div class="chart">
-      <h4>Distribution of differentials</h4>
+      <h3 class="ch">Distribution of differentials</h3>
       <p class="cap">How often you land in each band.</p>
       <div id="histChart"></div>
       <button class="btn tblbtn" data-tbl="histTbl">Table view</button>
-      <div class="tblview" id="histTbl"></div>
+      <div class="tblview" tabindex="0" id="histTbl"></div>
     </div>
     <div class="chart">
-      <h4>Rust — scoring by days since your last round</h4>
+      <h3 class="ch">Rust — scoring by days since your last round</h3>
       <p class="cap">Every round bucketed by the gap since the one before it.</p>
       <div id="rustChart"></div>
       <button class="btn tblbtn" data-tbl="rustTbl">Table view</button>
-      <div class="tblview" id="rustTbl"></div>
+      <div class="tblview" tabindex="0" id="rustTbl"></div>
     </div>
     <div class="chart">
-      <h4>Scoring by month</h4>
+      <h3 class="ch">Scoring by month</h3>
       <p class="cap">Average differential per calendar month, across all years.</p>
       <div id="monthChart"></div>
       <button class="btn tblbtn" data-tbl="monthTbl">Table view</button>
-      <div class="tblview" id="monthTbl"></div>
+      <div class="tblview" tabindex="0" id="monthTbl"></div>
     </div>
   </div>
 </section>
@@ -333,7 +338,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   <div class="grid g2" id="rankTiles"></div>
 
   <div class="chart" style="margin-top:12px">
-    <h4>Every round, to par against differential</h4>
+    <h3 class="ch">Every round, to par against differential</h3>
     <p class="cap">If the two measures agreed perfectly, every dot would sit on one rising line. The
     spread is course difficulty doing its work. Click any dot to open the round.</p>
     <div id="scatterChart"></div>
@@ -345,12 +350,12 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
     <div>
       <h3 style="margin-top:0">Best rounds by score to par</h3>
       <p class="lede">Raw result against the card, ignoring difficulty.</p>
-      <div class="tablewrap" style="max-height:420px"><table id="toParTbl"></table></div>
+      <div class="tablewrap" tabindex="0" style="max-height:420px"><table id="toParTbl"></table></div>
     </div>
     <div>
       <h3 style="margin-top:0">Best rounds by differential</h3>
       <p class="lede">GHIN's ranking — what actually moves your index.</p>
-      <div class="tablewrap" style="max-height:420px"><table id="diffTbl"></table></div>
+      <div class="tablewrap" tabindex="0" style="max-height:420px"><table id="diffTbl"></table></div>
     </div>
   </div>
 </section>
@@ -362,7 +367,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   bad one."</p>
   <div class="grid g2">
     <div class="chart">
-      <h4>Average score by par type, per differential band</h4>
+      <h3 class="ch">Average score by par type, per differential band</h3>
       <p class="cap">Bars grouped by band. Lower is better.</p>
       <div id="parBucketChart"></div>
       <div class="legend">
@@ -371,10 +376,10 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
         <span><i style="background:var(--series-3)"></i>Par 5</span>
       </div>
       <button class="btn tblbtn" data-tbl="parBucketTbl">Table view</button>
-      <div class="tblview" id="parBucketTbl"></div>
+      <div class="tblview" tabindex="0" id="parBucketTbl"></div>
     </div>
     <div class="chart">
-      <h4>Average score by par type, per score band</h4>
+      <h3 class="ch">Average score by par type, per score band</h3>
       <p class="cap">18-hole rounds only.</p>
       <div id="parBandChart"></div>
       <div class="legend">
@@ -383,7 +388,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
         <span><i style="background:var(--series-3)"></i>Par 5</span>
       </div>
       <button class="btn tblbtn" data-tbl="parBandTbl">Table view</button>
-      <div class="tblview" id="parBandTbl"></div>
+      <div class="tblview" tabindex="0" id="parBandTbl"></div>
     </div>
   </div>
   <div class="grid g3" style="margin-top:12px" id="parSpread"></div>
@@ -436,22 +441,22 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   </div>
   <div class="grid g3" id="oHotspots" style="margin-bottom:12px"></div>
   <p class="lede" id="oNote" style="margin:0 0 10px"></p>
-  <div class="tablewrap" style="max-height:520px"><table id="outHoleTbl"></table></div>
+  <div class="tablewrap" tabindex="0" style="max-height:520px"><table id="outHoleTbl"></table></div>
   <div class="grid g2" style="margin-top:12px">
     <div class="chart">
-      <h4>Outcome mix</h4>
+      <h3 class="ch">Outcome mix</h3>
       <p class="cap">Share of all holes played.</p>
       <div id="outChart"></div>
       <button class="btn tblbtn" data-tbl="outTbl">Table view</button>
-      <div class="tblview" id="outTbl"></div>
+      <div class="tblview" tabindex="0" id="outTbl"></div>
     </div>
     <div class="chart">
-      <h4>Outcome mix by par type</h4>
+      <h3 class="ch">Outcome mix by par type</h3>
       <p class="cap">Share of holes of each par, by result.</p>
       <div id="outParChart"></div>
       <div class="legend" id="outParLegend"></div>
       <button class="btn tblbtn" data-tbl="outParTbl">Table view</button>
-      <div class="tblview" id="outParTbl"></div>
+      <div class="tblview" tabindex="0" id="outParTbl"></div>
     </div>
   </div>
 </section>
@@ -467,7 +472,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   swing between them. Complete 18-hole rounds only.</p>
   <div class="grid g4" id="notableN"></div>
   <div class="chart" style="margin-top:12px">
-    <h4>Every signed nine, by score to par</h4>
+    <h3 class="ch">Every signed nine, by score to par</h3>
     <p class="cap">All complete 18-hole rounds, split into their two nines. Hover any bar for the split.</p>
     <div id="nineDist"></div>
     <div class="legend">
@@ -475,7 +480,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
       <span><i style="background:var(--series-2)"></i>Back nine</span>
     </div>
     <button class="btn tblbtn" data-tbl="nineDistTbl">Table view</button>
-    <div class="tblview" id="nineDistTbl"></div>
+    <div class="tblview" tabindex="0" id="nineDistTbl"></div>
   </div>
   <h3>Three-hole transitions</h3>
   <p class="lede">Back-to-back three-hole stretches inside the same round — holes 1–3 into 4–6, 2–4
@@ -505,7 +510,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   prize you're playing for.</p>
   <div class="grid g4" id="ifNoBlowups"></div>
   <div class="chart" style="margin-top:12px">
-    <h4>Blow-up holes per round, over time</h4>
+    <h3 class="ch">Blow-up holes per round, over time</h3>
     <p class="cap">Doubles or worse in each complete 18-hole round. The line is a 5-round rolling
     average. Click any dot to open that round.</p>
     <div id="blowChart"></div>
@@ -514,7 +519,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
       <span><span class="ln" style="background:var(--series-2)"></span>5-round rolling average</span>
     </div>
     <button class="btn tblbtn" data-tbl="blowTbl">Table view</button>
-    <div class="tblview" id="blowTbl"></div>
+    <div class="tblview" tabindex="0" id="blowTbl"></div>
   </div>
 </section>
 
@@ -548,7 +553,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
     </div>
   </div>
   <p class="lede" id="sNote" style="margin:0 0 10px"></p>
-  <div class="tablewrap"><table id="stretchTbl"></table></div>
+  <div class="tablewrap" tabindex="0"><table id="stretchTbl"></table></div>
 </section>
 
 <section id="courses">
@@ -558,15 +563,15 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   <div class="grid g2">
     <div>
       <h3 style="margin-top:0">By course</h3>
-      <div class="tablewrap" style="max-height:460px"><table id="courseTbl"></table></div>
+      <div class="tablewrap" tabindex="0" style="max-height:460px"><table id="courseTbl"></table></div>
     </div>
     <div>
       <h3 style="margin-top:0">By course &amp; tee</h3>
-      <div class="tablewrap" style="max-height:460px"><table id="teeTbl"></table></div>
+      <div class="tablewrap" tabindex="0" style="max-height:460px"><table id="teeTbl"></table></div>
     </div>
   </div>
   <div class="chart" style="margin-top:12px">
-    <h4>Average differential by course</h4>
+    <h3 class="ch">Average differential by course</h3>
     <p class="cap">Courses played 3+ times. The dot is your best round there.</p>
     <div id="courseChart"></div>
     <div class="legend">
@@ -582,18 +587,18 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   (1 = hardest), its position in the round, and which nine it's on.</p>
   <div class="grid g2">
     <div class="chart">
-      <h4>Strokes over par by stroke index</h4>
+      <h3 class="ch">Strokes over par by stroke index</h3>
       <p class="cap">Stroke index 1 is the hardest hole on the card, 18 the easiest.</p>
       <div id="siChart"></div>
       <button class="btn tblbtn" data-tbl="siTbl">Table view</button>
-      <div class="tblview" id="siTbl"></div>
+      <div class="tblview" tabindex="0" id="siTbl"></div>
     </div>
     <div class="chart">
-      <h4>Strokes over par by hole number</h4>
+      <h3 class="ch">Strokes over par by hole number</h3>
       <p class="cap">Where in the round the damage happens. 18-hole rounds only.</p>
       <div id="holeChart"></div>
       <button class="btn tblbtn" data-tbl="holeTbl">Table view</button>
-      <div class="tblview" id="holeTbl"></div>
+      <div class="tblview" tabindex="0" id="holeTbl"></div>
     </div>
   </div>
   <div class="grid g4" style="margin-top:12px" id="nineTiles"></div>
@@ -601,8 +606,8 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   <p class="lede">Specific holes you've played at least four times, ranked by your average score
   against par there.</p>
   <div class="grid g2">
-    <div><div class="tablewrap" style="max-height:380px"><table id="nemesisTbl"></table></div></div>
-    <div><div class="tablewrap" style="max-height:380px"><table id="comfortTbl"></table></div></div>
+    <div><div class="tablewrap" tabindex="0" style="max-height:380px"><table id="nemesisTbl"></table></div></div>
+    <div><div class="tablewrap" tabindex="0" style="max-height:380px"><table id="comfortTbl"></table></div></div>
   </div>
 </section>
 
@@ -612,7 +617,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   scorecard. Sorting by differential ascending gives you your best rounds; descending gives you your
   worst.</p>
   <div class="chips" id="quickSorts"></div>
-  <div class="tablewrap" style="margin-top:12px"><table id="roundTbl"></table></div>
+  <div class="tablewrap" tabindex="0" style="margin-top:12px"><table id="roundTbl"></table></div>
   <div class="legend" style="margin-top:10px">
     <span><i style="background:var(--u2)"></i>Under par</span>
     <span><i style="background:var(--div-mid);border:1px solid var(--border)"></i>Par</span>
@@ -667,7 +672,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
       out of your most recent 20</b> rounds. Not all 20 — only the best 8 count, which is why one bad
       round barely moves it and why a good round only helps if it beats one of the eight already
       counting. With fewer than 20 scores a sliding table applies:</p>
-      <div class="tblview on" style="max-height:200px;margin-top:0">
+      <div class="tblview on" tabindex="0" style="max-height:200px;margin-top:0">
         <table><thead><tr><th>Scores</th><th>Differentials used</th><th class="num">Adjustment</th></tr></thead>
         <tbody>
           <tr><td>3</td><td>Lowest 1</td><td class="num">−2.0</td></tr>
@@ -707,11 +712,13 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
   <div class="note" id="qualityNote"></div>
 </section>
 
-<footer>
+<div class="prov">
   Built from <b>156</b> rounds pulled from your GHIN account on July 27, 2026.
   Differentials, course ratings and slopes are GHIN's own values; everything else is computed from the
   hole-by-hole cards using raw (uncapped) scores.
-</footer>
+</div>
+
+</main>
 </div>
 
 <script>
@@ -2433,10 +2440,10 @@ function renderQuality(){
 
 buildControls(); renderQuality(); render();
 </script>
-<div class="cf-footer">
+<footer class="cf-footer">
   <span>grown by marshall</span>
   <span class="cf-slogan">nice dogs, strange people</span>
   <a href="https://cosmicfarmland.wtf">cosmicfarmland.wtf &#8599;</a>
-</div>
+</footer>
 </body>
 </html>

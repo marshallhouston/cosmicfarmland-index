@@ -323,7 +323,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25 }}
-            className="mt-8 max-w-md text-lg leading-relaxed text-[var(--color-ink-dim)]"
+            className="mt-8 max-w-lg text-pretty text-lg leading-relaxed text-[var(--color-ink-dim)]"
           >
             apps, tools, and writing. entrypoint to the cosmic farmland
           </motion.p>
@@ -403,12 +403,12 @@ export default function App() {
                   aria-pressed={active}
                   className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-xs transition-colors ${
                     active
-                      ? 'border-[var(--color-gold)] bg-[var(--color-gold)]/10 text-[var(--color-gold)]'
+                      ? 'border-[var(--color-gold)] bg-[var(--color-gold)]/10 text-[var(--color-gold-strong)]'
                       : 'border-[var(--color-line)] text-[var(--color-ink-dim)] hover:border-[var(--color-moss-strong)]'
                   }`}
                 >
                   <Icon size={14} aria-hidden="true" /> {k.label}
-                  <span className="opacity-60">{counts[k.id] || 0}</span>
+                  <span>{counts[k.id] || 0}</span>
                 </button>
               )
             })}

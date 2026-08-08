@@ -176,7 +176,7 @@
 </head>
 <body>
 <div class="board"></div><div class="canopy"></div><div class="straw"></div><div class="grain"></div>
-<a class="cf-brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a>
+<nav aria-label="site"><a class="cf-brand" href="https://cosmicfarmland.wtf">&#10023; cosmicfarmland.wtf</a></nav>
 <main class="wrap">
 <nav class="cf-golf-nav" aria-label="golf pages">
   <a class="cf-golf-link cf-home" href="https://cosmicfarmland.wtf">&#8592; cosmic farmland</a>
@@ -273,7 +273,7 @@
 
 <h2>The scorecards</h2>
 <p class="lede">Sunday only. <span class="sc s-birdie">3</span> birdie or better, <span class="sc s-par">4</span> par, <span class="sc s-bogey">5</span> bogey, <span class="sc s-dbl">6</span> double or worse. Sorted by final position.</p>
-<div class="card tbl-scroll"><table id="grid"></table></div>
+<div class="card tbl-scroll" tabindex="0"><table id="grid"></table></div>
 
 <h2>Moments</h2>
 <div class="card"><ul class="tight" id="moments"></ul></div>
@@ -498,7 +498,7 @@ function lineChart(el, yOf, tickFn, kind){
   const ys = all.flatMap(p=>[...Array(N+1).keys()].map(k=>yOf(p,k)));
   const lo = Math.min(...ys), hi = Math.max(...ys);
   const y = v => T + (v-lo)*(H-T-B)/(hi-lo||1);         // both charts: better is higher
-  let g = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:720px" role="img"
+  let g = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:720px" role="group"
     aria-label="${kind==='pos'?'leaderboard position':'score to par'} after each hole for the selected players">`;
   for(const t of tickFn(lo,hi)){
     g += `<line x1="${L}" x2="${W-R}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`
@@ -651,11 +651,11 @@ function drawGrid(){
   for(let i=9;i<18;i++) h += `<th scope="col" class="hole"><span class="hcell">${i+1}</span></th>`;
   h += `<th scope="col" class="num">In</th><th scope="col" class="num">Sun</th><th scope="col" class="num">Total</th><th scope="col" class="num">$</th>`
      + (MODE==='live'?`<th class="num">In top 12</th>`:'') + `</tr>
-        <tr><th class="stick c0"></th><th scope="row" class="stick c1 sub2">par</th><th></th>`;
+        <tr><td class="stick c0"></td><th scope="row" class="stick c1 sub2">par</th><td></td>`;
   for(let i=0;i<9;i++) h += `<th scope="col" class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
   h += `<th scope="col" class="num sub2">34</th>`;
   for(let i=9;i<18;i++) h += `<th scope="col" class="hole sub2"><span class="hcell">${PAR[i]}</span></th>`;
-  h += `<th scope="col" class="num sub2">36</th><th scope="col" class="num sub2">70</th><th scope="col" class="num sub2">140</th><th></th>`
+  h += `<th scope="col" class="num sub2">36</th><th scope="col" class="num sub2">70</th><th scope="col" class="num sub2">140</th><td></td>`
      + (MODE==='live'?`<th class="num sub2">of 19</th>`:'') + `</tr></thead><tbody>`;
   sel().forEach(p=>{
     const out = p.r2.slice(0,9).reduce((a,b)=>a+b,0), inn = p.r2.slice(9).reduce((a,b)=>a+b,0);
@@ -698,10 +698,10 @@ document.getElementById('moments').innerHTML = `
   <li><b>Welton was the closer nobody scouted.</b> After the opening 6 he played the last 17 holes in two over, birdied the 2nd and the 18th, and posted 74 — co-low round of Sunday with Chris Palamar, who shot 74 from 35th place and still only reached 22nd.</li>
   <li><b>The back nine was won by boredom.</b> From the 13th in, Marshall went birdie-par-par-bogey-par-par, level for the stretch. Exactly one player in the money gained on him over those six holes — Pathak, by two, from four shots back.</li>`;
 </script>
-<div class="cf-footer">
+<footer class="cf-footer">
   <span>grown by marshall</span>
   <span class="cf-slogan">nice dogs, strange people</span>
   <a href="https://cosmicfarmland.wtf">cosmicfarmland.wtf &#8599;</a>
-</div>
+</footer>
 </body>
 </html>

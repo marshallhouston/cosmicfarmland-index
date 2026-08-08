@@ -22,7 +22,7 @@
   * { box-sizing: border-box; }
   body {
     margin: 0; font-family: var(--font-body); color: var(--color-ink);
-    background: transparent; -webkit-font-smoothing: antialiased;
+    background: var(--color-surface); -webkit-font-smoothing: antialiased;
   }
   .wrap { position: relative; z-index: 1; max-width: 62rem; margin: 0 auto; padding: 0 1.5rem 8rem; }
   nav.top {
@@ -125,6 +125,8 @@
     </p>
   </header>
 
+  <main>
+
   <figure class="plate">
     <img src="/grayton-beach.jpg" width="1125" height="1500"
          alt="A hand-painted sign reading WELCOME TO GRAYTON BEACH: a long dark-stained board on weathered fence posts, the letters outlined in cream with a marigold-to-sage gradient fill, set in dense green shrub over pine straw on an overcast morning.">
@@ -177,13 +179,15 @@
       atmosphere layers, the sign treatment and the interface chrome. No build
       step, no framework. Link it and set a theme:
     </p>
-<pre><code>&lt;link rel="stylesheet" href="https://cosmicfarmland.wtf/grayton.css"&gt;
+<pre tabindex="0"><code>&lt;link rel="stylesheet" href="https://cosmicfarmland.wtf/grayton.css"&gt;
 &lt;html data-theme="dark"&gt;   &lt;!-- or "light"; board is the default --&gt;</code></pre>
     <p>
       <a class="inline" href="/grayton.css">read grayton.css</a> &#183;
       <a class="inline" href="https://github.com/marshallhouston/cosmicfarmland-index/blob/main/DESIGN.md">the full spec on github</a>
     </p>
   </section>
+
+  </main>
 
   <footer>
     <span>grown by marshall</span>
