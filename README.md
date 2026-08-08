@@ -34,7 +34,7 @@ spec — palette provenance, type, components, voice — and
 [`/grayton`](https://cosmicfarmland.wtf/grayton) is the public version of it:
 the source photograph, the sampled palette read live out of `grayton.css`, type
 specimens and the sign treatment. That page is itself built with a single
-`<link>` to `grayton.css`, so it doubles as the proof that one line is enough.
+`<link>` to `grayton.css`.
 
 ## Vault pages
 

@@ -306,14 +306,16 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1 }}
-            className="font-display text-[clamp(2.6rem,11vw,7.5rem)] font-normal leading-[1.25] tracking-[-0.015em]"
+            className="mr-[calc(50%-50vw+1.5rem)] font-display text-[clamp(2.6rem,11vw,7.5rem)] font-normal leading-[1.25] tracking-[-0.015em]"
           >
             <span className="plank">
               <span className="sr-only">Cosmic Farmland</span>
-              <span aria-hidden="true">
-                <SignWord>COSMIC</SignWord>
-                <br />
-                <SignWord offset={6}>FARMLAND</SignWord>
+              {/* One line when there's room for it, two when there isn't. The
+                  negative right margin lets the sign run past the text column
+                  into the gutter; flex wrapping picks the break itself. */}
+              <span aria-hidden="true" className="flex flex-wrap gap-x-[0.24em]">
+                <span><SignWord>COSMIC</SignWord></span>
+                <span><SignWord offset={6}>FARMLAND</SignWord></span>
               </span>
             </span>
           </motion.h1>

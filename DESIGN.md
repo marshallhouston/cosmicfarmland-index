@@ -192,8 +192,7 @@ the per-letter rotation inline, all wrapped in `.plank`:
   paints solid gold if `background-clip: text` is missing.
 - **`SignWord`** (in `App.jsx`) — wraps each letter and applies a fixed rotation
   and vertical offset from `LETTER_JITTER`. Fixed, not random: the wordmark must
-  be identical on every load. This is what separates "hand-painted" from "a font
-  with an effect".
+  be identical on every load.
 - **`.plank`** — the wrapper around the wordmark. It carries no board in either
   theme. A dark slab behind the letters in daylight reads as a separate object
   sitting in the page, narrower than the column around it, and two rounds of
@@ -203,6 +202,19 @@ the per-letter rotation inline, all wrapped in `.plank`:
   (`drop-shadow` at ~1px with no offset), which does the board's job with none
   of its furniture and keeps the wordmark on the same left margin as everything
   else.
+
+The index hero holds each word in its own child of a `flex flex-wrap` span,
+gapped `0.24em` to match `.glyph-space`, and the `h1` carries
+`mr-[calc(50%-50vw+1.5rem)]` so the sign can run past the `max-w-5xl` column into
+the right gutter. **COSMIC FARMLAND** lands on one line from about 1350px of
+viewport up and breaks in two below that; the left margin stays on the column and
+the negative margin collapses to zero once the column is full-width, so nothing
+ever scrolls sideways. At `7.5rem` one line measures ~1137px against 976px of
+column — the sign has to leave the column to fit, or shrink to ~6.4rem.
+
+Don't put a `<br>` back: it costs the wide-screen line, and the words can't wrap
+on their own because `.glyph-space` is an `inline-block` and offers no break
+opportunity.
 
 The wordmark's visible letters are `aria-hidden` and `user-select: none`; an
 `sr-only` "Cosmic Farmland" carries the accessible name and the copy buffer. The
