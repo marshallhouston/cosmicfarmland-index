@@ -206,11 +206,12 @@ the per-letter rotation inline, all wrapped in `.plank`:
 The index hero holds each word in its own child of a `flex flex-wrap` span,
 gapped `0.24em` to match `.glyph-space`, and the `h1` carries
 `mr-[calc(50%-50vw+1.5rem)]` so the sign can run past the `max-w-5xl` column into
-the right gutter. **COSMIC FARMLAND** lands on one line from about 1350px of
-viewport up and breaks in two below that; the left margin stays on the column and
-the negative margin collapses to zero once the column is full-width, so nothing
-ever scrolls sideways. At `7.5rem` one line measures ~1137px against 976px of
-column — the sign has to leave the column to fit, or shrink to ~6.4rem.
+the right gutter. **COSMIC FARMLAND** lands on one line from about 380px of
+viewport up, and only breaks in two below that, where the `clamp` floor of
+`2.6rem` stops the type shrinking with the screen. The left margin stays on the
+column and the negative margin collapses to zero once the column is full-width,
+so nothing ever scrolls sideways. At `7.5rem` one line measures ~1137px against
+976px of column: the sign has to leave the column to fit, or shrink to ~6.4rem.
 
 Don't put a `<br>` back: it costs the wide-screen line, and the words can't wrap
 on their own because `.glyph-space` is an `inline-block` and offers no break
