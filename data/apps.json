@@ -62,6 +62,15 @@
       "tags": ["learning", "org design", "interactive"]
     },
     {
+      "slug": "golf-course-designer",
+      "name": "Golf Course Designer",
+      "blurb": "Shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. Every number on screen is a replayed round, not a rating.",
+      "url": "https://editor-production-c7ff.up.railway.app",
+      "repo": "https://github.com/marshallhouston/golf-course-designer",
+      "status": "live",
+      "tags": ["golf", "simulation", "interactive"]
+    },
+    {
       "slug": "golf-record",
       "name": "Golf Record",
       "blurb": "Every round from my GHIN history - scoring trends, hole-by-hole splits, and where the strokes actually go.",
