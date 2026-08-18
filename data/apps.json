@@ -65,7 +65,7 @@
       "slug": "golf-course-designer",
       "name": "Golf Course Designer",
       "blurb": "Shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. Every number on screen is a replayed round, not a rating.",
-      "url": "https://editor-production-c7ff.up.railway.app",
+      "url": "https://golf-course-designer.cosmicfarmland.wtf",
       "repo": "https://github.com/marshallhouston/golf-course-designer",
       "status": "live",
       "tags": ["golf", "simulation", "interactive"]
