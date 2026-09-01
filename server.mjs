@@ -8,6 +8,14 @@ import { join, normalize } from 'node:path'
 const DIST = join(import.meta.dir, 'dist')
 const PORT = process.env.PORT || 8080
 
+// Cloudflare applies a 4h default TTL to static extensions when the origin
+// sends no cache-control, and it will happily pin whatever it saw first. These
+// three were soft-404s (200 + homepage HTML) until #28, so the edge cached
+// HTML as robots.txt and served it for hours after the fix deployed. They are
+// small, they change on every deploy, and being wrong about robots.txt is
+// expensive, so cap the edge TTL. Hashed assets keep the long default.
+const SHORT_CACHE = new Set(['/robots.txt', '/sitemap.xml', '/llms.txt'])
+
 serve({
   port: PORT,
   async fetch(req) {
@@ -24,7 +32,12 @@ serve({
     // Serve static asset if it exists.
     const asset = file(join(DIST, safe))
     if (await asset.exists()) {
-      return new Response(asset)
+      return new Response(
+        asset,
+        SHORT_CACHE.has(safe)
+          ? { headers: { 'cache-control': 'public, max-age=300' } }
+          : undefined
+      )
     }
     // Pretty URL for standalone pages: /golf serves dist/golf.html.
     const page = file(join(DIST, `${safe}.html`))
