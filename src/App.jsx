@@ -259,9 +259,38 @@ function CatalogCard({ entry }) {
   )
 }
 
+// Toolshed filters live in the query string, so a filtered view is a link you
+// can send someone. Read once at mount; ?kind= is validated against KINDS so a
+// mangled link falls back to the default tab instead of an empty, unexplained
+// toolshed.
+function initialFilters() {
+  const p = new URLSearchParams(window.location.search)
+  const kind = p.get('kind')
+  return {
+    kind: KINDS.some((k) => k.id === kind) ? kind : 'skill',
+    q: p.get('q') || '',
+  }
+}
+
 export default function App() {
-  const [kind, setKind] = useState('skill')
-  const [q, setQ] = useState('')
+  const [initial] = useState(initialFilters)
+  const [kind, setKind] = useState(initial.kind)
+  const [q, setQ] = useState(initial.q)
+
+  // replaceState, not pushState: filtering is not navigation, and a push per
+  // keystroke would bury the back button. Defaults stay out of the URL so the
+  // untouched page is a clean '/', and any #anchor is preserved.
+  useEffect(() => {
+    const p = new URLSearchParams()
+    if (kind !== 'skill') p.set('kind', kind)
+    if (q.trim()) p.set('q', q.trim())
+    const qs = p.toString()
+    window.history.replaceState(
+      null,
+      '',
+      `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash}`
+    )
+  }, [kind, q])
 
   const counts = catalogData.counts || {}
   const filtered = useMemo(() => {
