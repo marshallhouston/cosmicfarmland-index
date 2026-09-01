@@ -12,6 +12,7 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { join, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { deDash } from './dedash.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const REPO = process.argv[2] || join(__dirname, '..', '..', 'cosmic-farmland')
@@ -20,11 +21,6 @@ const OUT = join(__dirname, '..', 'data', 'catalog.json')
 
 function prettyName(slug) {
   return slug.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
-}
-
-// Strip em/en dashes from generated copy (house style: no em-dashes).
-function deDash(s = '') {
-  return s.replace(/\s*[—–]\s*/g, ' - ')
 }
 
 // Minimal frontmatter parser - first --- fenced block, flat key: value pairs.
