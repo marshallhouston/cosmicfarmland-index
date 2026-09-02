@@ -21,10 +21,18 @@
       try {
         var t = localStorage.getItem('cf-theme');
         document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+        document.documentElement.classList.add('js');
       } catch (e) {
         document.documentElement.dataset.theme = 'dark';
+        document.documentElement.classList.add('js');
       }
     </script>
+    <style>
+      /* The build injects a plain-HTML mirror of the farm into #root for crawlers
+         and no-JS clients. React clears it on mount; hide it before paint when JS
+         is present so it never flashes. Crawlers never get .js, so they see it. */
+      .js [data-seo-fallback] { display: none; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
