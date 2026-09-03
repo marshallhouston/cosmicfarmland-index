@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://cosmicfarmland.wtf/</loc></url>
-  <url><loc>https://cosmicfarmland.wtf/grayton</loc></url>
-  <url><loc>https://cosmicfarmland.wtf/golf</loc></url>
-  <url><loc>https://cosmicfarmland.wtf/golf/city-am-2026</loc></url>
+  <url><loc>https://cosmicfarmland.wtf/</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cosmicfarmland.wtf/grayton</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cosmicfarmland.wtf/golf</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cosmicfarmland.wtf/golf/city-am-2026</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cosmicfarmland.wtf/about</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cosmicfarmland.wtf/contact</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cosmicfarmland.wtf/privacy</loc><lastmod>2026-09-02</lastmod></url>
 </urlset>

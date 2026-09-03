@@ -43,6 +43,14 @@ export function seoFragment(tagline = '') {
     `</ul><h2>Toolshed (${esc(counts)})</h2><ul>`,
     ...catalog.entries.map((e) => li(e.source, e.name, `${e.kind}, ${e.plugin}: ${e.blurb}`)),
     '</ul>',
+    // The trust pages, so a crawler that only reads the homepage still finds them.
+    '<h2>The farm</h2><ul>',
+    li(origin + '/about', 'About', 'who grows this and how the site is built'),
+    li(origin + '/contact', 'Contact', 'github is the front door; issues and pull requests welcome'),
+    li(origin + '/privacy', 'Privacy', 'no analytics, no tracking, one theme preference in localStorage'),
+    li(origin + '/grayton', 'Grayton Beach', 'the design system every page here is sampled from'),
+    li(origin + '/llms.txt', 'llms.txt', 'the whole farm in one machine-readable file, with when-to-use guidance'),
+    '</ul>',
     '</div>',
   ].join('')
 }

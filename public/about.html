@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>about cosmic farmland — cosmicfarmland.wtf</title>
+<meta name="description" content="cosmic farmland is one person's working farm of small software. it is the apex landing page for cosmicfarmland.wtf: the place that routes you to the apps growing on the subdomains, and catalogs the skills, commands and plugins those apps were built with.">
+<link rel="canonical" href="https://cosmicfarmland.wtf/about">
+<meta property="og:title" content="about cosmic farmland — cosmicfarmland.wtf">
+<meta property="og:description" content="cosmic farmland is one person's working farm of small software. it is the apex landing page for cosmicfarmland.wtf: the place that routes you to the apps growing on the subdomains, and catalogs the skills, commands and plugins those apps were built with.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cosmicfarmland.wtf/about">
+<meta property="og:image" content="https://cosmicfarmland.wtf/grayton-beach.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="text/markdown" href="https://cosmicfarmland.wtf/about.md">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127793;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amarante&family=Figtree:ital,wght@0,300..800;1,300..800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/grayton.css">
+<style>
+  /* Layout only. Every colour, face and texture comes from grayton.css. */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font-body); color: var(--color-ink);
+         background: var(--color-surface); -webkit-font-smoothing: antialiased; }
+  .wrap { position: relative; z-index: 1; max-width: 46rem; margin: 0 auto; padding: 0 1.5rem 8rem; }
+  nav.top { display: flex; gap: 1.5rem; padding: 2rem 0 0; font-family: var(--font-mono);
+            font-size: 0.72rem; letter-spacing: 0.25em; }
+  nav.top a { color: var(--color-moss); text-decoration: none; }
+  nav.top a:hover { color: var(--color-gold); }
+  h1 { font-family: var(--font-display); font-weight: 400; text-transform: lowercase;
+       font-size: clamp(2rem, 7vw, 3.2rem); margin: 3rem 0 1.5rem; color: var(--color-gold); }
+  h2 { font-family: var(--font-display); font-weight: 400; text-transform: lowercase;
+       font-size: 1.6rem; margin: 3rem 0 0.6rem; }
+  p, li { line-height: 1.75; color: var(--color-ink-dim); max-width: 62ch; }
+  ul { padding-left: 1.1rem; }
+  li { margin-bottom: 0.5rem; }
+  code { font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-ink); }
+  a.inline { color: var(--color-gold); text-underline-offset: 3px; }
+  footer { margin-top: 5rem; padding-top: 1.6rem; border-top: 1px solid var(--color-line);
+           display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: space-between;
+           font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
+           text-transform: uppercase; color: var(--color-ink-dim); }
+  footer a { color: var(--color-moss); text-decoration: none; }
+  footer a:hover { color: var(--color-gold); }
+  footer .slogan { color: var(--color-gold); letter-spacing: 0.28em; }
+</style>
+</head>
+<body>
+<div class="board"></div><div class="canopy"></div><div class="straw"></div><div class="grain"></div>
+<div class="wrap">
+  <nav class="top"><a href="/">&#8592; cosmic farmland</a></nav>
+  <main>
+<h1>about cosmic farmland</h1>
+<p>cosmic farmland is one person's working farm of small software. it is the apex landing page for cosmicfarmland.wtf: the place that routes you to the apps growing on the subdomains, and catalogs the skills, commands and plugins those apps were built with.</p>
+<p>everything on the site is real. the app cards reflect what is actually deployed, and the toolshed counts are generated straight out of the <a class="inline" href="https://github.com/marshallhouston/cosmic-farmland">cosmic-farmland plugin repo</a> at build time. nothing here is a mockup, a coming-soon, or a placeholder waiting on a launch date.</p>
+<h2>who grows it</h2>
+<p>marshall houston. product person who ships. the apps range from an interactive archive of the grateful dead's spring 1977 tour, to a teaching tool for donella meadows' systems thinking, to a golf course designer, to a reader for lenny's newsletter archive. the tooling underneath is claude code plugins: skills, slash commands and hooks that do the repetitive parts of shipping.</p>
+<h2>how it is built</h2>
+<p>a static vite + react page, served by a small bun server on railway. the catalog and the machine-readable files are generated from committed json, so the site cannot drift from the repo it describes. the whole look is sampled off one photograph of a hand-painted welcome sign in grayton beach, florida, which is documented in <a class="inline" href="/grayton">the design system</a>.</p>
+<h2>for agents</h2>
+<p>if you are an agent reading this, start at <a class="inline" href="/llms.txt">llms.txt</a>. it lists every app, vault page and toolshed entry with a one-line blurb and a source link, and it includes a when-to-use section. the <a class="inline" href="/sitemap.xml">sitemap</a> lists the indexable pages. every page here also answers to <code>Accept: text/markdown</code>.</p>
+  </main>
+  <footer>
+    <span>grown by marshall</span>
+    <span><a href="/about">about</a> &#183; <a href="/contact">contact</a> &#183; <a href="/privacy">privacy</a> &#183; <a href="/llms.txt">llms.txt</a></span>
+    <span class="slogan">nice dogs, strange people</span>
+  </footer>
+</div>
+</body>
+</html>

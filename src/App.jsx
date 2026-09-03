@@ -476,7 +476,16 @@ export default function App() {
             <span className="uppercase tracking-[0.28em] text-[var(--color-gold)]">
               nice dogs, strange people
             </span>
-            <div className="flex gap-5">
+            <div className="flex flex-wrap gap-5">
+              <a href="/about" className="hover:text-[var(--color-gold)]">
+                about
+              </a>
+              <a href="/contact" className="hover:text-[var(--color-gold)]">
+                contact
+              </a>
+              <a href="/privacy" className="hover:text-[var(--color-gold)]">
+                privacy
+              </a>
               <a href="/grayton" className="hover:text-[var(--color-gold)]">
                 grayton beach ↗
               </a>
