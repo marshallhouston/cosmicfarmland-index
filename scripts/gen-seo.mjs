@@ -107,14 +107,19 @@ const urls = [
 ]
 
 // lastmod is the commit the deploy was built from: every page here is generated
-// from committed data, so that date is the truth for all of them. A build with
-// no git available (a bare docker context) just omits lastmod rather than lying.
-let lastmod = ''
+// from committed data, so that date is the truth for all of them. Railway builds
+// from a source archive with no .git, so fall back to the build date — the same
+// claim, one day of slack, and a deploy only happens on a commit anyway.
+let lastmod = new Date().toISOString().slice(0, 10)
 try {
-  lastmod = execFileSync('git', ['log', '-1', '--format=%cs'], { cwd: REPO }).toString().trim()
+  lastmod = execFileSync('git', ['log', '-1', '--format=%cs'], {
+    cwd: REPO,
+    stdio: ['ignore', 'pipe', 'ignore'],
+  })
+    .toString()
+    .trim()
 } catch {}
-const entry = (u) =>
-  `  <url><loc>${u}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}</url>`
+const entry = (u) => `  <url><loc>${u}</loc><lastmod>${lastmod}</lastmod></url>`
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',

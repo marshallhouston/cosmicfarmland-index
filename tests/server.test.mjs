@@ -84,3 +84,11 @@ test('llms.txt and sitemap.xml keep the short edge TTL', async () => {
 test('path traversal cannot escape dist', async () => {
   expect((await get('/../package.json')).status).toBe(404)
 })
+
+test('sitemap ships a lastmod on every url', async () => {
+  const xml = await (await get('/sitemap.xml')).text()
+  const locs = xml.match(/<loc>/g)?.length ?? 0
+  const mods = xml.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g)?.length ?? 0
+  expect(locs).toBeGreaterThan(0)
+  expect(mods).toBe(locs)
+})
