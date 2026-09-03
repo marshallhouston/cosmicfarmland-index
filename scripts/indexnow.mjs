@@ -3,37 +3,59 @@
 // Seznam share the endpoint; Google does not participate (it wants the sitemap
 // submitted in Search Console, which needs a login and cannot be scripted).
 //
-// The key is a file in public/ named <key>.txt whose body is the key: that file
-// being reachable on the domain is the whole proof of ownership. Run after a
-// deploy, once new urls are actually live:
+// The key is a file named <key>.txt whose body is the key: that file being
+// reachable on the domain is the whole proof of ownership.
+//
+// The server calls this on boot after a fresh deploy (see server.mjs), so there
+// is nothing to remember. Run it by hand against the source tree if you want:
 //   node scripts/indexnow.mjs
 import { readFileSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const REPO = join(dirname(fileURLToPath(import.meta.url)), '..')
-const HOST = 'cosmicfarmland.wtf'
+export const HOST = 'cosmicfarmland.wtf'
 
-const keyFile = readdirSync(join(REPO, 'public')).find((f) => /^[0-9a-f]{32}\.txt$/.test(f))
-if (!keyFile) throw new Error('no indexnow key file in public/ (expected <32 hex>.txt)')
-const key = keyFile.replace('.txt', '')
+// The date every url in the sitemap carries, or '' if there is no sitemap.
+export function sitemapDate(dir) {
+  try {
+    return readFileSync(join(dir, 'sitemap.xml'), 'utf8').match(/<lastmod>([^<]+)</)?.[1] ?? ''
+  } catch {
+    return ''
+  }
+}
 
-const sitemap = readFileSync(join(REPO, 'public', 'sitemap.xml'), 'utf8')
-const urlList = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
+// Only ping for a sitemap built today: a deploy regenerates it with the build
+// date, so this fires once per deploy day and stays quiet when the container is
+// merely restarted weeks later.
+export const isFresh = (dir, today = new Date().toISOString().slice(0, 10)) =>
+  sitemapDate(dir) === today
 
-// The key file has to be live on the host before the ping, or the whole batch
-// is rejected. Check it rather than guessing from a 202.
-const live = await fetch(`https://${HOST}/${keyFile}`)
-if (!live.ok || (await live.text()).trim() !== key)
-  throw new Error(`key file not live at https://${HOST}/${keyFile} — deploy first`)
+export async function ping(dir, { host = HOST } = {}) {
+  const keyFile = readdirSync(dir).find((f) => /^[0-9a-f]{32}\.txt$/.test(f))
+  if (!keyFile) throw new Error(`no indexnow key file in ${dir} (expected <32 hex>.txt)`)
+  const key = keyFile.replace('.txt', '')
 
-const res = await fetch('https://api.indexnow.org/indexnow', {
-  method: 'POST',
-  headers: { 'content-type': 'application/json; charset=utf-8' },
-  body: JSON.stringify({ host: HOST, key, keyLocation: `https://${HOST}/${keyFile}`, urlList }),
-})
-console.log(`indexnow ${res.status} ${res.statusText} for ${urlList.length} urls`)
-if (!res.ok) {
-  console.error(await res.text())
-  process.exit(1)
+  const urlList = [
+    ...readFileSync(join(dir, 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g),
+  ].map((m) => m[1])
+
+  // The key file has to be live on the host before the ping, or the whole batch
+  // is rejected. Check it rather than guessing from a 202.
+  const live = await fetch(`https://${host}/${keyFile}`)
+  if (!live.ok || (await live.text()).trim() !== key)
+    throw new Error(`key file not live at https://${host}/${keyFile}`)
+
+  const res = await fetch('https://api.indexnow.org/indexnow', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json; charset=utf-8' },
+    body: JSON.stringify({ host, key, keyLocation: `https://${host}/${keyFile}`, urlList }),
+  })
+  return { status: res.status, urls: urlList.length, body: res.ok ? '' : await res.text() }
+}
+
+if (import.meta.main) {
+  const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'public')
+  const r = await ping(dir)
+  console.log(`indexnow ${r.status} for ${r.urls} urls ${r.body}`)
+  if (r.status >= 300) process.exit(1)
 }

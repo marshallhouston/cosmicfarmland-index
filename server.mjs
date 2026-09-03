@@ -4,6 +4,7 @@
 // the FastAPI/auth stack those carry.
 import { serve, file } from 'bun'
 import { join, normalize } from 'node:path'
+import { isFresh, ping } from './scripts/indexnow.mjs'
 
 const DIST = join(import.meta.dir, 'dist')
 const PORT = process.env.PORT || 8080
@@ -116,4 +117,17 @@ function notFound(status = 404, reason) {
 if (import.meta.main) {
   serve({ port: PORT, fetch: handle })
   console.log(`cosmic-farmland index serving on :${PORT}`)
+
+  // Tell IndexNow (Bing, DuckDuckGo, Yandex, Seznam) about the new build. This
+  // is the only moment that knows a deploy both happened and is serving: the
+  // ping has to come after the key file is reachable, which is this process.
+  // isFresh keeps it to one deploy-day, so a plain restart is silent.
+  // ponytail: same-day restarts re-submit. Harmless at this volume; give it a
+  // marker file on a volume if the restart count ever climbs.
+  if (isFresh(DIST)) {
+    ping(DIST).then(
+      (r) => console.log(`indexnow ${r.status} for ${r.urls} urls ${r.body}`),
+      (e) => console.warn(`indexnow skipped: ${e.message}`),
+    )
+  }
 }

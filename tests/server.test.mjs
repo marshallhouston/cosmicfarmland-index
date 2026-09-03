@@ -3,6 +3,7 @@
 // two variants. Run: bun test
 import { test, expect, beforeAll } from 'bun:test'
 import { handle } from '../server.mjs'
+import { isFresh, sitemapDate } from '../scripts/indexnow.mjs'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -91,4 +92,12 @@ test('sitemap ships a lastmod on every url', async () => {
   const mods = xml.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g)?.length ?? 0
   expect(locs).toBeGreaterThan(0)
   expect(mods).toBe(locs)
+})
+
+test('indexnow pings only for a sitemap built today', () => {
+  const dist = join(import.meta.dir, '..', 'dist')
+  expect(isFresh(dist, sitemapDate(dist))).toBe(true)
+  expect(isFresh(dist, '1999-01-01')).toBe(false)
+  // No sitemap, no date, no ping. (A dir that exists but holds no sitemap.)
+  expect(isFresh(import.meta.dir)).toBe(false)
 })
