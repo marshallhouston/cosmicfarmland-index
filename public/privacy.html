@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>privacy — cosmicfarmland.wtf</title>
+<meta name="description" content="short version: this site does not collect anything about you.">
+<link rel="canonical" href="https://cosmicfarmland.wtf/privacy">
+<meta property="og:title" content="privacy — cosmicfarmland.wtf">
+<meta property="og:description" content="short version: this site does not collect anything about you.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cosmicfarmland.wtf/privacy">
+<meta property="og:image" content="https://cosmicfarmland.wtf/grayton-beach.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="text/markdown" href="https://cosmicfarmland.wtf/privacy.md">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127793;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amarante&family=Figtree:ital,wght@0,300..800;1,300..800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/grayton.css">
+<style>
+  /* Layout only. Every colour, face and texture comes from grayton.css. */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font-body); color: var(--color-ink);
+         background: var(--color-surface); -webkit-font-smoothing: antialiased; }
+  .wrap { position: relative; z-index: 1; max-width: 46rem; margin: 0 auto; padding: 0 1.5rem 8rem; }
+  nav.top { display: flex; gap: 1.5rem; padding: 2rem 0 0; font-family: var(--font-mono);
+            font-size: 0.72rem; letter-spacing: 0.25em; }
+  nav.top a { color: var(--color-moss); text-decoration: none; }
+  nav.top a:hover { color: var(--color-gold); }
+  h1 { font-family: var(--font-display); font-weight: 400; text-transform: lowercase;
+       font-size: clamp(2rem, 7vw, 3.2rem); margin: 3rem 0 1.5rem; color: var(--color-gold); }
+  h2 { font-family: var(--font-display); font-weight: 400; text-transform: lowercase;
+       font-size: 1.6rem; margin: 3rem 0 0.6rem; }
+  p, li { line-height: 1.75; color: var(--color-ink-dim); max-width: 62ch; }
+  ul { padding-left: 1.1rem; }
+  li { margin-bottom: 0.5rem; }
+  code { font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-ink); }
+  a.inline { color: var(--color-gold); text-underline-offset: 3px; }
+  footer { margin-top: 5rem; padding-top: 1.6rem; border-top: 1px solid var(--color-line);
+           display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: space-between;
+           font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
+           text-transform: uppercase; color: var(--color-ink-dim); }
+  footer a { color: var(--color-moss); text-decoration: none; }
+  footer a:hover { color: var(--color-gold); }
+  footer .slogan { color: var(--color-gold); letter-spacing: 0.28em; }
+</style>
+</head>
+<body>
+<div class="board"></div><div class="canopy"></div><div class="straw"></div><div class="grain"></div>
+<div class="wrap">
+  <nav class="top"><a href="/">&#8592; cosmic farmland</a></nav>
+  <main>
+<h1>privacy</h1>
+<p>short version: this site does not collect anything about you.</p>
+<h2>what is not collected</h2>
+<p>there are no analytics scripts, no tracking pixels, no advertising tags, no session recording, no fingerprinting, and no third-party embeds beyond the web font stylesheet described below. there is no account system, no login, no newsletter signup and no contact form, so there is nothing here that asks you for a name, an email address or a payment method, and nothing that could store one.</p>
+<h2>what is stored on your device</h2>
+<p>one item in your browser's localStorage, under the key <code>cf-theme</code>, remembering whether you last chose the board (dark) or daylight (light) view. it never leaves your browser, it is not an identifier, and clearing your site data removes it.</p>
+<h2>what third parties see</h2>
+<ul><li><strong>google fonts.</strong> the pages load typefaces from fonts.googleapis.com and fonts.gstatic.com, so google receives the request for those files, including your ip address, under its own privacy policy.</li><li><strong>cloudflare and railway.</strong> the site is served through cloudflare in front of railway. both keep standard server request logs, which include ip address, user agent and the path requested, for security and operations.</li></ul>
+<h2>agents and crawlers</h2>
+<p>crawling rules are published at <a class="inline" href="/robots.txt">robots.txt</a>, including content signals covering search, ai training and ai input. a machine-readable summary of the whole site is published at <a class="inline" href="/llms.txt">llms.txt</a>.</p>
+<h2>changes</h2>
+<p>if this policy changes, the updated version is published here and the change shows up in the public git history of the site repo.</p>
+  </main>
+  <footer>
+    <span>grown by marshall</span>
+    <span><a href="/about">about</a> &#183; <a href="/contact">contact</a> &#183; <a href="/privacy">privacy</a> &#183; <a href="/llms.txt">llms.txt</a></span>
+    <span class="slogan">nice dogs, strange people</span>
+  </footer>
+</div>
+</body>
+</html>

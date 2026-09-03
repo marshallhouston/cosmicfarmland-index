@@ -10,46 +10,110 @@ const PORT = process.env.PORT || 8080
 
 // Cloudflare applies a 4h default TTL to static extensions when the origin
 // sends no cache-control, and it will happily pin whatever it saw first. These
-// three were soft-404s (200 + homepage HTML) until #28, so the edge cached
-// HTML as robots.txt and served it for hours after the fix deployed. They are
-// small, they change on every deploy, and being wrong about robots.txt is
-// expensive, so cap the edge TTL. Hashed assets keep the long default.
-const SHORT_CACHE = new Set(['/robots.txt', '/sitemap.xml', '/llms.txt'])
+// were soft-404s (200 + homepage HTML) until #28, so the edge cached HTML as
+// robots.txt and served it for hours after the fix deployed. They are small,
+// they change on every deploy, and being wrong about robots.txt is expensive,
+// so cap the edge TTL. Hashed assets keep the long default.
+const SHORT_CACHE = new Set(['/robots.txt', '/sitemap.xml', '/llms.txt', '/index.md'])
 
-serve({
-  port: PORT,
-  async fetch(req) {
-    const url = new URL(req.url)
-    if (url.pathname === '/api/health') {
-      return Response.json({ status: 'ok' })
-    }
-    const safe = normalize(url.pathname).replace(/^(\.\.(\/|\\|$))+/, '')
-    if (safe === '/') {
-      return new Response(file(join(DIST, 'index.html')), {
-        headers: { 'content-type': 'text/html' },
+// Every negotiated response carries this. Without Accept in Vary, a CDN can
+// hand the cached HTML to an agent that asked for markdown, or the reverse,
+// depending on which variant landed in the cache first (acceptmarkdown.com).
+const VARY = 'Accept, Accept-Encoding'
+
+// Parse Accept into a q-value lookup. RFC 9110: a missing q is 1, and params
+// after the media type (charset, q) are dropped from the key.
+function accepts(header = '') {
+  const q = {}
+  for (const part of header.split(',')) {
+    const [type, ...params] = part.trim().split(';')
+    if (!type) continue
+    const qp = params.map((p) => p.trim()).find((p) => p.startsWith('q='))
+    q[type.toLowerCase()] = qp ? parseFloat(qp.slice(2)) || 0 : 1
+  }
+  return q
+}
+
+const qFor = (q, ...types) => Math.max(...types.map((t) => q[t] ?? 0), q['*/*'] ?? 0)
+
+// The .md twin of a page path: '/' -> index.md, '/about' -> about.md.
+const mdTwin = (path) => (path === '/' ? '/index.md' : `${path}.md`)
+
+const NOT_FOUND = `# 404 — nothing grows at this path
+
+This page does not exist on cosmicfarmland.wtf.
+
+- [/llms.txt](https://cosmicfarmland.wtf/llms.txt) — the whole site in one machine-readable file, with when-to-use guidance
+- [/sitemap.xml](https://cosmicfarmland.wtf/sitemap.xml) — every indexable url
+- [/](https://cosmicfarmland.wtf/) — the index
+`
+
+export async function handle(req) {
+  const url = new URL(req.url)
+  if (url.pathname === '/api/health') return Response.json({ status: 'ok' })
+
+  const safe = normalize(url.pathname).replace(/^(\.\.(\/|\\|$))+/, '')
+  const q = accepts(req.headers.get('accept') ?? '')
+  const wantsMd = qFor(q, 'text/markdown') > qFor(q, 'text/html', 'application/xhtml+xml')
+  const mdOnly = wantsMd && qFor(q, 'text/html', 'application/xhtml+xml') === 0
+
+  const html = (f, headers) =>
+    new Response(f, { headers: { 'content-type': 'text/html; charset=utf-8', vary: VARY, ...headers } })
+
+  // Markdown variant, when the client prefers it and one exists.
+  if (wantsMd && !safe.endsWith('.md')) {
+    const md = file(join(DIST, mdTwin(safe)))
+    if (await md.exists()) {
+      return new Response(md, {
+        headers: {
+          'content-type': 'text/markdown; charset=utf-8',
+          vary: VARY,
+          ...(SHORT_CACHE.has(mdTwin(safe)) ? { 'cache-control': 'public, max-age=300' } : {}),
+        },
       })
     }
-    // Serve static asset if it exists.
-    const asset = file(join(DIST, safe))
-    if (await asset.exists()) {
-      return new Response(
-        asset,
-        SHORT_CACHE.has(safe)
-          ? { headers: { 'cache-control': 'public, max-age=300' } }
-          : undefined
-      )
+  }
+
+  if (safe === '/') {
+    // A client that will take markdown and nothing else gets 406, not HTML it
+    // cannot read. Anything that also accepts HTML falls through to the page.
+    if (mdOnly) return notFound(406, 'no markdown variant for this path')
+    return html(file(join(DIST, 'index.html')))
+  }
+
+  const asset = file(join(DIST, safe))
+  if (await asset.exists()) {
+    const headers = {
+      vary: VARY,
+      ...(SHORT_CACHE.has(safe) ? { 'cache-control': 'public, max-age=300' } : {}),
+      ...(safe.endsWith('.md') ? { 'content-type': 'text/markdown; charset=utf-8' } : {}),
     }
-    // Pretty URL for standalone pages: /golf serves dist/golf.html.
-    const page = file(join(DIST, `${safe}.html`))
-    if (!safe.includes('.') && (await page.exists())) {
-      return new Response(page)
-    }
-    // The index app has no client-side routes, so nothing unmatched is real.
-    // Falling through to index.html here would make every miss a soft 404.
-    return new Response('not found\n', {
-      status: 404,
-      headers: { 'content-type': 'text/plain' },
-    })
-  },
-})
-console.log(`cosmic-farmland index serving on :${PORT}`)
+    return new Response(asset, { headers })
+  }
+
+  // Pretty URL for standalone pages: /golf serves dist/golf.html.
+  const page = file(join(DIST, `${safe}.html`))
+  if (!safe.includes('.') && (await page.exists())) {
+    if (mdOnly) return notFound(406, 'no markdown variant for this path')
+    return html(page)
+  }
+
+  // The index app has no client-side routes, so nothing unmatched is real.
+  // Falling through to index.html here would make every miss a soft 404.
+  return notFound(404)
+}
+
+function notFound(status = 404, reason) {
+  const body = reason ? `${NOT_FOUND}\n(${reason})\n` : NOT_FOUND
+  // Markdown body, text/plain type: agents read the pointers either way, and a
+  // person who mistyped a url sees the page instead of downloading a file.
+  return new Response(body, {
+    status,
+    headers: { 'content-type': 'text/plain; charset=utf-8', vary: VARY },
+  })
+}
+
+if (import.meta.main) {
+  serve({ port: PORT, fetch: handle })
+  console.log(`cosmic-farmland index serving on :${PORT}`)
+}
