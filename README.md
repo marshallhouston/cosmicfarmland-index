@@ -32,6 +32,11 @@ without JavaScript:
   the markdown, run `bun run gen`, never the generated html.
 - `scripts/seo-fragment.mjs` injects a plain-HTML mirror of the farm into
   `#root` at build time; React clears it on mount.
+- `public/<32-hex>.txt` + `scripts/indexnow.mjs` — IndexNow ownership key and
+  the ping. Run `node scripts/indexnow.mjs` after a deploy that adds or changes
+  urls; it reads the sitemap, checks the key file is live and submits the batch
+  to Bing, DuckDuckGo, Yandex and Seznam. Google does not take IndexNow: submit
+  the sitemap in Search Console instead.
 - `server.mjs` negotiates on `Accept` (acceptmarkdown.com): `text/markdown`
   gets the `.md` twin with `Vary: Accept, Accept-Encoding`, a markdown-only
   client on a path with no twin gets 406, and unknown paths get a real 404 with
