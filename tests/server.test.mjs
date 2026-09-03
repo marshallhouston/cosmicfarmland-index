@@ -101,3 +101,15 @@ test('indexnow pings only for a sitemap built today', () => {
   // No sitemap, no date, no ping. (A dir that exists but holds no sitemap.)
   expect(isFresh(import.meta.dir)).toBe(false)
 })
+
+test('robots.txt welcomes reading agents and refuses training crawlers', async () => {
+  const txt = await (await get('/robots.txt')).text()
+  expect(txt).toContain('ai-train=no')
+  expect(txt).toContain('ai-input=yes')
+  // Each of these gets its own group, so a missing one is a silent policy hole.
+  const group = (ua) => txt.split(/\n\s*\n/).find((b) => b.includes(`User-agent: ${ua}`))
+  for (const ua of ['Claude-User', 'Claude-SearchBot', 'ChatGPT-User', 'OAI-SearchBot'])
+    expect(group(ua)).toContain('Allow: /')
+  for (const ua of ['ClaudeBot', 'GPTBot', 'CCBot', 'Google-Extended'])
+    expect(group(ua)).toContain('Disallow: /')
+})

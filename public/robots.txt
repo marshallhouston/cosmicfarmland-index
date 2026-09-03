@@ -1,4 +1,60 @@
+# cosmicfarmland.wtf
+#
+# Policy: agents are welcome to read this site and answer with it. Training on
+# it is not granted. Cloudflare prepends its own managed block above this one
+# and blocks the training crawlers by name; these rules say the same thing at
+# the origin, so the policy survives that toggle being turned off.
+
+# Read, index, ground answers: yes. Train on it: no.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
 Allow: /
+
+# Agents fetching a page for a person, and the search indexes behind assistants.
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Training and dataset collection. Same set Cloudflare blocks, named here too.
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
 
 Sitemap: https://cosmicfarmland.wtf/sitemap.xml
