@@ -188,18 +188,10 @@
   .idx a{ color:var(--ink-2); padding-bottom:2px; border-bottom:1px solid transparent }
   .idx a:hover, .idx a.on{ color:var(--ink); border-bottom-color:rgba(20,19,16,.55) }
   .sheet > .head{
-    position:sticky; top:0; z-index:20;
+    position:relative; z-index:20;
     display:flex; justify-content:space-between; align-items:baseline;
     margin:0 calc(-1 * var(--pad));
     padding:30px var(--pad) 15px;
-    background:#f2ede0;
-  }
-  /* the header's own slip of paper fibre, so it does not read as a flat bar */
-  .sheet > .head::before{
-    content:""; position:absolute; top:0; bottom:1px; z-index:-1;
-    left:0; right:0;
-    pointer-events:none; mix-blend-mode:multiply; opacity:.12;
-    background-image:url("img/paper.jpg"); background-size:760px auto;
   }
   .sheet > .head::after{     /* stops on the measure, like every other rule */
     content:""; position:absolute; left:var(--pad); right:var(--pad);
@@ -218,10 +210,9 @@
   }
   .shed a{
     display:grid; grid-template-columns:132px 1fr; gap:14px; align-items:baseline;
-    padding:9px 0; border-top:1px solid rgba(20,19,16,.1);
+    padding:7px 0;
     font-size:12.5px; line-height:1.35; color:var(--ink-2);
   }
-  .shed a:first-of-type{ border-top:0 }
   .shed a b{
     font-family:"IBM Plex Mono", monospace; font-weight:400; font-size:12px;
     letter-spacing:.02em; color:var(--ink);
@@ -321,42 +312,42 @@ const apps = [
   { no:"cf-001", n:"marshallhouston.wtf", u:"https://marshallhouston.wtf",
     d:"writing about the cosmic farmland",
     img:"specimen-ice-plant.png", alt:"a pressed hardy ice plant sprig, thick fleshy leaves and one star-shaped flower",
-    rot:2.4, full:1, loc:"marshallhouston.wtf", h:[[27.1, 30.4, 20, 88], [80.4, 47.1, 20, 88]] },
+    rot:2.4, full:1, loc:"marshallhouston.wtf", h:[[27.5, 13.3, 26, 0.0], [9.5, 77.8, 34, 31.1]] },
 
   { no:"cf-002", s:.72, n:"anthology '77", u:"https://grateful-dead-77.cosmicfarmland.wtf",
     d:"every show of the grateful dead's spring 1977 tour, mapped, with setlists and tapes",
     img:"specimen-bee-balm.png", alt:"a pressed bee balm flower head, shaggy tubular petals radiating from the crown",
-    rot:-3.5, loc:"grateful-dead-77", h:[[45.8, 34.3, 22, 4], [54.6, 35.6, 22, 4]] },
+    rot:-3.5, loc:"grateful-dead-77", h:[[50.0, 30.1, 34, -2.8], [49.6, 72.2, 21, -2.6]] },
 
   { no:"cf-003", s:1.0, n:"lenny explorer", u:"https://lenny-explorer.cosmicfarmland.wtf",
     d:"a reader for lenny's newsletter posts and podcast transcripts",
     img:"specimen-aster.png", alt:"a pressed aster stem, narrow leaves and small daisy-like flower heads", pale:1,
-    rot:-2.4, loc:"lenny-explorer", h:[[42.9, 40.5, 22, 4], [55.4, 32.7, 22, 4]] },
+    rot:-2.4, loc:"lenny-explorer", h:[[50.5, 34.0, 20, -4.0], [49.8, 84.4, 28, -12.3]] },
 
   { no:"cf-004", s:1.18, n:"systems playground", u:"https://systems-thinking.cosmicfarmland.wtf",
     d:"stocks, flows, feedback loops, delays, and meadows' twelve leverage points",
     img:"specimen-blue-salvia.png", alt:"a pressed blue salvia spike, narrow leaves and a tall row of tubular flowers",
-    rot:3.5, loc:"systems-thinking", h:[[46.7, 45.2, 22, 4], [52.5, 44.1, 22, 4]] },
+    rot:3.5, loc:"systems-thinking", h:[[51.1, 24.9, 34, 5.1], [49.9, 82.3, 29, -0.0]] },
 
   { no:"cf-005", s:.45, n:"strategy wizard", u:"https://strategy-wizard.cosmicfarmland.wtf",
     d:"build a real action agenda and let an inline critic tear at it",
     img:"specimen-furmans-red-sage.png", alt:"a pressed furman's red sage stem, small oval leaves and a spike of tubular flowers",
-    rot:-2.2, loc:"strategy-wizard", h:[[45.0, 49.2, 20, 88], [52.5, 46.0, 20, 88]] },
+    rot:-2.2, loc:"strategy-wizard", h:[[49.2, 47.9, 21, 18.4], [50.0, 87.9, 34, -5.7]] },
 
   { no:"cf-006", s:1.3, n:"bobby bowser arcade", u:"https://bobby-bowser.cosmicfarmland.wtf",
     d:"ten cabinets of coding-craft minigames. defeat bad practices, collect good ones",
     img:"specimen-hyssop.png", alt:"a single pressed anise hyssop spike, tall and narrow, dense with tiny dried flowers",
-    rot:2, loc:"bobby-bowser", h:[[47.5, 42.5, 22, 4], [54.2, 55.7, 22, 4]] },
+    rot:2, loc:"bobby-bowser", h:[[50.5, 26.3, 34, -4.2], [50.0, 77.1, 31, 0.7]] },
 
   { no:"cf-007", s:.8, n:"octopus antipatterns", u:"https://octopus-org-lair.cosmicfarmland.wtf",
     d:"36 org antipatterns to browse, drill with recall quizzes, and diagnose",
     img:"specimen-hummingbird-mint.png", alt:"a pressed hummingbird mint stem, triangular leaves and a loose spike of flowers",
-    rot:-3, loc:"octopus-org-lair", h:[[20.4, 68.8, 20, 88], [73.8, 48.6, 20, 88]] },
+    rot:-3, loc:"octopus-org-lair", h:[[37.7, 49.6, 23, -90.0], [87.7, 50.6, 34, -90.0]] },
 
   { no:"cf-008", s:.82, n:"golf course designer", u:"https://golf-course-designer.cosmicfarmland.wtf",
     d:"shape nine holes of dirt, then let a simulated field of real handicaps judge them",
     img:"specimen-yarrow.png", alt:"a pressed yarrow stem, feathery leaves and a flat cluster of tiny flowers", pale:1,
-    rot:4, full:1, loc:"golf-course-designer", h:[[44.2, 48.3, 22, 4], [51.2, 49.2, 22, 4]] }
+    rot:4, full:1, loc:"golf-course-designer", h:[[48.7, 66.0, 20, -2.0], [50.2, 88.0, 22, 1.0]] }
 ];
 
 /* the two golf pages that are live today, from the same cabinet */
@@ -364,12 +355,12 @@ const golf = [
   { no:"cf-009", s:.95, n:"the war on double bogeys", u:"/golf", kick:"the record",
     d:"every round on my ghin record, filterable: handicap arc, scoring buckets, and where the shots actually go",
     img:"specimen-echinacea.png", alt:"a pressed echinacea flower head, drooping dried petals around a spiky cone center",
-    rot:-4, loc:"/golf", h:[[18.8, 45.3, 20, 88], [67.5, 59.3, 20, 88]] },
+    rot:-4, loc:"/golf", h:[[40.2, 49.5, 29, -74.2], [83.6, 78.0, 34, -70.9]] },
 
   { no:"cf-010", s:1.12, n:"sunday, hole by hole", u:"/golf/city-am-2026", kick:"2026 denver city am",
     d:"final round of the 2026 denver city amateur. round 1 leader by 2 strokes. winner by 1",
     img:"specimen-pitcher-salvia.png", alt:"a pressed pitcher sage stem, sparse tubular flowers along a thin spike",
-    rot:3, loc:"/golf/city-am-2026", h:[[48.8, 50.2, 20, 88], [73.8, 34.3, 20, 88]] }
+    rot:3, loc:"/golf/city-am-2026", h:[[67.2, 39.5, 18, -90.0], [84.8, 24.2, 28, -90.0]] }
 ];
 
 const tools = {
