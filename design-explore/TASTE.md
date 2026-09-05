@@ -30,8 +30,11 @@ Where they conflict with anything else, these win.
 - **Sparse.** Visual busyness is the number one complaint. On a dense page the owner
   reported not knowing where to look or where to go. One clear focal point per screen.
   Empty space is the feature.
-- **Faint ruled lines are welcome.** The owner liked them: reads as a notebook or a
-  page, personal rather than machine.
+- **Faint ruled lines are welcome, and the full ruled grid is the chosen layout.** The
+  owner liked them: reads as a notebook or a page, personal rather than machine. On the
+  pass-7 grid comparison the owner picked the base sheet, whose plates are divided by a
+  hairline grid on all sides, over four looser variants. Design critics scored the ruled
+  separation down. The owner overrode them. Rules stay.
 - **If drawings or specimens appear, they must be visibly different from each other.**
   Nine near-identical illustrations was a specific complaint.
 - **Lowercase, plainspoken, few words.**
