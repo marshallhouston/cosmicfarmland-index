@@ -99,12 +99,13 @@
   .row:not(.full) > .sp:first-child{ border-right:1px solid var(--rule) }
   .sp{ display:flex; flex-direction:column; padding:40px 34px 48px }
   .mount{
-    position:relative; width:fit-content; max-width:100%; height:340px; margin:0 auto;
+    --s:1;                 /* per specimen, set on the element. see the data. */
+    position:relative; width:fit-content; max-width:100%; margin:0 auto;
+    height:calc(340px * var(--s));
     display:flex; align-items:center; justify-content:center;
   }
-  .mount img{ display:block; width:auto; height:auto; max-width:100%; max-height:340px }
-  .row.full .mount{ height:470px }
-  .row.full .mount img{ max-height:470px }
+  .mount img{ display:block; width:auto; height:auto; max-width:100%; max-height:100% }
+  .row.full .mount{ height:calc(470px * var(--s)) }
 
   /* real pressed material, all nine. multiply drops the scan matte so the
      sheet fibre reads straight through; the duotone pulls them to the ink. */
@@ -322,37 +323,37 @@ const apps = [
     img:"specimen-ice-plant.png", alt:"a pressed hardy ice plant sprig, thick fleshy leaves and one star-shaped flower",
     rot:2.4, full:1, loc:"marshallhouston.wtf", h:[[27.1, 30.4, 20, 88], [80.4, 47.1, 20, 88]] },
 
-  { no:"cf-002", n:"anthology '77", u:"https://grateful-dead-77.cosmicfarmland.wtf",
+  { no:"cf-002", s:.72, n:"anthology '77", u:"https://grateful-dead-77.cosmicfarmland.wtf",
     d:"every show of the grateful dead's spring 1977 tour, mapped, with setlists and tapes",
     img:"specimen-bee-balm.png", alt:"a pressed bee balm flower head, shaggy tubular petals radiating from the crown",
     rot:-3.5, loc:"grateful-dead-77", h:[[45.8, 34.3, 22, 4], [54.6, 35.6, 22, 4]] },
 
-  { no:"cf-003", n:"lenny explorer", u:"https://lenny-explorer.cosmicfarmland.wtf",
+  { no:"cf-003", s:1.0, n:"lenny explorer", u:"https://lenny-explorer.cosmicfarmland.wtf",
     d:"a reader for lenny's newsletter posts and podcast transcripts",
     img:"specimen-aster.png", alt:"a pressed aster stem, narrow leaves and small daisy-like flower heads", pale:1,
     rot:-2.4, loc:"lenny-explorer", h:[[42.9, 40.5, 22, 4], [55.4, 32.7, 22, 4]] },
 
-  { no:"cf-004", n:"systems playground", u:"https://systems-thinking.cosmicfarmland.wtf",
+  { no:"cf-004", s:1.18, n:"systems playground", u:"https://systems-thinking.cosmicfarmland.wtf",
     d:"stocks, flows, feedback loops, delays, and meadows' twelve leverage points",
     img:"specimen-blue-salvia.png", alt:"a pressed blue salvia spike, narrow leaves and a tall row of tubular flowers",
     rot:3.5, loc:"systems-thinking", h:[[46.7, 45.2, 22, 4], [52.5, 44.1, 22, 4]] },
 
-  { no:"cf-005", n:"strategy wizard", u:"https://strategy-wizard.cosmicfarmland.wtf",
+  { no:"cf-005", s:.45, n:"strategy wizard", u:"https://strategy-wizard.cosmicfarmland.wtf",
     d:"build a real action agenda and let an inline critic tear at it",
     img:"specimen-furmans-red-sage.png", alt:"a pressed furman's red sage stem, small oval leaves and a spike of tubular flowers",
     rot:-2.2, loc:"strategy-wizard", h:[[45.0, 49.2, 20, 88], [52.5, 46.0, 20, 88]] },
 
-  { no:"cf-006", n:"bobby bowser arcade", u:"https://bobby-bowser.cosmicfarmland.wtf",
+  { no:"cf-006", s:1.3, n:"bobby bowser arcade", u:"https://bobby-bowser.cosmicfarmland.wtf",
     d:"ten cabinets of coding-craft minigames. defeat bad practices, collect good ones",
     img:"specimen-hyssop.png", alt:"a single pressed anise hyssop spike, tall and narrow, dense with tiny dried flowers",
     rot:2, loc:"bobby-bowser", h:[[47.5, 42.5, 22, 4], [54.2, 55.7, 22, 4]] },
 
-  { no:"cf-007", n:"octopus antipatterns", u:"https://octopus-org-lair.cosmicfarmland.wtf",
+  { no:"cf-007", s:.8, n:"octopus antipatterns", u:"https://octopus-org-lair.cosmicfarmland.wtf",
     d:"36 org antipatterns to browse, drill with recall quizzes, and diagnose",
     img:"specimen-hummingbird-mint.png", alt:"a pressed hummingbird mint stem, triangular leaves and a loose spike of flowers",
     rot:-3, loc:"octopus-org-lair", h:[[20.4, 68.8, 20, 88], [73.8, 48.6, 20, 88]] },
 
-  { no:"cf-008", n:"golf course designer", u:"https://golf-course-designer.cosmicfarmland.wtf",
+  { no:"cf-008", s:.82, n:"golf course designer", u:"https://golf-course-designer.cosmicfarmland.wtf",
     d:"shape nine holes of dirt, then let a simulated field of real handicaps judge them",
     img:"specimen-yarrow.png", alt:"a pressed yarrow stem, feathery leaves and a flat cluster of tiny flowers", pale:1,
     rot:4, full:1, loc:"golf-course-designer", h:[[44.2, 48.3, 22, 4], [51.2, 49.2, 22, 4]] }
@@ -360,12 +361,12 @@ const apps = [
 
 /* the two golf pages that are live today, from the same cabinet */
 const golf = [
-  { no:"cf-009", n:"the war on double bogeys", u:"/golf", kick:"the record",
+  { no:"cf-009", s:.95, n:"the war on double bogeys", u:"/golf", kick:"the record",
     d:"every round on my ghin record, filterable: handicap arc, scoring buckets, and where the shots actually go",
     img:"specimen-echinacea.png", alt:"a pressed echinacea flower head, drooping dried petals around a spiky cone center",
     rot:-4, loc:"/golf", h:[[18.8, 45.3, 20, 88], [67.5, 59.3, 20, 88]] },
 
-  { no:"cf-010", n:"sunday, hole by hole", u:"/golf/city-am-2026", kick:"2026 denver city am",
+  { no:"cf-010", s:1.12, n:"sunday, hole by hole", u:"/golf/city-am-2026", kick:"2026 denver city am",
     d:"final round of the 2026 denver city amateur. round 1 leader by 2 strokes. winner by 1",
     img:"specimen-pitcher-salvia.png", alt:"a pressed pitcher sage stem, sparse tubular flowers along a thin spike",
     rot:3, loc:"/golf/city-am-2026", h:[[48.8, 50.2, 20, 88], [73.8, 34.3, 20, 88]] }
@@ -394,7 +395,7 @@ function plateHTML(a){
   const hinges = a.h.map(([x,y,len,r],j) =>
     `<span class="hinge h${(j%3)+1}" style="left:${x}%;top:${y}%;width:${len}px;height:${9+(j%3)}px;transform:translate(-50%,-50%) rotate(${r}deg)"></span>`).join("");
   return `<a class="sp" href="${a.u}">
-    <span class="mount" style="transform:rotate(${a.rot}deg)">
+    <span class="mount" style="--s:${a.s||1}; transform:rotate(${a.rot}deg)">
       <img class="ph${a.pale?" pale":""}" src="img/${a.img}" alt="${a.alt}">
       ${hinges}
     </span>
@@ -402,7 +403,7 @@ function plateHTML(a){
       <span class="no">${a.no}${a.kick?" &nbsp;/&nbsp; "+a.kick:""}</span>
       <span class="name">${a.n}</span>
       <span class="d">${a.d}</span>
-      <span class="fld">loc. <em>${a.loc}</em></span>
+      ${a.loc.replace(/-/g," ") === a.n ? "" : `<span class="fld">loc. <em>${a.loc}</em></span>`}
     </span>
   </a>`;
 }
@@ -455,12 +456,9 @@ const lyra = [
 const fld = document.getElementById("field"), W = 380, H = 220;
 fld.innerHTML = lyra.map(([ra,dec,m]) => {
   const x = (19.40 - ra) / 1.15 * W, y = (40.6 - dec) / 9.0 * H;
-  const sz = Math.max(1.8, (7.0 - m) * 0.92), o = Math.max(.5, (7.0 - m) * .19);
+  const sz = Math.min(3.6, Math.max(1.4, (7.0 - m) * 0.55)),
+        o  = Math.min(.78, Math.max(.34, (7.0 - m) * .13));
   return `<i style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;width:${sz.toFixed(2)}px;height:${sz.toFixed(2)}px;opacity:${o.toFixed(2)}"></i>`;
-}).join("") +
-Array.from({length:18},(_,i) => {
-  const sz = .8 + rnd(i+300)*1.1;
-  return `<i style="left:${(rnd(i)*W).toFixed(1)}px;top:${(rnd(i+90)*H).toFixed(1)}px;width:${sz.toFixed(2)}px;height:${sz.toFixed(2)}px;opacity:${(.1+rnd(i+170)*.16).toFixed(2)}"></i>`;
 }).join("");
 
 const marks = [...document.querySelectorAll(".idx a")];
