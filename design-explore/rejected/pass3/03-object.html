@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cosmic farmland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e9e2d4;
+    --ink:#16130f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  a{color:inherit}
+
+  .mark{
+    padding:34px 40px 0;
+    font-size:11px;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    font-weight:400;
+  }
+  .counts{
+    padding:8px 40px 0;
+    font-size:12px;
+    letter-spacing:.06em;
+    opacity:.5;
+  }
+
+  main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:40px 32px 0;
+  }
+
+  .rack{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:34px;
+    position:relative;
+    margin:0 auto;
+  }
+  .rack::before{
+    content:"";
+    position:absolute;
+    left:-46px;
+    right:-46px;
+    top:23px;
+    height:2px;
+    background:var(--ink);
+    z-index:0;
+  }
+
+  .col{
+    position:relative;
+    z-index:1;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    outline:none;
+  }
+  svg.k{
+    display:block;
+    height:300px;
+    width:74px;
+    overflow:visible;
+    fill:var(--paper);
+    stroke:var(--ink);
+    stroke-width:2;
+    stroke-linejoin:round;
+    stroke-linecap:round;
+  }
+  .stamp{
+    fill:var(--ink);
+    stroke:none;
+    font-family:"Newsreader",Georgia,serif;
+    font-size:9px;
+    letter-spacing:.16em;
+  }
+  .nm{
+    writing-mode:vertical-rl;
+    margin-top:16px;
+    font-size:15px;
+    letter-spacing:.05em;
+    border-left:1px dotted rgba(22,19,15,.45);
+    padding-left:7px;
+    white-space:nowrap;
+  }
+  .col:hover svg.k,
+  .col:focus-visible svg.k{stroke-width:3.4}
+  .col:hover .nm,
+  .col:focus-visible .nm{border-left:1px solid var(--ink);font-weight:500}
+  .col:focus-visible{box-shadow:0 0 0 2px var(--ink);border-radius:2px}
+
+  .read{
+    max-width:620px;
+    margin:56px auto 0;
+    min-height:4.6em;
+    text-align:center;
+    font-size:16px;
+    line-height:1.55;
+    opacity:.86;
+  }
+
+  footer{padding:0 40px 34px;font-size:12px;letter-spacing:.06em;opacity:.5}
+
+  @media (max-width:1100px){
+    .rack{gap:20px}
+    svg.k{height:240px;width:60px}
+    .nm{font-size:13px}
+  }
+  @media (max-width:820px){
+    .mark,.counts,footer{padding-left:22px;padding-right:22px}
+    main{padding:26px 16px 0}
+    .rack{flex-wrap:wrap;gap:14px 16px;justify-content:flex-start}
+    .rack::before{display:none}
+    .col{border-top:2px solid var(--ink);padding-top:0}
+    svg.k{height:180px;width:46px}
+    .nm{font-size:12px;margin-top:10px}
+    .read{margin-top:34px;font-size:15px;text-align:left;min-height:5.6em}
+  }
+</style>
+</head>
+<body>
+
+<div class="mark">cosmic farmland</div>
+<div class="counts">9 apps &middot; 20 skills &middot; 7 commands &middot; 4 plugins</div>
+
+<main>
+  <div class="rack" id="rack">
+
+    <!-- fob tag: toolshed -->
+    <a class="col" href="https://github.com/marshallhouston/cosmic-farmland" data-b="the skills, commands, and plugins these were built with. source on github.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <path d="M14 8 h36 a6 6 0 0 1 6 6 v150 a6 6 0 0 1 -6 6 h-36 a6 6 0 0 1 -6 -6 v-150 a6 6 0 0 1 6 -6 z"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+        <line x1="12" y1="34" x2="52" y2="34" stroke-width="1"/>
+        <text class="stamp" transform="rotate(90 50 52)" x="50" y="52">20 skills</text>
+        <text class="stamp" transform="rotate(90 38 52)" x="38" y="52">7 commands</text>
+        <text class="stamp" transform="rotate(90 26 52)" x="26" y="52">4 plugins</text>
+      </svg>
+      <span class="nm">toolshed</span>
+    </a>
+
+    <!-- 1. skeleton key -->
+    <a class="col" href="https://marshallhouston.wtf" data-b="writing about the cosmic farmland.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <path d="M28 38 v192 h8 v-14 h16 v-10 h-8 v-8 h8 v-10 h-16 v-150 z"/>
+        <circle cx="32" cy="26" r="17"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+        <circle cx="32" cy="34" r="4" fill="none" stroke-width="1.4"/>
+      </svg>
+      <span class="nm">marshallhouston.wtf</span>
+    </a>
+
+    <!-- 2. flat pin-tumbler key -->
+    <a class="col" href="https://lenny.cosmicfarmland.wtf" data-b="a personal archive reader for lenny's newsletter posts and podcast transcripts.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <path d="M14 8 h36 a6 6 0 0 1 6 6 v26 a6 6 0 0 1 -6 6 h-36 a6 6 0 0 1 -6 -6 v-26 a6 6 0 0 1 6 -6 z"/>
+        <path d="M25 44 h14 v192 h-14 v-12 l-7 -7 l7 -7 v-12 l-7 -7 l7 -7 v-12 l-7 -7 l7 -7 z"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+      </svg>
+      <span class="nm">lenny explorer</span>
+    </a>
+
+    <!-- 3. barrel / pipe key -->
+    <a class="col" href="https://anthology77.cosmicfarmland.wtf" data-b="an interactive archive of the grateful dead's spring 1977 tour. map every show, read every setlist, hear the tapes.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <circle cx="32" cy="26" r="18"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+        <path d="M24 42 v186 h16 v-186 z"/>
+        <path d="M40 190 h14 v34 h-14"/>
+        <line x1="40" y1="202" x2="52" y2="202" stroke-width="1.4"/>
+        <line x1="40" y1="212" x2="52" y2="212" stroke-width="1.4"/>
+        <ellipse cx="32" cy="228" rx="8" ry="3.5" fill="none" stroke-width="1.4"/>
+      </svg>
+      <span class="nm">anthology '77</span>
+    </a>
+
+    <!-- 4. warded flag key -->
+    <a class="col" href="https://systems.cosmicfarmland.wtf" data-b="interactive teaching tool for donella h. meadows' systems thinking: stocks, flows, feedback loops, delays, and the 12 leverage points.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <ellipse cx="32" cy="28" rx="15" ry="20"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+        <path d="M28 46 v174 h6 v-8 h20 v-12 h-20 v-8 h20 v-12 h-20 v-8 h20 v-12 h-20 v-114 z"/>
+      </svg>
+      <span class="nm">systems playground</span>
+    </a>
+
+    <!-- 5. triangular bow, stepped bit -->
+    <a class="col" href="https://strategy.cosmicfarmland.wtf" data-b="build a real strategy, an action agenda, not a wish list. guided, with an inline critic, based on rumelt's good strategy / bad strategy.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <path d="M32 6 L54 44 H10 Z"/>
+        <circle cx="32" cy="26" r="6" fill="none"/>
+        <path d="M27 44 v166 h5 v-10 h8 v-14 h-8 v-10 h14 v-14 h-14 v-10 h20 v-14 h-20 v-94 z"/>
+      </svg>
+      <span class="nm">strategy wizard</span>
+    </a>
+
+    <!-- 6. stubby cabinet key -->
+    <a class="col" href="https://arcade.cosmicfarmland.wtf" data-b="a 10-cabinet arcade of coding-craft minigames. defeat bad practices, collect good ones.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <path d="M12 8 h40 a4 4 0 0 1 4 4 v34 a4 4 0 0 1 -4 4 h-40 a4 4 0 0 1 -4 -4 v-34 a4 4 0 0 1 4 -4 z"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+        <line x1="20" y1="34" x2="44" y2="34" stroke-width="1.4"/>
+        <path d="M24 50 v106 h16 v-14 h-8 v-10 h8 v-14 h-8 v-10 h8 v-58 z"/>
+      </svg>
+      <span class="nm">bobby bowser arcade</span>
+    </a>
+
+    <!-- 7. long comb key -->
+    <a class="col" href="https://octopus.cosmicfarmland.wtf" data-b="a study site for the 36 antipatterns in the octopus organization. browse by category, drill with recall quizzes, run a spot-it diagnostic on your own org.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <circle cx="32" cy="14" r="10"/>
+        <circle cx="20" cy="30" r="10"/>
+        <circle cx="44" cy="30" r="10"/>
+        <circle cx="32" cy="20" r="5.5" fill="none"/>
+        <path d="M29 40 v208 h6 v-8 h10 v-8 h-10 v-6 h10 v-8 h-10 v-6 h10 v-8 h-10 v-6 h10 v-8 h-10 v-150 z"/>
+      </svg>
+      <span class="nm">octopus antipatterns</span>
+    </a>
+
+    <!-- 8. tubular key -->
+    <a class="col" href="https://designer.cosmicfarmland.wtf" data-b="shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. every number is a replayed round.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <circle cx="32" cy="26" r="17"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+        <path d="M25 44 v146 h14 v-146 z"/>
+        <ellipse cx="32" cy="140" rx="13" ry="5"/>
+        <circle cx="32" cy="206" r="15"/>
+        <circle cx="32" cy="206" r="6" fill="none" stroke-width="1.4"/>
+        <line x1="32" y1="191" x2="32" y2="197" stroke-width="1.4"/>
+        <line x1="47" y1="206" x2="41" y2="206" stroke-width="1.4"/>
+        <line x1="32" y1="221" x2="32" y2="215" stroke-width="1.4"/>
+        <line x1="17" y1="206" x2="23" y2="206" stroke-width="1.4"/>
+      </svg>
+      <span class="nm">golf course designer</span>
+    </a>
+
+    <!-- 9. small luggage key -->
+    <a class="col" href="https://golf.cosmicfarmland.wtf" data-b="every round from my ghin history: scoring trends, hole-by-hole splits, and where the strokes actually go.">
+      <svg class="k" viewBox="0 0 64 260" aria-hidden="true">
+        <path d="M20 8 h24 a5 5 0 0 1 5 5 v24 a5 5 0 0 1 -5 5 h-24 a5 5 0 0 1 -5 -5 v-24 a5 5 0 0 1 5 -5 z"/>
+        <circle cx="32" cy="20" r="6" fill="none"/>
+        <path d="M27 42 v76 h10 v-12 h-6 v-10 h6 v-54 z"/>
+      </svg>
+      <span class="nm">golf record</span>
+    </a>
+
+  </div>
+
+  <p class="read" id="read" aria-live="polite"></p>
+</main>
+
+<footer>cosmicfarmland.wtf</footer>
+
+<script>
+  var read = document.getElementById('read');
+  document.getElementById('rack').addEventListener('mouseover', show);
+  document.getElementById('rack').addEventListener('focusin', show);
+  document.getElementById('rack').addEventListener('mouseleave', clear);
+  document.getElementById('rack').addEventListener('focusout', clear);
+  function show(e){
+    var a = e.target.closest('a.col');
+    if (a) read.textContent = a.getAttribute('data-b');
+  }
+  function clear(){ read.textContent = ''; }
+</script>
+
+
+<!--nav-->
+<div style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#000;color:#fff;padding:8px 14px;border-radius:999px;opacity:.75">
+&larr; &nbsp;3/4 &nbsp;object&nbsp; &rarr;
+</div>
+<script>
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowLeft')location.href='02-measured.html';
+  if(e.key==='ArrowRight')location.href='04-register.html';
+});
+</script>
+</body>
+</html>
