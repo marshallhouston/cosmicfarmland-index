@@ -1,0 +1,451 @@
+<title>Cosmic Farmland Spectrograph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000;
+    --panel:#050506;
+    --ink:#e9e6df;
+    --ink-2:#9aa09c;
+    --ink-3:#5d635f;
+    --rule:rgba(255,255,255,.11);
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --read:"Newsreader",Georgia,serif;
+    --pad:clamp(20px,4vw,64px);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--black);color:var(--ink);
+    font-family:var(--read);font-size:16px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 var(--pad)}
+
+  /* ---------- masthead ---------- */
+  header{padding:56px 0 30px;border-bottom:1px solid var(--rule)}
+  .wordmark{
+    font-family:var(--mono);font-weight:600;
+    font-size:clamp(30px,5.4vw,64px);letter-spacing:.16em;
+    margin:0;line-height:1;text-transform:uppercase;
+  }
+  .wordmark span{color:var(--ink-3)}
+  .tagline{
+    margin:18px 0 0;max-width:46ch;font-size:19px;color:var(--ink-2);
+    font-weight:300;
+  }
+  .masthead-grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-end}
+  nav{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;display:flex;gap:22px}
+  nav a{color:var(--ink-3);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent}
+  nav a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+  .readout{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;
+    color:var(--ink-3);text-transform:uppercase;
+    display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:26px;
+  }
+  .readout b{color:var(--ink);font-weight:500}
+
+  /* ---------- calibration ruler ---------- */
+  .ruler-dock{position:sticky;top:0;z-index:20;background:var(--black);padding-top:10px}
+  .ruler{position:relative;height:46px;border-bottom:1px solid var(--rule)}
+  .tick{position:absolute;bottom:0;width:1px;background:var(--ink-3);height:7px;transform:translateX(-.5px)}
+  .tick.major{height:12px;background:var(--ink-2)}
+  .tick-label{
+    position:absolute;bottom:15px;transform:translateX(-50%);
+    font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;white-space:nowrap;
+  }
+  .ref{position:absolute;top:0;bottom:0;width:1px;transform:translateX(-.5px);opacity:.55}
+  .ref-label{
+    position:absolute;top:2px;transform:translateX(-50%);
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;white-space:nowrap;
+  }
+  .ruler-caption{
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+    color:var(--ink-3);text-transform:uppercase;padding:7px 0 12px;
+  }
+
+  /* ---------- bands ---------- */
+  .band{
+    display:block;text-decoration:none;color:inherit;
+    padding:26px 0 30px;border-bottom:1px solid var(--rule);
+  }
+  .band:first-of-type{border-top:none}
+  .band-head{
+    display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:12px;letter-spacing:.08em;margin-bottom:12px;
+  }
+  .idx{color:var(--ink-3);font-size:11px}
+  .name{font-size:16px;letter-spacing:.04em;color:var(--ink);font-weight:500}
+  .band:hover .name{text-decoration:underline;text-underline-offset:4px}
+  .species{color:var(--ink-3);text-transform:uppercase;font-size:10.5px}
+  .go{margin-left:auto;color:var(--ink-3);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .band:hover .go{color:var(--ink)}
+
+  .strip{
+    position:relative;height:78px;background:#000;overflow:hidden;
+    border-top:1px solid rgba(255,255,255,.07);
+    border-bottom:1px solid rgba(255,255,255,.07);
+  }
+  .strip.absorb{background-image:var(--cont)}
+  .line{position:absolute;top:0;bottom:0;transform:translateX(-50%)}
+  .strip .lam{
+    position:absolute;bottom:5px;transform:translateX(-50%);
+    font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.42);
+    letter-spacing:.03em;opacity:0;transition:opacity .18s ease;pointer-events:none;
+  }
+  .band:hover .lam,.band:focus-visible .lam{opacity:1}
+  .strip.absorb .lam{color:rgba(0,0,0,.7)}
+
+  .band-body{display:flex;gap:36px;flex-wrap:wrap;margin-top:14px;align-items:flex-start}
+  .desc{margin:0;max-width:66ch;font-size:16.5px;color:var(--ink-2);font-weight:300;flex:1 1 420px}
+  .desc em{color:var(--ink);font-style:normal}
+  .tags{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;flex:0 0 auto;padding-top:4px}
+
+  /* ---------- sections ---------- */
+  section{padding:78px 0 0}
+  .sec-head{display:flex;align-items:baseline;gap:20px;border-bottom:1px solid var(--rule);padding-bottom:12px;margin-bottom:8px}
+  .sec-head h2{
+    font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;margin:0;color:var(--ink);
+  }
+  .sec-head p{margin:0;color:var(--ink-3);font-size:15px;font-weight:300;max-width:60ch}
+
+  /* ---------- instrument ---------- */
+  .instrument{margin:36px 0 46px}
+  .instrument svg{width:100%;height:auto;display:block;max-width:1100px}
+  .stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;max-width:1100px;margin-top:18px}
+  .stage h3{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 6px;color:var(--ink)}
+  .stage p{margin:0;font-size:15px;color:var(--ink-3);font-weight:300}
+  .stage b{font-family:var(--mono);color:var(--ink);font-weight:500;font-size:14px}
+
+  /* ---------- tool array ---------- */
+  .array{border-top:1px solid var(--rule)}
+  .tool{
+    display:grid;grid-template-columns:34px 190px 1fr 96px;gap:20px;align-items:baseline;
+    padding:15px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;
+  }
+  .pip{height:14px;width:3px;align-self:center;justify-self:start}
+  .tool .k{font-family:var(--mono);font-size:14px;letter-spacing:.03em;color:var(--ink)}
+  .tool .v{font-size:15.5px;color:var(--ink-3);font-weight:300}
+  .tool .src{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);text-align:right}
+  .tool:hover{background:#0a0a0b}
+  .tool:hover .src{color:var(--ink)}
+  .tool:hover .v{color:var(--ink-2)}
+
+  footer{padding:70px 0 120px;color:var(--ink-3);font-size:15px;font-weight:300}
+  footer .mono{font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:12px}
+  footer a{color:var(--ink-2)}
+
+  @media (max-width:860px){
+    .strip{height:60px}
+    .tool{grid-template-columns:22px 1fr;gap:12px}
+    .tool .src{grid-column:2;text-align:left}
+    .tool .v{grid-column:2}
+    .stages{grid-template-columns:1fr}
+    .ruler-dock{position:static}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+    .lam{opacity:1!important}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="masthead-grid">
+      <div>
+        <h1 class="wordmark">Cosmic <span>/</span> Farmland</h1>
+        <p class="tagline">apps, tools, and writing. entrypoint to the cosmic farmland.</p>
+      </div>
+      <nav>
+        <a href="#apps">apps</a>
+        <a href="#toolshed">toolshed</a>
+        <a href="https://golf.cosmicfarmland.wtf">golf</a>
+      </nav>
+    </div>
+    <div class="readout">
+      <span><b>9</b> apps live</span>
+      <span><b>20</b> skills</span>
+      <span><b>7</b> commands</span>
+      <span><b>4</b> plugins</span>
+      <span>slit 25&micro;m &middot; grating 1200 g/mm &middot; range 400 to 700 nm</span>
+    </div>
+  </header>
+
+  <section id="apps" style="padding-top:34px">
+    <p class="desc" style="max-width:62ch;margin:0 0 6px">
+      the same instrument that tells you a star is mostly hydrogen tells you a leaf is
+      mostly chlorophyll. one physics, one answer, no scale change. that collapse is the
+      whole idea. below, nine live apps read off the same detector.
+    </p>
+
+    <div class="ruler-dock">
+      <div class="ruler" id="ruler"></div>
+      <div class="ruler-caption">
+        <span>wavelength / nanometres</span>
+        <span>reference lamp: Hg, He, Na, H</span>
+      </div>
+    </div>
+
+    <div id="bands"></div>
+  </section>
+
+  <section id="toolshed">
+    <div class="sec-head">
+      <h2>Toolshed</h2>
+      <p>the instrument that does the reading. claude code skills, commands, and plugins, all source-visible.</p>
+    </div>
+
+    <div class="instrument">
+      <svg viewBox="0 0 1100 190" aria-label="light enters a slit, disperses at a grating, lands on a detector array">
+        <defs>
+          <linearGradient id="disp" x1="0" x2="1">
+            <stop offset="0" stop-color="#6d5cff"/><stop offset=".3" stop-color="#2ee6c8"/>
+            <stop offset=".6" stop-color="#c8e64a"/><stop offset="1" stop-color="#ff5a3c"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="95" x2="185" y2="95" stroke="#5d635f" stroke-width="1"/>
+        <text x="6" y="84" fill="#5d635f" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="1.4">SOURCE</text>
+        <!-- slit -->
+        <rect x="185" y="30" width="3" height="45" fill="#9aa09c"/>
+        <rect x="185" y="115" width="3" height="45" fill="#9aa09c"/>
+        <text x="176" y="182" fill="#e9e6df" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="1.4">SLIT</text>
+        <!-- collimated beam -->
+        <path d="M188 95 L470 60 M188 95 L470 130" stroke="#3a3f3c" stroke-width="1"/>
+        <!-- grating -->
+        <g>
+          <line x1="470" y1="45" x2="470" y2="145" stroke="#9aa09c" stroke-width="2"/>
+          <g stroke="#4a4f4c" stroke-width="1">
+            <line x1="463" y1="48" x2="470" y2="48"/><line x1="463" y1="60" x2="470" y2="60"/>
+            <line x1="463" y1="72" x2="470" y2="72"/><line x1="463" y1="84" x2="470" y2="84"/>
+            <line x1="463" y1="96" x2="470" y2="96"/><line x1="463" y1="108" x2="470" y2="108"/>
+            <line x1="463" y1="120" x2="470" y2="120"/><line x1="463" y1="132" x2="470" y2="132"/>
+          </g>
+          <text x="437" y="182" fill="#e9e6df" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="1.4">GRATING</text>
+        </g>
+        <!-- dispersed fan -->
+        <g stroke-width="1" opacity=".9">
+          <line x1="472" y1="95" x2="920" y2="22" stroke="#6d5cff"/>
+          <line x1="472" y1="95" x2="920" y2="52" stroke="#2ee6c8"/>
+          <line x1="472" y1="95" x2="920" y2="82" stroke="#c8e64a"/>
+          <line x1="472" y1="95" x2="920" y2="112" stroke="#ffb03a"/>
+          <line x1="472" y1="95" x2="920" y2="142" stroke="#ff5a3c"/>
+        </g>
+        <!-- detector -->
+        <rect x="920" y="14" width="9" height="134" fill="url(#disp)"/>
+        <rect x="932" y="14" width="46" height="134" fill="none" stroke="#3a3f3c"/>
+        <text x="905" y="182" fill="#e9e6df" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="1.4">DETECTOR</text>
+      </svg>
+      <div class="stages">
+        <div class="stage">
+          <h3>Slit</h3>
+          <p><b>7 commands</b> narrow a whole messy repo state down to one beam you can actually measure. /ship, /next, /handoff.</p>
+        </div>
+        <div class="stage">
+          <h3>Grating</h3>
+          <p><b>20 skills</b> split that beam into its parts. each one knows how to separate one thing from everything next to it.</p>
+        </div>
+        <div class="stage">
+          <h3>Detector</h3>
+          <p><b>4 plugins</b> record it. installed and enabled separately, by cadence, so nothing you are not using is running.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="array" id="array"></div>
+  </section>
+
+  <footer>
+    <span class="mono">calibration note</span>
+    <p style="margin:0;max-width:62ch">
+      every band above is a real app you can open right now, not a mockup. the line
+      positions are honest to the axis. built by one person who grows software like crops:
+      plant it, notice friction, fix the friction, plant the next thing.
+    </p>
+    <p style="margin:18px 0 0">
+      <a href="https://github.com/marshallhouston/cosmic-farmland">source on github</a> &middot;
+      <a href="https://marshallhouston.wtf">marshallhouston.wtf</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+const LO = 400, HI = 700;
+const pos = l => ((l - LO) / (HI - LO)) * 100;
+
+// CIE-ish visible wavelength to rgb
+function wl2rgb(l, gamma){
+  gamma = gamma === undefined ? 0.85 : gamma;
+  let r=0,g=0,b=0;
+  if(l<440){ r=-(l-440)/(440-380); b=1; }
+  else if(l<490){ g=(l-440)/(490-440); b=1; }
+  else if(l<510){ g=1; b=-(l-510)/(510-490); }
+  else if(l<580){ r=(l-510)/(580-510); g=1; }
+  else if(l<645){ r=1; g=-(l-645)/(645-580); }
+  else { r=1; }
+  let f=1;
+  if(l<420) f=0.3+0.7*(l-380)/40;
+  else if(l>700) f=0.3+0.7*(780-l)/80;
+  const c=v=>Math.round(255*Math.pow(Math.max(0,Math.min(1,v*f)),gamma));
+  return [c(r),c(g),c(b)];
+}
+const rgb = (l,a) => { const [r,g,b]=wl2rgb(l); return a===undefined?`rgb(${r},${g},${b})`:`rgba(${r},${g},${b},${a})`; };
+
+/* ---------- ruler ---------- */
+const ruler = document.getElementById('ruler');
+for(let l=400; l<=700; l+=10){
+  const t=document.createElement('div');
+  t.className='tick'+(l%50===0?' major':'');
+  t.style.left=pos(l)+'%';
+  ruler.appendChild(t);
+  if(l%50===0){
+    const lab=document.createElement('div');
+    lab.className='tick-label'; lab.style.left=pos(l)+'%'; lab.textContent=l;
+    ruler.appendChild(lab);
+  }
+}
+[[435.8,'Hg'],[486.1,'Hβ'],[546.1,'Hg'],[589.0,'Na D'],[656.3,'Hα']].forEach(([l,n])=>{
+  const r=document.createElement('div');
+  r.className='ref'; r.style.left=pos(l)+'%'; r.style.background=rgb(l);
+  ruler.appendChild(r);
+  const lab=document.createElement('div');
+  lab.className='ref-label'; lab.style.left=pos(l)+'%'; lab.style.color=rgb(l,.85); lab.textContent=n;
+  ruler.appendChild(lab);
+});
+
+/* ---------- apps ---------- */
+const APPS = [
+  { n:'marshallhouston.wtf', u:'https://marshallhouston.wtf', sp:'H I · balmer series · emission',
+    d:'writing about the cosmic farmland. essays, kernels, and the friction log.',
+    t:'writing / essays', mode:'e',
+    l:[[410.2,.55],[434.0,.8],[486.1,1],[656.3,1]] },
+
+  { n:"Lenny Explorer", u:'https://lenny.cosmicfarmland.wtf', sp:'Na I · D doublet · emission',
+    d:"a personal archive reader for lenny's newsletter posts and podcast transcripts. search the whole corpus, read the source.",
+    t:'search / product', mode:'e',
+    l:[[498.3,.5],[568.8,.6],[589.0,1],[589.6,1],[615.4,.55]] },
+
+  { n:"Anthology '77", u:'https://anthology77.cosmicfarmland.wtf', sp:'Ne I · neon · emission',
+    d:"an interactive archive of the grateful dead's spring 1977 tour. map every show, read every setlist, hear the tapes.",
+    t:'music / archive', mode:'e',
+    l:[[585.2,1],[594.5,.6],[614.3,.85],[621.7,.5],[640.2,1],[650.7,.8],[667.8,.5],[692.9,.7]] },
+
+  { n:'Systems Playground', u:'https://systems.cosmicfarmland.wtf', sp:'O III · forbidden lines · emission',
+    d:"interactive teaching tool for donella meadows' systems thinking: stocks, flows, feedback loops, delays, and the twelve leverage points.",
+    t:'systems / learning / interactive', mode:'e',
+    l:[[436.3,.45],[486.1,.7],[495.9,.8],[500.7,1],[630.0,.6],[658.4,.4]] },
+
+  { n:'Strategy Wizard', u:'https://strategy.cosmicfarmland.wtf', sp:'Hg I · mercury · emission',
+    d:"build a real strategy, an action agenda, not a wish list. guided, with an inline critic, on rumelt's good strategy / bad strategy.",
+    t:'strategy / critic / interactive', mode:'e',
+    l:[[404.7,.8],[435.8,1],[546.1,1],[577.0,.7],[579.1,.7]] },
+
+  { n:'Bobby Bowser Arcade', u:'https://arcade.cosmicfarmland.wtf', sp:'He I · helium · emission',
+    d:'a ten-cabinet arcade of coding-craft minigames. defeat bad practices, collect good ones.',
+    t:'arcade / games / interactive', mode:'e',
+    l:[[447.1,.8],[471.3,.5],[492.2,.6],[501.6,.75],[587.6,1],[667.8,.9],[706.5,.5]] },
+
+  { n:'Octopus Antipatterns', u:'https://octopus.cosmicfarmland.wtf', sp:'Fe I · line forest · absorption',
+    d:'a study site for the 36 antipatterns in the octopus organization. browse by category, drill with recall quizzes, run a spot-it diagnostic on your own org.',
+    t:'study / patterns', mode:'a',
+    l:[[438.4,1],[452.9,.6],[467.0,.5],[495.8,.8],[516.7,.9],[526.9,.7],[532.8,1],[537.1,.6],[543.5,.5],[561.6,.7],[588.0,.5],[649.5,.6]] },
+
+  { n:'Golf Course Designer', u:'https://coursedesigner.cosmicfarmland.wtf', sp:'chlorophyll a+b · leaf · absorption',
+    d:'shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. every number on screen is a replayed round, not a rating.',
+    t:'golf / simulation', mode:'a',
+    l:[[430.0,1,14],[453.0,.85,10],[642.0,.7,8],[662.0,1,16]] },
+
+  { n:'Golf Record', u:'https://golf.cosmicfarmland.wtf', sp:'Ca II + Fe · stellar · absorption',
+    d:'every round from my ghin history: scoring trends, hole-by-hole splits, and where the strokes actually go.',
+    t:'golf / data', mode:'a',
+    l:[[422.7,.8],[430.8,.9],[486.1,1,5],[517.3,.7],[527.0,.6],[589.0,.8],[656.3,1,5]] }
+];
+
+// dim continuum for absorption strips, built from the same wl2rgb
+const stops = [];
+for(let l=LO; l<=HI; l+=6){
+  const [r,g,b]=wl2rgb(l,1.9);
+  stops.push(`rgb(${Math.round(r*.42)},${Math.round(g*.42)},${Math.round(b*.42)}) ${pos(l).toFixed(2)}%`);
+}
+const CONT = `linear-gradient(90deg, ${stops.join(',')})`;
+
+const bands = document.getElementById('bands');
+APPS.forEach((a,i)=>{
+  const el=document.createElement('a');
+  el.className='band'; el.href=a.u;
+  if(!a.u.startsWith('#')){ el.rel='noopener'; }
+  const abs = a.mode==='a';
+
+  const lines = a.l.map(([l,inten,w])=>{
+    const width = w || (abs?3:2);
+    const c = rgb(l);
+    const style = abs
+      ? `left:${pos(l)}%;width:${width}px;background:rgba(0,0,0,${0.55+0.45*inten});box-shadow:0 0 ${width*1.6}px rgba(0,0,0,${inten*.9})`
+      : `left:${pos(l)}%;width:${width}px;background:${c};opacity:${0.35+0.65*inten};box-shadow:0 0 ${6+14*inten}px ${rgb(l,.5*inten)},0 0 ${2+4*inten}px ${rgb(l,.8*inten)}`;
+    return `<div class="line" style="${style}"></div>`;
+  }).join('');
+
+  // label the two strongest lines only, so it stays a measurement not a chart
+  const strong = a.l.slice().sort((x,y)=>y[1]-x[1]).slice(0,3);
+  const labels = strong.map(([l])=>`<div class="lam" style="left:${pos(l)}%">${l.toFixed(1)}</div>`).join('');
+
+  el.innerHTML = `
+    <div class="band-head">
+      <span class="idx">${String(i+1).padStart(2,'0')}</span>
+      <span class="name">${a.n}</span>
+      <span class="species">${a.sp}</span>
+      <span class="go">open &rarr;</span>
+    </div>
+    <div class="strip${abs?' absorb':''}" style="${abs?`--cont:${CONT}`:''}">${lines}${labels}</div>
+    <div class="band-body">
+      <p class="desc">${a.d}</p>
+      <span class="tags">${a.t}</span>
+    </div>`;
+  bands.appendChild(el);
+});
+
+/* ---------- toolshed array ---------- */
+const REPO='https://github.com/marshallhouston/cosmic-farmland/blob/main/plugins/';
+const TOOLS=[
+  ['/ship',        547.0, 'wait for a pr to go green, merge it, clean up the worktree and the local branch.', 'cosmic-farmland/commands/ship.md'],
+  ['/ptv',         589.0, 'prove-the-value audit. reads recent commits and flags the bloat you talked yourself into.', 'cosmic-farmland/commands/ptv.md'],
+  ['/next',        486.1, 'what to work on next here: git state, open prs, worktrees, backlog docs, issues.', 'cosmic-farmland/skills/next/SKILL.md'],
+  ['/handoff',     656.3, 'a self-contained resumption prompt for a fresh session after you clear the context.', 'cosmic-farmland/skills/handoff/SKILL.md'],
+  ['/deps-sweep',  435.8, 'bucket bun outdated, run the audit, open one pr per bucket. no giant unreviewable bump.', 'cosmic-farmland/skills/deps-sweep/SKILL.md'],
+  ['/systematize', 501.6, 'promote a lesson to enforcement. hook beats ci beats script beats doc beats memory.', 'cosmic-farmland/skills/systematize/SKILL.md'],
+  ['/wrap',        614.3, 'end-of-session cap. ships the current pr, then writes the pickup prompt.', 'cosmic-farmland/commands/wrap.md'],
+  ['obsidian-weaver', 667.8, 'obsidian vault interface plus an auto-weaving graph. capture, connect, sync.', 'obsidian-weaver/skills/capture/SKILL.md'],
+  ['cf-deploy',    404.7, 'one command from repo to live domain, dns record included.', 'cosmic-farmland-utils/skills/cf-deploy/SKILL.md']
+];
+const array=document.getElementById('array');
+array.innerHTML = TOOLS.map(([k,l,v,p])=>`
+  <a class="tool" href="${REPO}${p}" rel="noopener">
+    <span class="pip" style="background:${rgb(l)};box-shadow:0 0 8px ${rgb(l,.6)}"></span>
+    <span class="k">${k}</span>
+    <span class="v">${v}</span>
+    <span class="src">source &rarr;</span>
+  </a>`).join('') + `
+  <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland" rel="noopener">
+    <span class="pip" style="background:#e9e6df"></span>
+    <span class="k">all 20 skills</span>
+    <span class="v">the full instrument: four plugins, split by cadence, enabled separately.</span>
+    <span class="src">source &rarr;</span>
+  </a>`;
+</script>
+
+<!--nav-->
+<div style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#000;color:#fff;padding:8px 14px;border-radius:999px;opacity:.75">
+&larr; &nbsp;4/5 &nbsp;spectrum&nbsp; &rarr;
+</div>
+<script>
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowLeft')location.href='03-botanical-press.html';
+  if(e.key==='ArrowRight')location.href='05-instrument.html';
+});
+</script>

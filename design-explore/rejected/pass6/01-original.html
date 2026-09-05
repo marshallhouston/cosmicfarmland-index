@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cosmic farmland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --card:#efe7d3;
+    --card-2:#e8dfc8;
+    --edge:#d6c9a8;
+    --ink:#22201b;
+    --ink-soft:#4a463c;
+    --ink-pen:#2b3a52;
+    --brown:#8a7042;
+    --press:#6b7355;
+    --rule:#b9ab8a;
+    --table:#cfc6b2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --table:#15161a;
+    }
+  }
+  :root[data-theme="dark"]{ --table:#15161a; }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--table);
+    color:var(--ink);
+    font-family:Spectral, Georgia, serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- the sheet ---------- */
+  .sheet{
+    position:relative;
+    max-width:1180px;
+    margin:56px auto 96px;
+    padding:96px 92px 72px;
+    background:
+      radial-gradient(120% 90% at 12% 4%, rgba(255,252,240,.75), rgba(255,252,240,0) 60%),
+      linear-gradient(178deg, var(--card) 0%, var(--card-2) 100%);
+    border:1px solid var(--edge);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.6) inset,
+      0 24px 60px rgba(0,0,0,.28),
+      0 2px 6px rgba(0,0,0,.18);
+  }
+  /* paper fiber */
+  .sheet::before{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none;
+    opacity:.34;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23f)' opacity='0.45'/%3E%3C/svg%3E");
+  }
+  /* foxing at the edges */
+  .sheet::after{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none;
+    box-shadow:
+      0 0 0 1px rgba(150,130,90,.25) inset,
+      0 0 90px rgba(120,95,50,.16) inset;
+  }
+  .sheet > *{position:relative; z-index:2}
+
+  /* ---------- printed furniture ---------- */
+  .furn{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-weight:400;
+    font-size:10px;
+    letter-spacing:.20em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .pen{
+    font-family:"Cormorant Garamond", Spectral, serif;
+    font-style:italic;
+    color:var(--ink-pen);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:40px; flex-wrap:wrap;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:18px;
+  }
+  h1{
+    margin:0;
+    font-weight:400;
+    font-size:44px;
+    letter-spacing:.30em;
+    text-transform:uppercase;
+    line-height:1;
+  }
+  h1 .cosmic{ color:var(--ink); }
+  h1 .farm{ color:var(--brown); }
+  .tag{
+    margin:14px 0 0;
+    font-size:19px;
+    line-height:1.5;
+    max-width:34ch;
+  }
+  nav{ display:flex; gap:26px; padding-bottom:4px }
+  nav a{ border-bottom:1px solid transparent; padding-bottom:2px }
+  nav a:hover{ border-bottom-color:var(--brown); color:var(--brown) }
+
+  .counts{
+    margin:16px 0 0;
+    display:flex; gap:0 26px; flex-wrap:wrap;
+  }
+  .counts span::before{ content:"· "; color:var(--rule) }
+  .counts span:first-child::before{ content:"" }
+
+  /* ---------- specimen grid ---------- */
+  .plate{
+    margin-top:74px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:78px 64px;
+  }
+  .sp{
+    display:block;
+    position:relative;
+    padding-top:8px;
+  }
+  .sp .mount{
+    position:relative;
+    height:230px;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .sp svg{ height:100%; width:auto; overflow:visible }
+  .leaf, .stem, .head{ transition:transform .5s ease, opacity .5s ease }
+
+  /* paper hinges */
+  .hinge{
+    position:absolute;
+    width:46px; height:15px;
+    background:linear-gradient(180deg, rgba(252,247,232,.82), rgba(232,222,196,.68));
+    border-top:1px solid rgba(255,255,255,.55);
+    border-bottom:1px solid rgba(160,142,100,.32);
+    box-shadow:0 1px 2px rgba(90,70,35,.14);
+    opacity:.9;
+    transition:transform .5s ease;
+  }
+  .h1{ left:50%; top:34px; transform:translateX(-64%) rotate(-7deg) }
+  .h2{ left:50%; bottom:26px; transform:translateX(-40%) rotate(5deg) }
+
+  .sp .no{ display:block; margin-top:16px }
+  .sp .name{
+    display:block;
+    font-family:"Cormorant Garamond", serif;
+    font-style:italic;
+    font-size:27px;
+    line-height:1.15;
+    color:var(--ink-pen);
+    margin-top:5px;
+  }
+  .sp .desc{
+    margin:8px 0 0;
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--ink-soft);
+    max-width:32ch;
+  }
+  .sp .det{
+    display:block; margin-top:9px;
+    font-family:"Cormorant Garamond", serif; font-style:italic;
+    font-size:16px; color:#5d5647;
+  }
+  .sp:hover .stem{ transform:translateY(-2px) }
+  .sp:hover .leaf{ opacity:.95 }
+  .sp:hover .head{ transform:translateY(-3px) }
+  .sp:hover .hinge{ transform:translateX(-64%) rotate(-7deg) translateY(-1px) }
+  .sp:hover .h2{ transform:translateX(-40%) rotate(5deg) translateY(1px) }
+  .sp:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:5px }
+
+  /* ---------- toolshed ---------- */
+  .shed{
+    margin-top:96px;
+    padding-top:24px;
+    border-top:1px solid var(--rule);
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 400px;
+    gap:56px;
+  }
+  .shed h2{
+    margin:0 0 12px;
+    font-family:"Cormorant Garamond", serif; font-style:italic; font-weight:400;
+    font-size:30px; color:var(--ink-pen);
+  }
+  .shed p{ margin:0; font-size:15px; line-height:1.6; color:var(--ink-soft); max-width:52ch }
+  .packet{
+    margin-top:22px;
+    columns:2; column-gap:44px;
+  }
+  .packet a{
+    display:block;
+    padding:7px 0;
+    border-bottom:1px dotted var(--rule);
+    break-inside:avoid;
+    font-size:14.5px;
+  }
+  .packet a b{ font-family:"IBM Plex Mono", monospace; font-weight:400; font-size:13px; letter-spacing:.04em }
+  .packet a i{ font-style:normal; color:var(--ink-soft) }
+  .packet a:hover{ color:var(--brown) }
+  .packet a:hover i{ color:var(--brown) }
+
+  /* ---------- accession label ---------- */
+  .label{
+    border:1px solid var(--ink-soft);
+    padding:0;
+    background:linear-gradient(180deg, rgba(255,252,241,.7), rgba(240,232,212,.5));
+    box-shadow:0 1px 3px rgba(90,70,35,.16);
+    align-self:start;
+  }
+  .label .cap{
+    padding:9px 14px 8px;
+    border-bottom:1px solid var(--ink-soft);
+    text-align:center;
+    letter-spacing:.26em;
+  }
+  .label dl{ margin:0; padding:14px 16px 6px }
+  .label .row{
+    display:grid; grid-template-columns:96px 1fr;
+    gap:10px; align-items:baseline;
+    padding:5px 0;
+  }
+  .label dt{ font-family:"IBM Plex Mono", monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft) }
+  .label dd{
+    margin:0;
+    font-family:"Cormorant Garamond", serif; font-style:italic;
+    font-size:19px; line-height:1.25; color:var(--ink-pen);
+    border-bottom:1px solid rgba(150,135,100,.35);
+    padding-bottom:2px;
+  }
+  .label .mono dd{ font-family:"IBM Plex Mono", monospace; font-style:normal; font-size:13px; letter-spacing:.06em }
+  .label .foot{
+    padding:8px 16px 12px;
+    display:flex; justify-content:space-between; gap:12px;
+    font-size:9px; letter-spacing:.14em;
+  }
+
+  footer{
+    margin-top:56px; padding-top:16px;
+    border-top:1px solid var(--rule);
+    display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  footer a:hover{ color:var(--brown) }
+
+  @media (max-width:900px){
+    .sheet{ margin:20px 12px 60px; padding:44px 26px 40px }
+    h1{ font-size:30px; letter-spacing:.20em }
+    .tag{ font-size:17px }
+    .plate{ grid-template-columns:1fr 1fr; gap:56px 30px; margin-top:48px }
+    .sp .mount{ height:190px }
+    .shed{ grid-template-columns:1fr; gap:34px; margin-top:64px }
+    .packet{ columns:1 }
+  }
+  @media (max-width:560px){
+    .plate{ grid-template-columns:1fr }
+    .sp .desc, .sp .name{ max-width:none }
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{ transition:none !important; animation:none !important }
+  }
+</style>
+</head>
+<body>
+
+<main class="sheet">
+  <header>
+    <div>
+      <h1><span class="cosmic">cosmic</span> <span class="farm">farmland</span></h1>
+      <p class="tag">apps, tools, and writing. entrypoint to the cosmic farmland.</p>
+      <p class="counts furn">
+        <span>9 apps live</span><span>20 skills</span><span>7 commands</span><span>4 plugins</span>
+      </p>
+    </div>
+    <nav class="furn">
+      <a href="#plate">apps</a>
+      <a href="#toolshed">toolshed</a>
+      <a href="https://golf.cosmicfarmland.wtf">golf</a>
+    </nav>
+  </header>
+
+  <section class="plate" id="plate"></section>
+
+  <section class="shed" id="toolshed">
+    <div>
+      <h2>the toolshed</h2>
+      <p>the skills, commands, and plugins the specimens above were grown with. 20 skills, 7 commands, 4 plugins, all of it filed in one repo. every entry below opens its source.</p>
+      <div class="packet" id="packet"></div>
+    </div>
+
+    <div class="label">
+      <p class="cap furn">herbarium of pressed light</p>
+      <dl>
+        <div class="row"><dt>collector</dt><dd>m. houston</dd></div>
+        <div class="row"><dt>locality</dt><dd>cosmicfarmland.wtf</dd></div>
+        <div class="row mono"><dt>coords</dt><dd>18h 36m +38&deg; 47&prime;</dd></div>
+        <div class="row"><dt>habit</dt><dd>grown like crops, cut when ripe</dd></div>
+        <div class="row mono"><dt>accession</dt><dd>CF-0009-A</dd></div>
+        <div class="row"><dt>det. by</dt><dd>the person who uses them</dd></div>
+      </dl>
+      <p class="foot furn"><span>sheet 1 of 1</span><span>pressed 2026</span></p>
+    </div>
+  </section>
+
+  <footer class="furn">
+    <span>this person grows software like crops</span>
+    <span><a href="https://github.com/marshallhouston/cosmic-farmland">source on github</a></span>
+  </footer>
+</main>
+
+<script>
+const apps = [
+  {n:"marshallhouston.wtf", u:"https://marshallhouston.wtf", d:"writing about the cosmic farmland.", t:"writing, essays", s:1},
+  {n:"lenny explorer", u:"https://lenny.cosmicfarmland.wtf", d:"a personal archive reader for lenny's newsletter posts and podcast transcripts.", t:"search, product", s:2},
+  {n:"anthology '77", u:"https://anthology77.cosmicfarmland.wtf", d:"an interactive archive of the grateful dead's spring 1977 tour. map every show, read every setlist, hear the tapes.", t:"music, archive", s:3},
+  {n:"systems playground", u:"https://systems.cosmicfarmland.wtf", d:"teaching tool for donella h. meadows' systems thinking: stocks, flows, feedback loops, delays, and the 12 leverage points.", t:"systems, learning", s:4},
+  {n:"strategy wizard", u:"https://strategy.cosmicfarmland.wtf", d:"build a real strategy, an action agenda, not a wish list. guided, with an inline critic, after rumelt.", t:"strategy, critic", s:5},
+  {n:"bobby bowser arcade", u:"https://arcade.cosmicfarmland.wtf", d:"a 10-cabinet arcade of coding-craft minigames. defeat bad practices, collect good ones.", t:"arcade, games", s:6},
+  {n:"octopus antipatterns", u:"https://octopus.cosmicfarmland.wtf", d:"a study site for the 36 antipatterns in the octopus organization. browse, drill with recall quizzes, diagnose your own org.", t:"study, patterns", s:7},
+  {n:"golf course designer", u:"https://designer.cosmicfarmland.wtf", d:"shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. every number is a replayed round.", t:"golf, simulation", s:8},
+  {n:"golf record", u:"https://golf.cosmicfarmland.wtf", d:"every round from my ghin history: scoring trends, hole-by-hole splits, and where the strokes actually go.", t:"golf, data", s:9}
+];
+
+const tools = [
+  {c:"/ship", d:"wait for a pr to go green, merge it, clean the worktree"},
+  {c:"/ptv", d:"prove-the-value audit that flags bloat"},
+  {c:"/next", d:"what to work on next in this repo"},
+  {c:"/handoff", d:"self-contained resumption prompt"},
+  {c:"/deps-sweep", d:"bucket outdated deps, one pr per bucket"},
+  {c:"/systematize", d:"promote a lesson to enforcement"},
+  {c:"/wrap", d:"end-of-session cap, ship then hand off"},
+  {c:"obsidian-weaver", d:"vault interface with an auto-weaving graph"}
+];
+
+// deterministic pseudo-random, seeded per specimen
+function rng(seed){ let s = seed * 9301 + 49297; return () => (s = (s * 9301 + 49297) % 233280) / 233280; }
+
+function specimen(seed){
+  const r = rng(seed);
+  const lean = (r() - .5) * 34;
+  const bow = (r() - .5) * 30;
+  const H = 210, W = 120, base = H - 4, topY = 22 + r() * 10;
+  const cx = W / 2;
+  const tipX = cx + lean;
+  const p = [];
+
+  // stem
+  const c1x = cx + bow, c1y = base - 70, c2x = tipX - bow * .7, c2y = topY + 60;
+  const stem = `M${cx},${base} C${c1x},${c1y} ${c2x},${c2y} ${tipX},${topY}`;
+  const pt = t => {
+    const m = 1 - t;
+    return [
+      m*m*m*cx + 3*m*m*t*c1x + 3*m*t*t*c2x + t*t*t*tipX,
+      m*m*m*base + 3*m*m*t*c1y + 3*m*t*t*c2y + t*t*t*topY
+    ];
+  };
+
+  p.push(`<path class="stem" d="${stem}" fill="none" stroke="#6f6a4a" stroke-width="1.7" stroke-linecap="round" opacity=".78"/>`);
+
+  // pressed leaves, alternating
+  const pairs = 3 + Math.floor(r() * 3);
+  for(let i = 0; i < pairs; i++){
+    const t = .12 + (i / pairs) * .68 + r() * .05;
+    const [x, y] = pt(t);
+    const side = i % 2 ? 1 : -1;
+    const len = 30 + r() * 20 - i * 2.4;
+    const wid = 9 + r() * 6;
+    const ang = side * (34 + r() * 26) - 22;
+    const d = `M0,0 C${len*.35},${-wid} ${len*.72},${-wid*.8} ${len},0 C${len*.72},${wid*.8} ${len*.35},${wid} 0,0 Z`;
+    const rot = side > 0 ? ang : 180 - ang;
+    p.push(`<g class="leaf" transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${rot.toFixed(1)})" style="transition-delay:${i*40}ms">
+      <path d="${d}" fill="#6b7355" fill-opacity=".30" stroke="#7d6636" stroke-width=".85" stroke-opacity=".62"/>
+      <path d="M0,0 L${len*.92},0" stroke="#7d6636" stroke-width=".6" stroke-opacity=".45" fill="none"/>
+    </g>`);
+  }
+
+  // seed head: the cosmic half. a small constellation pressed at the tip.
+  const stars = 3 + Math.floor(r() * 4);
+  const pts = [];
+  for(let i = 0; i < stars; i++){
+    pts.push([tipX + (r() - .5) * 46, topY - 6 + (r() - .5) * 34]);
+  }
+  let head = `<g class="head">`;
+  for(let i = 1; i < pts.length; i++){
+    head += `<line x1="${pts[i-1][0].toFixed(1)}" y1="${pts[i-1][1].toFixed(1)}" x2="${pts[i][0].toFixed(1)}" y2="${pts[i][1].toFixed(1)}" stroke="#7d6636" stroke-width=".5" stroke-opacity=".42"/>`;
+  }
+  pts.forEach((s, i) => {
+    const rad = 2.1 + r() * 2.4;
+    head += `<circle cx="${s[0].toFixed(1)}" cy="${s[1].toFixed(1)}" r="${rad.toFixed(1)}" fill="#4a463c" fill-opacity=".62"/>`;
+    if(i === 0) head += `<circle cx="${s[0].toFixed(1)}" cy="${s[1].toFixed(1)}" r="${(rad+3.4).toFixed(1)}" fill="none" stroke="#8a7042" stroke-width=".5" stroke-opacity=".38"/>`;
+  });
+  head += `</g>`;
+  p.push(head);
+
+  // pressed root wisps
+  p.push(`<path class="stem" d="M${cx},${base} l-9,7 M${cx},${base} l7,8 M${cx},${base} l-1,10" stroke="#7d6636" stroke-width=".8" stroke-opacity=".5" fill="none"/>`);
+
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true">${p.join("")}</svg>`;
+}
+
+document.getElementById("plate").innerHTML = apps.map(a => `
+  <a class="sp" href="${a.u}">
+    <div class="mount">
+      ${specimen(a.s)}
+      <span class="hinge h1"></span>
+      <span class="hinge h2"></span>
+    </div>
+    <span class="no furn">cf&middot;${String(a.s).padStart(3,"0")}</span>
+    <span class="name">${a.n}</span>
+    <p class="desc">${a.d}</p>
+    <span class="det">det. ${a.t}</span>
+  </a>`).join("");
+
+document.getElementById("packet").innerHTML = tools.map(t => `
+  <a href="https://github.com/marshallhouston/cosmic-farmland"><b>${t.c}</b> <i>${t.d}</i></a>`).join("");
+</script>
+
+<!--nav-->
+<div style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#000;color:#fff;padding:8px 14px;border-radius:999px;opacity:.75">
+&larr; &nbsp;original botanical press&nbsp; &rarr;
+</div>
+<script>
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowLeft')location.href='02-seeded.html';
+  if(e.key==='ArrowRight')location.href='02-seeded.html';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cosmic farmland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --card:#e9dfc9;
+    --card-deep:#e1d5ba;
+    --ink:#17140f;
+    --ink-soft:#4a4338;
+    --ink-faint:#8b8271;
+    --rust:#8c2f1b;
+    --rule:rgba(23,20,15,.085);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--card);
+    color:var(--ink);
+    font-family:"EB Garamond",Georgia,serif;
+    font-size:16px;
+    line-height:1.45;
+    overflow-x:hidden;
+  }
+  /* faint ruled lines, the whole sheet */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:repeating-linear-gradient(to bottom,
+      transparent 0, transparent 30px,
+      var(--rule) 30px, var(--rule) 31px);
+    pointer-events:none;
+    z-index:1;
+  }
+  #fiber{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:2;
+    mix-blend-mode:multiply;
+    opacity:.55;
+  }
+  main{position:relative;z-index:3}
+
+  /* ---- sheet head ---- */
+  header{
+    padding:52px 60px 0 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:32px;
+  }
+  .mark{
+    font-size:19px;
+    letter-spacing:.46em;
+    font-weight:500;
+    line-height:1;
+  }
+  .head-right{text-align:right}
+  nav{
+    font-family:"Courier Prime",ui-monospace,monospace;
+    font-size:11px;
+    letter-spacing:.16em;
+  }
+  nav a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+  }
+  nav a:hover,nav a:focus-visible{border-bottom-color:var(--ink)}
+  nav span{color:var(--ink-faint);padding:0 8px}
+  .counts{
+    margin-top:14px;
+    font-family:"Courier Prime",ui-monospace,monospace;
+    font-size:10px;
+    letter-spacing:.14em;
+    color:var(--ink-faint);
+    line-height:1.9;
+  }
+
+  /* ---- specimens ---- */
+  #sheet{padding:0 60px}
+  .sp{
+    min-height:94vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-left:var(--x);
+  }
+  .sp:first-child{min-height:74vh}
+  .sp:nth-child(3n+2){justify-content:flex-start;padding-top:14vh}
+  .sp:nth-child(4n+3){justify-content:flex-end;padding-bottom:16vh}
+  .holder{width:var(--w);max-width:100%}
+  .mount{
+    position:relative;
+    color:var(--ink);
+    line-height:0;
+  }
+  .mount svg{width:100%;height:auto;display:block;overflow:visible}
+
+  .lbl{
+    display:block;
+    margin-top:26px;
+    max-width:270px;
+    text-decoration:none;
+    color:var(--ink);
+    border-top:1px solid rgba(23,20,15,.32);
+    padding-top:7px;
+  }
+  .acc{
+    font-family:"Courier Prime",ui-monospace,monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    color:var(--ink-faint);
+  }
+  .nm{
+    font-size:18px;
+    letter-spacing:.012em;
+    margin-top:3px;
+    display:inline-block;
+    border-bottom:1px solid transparent;
+  }
+  .lbl:hover .nm,.lbl:focus-visible .nm{border-bottom-color:var(--ink)}
+  .bl{
+    font-size:13.5px;
+    line-height:1.5;
+    color:var(--ink-soft);
+    margin-top:5px;
+  }
+  .meta{
+    margin-top:9px;
+    font-family:"Courier Prime",ui-monospace,monospace;
+    font-size:9.5px;
+    letter-spacing:.15em;
+    color:var(--ink-faint);
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .lbl:focus-visible{outline:1px solid var(--ink);outline-offset:8px}
+
+  /* ---- toolshed ---- */
+  #toolshed{
+    padding:22vh 60px 0 60px;
+    max-width:820px;
+  }
+  .shed-head{
+    font-family:"Courier Prime",ui-monospace,monospace;
+    font-size:10px;
+    letter-spacing:.3em;
+    color:var(--ink-faint);
+    border-bottom:1px solid rgba(23,20,15,.24);
+    padding-bottom:8px;
+  }
+  ul.shed{list-style:none;margin:0;padding:0}
+  ul.shed li{
+    display:flex;
+    gap:22px;
+    align-items:baseline;
+    padding:9px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  ul.shed a{
+    font-family:"Courier Prime",ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.05em;
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    flex:0 0 128px;
+  }
+  ul.shed a:hover,ul.shed a:focus-visible{border-bottom-color:var(--ink)}
+  ul.shed span{font-size:13.5px;color:var(--ink-soft)}
+  .shed-foot{
+    margin-top:26px;
+    font-family:"Courier Prime",ui-monospace,monospace;
+    font-size:10px;
+    letter-spacing:.16em;
+    color:var(--ink-faint);
+  }
+  .shed-foot a{color:var(--ink-faint);text-decoration:none;border-bottom:1px solid rgba(23,20,15,.25)}
+  .shed-foot a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  footer{height:26vh}
+
+  @media (max-width:860px){
+    header{padding:30px 22px 0 22px;flex-direction:column;gap:16px;align-items:flex-start}
+    .head-right{text-align:left}
+    .mark{font-size:16px;letter-spacing:.34em}
+    #sheet{padding:0 22px}
+    .sp{min-height:auto;padding:14vh 0 0 0 !important;justify-content:flex-start}
+    .sp:first-child{padding-top:10vh !important}
+    .holder{width:100%}
+    #toolshed{padding:16vh 22px 0 22px}
+    ul.shed li{flex-direction:column;gap:3px}
+    ul.shed a{flex:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+
+<svg id="fiber" aria-hidden="true" preserveAspectRatio="none">
+  <filter id="pulp" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" result="n"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.42"/></feComponentTransfer>
+  </filter>
+  <filter id="fibers" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.004 0.5" numOctaves="3" seed="37" result="f"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.2"/></feComponentTransfer>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#pulp)"/>
+  <rect width="100%" height="100%" filter="url(#fibers)"/>
+</svg>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ink" x="-12%" y="-12%" width="124%" height="124%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.031" numOctaves="2" seed="9" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="1.9" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<main>
+  <header>
+    <div class="mark">cosmic farmland</div>
+    <div class="head-right">
+      <nav>
+        <a href="#sheet">apps</a><span>/</span><a href="#toolshed">toolshed</a><span>/</span><a href="/golf">golf</a>
+      </nav>
+      <div class="counts">
+        9 apps live<br>20 skills . 7 commands . 4 plugins
+      </div>
+    </div>
+  </header>
+
+  <div id="sheet"></div>
+
+  <section id="toolshed">
+    <div class="shed-head">toolshed . 20 skills . 7 commands . 4 plugins</div>
+    <ul class="shed" id="shedlist"></ul>
+    <div class="shed-foot">
+      source . <a href="https://github.com/marshallhouston/cosmic-farmland">github.com/marshallhouston/cosmic-farmland</a>
+    </div>
+  </section>
+  <footer></footer>
+</main>
+
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg";
+
+  // deterministic wobble
+  var seed=1337;
+  function rnd(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;}
+  function j(a){return (rnd()-.5)*2*a;}
+
+  function P(d,w,extra){
+    return '<path d="'+d+'" fill="none" stroke="currentColor" stroke-width="'+(w||1.1)+
+      '" stroke-linecap="round" stroke-linejoin="round"'+(extra||'')+'/>';
+  }
+  function C(x,y,r,fill){
+    return '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r.toFixed(2)+
+      '" fill="'+(fill===false?'none':'currentColor')+'" stroke="currentColor" stroke-width="'+(fill===false?0.9:0)+'"/>';
+  }
+  function cub(p,t){var u=1-t;
+    return [u*u*u*p[0]+3*u*u*t*p[2]+3*u*t*t*p[4]+t*t*t*p[6],
+            u*u*u*p[1]+3*u*u*t*p[3]+3*u*t*t*p[5]+t*t*t*p[7]];}
+  function tan(p,t){var u=1-t;
+    var x=3*u*u*(p[2]-p[0])+6*u*t*(p[4]-p[2])+3*t*t*(p[6]-p[4]);
+    var y=3*u*u*(p[3]-p[1])+6*u*t*(p[5]-p[3])+3*t*t*(p[7]-p[5]);
+    var m=Math.hypot(x,y)||1;return [x/m,y/m];}
+  function d3(p){return "M"+p[0]+","+p[1]+" C"+p[2]+","+p[3]+" "+p[4]+","+p[5]+" "+p[6]+","+p[7];}
+
+  // paper hinge over the stem
+  function hinge(x,y,w,h,rot){
+    return '<g transform="translate('+x+','+y+') rotate('+rot+')">'+
+      '<rect x="'+(-w/2)+'" y="'+(-h/2)+'" width="'+w+'" height="'+h+'" rx="1" '+
+      'fill="#e2d6ba" fill-opacity=".92" stroke="rgba(23,20,15,.22)" stroke-width=".7"/>'+
+      '<path d="M'+(-w/2)+','+(-h/2+2.5)+' L'+(w/2)+','+(-h/2+2.5)+'" stroke="rgba(23,20,15,.12)" stroke-width=".6" fill="none"/>'+
+      '</g>';
+  }
+
+  /* ---------------- 01 . tap root ---------------- */
+  function root(){
+    var m=[70,10, 54,120, 84,250, 44,420];
+    var s=P(d3(m),2.3);
+    s+=P("M56,10 L84,7",1.6); // cut crown
+    var lat="";
+    for(var i=0;i<9;i++){
+      var t=.10+i*.095, p=cub(m,t), dir=(i%2?1:-1), L=54*(1-t)+16;
+      var ex=p[0]+dir*L, ey=p[1]+L*.72+j(6);
+      lat+=P("M"+p[0].toFixed(1)+","+p[1].toFixed(1)+" Q"+(p[0]+dir*L*.55).toFixed(1)+","+(p[1]+L*.18).toFixed(1)+" "+ex.toFixed(1)+","+ey.toFixed(1),1.05);
+      for(var k=0;k<2;k++){
+        var hx=ex+dir*(6+k*7)+j(3), hy=ey+8+k*9+j(4);
+        lat+=P("M"+ex.toFixed(1)+","+ey.toFixed(1)+" L"+hx.toFixed(1)+","+hy.toFixed(1),.6);
+      }
+    }
+    return {vb:"0 0 170 440",art:s+lat,hg:hinge(66,74,34,11,-6)+hinge(60,300,32,10,7)};
+  }
+
+  /* ---------------- 02 . fern frond ---------------- */
+  function fern(){
+    var r=[16,196, 120,178, 258,106, 428,16];
+    var s=P(d3(r),1.7),pin="";
+    for(var i=0;i<23;i++){
+      var t=.045+i*.0415, p=cub(r,t), d=tan(r,t);
+      var nx=-d[1], ny=d[0];
+      var L=(9+40*Math.pow(1-t,1.1))*(1+j(.06));
+      for(var side=-1;side<=1;side+=2){
+        var tipx=p[0]+nx*L*side+d[0]*L*.42, tipy=p[1]+ny*L*side+d[1]*L*.42;
+        var c1x=p[0]+nx*L*.62*side, c1y=p[1]+ny*L*.62*side;
+        var c2x=p[0]+nx*L*.9*side+d[0]*L*.05, c2y=p[1]+ny*L*.9*side+d[1]*L*.05;
+        pin+=P("M"+p[0].toFixed(1)+","+p[1].toFixed(1)+" C"+c1x.toFixed(1)+","+c1y.toFixed(1)+" "+
+          c2x.toFixed(1)+","+c2y.toFixed(1)+" "+tipx.toFixed(1)+","+tipy.toFixed(1)+
+          " C"+(c2x+d[0]*L*.3).toFixed(1)+","+(c2y+d[1]*L*.3).toFixed(1)+" "+
+          (c1x+d[0]*L*.34).toFixed(1)+","+(c1y+d[1]*L*.34).toFixed(1)+" "+
+          p[0].toFixed(1)+","+p[1].toFixed(1),.85);
+      }
+    }
+    return {vb:"0 0 450 226",art:s+pin,hg:hinge(58,190,30,10,-12)+hinge(300,74,28,9,-30)};
+  }
+
+  /* ---------------- 03 . umbel seed head, star magnitudes ---------------- */
+  function umbel(){
+    var st=[152,356, 144,268, 158,206, 152,164];
+    var s=P(d3(st),1.9);
+    s+=P("M152,356 L138,352",1.2);
+    var rays="",n=34;
+    // magnitudes: a real spread, a few bright, most faint
+    var mag=[2.4,1.0,1.5,.8,3.1,.9,1.2,2.0,.7,1.1,2.7,.9,1.4,.8,1.9,1.1,.75,2.2,1.0,1.3,.85,3.4,.95,1.2,1.7,.8,1.05,2.5,.9,1.35,.8,2.1,1.0,1.15];
+    for(var i=0;i<n;i++){
+      var a=-Math.PI*.02 - Math.PI*.96*(i/(n-1));
+      var L=54+58*Math.abs(Math.sin(i*1.7))+j(9);
+      var ex=152+Math.cos(a)*L*1.08, ey=164+Math.sin(a)*L*.86;
+      rays+=P("M152,164 Q"+(152+Math.cos(a)*L*.5).toFixed(1)+","+(164+Math.sin(a)*L*.42-6).toFixed(1)+
+        " "+ex.toFixed(1)+","+ey.toFixed(1),.55);
+      rays+=C(ex,ey,mag[i]);
+    }
+    // three seeds drifted free of the head
+    rays+=C(46,52,1.9)+C(268,40,1.15)+C(206,18,2.6);
+    return {vb:"0 0 320 376",art:s+rays,hg:hinge(148,300,30,10,4)};
+  }
+
+  /* ---------------- 04 . twining vine with tendrils ---------------- */
+  function vine(){
+    var v=[10,150, 130,32, 300,238, 452,86];
+    var s=P(d3(v),1.5),ex="";
+    // leaves
+    [.14,.3,.46,.62,.78,.92].forEach(function(t,i){
+      var p=cub(v,t), d=tan(v,t), nx=-d[1], ny=d[0], side=(i%2?1:-1), L=30+10*Math.abs(Math.sin(i*2.1));
+      var tx=p[0]+nx*L*side, ty=p[1]+ny*L*side;
+      ex+=P("M"+p[0].toFixed(1)+","+p[1].toFixed(1)+
+        " C"+(p[0]+nx*L*.4*side+d[0]*L*.5).toFixed(1)+","+(p[1]+ny*L*.4*side+d[1]*L*.5).toFixed(1)+
+        " "+(tx+d[0]*L*.25).toFixed(1)+","+(ty+d[1]*L*.25).toFixed(1)+" "+tx.toFixed(1)+","+ty.toFixed(1)+
+        " C"+(tx-d[0]*L*.3).toFixed(1)+","+(ty-d[1]*L*.3).toFixed(1)+
+        " "+(p[0]+nx*L*.4*side-d[0]*L*.45).toFixed(1)+","+(p[1]+ny*L*.4*side-d[1]*L*.45).toFixed(1)+
+        " "+p[0].toFixed(1)+","+p[1].toFixed(1),.95);
+      ex+=P("M"+p[0].toFixed(1)+","+p[1].toFixed(1)+" L"+tx.toFixed(1)+","+ty.toFixed(1),.5);
+    });
+    // two tendrils that curl back on themselves
+    [[.36,1],[.7,-1]].forEach(function(cfg){
+      var p=cub(v,cfg[0]), d=tan(v,cfg[0]), nx=-d[1]*cfg[1], ny=d[0]*cfg[1];
+      var pts="M"+p[0].toFixed(1)+","+p[1].toFixed(1);
+      var cx=p[0]+nx*26, cy=p[1]+ny*26, r=13;
+      pts+=" L"+cx.toFixed(1)+","+cy.toFixed(1);
+      for(var a=0;a<=Math.PI*3.4;a+=.28){
+        var rr=r*(1-a/(Math.PI*4.4));
+        pts+=" L"+(cx+Math.cos(a)*rr).toFixed(1)+","+(cy+Math.sin(a)*rr*cfg[1]).toFixed(1);
+      }
+      ex+=P(pts,.75);
+    });
+    return {vb:"0 0 470 258",art:s+ex,hg:hinge(96,66,28,9,58)+hinge(384,150,28,9,-50)};
+  }
+
+  /* ---------------- 05 . thistle ---------------- */
+  function thistle(){
+    var st=[100,398, 92,300, 108,220, 100,150];
+    var s=P(d3(st),2.4);
+    // cup of bracts
+    s+=P("M74,150 C76,120 124,120 126,150 C120,168 80,168 74,150 Z",1.3);
+    for(var i=0;i<7;i++){
+      var x=78+i*7.4;
+      s+=P("M"+x+",150 L"+(x+3)+",127",.6);
+    }
+    // filaments
+    var fl="";
+    for(var k=0;k<26;k++){
+      var a=-Math.PI*.5+(k/25-.5)*2.0;
+      var L=38+22*Math.abs(Math.cos(k*1.3))+j(5);
+      fl+=P("M100,132 Q"+(100+Math.cos(a)*L*.5).toFixed(1)+","+(132+Math.sin(a)*L*.55).toFixed(1)+
+        " "+(100+Math.cos(a)*L).toFixed(1)+","+(132+Math.sin(a)*L*1.05).toFixed(1),.55);
+    }
+    // spiny leaves
+    [[214,-1,66],[286,1,74],[348,-1,58]].forEach(function(cfg){
+      var y=cfg[0],dir=cfg[1],L=cfg[2],x0=cub(st,(398-y)/248)[0];
+      var d="M"+x0.toFixed(1)+","+y;
+      for(var i=1;i<=6;i++){
+        var f=i/6;
+        d+=" L"+(x0+dir*L*f*(.75+.25*Math.sin(i))).toFixed(1)+","+(y-L*f*.55-8).toFixed(1);
+        d+=" L"+(x0+dir*L*f*.72).toFixed(1)+","+(y-L*f*.5+3).toFixed(1);
+      }
+      s+=P(d,.95);
+    });
+    return {vb:"0 0 200 418",art:s+fl,hg:hinge(98,330,30,10,-5)+hinge(102,200,26,9,6)};
+  }
+
+  /* ---------------- 06 . ten seed pods ---------------- */
+  function pods(){
+    var s=P("M18,140 C46,124 70,112 96,104",1.6);
+    var art="";
+    for(var i=0;i<10;i++){
+      var col=i%5, row=Math.floor(i/5);
+      var x=34+col*30+row*14, y=104-row*38-col*3;
+      var w=11+j(1.2), h=26+j(3);
+      art+=P("M"+x+","+y+" C"+(x-w)+","+(y-h*.35)+" "+(x-w*.6)+","+(y-h)+" "+x+","+(y-h-3)+
+             " C"+(x+w*.6)+","+(y-h)+" "+(x+w)+","+(y-h*.35)+" "+x+","+y+" Z",1.0);
+      art+=P("M"+x+","+y+" L"+x+","+(y-h-3),.45);
+      art+=P("M"+x+","+(y+1)+" L"+(x-8-col*1.5)+","+(y+12+row*2),.7);
+      art+=C(x-3.2,y-h*.55,1.5)+C(x+3.2,y-h*.35,1.5);
+    }
+    return {vb:"0 0 220 168",art:s+art,hg:hinge(40,132,24,8,-24)};
+  }
+
+  /* ---------------- 07 . rhizome, eight arms ---------------- */
+  function rhizome(){
+    var art=P("M232,96 C210,74 262,60 276,84 C296,74 300,110 274,116 C256,134 218,124 232,96 Z",1.8);
+    for(var i=0;i<8;i++){
+      var a=(i/8)*Math.PI*2+.35;
+      var L=96+52*Math.abs(Math.sin(i*2.4));
+      var ex=254+Math.cos(a)*L*1.55, ey=98+Math.sin(a)*L*.52;
+      var mx=254+Math.cos(a)*L*.8, my=98+Math.sin(a)*L*.3+j(10);
+      var th=3.4-i*.18;
+      art+=P("M254,98 Q"+mx.toFixed(1)+","+my.toFixed(1)+" "+ex.toFixed(1)+","+ey.toFixed(1),th);
+      art+=C(ex,ey,2.4,false);
+      for(var k=0;k<3;k++){
+        var t=.4+k*.2;
+        var px=254+(mx-254)*2*t*(1-t)+(ex-254)*t*t, py=98+(my-98)*2*t*(1-t)+(ey-98)*t*t;
+        art+=P("M"+px.toFixed(1)+","+py.toFixed(1)+" l"+(j(9)).toFixed(1)+","+(7+k*3).toFixed(1),.5);
+      }
+    }
+    return {vb:"0 0 510 200",art:art,hg:hinge(150,88,28,9,14)+hinge(360,110,28,9,-10)};
+  }
+
+  /* ---------------- 08 . single blade of grass ---------------- */
+  function blade(){
+    var a=[70,426, 44,300, 92,150, 58,14];
+    var b=[82,426, 62,296, 116,152, 58,14];
+    var art=P(d3(a),1.15)+P(d3(b),1.15);
+    art+=P(d3([76,426, 53,298, 104,151, 58,14]),.5);
+    art+=P("M70,426 C74,432 78,434 82,426",1.15);
+    return {vb:"0 0 150 446",art:art,hg:hinge(76,360,26,9,3)+hinge(88,190,24,8,-16)};
+  }
+
+  /* ---------------- 09 . grass seed head, spikelets ---------------- */
+  function spike(){
+    var st=[130,392, 118,290, 140,190, 116,26];
+    var art=P(d3(st),1.5);
+    for(var i=0;i<19;i++){
+      var t=.34+i*.0355, p=cub(st,t), d=tan(st,t);
+      var nx=-d[1]*(i%2?1:-1), ny=d[0]*(i%2?1:-1);
+      var L=16+13*Math.abs(Math.sin(i*1.9));
+      var ex=p[0]+nx*L, ey=p[1]+ny*L-9;
+      art+=P("M"+p[0].toFixed(1)+","+p[1].toFixed(1)+
+        " C"+(p[0]+nx*L*.4).toFixed(1)+","+(p[1]-5).toFixed(1)+" "+(ex-nx*2).toFixed(1)+","+(ey+4).toFixed(1)+" "+ex.toFixed(1)+","+ey.toFixed(1)+
+        " C"+(ex+nx*1.5).toFixed(1)+","+(ey+7).toFixed(1)+" "+(p[0]+nx*L*.5).toFixed(1)+","+(p[1]-1).toFixed(1)+" "+p[0].toFixed(1)+","+p[1].toFixed(1),.85);
+      art+=P("M"+ex.toFixed(1)+","+ey.toFixed(1)+" L"+(ex+nx*10).toFixed(1)+","+(ey-19-L*.4).toFixed(1),.4);
+    }
+    return {vb:"0 0 250 412",art:art,hg:hinge(126,340,28,9,-4)};
+  }
+
+  var ART={root:root,fern:fern,umbel:umbel,vine:vine,thistle:thistle,pods:pods,rhizome:rhizome,blade:blade,spike:spike};
+
+  var SPECIMENS=[
+    {a:"01",n:"marshallhouston.wtf",u:"https://marshallhouston.wtf",
+     b:"writing about the cosmic farmland.",t:"writing, essays",d:"2025 . 11",art:"root",x:14.7,w:170},
+    {a:"02",n:"lenny explorer",u:"https://lenny-explorer.cosmicfarmland.wtf",
+     b:"a personal archive reader for lenny's newsletter posts and podcast transcripts.",t:"search, product",d:"2026 . 01",art:"fern",x:41,w:450},
+    {a:"03",n:"anthology '77",u:"https://grateful-dead-77.cosmicfarmland.wtf",
+     b:"an interactive archive of the grateful dead's legendary spring 1977 tour. map every show, read every setlist, hear the tapes.",t:"music, archive",d:"2026 . 02",art:"umbel",x:28,w:320,stamp:true},
+    {a:"04",n:"systems playground",u:"https://systems-thinking.cosmicfarmland.wtf",
+     b:"interactive teaching tool for donella h. meadows' systems thinking: stocks, flows, feedback loops, delays, and the 12 leverage points.",t:"systems, learning, interactive",d:"2026 . 03",art:"vine",x:54.7,w:470},
+    {a:"05",n:"strategy wizard",u:"https://strategy-wizard.cosmicfarmland.wtf",
+     b:"build a real strategy, an action agenda, not a wish list. guided, with an inline critic, based on rumelt's good strategy / bad strategy.",t:"strategy, critic, interactive",d:"2026 . 04",art:"thistle",x:8,w:200},
+    {a:"06",n:"bobby bowser arcade",u:"https://bobby-bowser.cosmicfarmland.wtf",
+     b:"a 10 cabinet arcade of coding craft minigames. defeat bad practices, collect good ones.",t:"arcade, games, interactive",d:"2026 . 05",art:"pods",x:34.7,w:220},
+    {a:"07",n:"octopus antipatterns",u:"https://octopus-org-lair.cosmicfarmland.wtf",
+     b:"a personal study site for the 36 antipatterns in the octopus organization. browse by category, drill with recall quizzes, and run a spot it diagnostic on your own org.",t:"study, patterns",d:"2026 . 06",art:"rhizome",x:8,w:510},
+    {a:"08",n:"golf course designer",u:"https://golf-course-designer.cosmicfarmland.wtf",
+     b:"shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. every number on screen is a replayed round, not a rating.",t:"golf, simulation",d:"2026 . 07",art:"blade",x:54.7,w:150},
+    {a:"09",n:"golf record",u:"/golf",
+     b:"every round from my ghin history: scoring trends, hole by hole splits, and where the strokes actually go.",t:"golf, data",d:"2026 . 08",art:"spike",x:21.3,w:250}
+  ];
+
+  var stampSVG='<svg class="stamp" width="86" height="86" viewBox="0 0 86 86" aria-hidden="true" '+
+    'style="position:absolute;right:-6px;top:8px;color:var(--rust);opacity:.72">'+
+    '<g transform="rotate(-13 43 43)" fill="none" stroke="currentColor" stroke-width="1.6">'+
+    '<circle cx="43" cy="43" r="33"/><circle cx="43" cy="43" r="29" stroke-width=".8"/>'+
+    '<text x="43" y="49" text-anchor="middle" font-family="Courier Prime, monospace" font-size="19" '+
+    'letter-spacing="1.5" stroke="none" fill="currentColor">77</text></g></svg>';
+
+  var out="";
+  SPECIMENS.forEach(function(s){
+    var g=ART[s.art]();
+    out+='<section class="sp" style="--x:'+s.x+'%;--w:'+s.w+'px">'+
+      '<div class="holder">'+
+        '<div class="mount">'+
+          '<svg viewBox="'+g.vb+'" role="img" aria-label="pressed specimen">'+
+            '<g filter="url(#ink)">'+g.art+'</g>'+g.hg+
+          '</svg>'+
+          (s.stamp?stampSVG:'')+
+        '</div>'+
+        '<a class="lbl" href="'+s.u+'">'+
+          '<div class="acc">cf . '+s.a+'</div>'+
+          '<div class="nm">'+s.n+'</div>'+
+          '<div class="bl">'+s.b+'</div>'+
+          '<div class="meta"><span>'+s.d+'</span><span>'+s.t+'</span></div>'+
+        '</a>'+
+      '</div>'+
+    '</section>';
+  });
+  document.getElementById("sheet").innerHTML=out;
+
+  var SHED=[
+    ["/ship","wait for a pr to go green, merge it, clean up the worktree"],
+    ["/ptv","prove the value audit that flags bloat"],
+    ["/next","what to work on next in this repo"],
+    ["/handoff","self contained resumption prompt"],
+    ["/deps-sweep","bump deps, one pr per bucket"],
+    ["/systematize","promote a lesson to enforcement"],
+    ["obsidian-weaver","obsidian vault interface, auto weaving graph"]
+  ];
+  var repo="https://github.com/marshallhouston/cosmic-farmland";
+  document.getElementById("shedlist").innerHTML=SHED.map(function(e){
+    return '<li><a href="'+repo+'">'+e[0]+'</a><span>'+e[1]+'</span></li>';
+  }).join("");
+})();
+</script>
+
+<!--nav-->
+<div style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#000;color:#fff;padding:8px 14px;border-radius:999px;opacity:.75">
+&larr; &nbsp;sheet 2 of 4&nbsp; &rarr;
+</div>
+<script>
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowLeft')location.href='01.html';
+  if(e.key==='ArrowRight')location.href='03.html';
+});
+</script>
+</body>
+</html>

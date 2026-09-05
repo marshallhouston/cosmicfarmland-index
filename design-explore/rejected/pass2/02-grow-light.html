@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cosmic farmland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#040308;
+    --mag:#ff2fb0;
+    --cyan:#26f5ea;
+    --paper:#fdf8ff;
+    --lit:rgba(253,248,255,.94);
+    --half:rgba(240,228,246,.62);
+    --dim:rgba(226,214,236,.4);
+    --edge-mag:rgba(255,47,176,.55);
+    --edge-cyan:rgba(38,245,234,.5);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--void);color:var(--half);
+    font-family:"Inter Tight",system-ui,-apple-system,Segoe UI,sans-serif;
+    font-size:16px;line-height:1.55;overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- the rig: light lives in fixed space, content passes under it ---------- */
+  .rig{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .lamp{position:absolute;border-radius:50%;mix-blend-mode:screen;filter:blur(60px)}
+  /* magenta emitter */
+  .lamp.m{
+    left:22%;top:-30vh;width:78vw;height:78vw;transform:translateX(-50%);
+    background:radial-gradient(circle at 50% 50%,
+      rgba(255,120,205,.95) 0%,
+      rgba(255,47,176,.55) 18%,
+      rgba(196,26,140,.24) 38%,
+      rgba(96,10,72,.09) 58%,
+      rgba(0,0,0,0) 74%);
+    animation:breatheA 19s ease-in-out infinite;
+  }
+  /* cyan emitter */
+  .lamp.c{
+    left:78%;top:-34vh;width:80vw;height:80vw;transform:translateX(-50%);
+    background:radial-gradient(circle at 50% 50%,
+      rgba(160,255,250,.9) 0%,
+      rgba(38,245,234,.48) 18%,
+      rgba(16,168,168,.2) 38%,
+      rgba(4,72,80,.08) 58%,
+      rgba(0,0,0,0) 74%);
+    animation:breatheB 23s ease-in-out infinite;
+  }
+  /* where the two washes overlap they mix to a near-white core */
+  .core{
+    position:absolute;left:50%;top:-16vh;width:46vw;height:34vw;transform:translateX(-50%);
+    background:radial-gradient(ellipse at 50% 45%,
+      rgba(255,255,255,.85) 0%,
+      rgba(248,236,255,.36) 26%,
+      rgba(210,200,255,.1) 50%,
+      rgba(0,0,0,0) 72%);
+    mix-blend-mode:screen;filter:blur(40px);
+    animation:ballast 7.5s steps(1,end) infinite;
+  }
+  /* the throw: penumbra cone falling down the page from the bar */
+  .throw{
+    position:absolute;left:50%;top:0;width:150vw;height:190vh;transform:translateX(-50%);
+    clip-path:polygon(36% 0%,64% 0%,104% 100%,-4% 100%);
+    background:linear-gradient(180deg,
+      rgba(255,235,250,.13) 0%,
+      rgba(196,120,220,.075) 22%,
+      rgba(70,140,190,.045) 46%,
+      rgba(20,30,60,.018) 68%,
+      rgba(0,0,0,0) 88%);
+    mix-blend-mode:screen;filter:blur(30px);
+  }
+  /* true black floor: everything far from the lamps falls out of the spectrum */
+  .floor{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 120% 78% at 50% -14%,rgba(0,0,0,0) 34%,rgba(4,3,8,.55) 66%,#040308 100%);
+  }
+  /* faint sensor grain so the wash reads as light, not as a fill */
+  .grain{
+    position:absolute;inset:-100px;opacity:.32;mix-blend-mode:overlay;
+    background-image:radial-gradient(rgba(255,255,255,.35) .5px,transparent .6px);
+    background-size:3px 3px;
+  }
+  @keyframes breatheA{0%,100%{opacity:.92}42%{opacity:1}68%{opacity:.86}}
+  @keyframes breatheB{0%,100%{opacity:.88}38%{opacity:1}72%{opacity:.83}}
+  @keyframes ballast{0%,100%{opacity:1}96%{opacity:1}97%{opacity:.82}98%{opacity:1}}
+  @media (prefers-reduced-motion:reduce){
+    .lamp,.core{animation:none}
+  }
+
+  .page{position:relative;z-index:1}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+
+  /* ---------- the bar ---------- */
+  .bar{position:relative;height:0;max-width:1180px;margin:0 auto}
+  .tube{
+    position:absolute;left:50%;top:0;transform:translateX(-50%);
+    width:min(620px,74vw);height:5px;border-radius:99px;
+    background:linear-gradient(90deg,
+      rgba(255,47,176,.15) 0%,
+      var(--mag) 12%,
+      #ffd6f4 34%,
+      #ffffff 50%,
+      #d4fffb 66%,
+      var(--cyan) 88%,
+      rgba(38,245,234,.15) 100%);
+    box-shadow:0 0 28px 6px rgba(255,47,176,.35),0 0 34px 10px rgba(38,245,234,.28),0 0 90px 26px rgba(255,255,255,.12);
+  }
+
+  /* ---------- hero ---------- */
+  header{padding:0 0 132px}
+  .topline{
+    display:flex;justify-content:space-between;align-items:baseline;gap:24px;
+    padding:34px 0 0;font-size:13.5px;letter-spacing:.14em;text-transform:lowercase;
+    color:var(--dim);
+  }
+  .nav{display:flex;gap:26px}
+  .nav a{transition:color .25s,text-shadow .25s}
+  .nav a:hover{color:var(--paper);text-shadow:0 0 16px rgba(255,255,255,.5)}
+
+  .wordmark{
+    margin:112px 0 0;text-align:center;
+    font-weight:900;letter-spacing:-.045em;line-height:.86;
+    font-size:clamp(58px,10.6vw,152px);
+    color:var(--paper);
+    text-shadow:
+      0 0 1px rgba(255,255,255,.9),
+      0 0 34px rgba(255,255,255,.3),
+      -2px 0 22px rgba(255,47,176,.55),
+      2px 0 22px rgba(38,245,234,.5),
+      0 26px 70px rgba(0,0,0,.9);
+  }
+  .wordmark span{display:block}
+  .wordmark .b{
+    color:rgba(246,232,246,.82);
+    text-shadow:0 0 30px rgba(255,255,255,.14),-2px 0 18px rgba(255,47,176,.3),2px 0 18px rgba(38,245,234,.28);
+  }
+  .tag{
+    margin:34px auto 0;max-width:560px;text-align:center;
+    font-size:17px;color:var(--half);
+  }
+  .star{
+    margin:64px auto 0;max-width:640px;text-align:center;
+    font-family:"Instrument Serif",Georgia,serif;font-style:italic;
+    font-size:clamp(21px,2.4vw,31px);line-height:1.32;
+    color:rgba(250,242,252,.88);
+  }
+  .star b{font-weight:400;font-style:italic;color:#fff;text-shadow:0 0 24px rgba(255,255,255,.4)}
+
+  .counts{
+    display:flex;justify-content:center;flex-wrap:wrap;gap:10px 30px;
+    margin:56px 0 0;font-size:13.5px;letter-spacing:.1em;color:var(--dim);
+  }
+  .counts i{font-style:normal;color:rgba(252,244,255,.86)}
+
+  /* ---------- sections ---------- */
+  section{padding:0 0 40px}
+  .sechead{
+    display:flex;align-items:baseline;gap:18px;
+    padding-bottom:26px;
+  }
+  .sechead h2{
+    margin:0;font-size:15px;font-weight:500;letter-spacing:.26em;text-transform:lowercase;
+    color:rgba(252,244,255,.9);
+  }
+  .sechead em{font-style:normal;font-size:13px;letter-spacing:.1em;color:var(--dim)}
+  .seam{height:1px;background:linear-gradient(90deg,rgba(255,47,176,.42),rgba(255,255,255,.3) 48%,rgba(38,245,234,.36),rgba(38,245,234,0))}
+
+  /* apps: rows on a rail, lit at the top, falling into the dark going down */
+  .row{
+    display:grid;grid-template-columns:56px minmax(240px,1fr) minmax(0,1.5fr) 150px;
+    align-items:baseline;gap:28px;
+    padding:26px 12px 26px 8px;position:relative;
+    border-top:1px solid rgba(255,255,255,.055);
+    transition:background .4s ease,transform .3s ease;
+  }
+  .row:first-of-type{border-top:0}
+  .num{font-size:12px;letter-spacing:.16em;color:rgba(220,205,235,.34);font-variant-numeric:tabular-nums}
+  .name{font-size:clamp(22px,2.1vw,29px);font-weight:500;letter-spacing:-.02em;color:var(--lit);line-height:1.15}
+  .desc{font-size:14.5px;color:var(--half);max-width:50ch}
+  .tags{font-size:12px;letter-spacing:.12em;color:rgba(214,200,230,.3);text-align:right}
+  .go{
+    position:absolute;right:12px;bottom:24px;font-size:12px;letter-spacing:.16em;
+    color:rgba(255,255,255,0);transition:color .3s;
+  }
+  /* falloff: rows further from the lamp lose light */
+  .row:nth-of-type(n+4) .name{color:rgba(248,240,252,.84)}
+  .row:nth-of-type(n+4) .desc{color:rgba(232,220,240,.5)}
+  .row:nth-of-type(n+7) .name{color:rgba(244,236,250,.74)}
+  .row:nth-of-type(n+7) .desc{color:rgba(226,216,236,.44)}
+  /* hovering swings the light back onto the row */
+  .row:hover{
+    background:
+      radial-gradient(120% 220% at 6% 50%,rgba(255,47,176,.16),rgba(255,47,176,0) 58%),
+      radial-gradient(120% 220% at 96% 50%,rgba(38,245,234,.15),rgba(38,245,234,0) 58%),
+      linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  }
+  .row:hover .name{color:#fff;text-shadow:0 0 26px rgba(255,255,255,.45),-1px 0 14px rgba(255,47,176,.5),1px 0 14px rgba(38,245,234,.45)}
+  .row:hover .desc{color:rgba(250,244,254,.82)}
+  .row:hover .tags{color:rgba(240,230,250,.55)}
+  .row:hover .num{color:rgba(255,255,255,.6)}
+  .row:hover .go{color:rgba(255,255,255,.72)}
+  .row:focus-visible{outline:2px solid rgba(255,255,255,.7);outline-offset:-2px}
+
+  /* toolshed: second, smaller lamp */
+  .shed{position:relative;margin-top:92px;padding-top:8px}
+  .shedlamp{
+    position:absolute;left:50%;top:-30px;transform:translateX(-50%);
+    width:min(340px,60vw);height:3px;border-radius:99px;
+    background:linear-gradient(90deg,rgba(38,245,234,0),var(--cyan) 24%,#fff 52%,var(--mag) 78%,rgba(255,47,176,0));
+    box-shadow:0 0 22px 5px rgba(38,245,234,.3),0 0 26px 8px rgba(255,47,176,.24);
+  }
+  .shedcone{
+    position:absolute;left:50%;top:-28px;transform:translateX(-50%);
+    width:min(1100px,96vw);height:640px;pointer-events:none;
+    clip-path:polygon(40% 0%,60% 0%,100% 100%,0% 100%);
+    background:linear-gradient(180deg,rgba(240,230,255,.085),rgba(120,150,210,.03) 46%,rgba(0,0,0,0) 86%);
+    filter:blur(22px);mix-blend-mode:screen;
+  }
+  .shedgrid{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:2px 2px;
+    margin-top:34px;
+  }
+  .tool{
+    padding:22px 20px 24px;position:relative;
+    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+    transition:background .35s;
+  }
+  .tool b{
+    display:block;font-weight:500;font-size:17px;letter-spacing:-.01em;
+    color:rgba(252,246,255,.92);margin-bottom:6px;
+  }
+  .tool span{font-size:13.5px;color:rgba(228,218,238,.5);display:block}
+  .tool:hover{background:linear-gradient(180deg,rgba(255,47,176,.12),rgba(38,245,234,.07))}
+  .tool:hover b{color:#fff;text-shadow:0 0 20px rgba(255,255,255,.4)}
+  .tool:hover span{color:rgba(248,242,254,.76)}
+  .tool:focus-visible{outline:2px solid rgba(255,255,255,.7);outline-offset:-2px}
+  .shednote{margin-top:26px;font-size:14px;color:var(--dim);max-width:62ch}
+  .shednote a{color:rgba(250,244,255,.8);border-bottom:1px solid rgba(255,47,176,.5)}
+  .shednote a:hover{color:#fff;border-bottom-color:rgba(38,245,234,.8)}
+
+  footer{
+    margin-top:120px;padding:44px 0 120px;
+    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    font-size:13px;letter-spacing:.1em;color:rgba(206,194,216,.28);
+    border-top:1px solid rgba(255,255,255,.05);
+  }
+  footer a:hover{color:rgba(255,255,255,.75)}
+
+  @media (max-width:900px){
+    .wrap{padding:0 22px}
+    header{padding-bottom:80px}
+    .wordmark{margin-top:74px}
+    .row{grid-template-columns:34px 1fr;gap:8px 16px;padding:22px 4px}
+    .desc{grid-column:2}
+    .tags{grid-column:2;text-align:left}
+    .go{display:none}
+    .shedgrid{grid-template-columns:1fr}
+    .star{margin-top:48px}
+  }
+</style>
+</head>
+<body>
+<div class="rig" aria-hidden="true">
+  <div class="lamp m"></div>
+  <div class="lamp c"></div>
+  <div class="core"></div>
+  <div class="throw"></div>
+  <div class="floor"></div>
+  <div class="grain"></div>
+</div>
+
+<div class="page">
+<div class="bar"><div class="tube"></div></div>
+
+<header class="wrap">
+  <div class="topline">
+    <div>cosmicfarmland.wtf</div>
+    <nav class="nav">
+      <a href="#apps">apps</a>
+      <a href="#toolshed">toolshed</a>
+      <a href="#golf">golf</a>
+    </nav>
+  </div>
+
+  <h1 class="wordmark"><span>COSMIC</span><span class="b">FARMLAND</span></h1>
+  <p class="tag">apps, tools, and writing. entrypoint to the cosmic farmland</p>
+
+  <p class="star">a grow light is a star someone built indoors. the plant under it
+  <b>cannot tell the difference</b>, and neither can the work.</p>
+
+  <div class="counts">
+    <span><i>9</i> apps live</span>
+    <span><i>20</i> skills</span>
+    <span><i>7</i> commands</span>
+    <span><i>4</i> plugins</span>
+  </div>
+</header>
+
+<section id="apps" class="wrap">
+  <div class="sechead"><h2>apps</h2><em>all live, all under the light</em></div>
+  <div class="seam"></div>
+
+  <a class="row" href="https://marshallhouston.wtf">
+    <div class="num">01</div>
+    <div class="name">marshallhouston.wtf</div>
+    <div class="desc">writing about the cosmic farmland.</div>
+    <div class="tags">writing, essays</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" href="https://lenny.cosmicfarmland.wtf">
+    <div class="num">02</div>
+    <div class="name">Lenny Explorer</div>
+    <div class="desc">a personal archive reader for Lenny's Newsletter posts and podcast transcripts.</div>
+    <div class="tags">search, product</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" href="https://anthology77.cosmicfarmland.wtf">
+    <div class="num">03</div>
+    <div class="name">Anthology '77</div>
+    <div class="desc">an interactive archive of the Grateful Dead's legendary Spring 1977 tour. map every show, read every setlist, hear the tapes.</div>
+    <div class="tags">music, archive</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" href="https://systems.cosmicfarmland.wtf">
+    <div class="num">04</div>
+    <div class="name">Systems Playground</div>
+    <div class="desc">interactive teaching tool for Donella H. Meadows' systems thinking: stocks, flows, feedback loops, delays, and the 12 leverage points.</div>
+    <div class="tags">systems, learning</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" href="https://strategy.cosmicfarmland.wtf">
+    <div class="num">05</div>
+    <div class="name">Strategy Wizard</div>
+    <div class="desc">build a real strategy, an action agenda, not a wish list. guided, with an inline critic, based on Rumelt's Good Strategy / Bad Strategy.</div>
+    <div class="tags">strategy, critic</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" href="https://arcade.cosmicfarmland.wtf">
+    <div class="num">06</div>
+    <div class="name">Bobby Bowser Arcade</div>
+    <div class="desc">a 10-cabinet arcade of coding-craft minigames. defeat bad practices, collect good ones.</div>
+    <div class="tags">arcade, games</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" href="https://octopus.cosmicfarmland.wtf">
+    <div class="num">07</div>
+    <div class="name">Octopus Antipatterns</div>
+    <div class="desc">a personal study site for the 36 antipatterns in The Octopus Organization. browse by category, drill with recall quizzes, run a spot-it diagnostic on your own org.</div>
+    <div class="tags">study, patterns</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" id="golf" href="https://coursedesigner.cosmicfarmland.wtf">
+    <div class="num">08</div>
+    <div class="name">Golf Course Designer</div>
+    <div class="desc">shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. every number on screen is a replayed round, not a rating.</div>
+    <div class="tags">golf, simulation</div>
+    <div class="go">open</div>
+  </a>
+  <a class="row" href="https://golf.cosmicfarmland.wtf">
+    <div class="num">09</div>
+    <div class="name">Golf Record</div>
+    <div class="desc">every round from my GHIN history: scoring trends, hole-by-hole splits, and where the strokes actually go.</div>
+    <div class="tags">golf, data</div>
+    <div class="go">open</div>
+  </a>
+</section>
+
+<section class="wrap shed" id="toolshed">
+  <div class="shedcone" aria-hidden="true"></div>
+  <div class="shedlamp" aria-hidden="true"></div>
+  <div class="sechead" style="padding-top:26px"><h2>toolshed</h2><em>20 skills, 7 commands, 4 plugins. the gear that grew the apps</em></div>
+  <div class="seam"></div>
+  <div class="shedgrid">
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland/skills/ship"><b>/ship</b><span>wait for a PR to go green, merge it, clean up the worktree</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland/skills/fart-sniffing-detection"><b>/ptv</b><span>prove-the-value audit that flags bloat before it ships</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland/skills/next"><b>/next</b><span>what to work on next in this repo, read from real git state</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland/skills/handoff"><b>/handoff</b><span>a self-contained resumption prompt for a fresh session</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland/skills/deps-sweep"><b>/deps-sweep</b><span>bucket outdated deps, audit them, one PR per bucket</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland/skills/systematize"><b>/systematize</b><span>promote a lesson to enforcement: hook over doc over memory</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/obsidian-weaver"><b>obsidian-weaver</b><span>vault interface with an auto-weaving note graph</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland-content"><b>cosmic-farmland-content</b><span>feedback pages, review docs, carousels, meeting sync</span></a>
+    <a class="tool" href="https://github.com/marshallhouston/cosmic-farmland"><b>the whole shed</b><span>four plugins, every skill and hook, source on github</span></a>
+  </div>
+  <p class="shednote">everything here is built in the open. read the source, take what is useful, leave the rest:
+  <a href="https://github.com/marshallhouston/cosmic-farmland">github.com/marshallhouston/cosmic-farmland</a></p>
+</section>
+
+<footer class="wrap">
+  <div>grown under artificial light, on purpose</div>
+  <div><a href="https://github.com/marshallhouston">github</a></div>
+</footer>
+</div>
+
+<!--nav-->
+<div style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#000;color:#fff;padding:8px 14px;border-radius:999px;opacity:.75">
+&larr; &nbsp;2/5 &nbsp;grow light&nbsp; &rarr;
+</div>
+<script>
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowLeft')location.href='01-register.html';
+  if(e.key==='ArrowRight')location.href='03-botanical-press.html';
+});
+</script>
+</body>
+</html>

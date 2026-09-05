@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cosmic farmland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e8e2d4;
+    --ink:#141210;
+    --rule:rgba(20,18,16,.16);
+    --faint:rgba(20,18,16,.55);
+    --datum:#b03a1a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink)}
+  body{
+    font-family:"Newsreader",Georgia,serif;
+    font-weight:300;
+    font-size:19px;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{max-width:1000px;margin:0 auto;padding:120px 48px 160px}
+
+  header{margin-bottom:110px}
+  h1{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-weight:400;
+    font-size:16px;
+    letter-spacing:.42em;
+    margin:0 0 22px;
+    text-transform:uppercase;
+  }
+  .tagline{margin:0;font-size:20px;max-width:34em}
+  .counts{
+    margin:26px 0 0;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.06em;
+    color:var(--faint);
+  }
+
+  .colhead,.row{
+    display:grid;
+    grid-template-columns:280px 1fr 96px;
+    column-gap:32px;
+    align-items:baseline;
+  }
+  .colhead{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:lowercase;
+    color:var(--faint);
+    padding-bottom:12px;
+  }
+  .colhead .mm,.row .mm{text-align:right;font-variant-numeric:tabular-nums}
+
+  #datum{
+    border-top:1px solid var(--datum);
+    position:relative;
+  }
+  #datum::after{
+    content:"0";
+    position:absolute;
+    right:0;
+    top:6px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;
+    color:var(--datum);
+  }
+
+  .row{
+    text-decoration:none;
+    color:inherit;
+    padding:22px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .row .name{font-size:20px}
+  .row .note{color:var(--faint);font-size:17px}
+  .row .mm{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:13px;
+    color:var(--faint);
+  }
+  .row:hover .name,.row:focus-visible .name{text-decoration:underline;text-underline-offset:4px}
+  .row:hover .mm,.row:focus-visible .mm{color:var(--ink)}
+  .row:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
+
+  .band{
+    margin-top:96px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    color:var(--faint);
+    padding-bottom:12px;
+    border-bottom:1px solid var(--rule);
+  }
+  .band + .row{border-top:none}
+
+  footer{
+    margin-top:120px;
+    max-width:46em;
+    font-size:15px;
+    color:var(--faint);
+  }
+
+  @media (max-width:760px){
+    .sheet{padding:64px 22px 110px}
+    header{margin-bottom:64px}
+    .colhead,.row{grid-template-columns:1fr 76px;column-gap:18px}
+    .colhead .label-note,.row .note{display:none}
+    .colhead .label-note{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <h1>cosmic farmland</h1>
+    <p class="tagline">apps, tools, and writing. entrypoint to the cosmic farmland</p>
+    <p class="counts">9 apps live &nbsp;·&nbsp; 20 skills &nbsp;·&nbsp; 7 commands &nbsp;·&nbsp; 4 plugins</p>
+  </header>
+
+  <div class="colhead">
+    <span>apps</span>
+    <span class="label-note"></span>
+    <span class="mm">mm</span>
+  </div>
+  <div id="datum"></div>
+
+  <a class="row" href="https://marshallhouston.wtf">
+    <span class="name">marshallhouston.wtf</span>
+    <span class="note">writing about the cosmic farmland</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://lenny.cosmicfarmland.wtf">
+    <span class="name">lenny explorer</span>
+    <span class="note">a personal archive reader for lenny's newsletter posts and podcast transcripts</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://anthology77.cosmicfarmland.wtf">
+    <span class="name">anthology '77</span>
+    <span class="note">every show of the grateful dead's spring 1977 tour: map, setlists, tapes</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://systems.cosmicfarmland.wtf">
+    <span class="name">systems playground</span>
+    <span class="note">stocks, flows, feedback loops, delays, and the 12 leverage points, made interactive</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://strategy.cosmicfarmland.wtf">
+    <span class="name">strategy wizard</span>
+    <span class="note">build an action agenda, not a wish list, with an inline critic</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://arcade.cosmicfarmland.wtf">
+    <span class="name">bobby bowser arcade</span>
+    <span class="note">a 10-cabinet arcade of coding-craft minigames</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://octopus.cosmicfarmland.wtf">
+    <span class="name">octopus antipatterns</span>
+    <span class="note">36 antipatterns to browse, drill, and diagnose your own org against</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://coursedesigner.cosmicfarmland.wtf">
+    <span class="name">golf course designer</span>
+    <span class="note">shape nine holes, then let a field of real handicaps expose what you built</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://golf.cosmicfarmland.wtf">
+    <span class="name">golf record</span>
+    <span class="note">every round from my ghin history, and where the strokes actually go</span>
+    <span class="mm" data-mm></span>
+  </a>
+
+  <div class="band">toolshed</div>
+
+  <a class="row" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland">
+    <span class="name">cosmic-farmland</span>
+    <span class="note">ship, ptv, next, handoff, deps-sweep, systematize</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland-content">
+    <span class="name">cosmic-farmland-content</span>
+    <span class="note">feedback pages, review docs, carousels, granola sync</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/cosmic-farmland-utils">
+    <span class="name">cosmic-farmland-utils</span>
+    <span class="note">tee times, activity stats, disk cleanup, screenshots, deploys</span>
+    <span class="mm" data-mm></span>
+  </a>
+  <a class="row" href="https://github.com/marshallhouston/cosmic-farmland/tree/main/plugins/obsidian-weaver">
+    <span class="name">obsidian-weaver</span>
+    <span class="note">vault interface and auto-weaving graph</span>
+    <span class="mm" data-mm></span>
+  </a>
+
+  <footer>
+    last column is millimetres from the red line down to each row, measured off your own screen at 96 dpi, so it changes when you resize the window.
+  </footer>
+
+</div>
+
+<script>
+  // mm = css px * 25.4 / 96
+  var datum = document.getElementById('datum');
+  var cells = document.querySelectorAll('[data-mm]');
+  function measure(){
+    var zero = datum.getBoundingClientRect().bottom + window.scrollY;
+    cells.forEach(function(cell){
+      var y = cell.getBoundingClientRect().top + window.scrollY;
+      cell.textContent = ((y - zero) * 25.4 / 96).toFixed(1);
+    });
+  }
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  var t;
+  addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(measure, 120); });
+</script>
+
+<!--nav-->
+<div style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#000;color:#fff;padding:8px 14px;border-radius:999px;opacity:.75">
+&larr; &nbsp;2/4 &nbsp;measured&nbsp; &rarr;
+</div>
+<script>
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowLeft')location.href='01-notebook.html';
+  if(e.key==='ArrowRight')location.href='03-object.html';
+});
+</script>
+</body>
+</html>

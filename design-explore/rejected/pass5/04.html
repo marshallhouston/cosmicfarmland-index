@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cosmic farmland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e9e2ce;
+  --paper-hi:#f0eadb;
+  --ink:#17140e;
+  --ink-soft:#4a443a;
+  --rule:rgba(23,20,14,.075);
+  --hinge:rgba(196,180,146,.72);
+  --oxide:#8c2f1c;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Courier Prime",ui-monospace,Menlo,monospace;
+  font-size:13px;
+  line-height:1.5;
+  overflow-x:hidden;
+}
+/* faint ruled sheet, edge to edge, no frame */
+.rules{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 32px,var(--rule) 32px,var(--rule) 33px);
+}
+.fiber{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;mix-blend-mode:multiply}
+.sheet{position:relative;z-index:2;max-width:1440px;margin:0 auto;padding:0 96px 200px}
+
+/* header: stamped, quiet */
+header{padding:88px 0 0;display:flex;justify-content:space-between;align-items:flex-start;gap:48px;flex-wrap:wrap}
+.mark{
+  font-family:"EB Garamond",Georgia,serif;
+  font-size:30px;letter-spacing:.42em;text-transform:uppercase;font-weight:500;
+  margin:0;line-height:1;text-indent:.42em;
+}
+nav{margin-top:22px;display:flex;gap:26px}
+nav a,.acc a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(23,20,14,.28);padding-bottom:2px}
+nav a:hover{border-bottom-color:var(--ink)}
+.acc{text-align:right;font-size:11.5px;letter-spacing:.09em;color:var(--ink-soft)}
+.acc b{font-weight:400;color:var(--ink)}
+.acc div{white-space:nowrap}
+
+/* bands: 1 / 3 / 2 / 3 */
+.band{display:flex;flex-wrap:wrap;align-items:flex-end;gap:120px;margin:0}
+.b1{padding:210px 0 260px;padding-left:8%}
+.b2{padding:0 0 250px;gap:150px;align-items:flex-end}
+.b3{padding:0 0 260px;padding-left:16%;gap:190px}
+.b4{padding:0 0 200px;gap:130px;align-items:flex-end}
+
+.sp{position:relative;display:block;text-decoration:none;color:var(--ink)}
+.sp .plate{position:relative;display:block}
+.sp svg{display:block;overflow:visible}
+.sp svg path,.sp svg line,.sp svg polyline,.sp svg ellipse,.sp svg circle.o{
+  fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;
+}
+.sp svg .star{fill:var(--ink);stroke:none}
+.sp svg .cons{stroke:rgba(23,20,14,.3);stroke-width:.5;stroke-dasharray:1.5 3.5;fill:none}
+.sp svg .fill{fill:var(--ink);stroke:none}
+
+/* paper hinges */
+.hinge{display:block;position:absolute;background:var(--hinge);height:13px;border-radius:1px;
+  box-shadow:0 1px 0 rgba(23,20,14,.09);pointer-events:none}
+
+/* accession label */
+.label{display:block;margin-top:26px;max-width:270px}
+.label>span{display:block}
+.label .rule{display:block;height:1px;background:rgba(23,20,14,.42)}
+.label .row{display:flex;justify-content:space-between;gap:14px;font-size:10.5px;letter-spacing:.14em;color:var(--ink-soft);padding:5px 0}
+.label .name{display:block;font-family:"EB Garamond",Georgia,serif;font-style:italic;font-size:21px;line-height:1.2;letter-spacing:.005em;padding:9px 0 6px}
+.label .blurb{display:block;font-size:11.5px;line-height:1.62;color:var(--ink-soft);padding-bottom:9px}
+.label .det{font-size:10.5px;letter-spacing:.13em;color:var(--ink-soft);padding:5px 0 0}
+.sp:hover .label .name{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.sp:focus-visible{outline:1px solid var(--ink);outline-offset:14px}
+
+/* the one accent, used once */
+.stamp{
+  display:block;position:absolute;right:-6px;top:-46px;color:var(--oxide);border:1.5px solid var(--oxide);
+  font-size:9.5px;letter-spacing:.22em;padding:4px 8px;transform:rotate(-6.5deg);opacity:.85;
+}
+
+/* toolshed, quieter */
+.shed{padding-top:80px;padding-left:8%;max-width:760px}
+.shed h2{font-family:"EB Garamond",Georgia,serif;font-weight:400;font-style:italic;font-size:20px;margin:0 0 8px;letter-spacing:.02em}
+.shed .meta{font-size:10.5px;letter-spacing:.16em;color:var(--ink-soft);margin-bottom:34px}
+.shed ul{list-style:none;margin:0;padding:0}
+.shed li{display:flex;gap:20px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:12px;color:var(--ink-soft)}
+.shed li a{color:var(--ink);text-decoration:none;min-width:118px;border-bottom:1px solid transparent}
+.shed li a:hover{border-bottom-color:var(--ink)}
+footer{padding-top:70px;padding-left:8%;font-size:10.5px;letter-spacing:.16em;color:var(--ink-soft)}
+
+@media (max-width:900px){
+  .sheet{padding:0 26px 160px}
+  header{padding-top:52px}
+  .mark{font-size:21px;letter-spacing:.3em;text-indent:.3em}
+  .acc{text-align:left}
+  .band,.b1,.b2,.b3,.b4{padding-left:0;gap:110px}
+  .b1{padding-top:110px;padding-bottom:120px}
+  .b2,.b3,.b4{padding-bottom:120px}
+  .label{max-width:100%}
+  .sp svg{max-width:100%;height:auto}
+  .shed,footer{padding-left:0}
+}
+@media (prefers-reduced-motion:no-preference){
+  .sp .plate{transition:transform .35s ease}
+  .sp:hover .plate{transform:translateY(-2px)}
+}
+</style>
+</head>
+<body>
+
+<div class="rules" aria-hidden="true"></div>
+<svg class="fiber" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <filter id="fib"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/>
+  <feColorMatrix type="saturate" values="0"/>
+  <feComponentTransfer><feFuncA type="linear" slope="0.16"/></feComponentTransfer></filter>
+  <rect width="100%" height="100%" filter="url(#fib)"/>
+</svg>
+
+<main class="sheet">
+
+<header>
+  <div>
+    <h1 class="mark">cosmic farmland</h1>
+    <nav>
+      <a href="#apps">apps</a>
+      <a href="#toolshed">toolshed</a>
+      <a href="/golf">golf</a>
+    </nav>
+  </div>
+  <div class="acc">
+    <div><b>9</b> apps live</div>
+    <div><b>20</b> skills</div>
+    <div><b>7</b> commands</div>
+    <div><b>4</b> plugins</div>
+  </div>
+</header>
+
+<div id="apps"></div>
+
+<!-- band 1 : one specimen -->
+<section class="band b1">
+
+  <a class="sp" href="https://marshallhouston.wtf">
+    <span class="plate">
+      <span class="hinge" style="left:14px;top:196px;width:64px;transform:rotate(-4deg)"></span>
+      <span class="hinge" style="left:26px;top:352px;width:56px;transform:rotate(3deg)"></span>
+      <svg width="104" height="452" viewBox="0 0 104 452" role="img" aria-label="tall spindly stem with a seed head">
+        <path d="M50 450 C46 372 44 300 47 236 C49 186 50 140 49 96" stroke-width="1.5"/>
+        <path d="M49 96 C48 74 51 58 56 42" stroke-width="1.2"/>
+        <path d="M56 42 C60 33 63 27 66 20" stroke-width="1"/>
+        <path d="M53 74 C61 66 68 60 76 57" stroke-width=".9"/>
+        <path d="M52 88 C43 82 35 78 27 76" stroke-width=".9"/>
+        <path d="M50 106 C60 100 68 94 74 86" stroke-width=".9"/>
+        <path d="M50 122 C41 118 33 113 27 106" stroke-width=".9"/>
+        <path d="M49 140 C58 135 66 128 71 120" stroke-width=".9"/>
+        <path d="M48 158 C40 154 33 148 28 141" stroke-width=".9"/>
+        <path d="M47 232 C30 214 20 186 18 154" stroke-width="1.1"/>
+        <path d="M46 288 C64 268 76 236 79 200" stroke-width="1.1"/>
+        <path d="M48 352 C34 338 25 322 21 302" stroke-width=".9"/>
+        <polyline class="cons" points="66,20 76,57 71,120 79,200 18,154 21,302 50,450"/>
+        <circle class="star" cx="66" cy="20" r="1.7"/>
+        <circle class="star" cx="76" cy="57" r="1.2"/>
+        <circle class="star" cx="71" cy="120" r="1.1"/>
+        <circle class="star" cx="79" cy="200" r="1.5"/>
+        <circle class="star" cx="18" cy="154" r="1.3"/>
+        <circle class="star" cx="21" cy="302" r="1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 01</span><span>cf 43</span></span>
+      <span class="rule"></span>
+      <span class="name">marshallhouston.wtf</span>
+      <span class="blurb">writing about the cosmic farmland.</span>
+      <span class="rule"></span>
+      <span class="row"><span>writing, essays</span><span>iv 2026</span></span>
+    </span>
+  </a>
+
+</section>
+
+<!-- band 2 : three -->
+<section class="band b2">
+
+  <a class="sp" href="https://lenny-explorer.cosmicfarmland.wtf">
+    <span class="plate">
+      <span class="hinge" style="left:96px;top:250px;width:60px;transform:rotate(6deg)"></span>
+      <svg width="212" height="348" viewBox="0 0 212 348" role="img" aria-label="arching pinnate fern frond">
+        <path d="M118 346 C112 292 106 236 96 186 C84 128 66 82 34 44" stroke-width="1.6"/>
+        <g stroke-width=".85">
+          <path d="M112 306 C96 300 84 294 74 284"/><path d="M114 306 C130 300 142 294 152 284"/>
+          <path d="M107 274 C90 268 77 261 66 250"/><path d="M109 274 C126 268 139 261 150 250"/>
+          <path d="M101 242 C84 236 70 228 59 216"/><path d="M103 242 C121 236 135 228 146 216"/>
+          <path d="M94 210 C77 204 63 195 52 183"/><path d="M96 210 C114 204 128 195 139 183"/>
+          <path d="M85 178 C69 171 56 162 46 150"/><path d="M87 178 C104 171 117 162 127 150"/>
+          <path d="M74 146 C60 139 48 130 39 119"/><path d="M76 146 C92 139 104 130 113 119"/>
+          <path d="M61 114 C49 108 39 100 31 90"/><path d="M63 114 C77 108 87 100 95 90"/>
+          <path d="M48 84 C39 79 31 72 25 64"/><path d="M50 84 C61 79 69 72 75 64"/>
+          <path d="M38 60 C32 56 27 51 23 45"/><path d="M40 60 C48 56 54 51 58 45"/>
+        </g>
+        <polyline class="cons" points="34,44 66,250 74,284 152,284 150,250 146,216 118,346"/>
+        <circle class="star" cx="34" cy="44" r="1.8"/>
+        <circle class="star" cx="66" cy="250" r="1.1"/>
+        <circle class="star" cx="152" cy="284" r="1.3"/>
+        <circle class="star" cx="146" cy="216" r="1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 02</span><span>cf 77</span></span>
+      <span class="rule"></span>
+      <span class="name">lenny explorer</span>
+      <span class="blurb">a personal archive reader for lenny's newsletter posts and podcast transcripts.</span>
+      <span class="rule"></span>
+      <span class="row"><span>search, product</span><span>ii 2026</span></span>
+    </span>
+  </a>
+
+  <a class="sp" href="https://grateful-dead-77.cosmicfarmland.wtf">
+    <span class="plate">
+      <span class="stamp">spring 1977</span>
+      <span class="hinge" style="left:78px;top:210px;width:58px;transform:rotate(-5deg)"></span>
+      <svg width="196" height="312" viewBox="0 0 196 312" role="img" aria-label="rose on a thorned stem">
+        <path d="M96 310 C92 254 90 200 88 152 C87 122 84 100 78 82" stroke-width="1.7"/>
+        <g stroke-width="1.2">
+          <path d="M78 82 C74 70 78 58 88 50"/>
+          <ellipse cx="98" cy="42" rx="26" ry="22"/>
+          <path d="M98 42 C86 44 78 38 76 28 C74 18 82 8 94 8 C108 8 118 16 120 28 C122 40 112 50 98 48"/>
+          <path d="M96 40 C90 34 92 26 100 22 C110 18 118 26 114 34 C111 40 104 43 98 40"/>
+        </g>
+        <g stroke-width=".9">
+          <path d="M124 34 C138 30 148 34 152 44"/>
+          <path d="M72 52 C58 52 50 46 48 36"/>
+        </g>
+        <path d="M88 132 C68 126 54 112 46 92" stroke-width="1.1"/>
+        <path d="M46 92 C60 88 74 94 82 106" stroke-width=".8"/>
+        <path d="M90 176 C112 170 128 152 134 128" stroke-width="1.1"/>
+        <path d="M134 128 C120 126 106 134 98 148" stroke-width=".8"/>
+        <path d="M92 236 C74 232 62 222 56 208" stroke-width="1"/>
+        <g stroke-width=".9">
+          <path d="M91 200 L82 194"/><path d="M92 262 L101 256"/><path d="M89 158 L98 152"/><path d="M93 286 L84 281"/>
+        </g>
+        <polyline class="cons" points="94,8 152,44 134,128 46,92 56,208 96,310"/>
+        <circle class="star" cx="94" cy="8" r="1.9"/>
+        <circle class="star" cx="152" cy="44" r="1.1"/>
+        <circle class="star" cx="134" cy="128" r="1.4"/>
+        <circle class="star" cx="46" cy="92" r="1.2"/>
+        <circle class="star" cx="56" cy="208" r="1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 03</span><span>cf 06</span></span>
+      <span class="rule"></span>
+      <span class="name">anthology '77</span>
+      <span class="blurb">an interactive archive of the grateful dead's legendary spring 1977 tour. map every show, read every setlist, hear the tapes.</span>
+      <span class="rule"></span>
+      <span class="row"><span>music, archive</span><span>v 2026</span></span>
+    </span>
+  </a>
+
+  <a class="sp" href="https://systems-thinking.cosmicfarmland.wtf">
+    <span class="plate">
+      <span class="hinge" style="left:60px;top:96px;width:66px;transform:rotate(2deg)"></span>
+      <span class="hinge" style="left:206px;top:110px;width:52px;transform:rotate(-7deg)"></span>
+      <svg width="316" height="176" viewBox="0 0 316 176" role="img" aria-label="broad low rhizome with tubers and root threads">
+        <path d="M12 96 C58 78 104 90 148 84 C196 78 244 92 300 78" stroke-width="1.9"/>
+        <g stroke-width="1.2">
+          <ellipse cx="66" cy="112" rx="19" ry="14"/>
+          <ellipse cx="146" cy="118" rx="26" ry="18"/>
+          <ellipse cx="232" cy="106" rx="15" ry="11"/>
+        </g>
+        <g stroke-width=".8">
+          <path d="M66 126 C62 142 56 152 46 162"/>
+          <path d="M70 126 C74 144 82 154 92 160"/>
+          <path d="M146 136 C142 152 136 164 126 172"/>
+          <path d="M152 136 C160 150 168 158 178 164"/>
+          <path d="M232 117 C230 134 224 146 214 154"/>
+          <path d="M236 117 C244 130 252 138 262 144"/>
+          <path d="M300 78 C306 92 306 106 300 118"/>
+          <path d="M12 96 C6 82 6 68 12 56"/>
+        </g>
+        <g stroke-width="1">
+          <path d="M92 86 C88 66 92 50 104 38"/>
+          <path d="M104 38 C96 34 88 36 82 42"/>
+          <path d="M198 82 C196 60 204 44 218 34"/>
+          <path d="M218 34 C210 30 200 32 194 40"/>
+          <path d="M264 84 C266 66 274 54 286 46"/>
+        </g>
+        <polyline class="cons" points="12,96 104,38 66,112 146,118 218,34 232,106 300,78"/>
+        <circle class="star" cx="104" cy="38" r="1.6"/>
+        <circle class="star" cx="218" cy="34" r="1.8"/>
+        <circle class="star" cx="146" cy="118" r="1.2"/>
+        <circle class="star" cx="12" cy="96" r="1.1"/>
+        <circle class="star" cx="300" cy="78" r="1.3"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 04</span><span>cf 53</span></span>
+      <span class="rule"></span>
+      <span class="name">systems playground</span>
+      <span class="blurb">interactive teaching tool for donella h. meadows' systems thinking: stocks, flows, feedback loops, delays, and the 12 leverage points.</span>
+      <span class="rule"></span>
+      <span class="row"><span>systems, learning</span><span>i 2026</span></span>
+    </span>
+  </a>
+
+</section>
+
+<!-- band 3 : two -->
+<section class="band b3">
+
+  <a class="sp" href="https://strategy-wizard.cosmicfarmland.wtf">
+    <span class="plate">
+      <span class="hinge" style="left:44px;top:224px;width:58px;transform:rotate(4deg)"></span>
+      <svg width="152" height="330" viewBox="0 0 152 330" role="img" aria-label="thistle with spined bract and spiny leaves">
+        <path d="M74 328 C70 268 68 210 70 156 C71 122 70 100 68 84" stroke-width="1.8"/>
+        <path d="M68 84 C64 72 66 60 74 52" stroke-width="1.3"/>
+        <g stroke-width="1.2">
+          <path d="M56 52 C58 34 68 24 82 24 C96 24 104 34 104 50 C104 62 94 70 80 70 C66 70 56 64 56 52 Z"/>
+        </g>
+        <g stroke-width=".85">
+          <path d="M80 24 L78 6"/><path d="M86 25 L92 8"/><path d="M72 26 L64 10"/>
+          <path d="M92 30 L106 18"/><path d="M66 32 L52 22"/><path d="M96 40 L112 36"/>
+          <path d="M60 42 L44 40"/><path d="M98 52 L112 56"/><path d="M60 54 L46 58"/>
+          <path d="M84 22 L86 4"/>
+        </g>
+        <g stroke-width=".9">
+          <path d="M69 122 C52 118 40 108 32 92 M32 92 L40 100 M38 96 L34 106 M46 100 L44 112 M54 106 L54 118"/>
+          <path d="M70 178 C88 174 102 162 110 144 M110 144 L100 150 M104 148 L106 160 M94 154 L96 166 M86 160 L86 172"/>
+          <path d="M72 244 C58 242 46 234 38 222 M38 222 L46 228 M44 226 L42 236 M52 230 L52 240"/>
+        </g>
+        <polyline class="cons" points="84,4 106,18 112,56 110,144 32,92 38,222 74,328"/>
+        <circle class="star" cx="84" cy="4" r="1.8"/>
+        <circle class="star" cx="106" cy="18" r="1"/>
+        <circle class="star" cx="112" cy="56" r="1.2"/>
+        <circle class="star" cx="110" cy="144" r="1.4"/>
+        <circle class="star" cx="32" cy="92" r="1.1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 05</span><span>cf 85</span></span>
+      <span class="rule"></span>
+      <span class="name">strategy wizard</span>
+      <span class="blurb">build a real strategy, an action agenda, not a wish list. guided, with an inline critic, based on rumelt's good strategy / bad strategy.</span>
+      <span class="rule"></span>
+      <span class="row"><span>strategy, critic</span><span>iii 2026</span></span>
+    </span>
+  </a>
+
+  <a class="sp" href="https://bobby-bowser.cosmicfarmland.wtf">
+    <span class="plate">
+      <span class="hinge" style="left:118px;top:22px;width:54px;transform:rotate(-3deg)"></span>
+      <svg width="256" height="148" viewBox="0 0 256 148" role="img" aria-label="cluster of ten seed pods on a wiry runner">
+        <path d="M8 34 C56 22 108 40 158 30 C196 22 228 34 250 30" stroke-width="1.4"/>
+        <g stroke-width="1.1">
+          <path d="M26 38 C18 54 20 76 32 92 C42 106 52 106 56 94 C60 80 50 56 38 42 C34 37 29 34 26 38 Z"/>
+          <path d="M62 34 C56 52 60 78 74 96 C84 110 94 108 96 94 C98 78 86 54 74 40 C70 35 65 30 62 34 Z"/>
+          <path d="M104 42 C98 58 102 82 114 100 C124 114 134 112 136 98 C138 82 126 60 116 46 C112 41 107 38 104 42 Z"/>
+          <path d="M146 34 C140 52 144 76 156 92 C166 104 176 102 178 88 C180 72 168 50 158 38 C154 33 149 30 146 34 Z"/>
+          <path d="M188 36 C184 54 190 78 202 94 C212 106 220 104 222 90 C224 74 212 52 202 40 C198 35 191 32 188 36 Z"/>
+        </g>
+        <g stroke-width=".7">
+          <path d="M32 52 L48 70"/><path d="M28 68 L46 84"/>
+          <path d="M68 50 L86 70"/><path d="M66 68 L86 86"/>
+          <path d="M110 58 L126 78"/><path d="M108 76 L128 92"/>
+          <path d="M152 50 L168 68"/><path d="M150 66 L170 82"/>
+          <path d="M194 52 L210 70"/><path d="M192 68 L212 84"/>
+        </g>
+        <g stroke-width=".9">
+          <path d="M92 30 C96 18 104 12 116 10"/>
+          <path d="M172 28 C170 16 162 10 150 10"/>
+        </g>
+        <polyline class="cons" points="8,34 56,94 96,94 116,10 136,98 178,88 222,90 250,30"/>
+        <circle class="star" cx="56" cy="94" r="1.1"/>
+        <circle class="star" cx="96" cy="94" r="1.3"/>
+        <circle class="star" cx="116" cy="10" r="1.6"/>
+        <circle class="star" cx="136" cy="98" r="1"/>
+        <circle class="star" cx="178" cy="88" r="1.2"/>
+        <circle class="star" cx="222" cy="90" r="1.1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 06</span><span>cf 20</span></span>
+      <span class="rule"></span>
+      <span class="name">bobby bowser arcade</span>
+      <span class="blurb">a 10-cabinet arcade of coding-craft minigames. defeat bad practices, collect good ones.</span>
+      <span class="rule"></span>
+      <span class="row"><span>arcade, games</span><span>vi 2026</span></span>
+    </span>
+  </a>
+
+</section>
+
+<!-- band 4 : three -->
+<section class="band b4">
+
+  <a class="sp" href="https://octopus-org-lair.cosmicfarmland.wtf">
+    <span class="plate">
+      <span class="hinge" style="left:70px;top:298px;width:62px;transform:rotate(5deg)"></span>
+      <span class="hinge" style="left:52px;top:118px;width:48px;transform:rotate(-8deg)"></span>
+      <svg width="204" height="392" viewBox="0 0 204 392" role="img" aria-label="kelp holdfast with eight long straps">
+        <path d="M100 390 C96 374 88 362 74 352 C58 340 44 336 30 338" stroke-width="1.5"/>
+        <path d="M100 390 C104 372 114 360 128 352 C144 342 158 340 172 344" stroke-width="1.5"/>
+        <path d="M100 390 C92 376 88 366 84 352" stroke-width="1.2"/>
+        <path d="M100 390 C110 376 116 364 122 350" stroke-width="1.2"/>
+        <path d="M100 352 C98 300 100 252 96 206" stroke-width="1.8"/>
+        <g stroke-width="1">
+          <path d="M96 206 C82 176 66 150 58 118 C52 94 56 66 68 40"/>
+          <path d="M96 206 C104 174 116 148 122 118 C128 92 126 66 116 42"/>
+          <path d="M96 214 C78 190 60 172 46 148 C34 128 30 106 34 84"/>
+          <path d="M96 214 C114 192 132 174 146 152 C160 130 166 108 164 88"/>
+          <path d="M96 232 C80 214 66 200 54 182"/>
+          <path d="M96 232 C112 216 126 202 138 184"/>
+          <path d="M96 258 C84 244 76 232 70 218"/>
+          <path d="M96 258 C110 244 118 232 124 216"/>
+        </g>
+        <g stroke-width=".7">
+          <path d="M68 40 L74 24"/><path d="M116 42 L112 26"/><path d="M34 84 L26 72"/><path d="M164 88 L172 76"/>
+        </g>
+        <polyline class="cons" points="74,24 112,26 172,76 26,72 96,206 100,390"/>
+        <circle class="star" cx="74" cy="24" r="1.4"/>
+        <circle class="star" cx="112" cy="26" r="1.6"/>
+        <circle class="star" cx="172" cy="76" r="1.1"/>
+        <circle class="star" cx="26" cy="72" r="1.2"/>
+        <circle class="star" cx="96" cy="206" r="1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 07</span><span>cf 55</span></span>
+      <span class="rule"></span>
+      <span class="name">octopus antipatterns</span>
+      <span class="blurb">a personal study site for the 36 antipatterns in the octopus organization. browse by category, drill with recall quizzes, and run a spot-it diagnostic on your own org.</span>
+      <span class="rule"></span>
+      <span class="row"><span>study, patterns</span><span>ii 2026</span></span>
+    </span>
+  </a>
+
+  <a class="sp" href="https://golf-course-designer.cosmicfarmland.wtf">
+    <span class="plate">
+      <span class="hinge" style="left:132px;top:96px;width:60px;transform:rotate(3deg)"></span>
+      <svg width="336" height="136" viewBox="0 0 336 136" role="img" aria-label="low cut sod of nine turf blades">
+        <path d="M6 118 C60 112 120 116 178 112 C236 108 292 114 330 108" stroke-width="1.6"/>
+        <g stroke-width="1.1">
+          <path d="M24 116 C20 92 24 70 36 52"/>
+          <path d="M56 116 C58 96 66 78 80 64"/>
+          <path d="M90 115 C84 90 84 66 92 44"/>
+          <path d="M122 115 C128 94 140 78 156 68"/>
+          <path d="M154 114 C148 88 148 62 156 38"/>
+          <path d="M188 113 C194 92 206 74 222 62"/>
+          <path d="M220 112 C214 90 216 68 226 48"/>
+          <path d="M254 111 C260 94 272 78 288 68"/>
+          <path d="M288 110 C282 88 284 64 294 44"/>
+        </g>
+        <g stroke-width=".7">
+          <path d="M36 52 L44 44"/><path d="M92 44 L88 32"/><path d="M156 38 L162 26"/><path d="M226 48 L222 36"/><path d="M294 44 L300 34"/>
+        </g>
+        <path d="M6 118 C40 128 100 130 168 126 C238 122 300 124 330 118" stroke-width=".8"/>
+        <polyline class="cons" points="44,44 88,32 162,26 222,36 300,34"/>
+        <circle class="star" cx="44" cy="44" r="1.1"/>
+        <circle class="star" cx="88" cy="32" r="1.3"/>
+        <circle class="star" cx="162" cy="26" r="1.7"/>
+        <circle class="star" cx="222" cy="36" r="1.2"/>
+        <circle class="star" cx="300" cy="34" r="1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 08</span><span>cf 30</span></span>
+      <span class="rule"></span>
+      <span class="name">golf course designer</span>
+      <span class="blurb">shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. every number on screen is a replayed round, not a rating.</span>
+      <span class="rule"></span>
+      <span class="row"><span>golf, simulation</span><span>vii 2026</span></span>
+    </span>
+  </a>
+
+  <a class="sp" href="/golf">
+    <span class="plate">
+      <span class="hinge" style="left:56px;top:150px;width:52px;transform:rotate(-4deg)"></span>
+      <svg width="164" height="228" viewBox="0 0 164 228" role="img" aria-label="dandelion clock with seeds leaving the head">
+        <path d="M78 226 C74 190 74 158 76 128 C77 110 78 100 78 92" stroke-width="1.5"/>
+        <circle class="o" cx="78" cy="82" r="4" stroke-width="1"/>
+        <g stroke-width=".6">
+          <path d="M78 78 L78 46"/><path d="M75 79 L62 52"/><path d="M72 81 L48 62"/><path d="M71 84 L42 78"/>
+          <path d="M71 87 L44 96"/><path d="M74 90 L56 110"/><path d="M81 78 L84 46"/><path d="M84 79 L98 54"/>
+          <path d="M86 82 L110 66"/><path d="M87 85 L114 82"/><path d="M86 89 L110 100"/><path d="M82 91 L96 112"/>
+        </g>
+        <g stroke-width=".5">
+          <path d="M78 46 L74 40 M78 46 L82 40"/><path d="M62 52 L57 48 M62 52 L60 45"/>
+          <path d="M42 78 L35 76 M42 78 L38 73"/><path d="M114 82 L121 80 M114 82 L118 77"/>
+          <path d="M110 66 L116 62 M110 66 L112 60"/><path d="M96 112 L99 118 M96 112 L102 114"/>
+        </g>
+        <g stroke-width=".5">
+          <path d="M132 34 L127 30 M132 34 L128 39 M132 34 L138 32"/>
+          <path d="M146 62 L141 58 M146 62 L142 67 M146 62 L152 60"/>
+          <path d="M28 26 L23 22 M28 26 L24 31 M28 26 L34 24"/>
+        </g>
+        <path d="M76 148 C60 144 48 134 40 120" stroke-width=".9"/>
+        <path d="M40 120 C50 118 62 124 70 134" stroke-width=".7"/>
+        <path d="M77 186 C92 182 104 172 110 158" stroke-width=".9"/>
+        <polyline class="cons" points="28,26 78,46 132,34 146,62 114,82 78,226"/>
+        <circle class="star" cx="28" cy="26" r="1.2"/>
+        <circle class="star" cx="132" cy="34" r="1.5"/>
+        <circle class="star" cx="146" cy="62" r="1"/>
+        <circle class="star" cx="78" cy="46" r="1.1"/>
+      </svg>
+    </span>
+    <span class="label">
+      <span class="rule"></span>
+      <span class="row"><span>no. 09</span><span>cf 33</span></span>
+      <span class="rule"></span>
+      <span class="name">golf record</span>
+      <span class="blurb">every round from my ghin history: scoring trends, hole-by-hole splits, and where the strokes actually go.</span>
+      <span class="rule"></span>
+      <span class="row"><span>golf, data</span><span>viii 2026</span></span>
+    </span>
+  </a>
+
+</section>
+
+<section class="shed" id="toolshed">
+  <h2>toolshed</h2>
+  <div class="meta">20 skills &nbsp; 7 commands &nbsp; 4 plugins</div>
+  <ul>
+    <li><a href="https://github.com/marshallhouston/cosmic-farmland">/ship</a><span>wait for a pr to go green, merge it, clean up the worktree</span></li>
+    <li><a href="https://github.com/marshallhouston/cosmic-farmland">/ptv</a><span>prove-the-value audit that flags bloat</span></li>
+    <li><a href="https://github.com/marshallhouston/cosmic-farmland">/next</a><span>what to work on next in this repo</span></li>
+    <li><a href="https://github.com/marshallhouston/cosmic-farmland">/handoff</a><span>self-contained resumption prompt</span></li>
+    <li><a href="https://github.com/marshallhouston/cosmic-farmland">/deps-sweep</a><span>bump deps, one pr per bucket</span></li>
+    <li><a href="https://github.com/marshallhouston/cosmic-farmland">/systematize</a><span>promote a lesson to enforcement</span></li>
+    <li><a href="https://github.com/marshallhouston/cosmic-farmland">obsidian-weaver</a><span>vault interface and auto-weaving graph</span></li>
+  </ul>
+</section>
+
+<footer>cosmic farmland &nbsp;&middot;&nbsp; <a href="https://github.com/marshallhouston/cosmic-farmland" style="color:inherit">source</a></footer>
+
+</main>
+
+<!--nav-->
+<div style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#000;color:#fff;padding:8px 14px;border-radius:999px;opacity:.75">
+&larr; &nbsp;sheet 4 of 4&nbsp; &rarr;
+</div>
+<script>
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowLeft')location.href='03.html';
+  if(e.key==='ArrowRight')location.href='01.html';
+});
+</script>
+</body>
+</html>
