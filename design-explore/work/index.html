@@ -17,6 +17,9 @@
     --slip:#f2ead6;
     --hair:rgba(48,38,20,.34);
     --rule:rgba(20,19,16,.18);
+    /* one measure for the whole sheet. anything that bleeds past the text
+       column offsets by exactly this, so nothing lands half a pixel off. */
+    --pad:max(28px, calc((100vw - 1240px) / 2));
   }
   *{box-sizing:border-box}
   body{
@@ -34,7 +37,7 @@
   .sheet{
     position:relative;
     min-height:100vh;
-    padding:0 max(28px, calc((100% - 1240px) / 2)) 44px;
+    padding:0 var(--pad) 44px;
     background:#f2ede0;
     overflow:clip;          /* clips the foxing without trapping position:sticky */
   }
@@ -102,7 +105,6 @@
   .mount img{ display:block; width:auto; height:auto; max-width:100%; max-height:340px }
   .row.full .mount{ height:470px }
   .row.full .mount img{ max-height:470px }
-  .row.full .lab{ width:320px }
 
   /* real pressed material, all nine. multiply drops the scan matte so the
      sheet fibre reads straight through; the duotone pulls them to the ink. */
@@ -136,7 +138,7 @@
 
   /* ---------- accession labels: printed flat onto the sheet ---------- */
   .lab{
-    display:block; width:fit-content; min-width:180px; max-width:300px;
+    display:block; width:292px; max-width:100%;
     padding:8px 0 0; border-top:1px solid rgba(20,19,16,.55);
   }
   .lab .no{
@@ -159,10 +161,6 @@
     font-size:9px; letter-spacing:.14em; color:var(--ink-2);
   }
   .lab .fld em{ font-style:normal; color:#2a261e; letter-spacing:.05em }
-  .lab.lg .name{ font-size:16px }
-  .lab.lg .d{ font-size:11px }
-  .lab.sm .name{ font-size:16px }
-  .lab.sm .d{ font-size:11px }
   .sp:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
   .lab{ margin-top:14px; align-self:flex-start }
 
@@ -191,20 +189,20 @@
   .sheet > .head{
     position:sticky; top:0; z-index:20;
     display:flex; justify-content:space-between; align-items:baseline;
-    padding:30px 0 15px;
+    margin:0 calc(-1 * var(--pad));
+    padding:30px var(--pad) 15px;
     background:#f2ede0;
   }
   /* the header's own slip of paper fibre, so it does not read as a flat bar */
   .sheet > .head::before{
     content:""; position:absolute; top:0; bottom:1px; z-index:-1;
-    left:calc(-1 * max(28px, (100vw - 1240px) / 2));
-    right:calc(-1 * max(28px, (100vw - 1240px) / 2));
+    left:0; right:0;
     pointer-events:none; mix-blend-mode:multiply; opacity:.12;
     background-image:url("img/paper.jpg"); background-size:760px auto;
   }
-  .sheet > .head::after{     /* the rule runs to both edges, like the sheet */
-    content:""; position:absolute; left:calc(-1 * max(28px, (100vw - 1240px) / 2));
-    right:calc(-1 * max(28px, (100vw - 1240px) / 2)); bottom:0; height:1px;
+  .sheet > .head::after{     /* stops on the measure, like every other rule */
+    content:""; position:absolute; left:var(--pad); right:var(--pad);
+    bottom:0; height:1px;
     background:var(--rule);
   }
 
@@ -230,7 +228,7 @@
   .shed a:hover b{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:.5px }
 
   /* ---------- colophon: one stamped block on flat ground ---------- */
-  .colwrap{ display:flex; justify-content:flex-end; margin-top:38px }
+  .colwrap{ display:flex; justify-content:flex-start; margin-top:38px }
   .col{
     width:330px; transform:rotate(.5deg);
     font-family:"IBM Plex Mono", monospace;
@@ -259,10 +257,10 @@
     .shed a{ grid-template-columns:1fr; gap:3px }
     .mount, .row.full .mount{ height:300px }
     .mount img, .row.full .mount img{ max-height:300px }
-    .lab, .row.full .lab{ width:100% }
+    .lab{ width:100% }
     #field{ display:none }
     .head{ flex-direction:column; gap:14px }
-    .colwrap{ margin-top:44px; justify-content:flex-start }
+    .colwrap{ margin-top:44px }
     .col{ transform:none }
   }
 </style>
@@ -301,7 +299,6 @@
       <div><span>coll.</span><em>m. houston</em></div>
       <div><span>loc.</span><em>cosmicfarmland.wtf</em></div>
       <div><span>field</span><em>18h 36m 56s &nbsp;+38&deg; 47&prime; 01&Prime;</em></div>
-      <div><span>kit</span><em>20 skills, 7 commands, 4 plugins</em></div>
       <div><span>det.</span><em>m. houston, 2026</em></div>
     </div>
   </div>
