@@ -1,6 +1,13 @@
-/* Golf-page skin. The design system itself is in grayton.css, which the sync
-   injects first; this file maps the vault page's own token names onto Grayton
-   values and styles the page's own components.
+/* Golf-page skin. The design system itself is in sheet.css, which the sync
+   injects first; this file maps the vault page's own token names onto the
+   sheet's and styles the page's own components.
+
+   Paper, ink, rules and type come from the sheet. What does not is the handful
+   of colours that encode data: the chart series, and birdie against bogey
+   against double. The sheet is monochrome by choice, but a scorecard that
+   cannot tell a birdie from a double has lost the information it exists to
+   carry, so those stay as a small, deliberate functional palette, darkened to
+   sit on cream rather than on the old board.
 
    Lives here, not in the vault source, so regenerating the vault HTML can't
    wipe it. Loaded after the page's inline <style>, so same-specificity rules
@@ -11,45 +18,46 @@
    the inverse of the index — that's the page's own toggle, left alone. */
 
 :root {
-  --gold: #e9bb47;
-  --gold-deep: #7d5a0c;
-  --moss: #3f5c3f;
-  --moss-deep: #2f4a30;
-  --post: #615e58;
-  /* light theme: the overcast sky and the fence rails, not gray UI chrome */
-  --surface-1: #eeefe9;
-  --plane: #e4e5df;
-  --text-primary: #24222a;
-  --text-secondary: #575360;
-  --muted: #615e58;
-  --grid: #d5d5cd;
-  --axis: #bcbcb4;
-  --border: rgba(36, 34, 42, 0.14);
-  --chip: #e7e8e1;
-  --div-mid: #d5d5cd;
+  /* functional: these two encode data and are darkened for cream */
+  --gold: #8a6d1f;
+  --gold-deep: #6b5416;
+  --moss: #44603f;
+  --moss-deep: #33492f;
+  --post: var(--ink-3);
+  /* everything else is the sheet's own paper, ink and rules */
+  --surface-1: var(--sheet);
+  --plane: var(--stock);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --muted: var(--ink-3);
+  --grid: var(--rule);
+  --axis: rgba(20, 19, 16, 0.30);
+  --border: var(--rule);
+  --chip: rgba(20, 19, 16, 0.05);
+  --div-mid: var(--rule);
 }
 
 :root[data-theme="dark"] {
-  --gold: #e9bb47;
-  --gold-deep: #b98a1e;
+  --gold: #c9a959;
+  --gold-deep: #dcc182;
   --moss: #9db38c;
-  --moss-deep: #7d9a70;
-  --post: #a9a5a0;
+  --moss-deep: #b2c6a3;
+  --post: var(--ink-3);
 
-  --surface-1: #232025;
-  --plane: #1b191c;
-  --text-primary: #f3e7c9;
-  --text-secondary: #b6ac97;
-  --muted: #948d80;
-  --grid: #4a464e;
-  --axis: #665f68;
-  --border: rgba(243, 231, 201, 0.14);
-  --chip: #2d292f;
-  --div-mid: #4a464e;
+  --surface-1: var(--sheet);
+  --plane: var(--stock);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --muted: var(--ink-3);
+  --grid: var(--rule);
+  --axis: rgba(232, 226, 210, 0.28);
+  --border: var(--rule);
+  --chip: rgba(232, 226, 210, 0.07);
+  --div-mid: var(--rule);
 }
 
 /* Charts: the page ships a blue/orange series palette. Repaint the categorical
-   series and status colors in the sign's three paints — green data, gold
+   series and status colors in the sheet's own register — green data, gold
    emphasis, straw third — and swap the blue "under par" ramp for a foliage
    ramp. The red "over par" ramp stays red: over-par severity has to read as a
    warning, and that's the one hue the photograph doesn't supply. */

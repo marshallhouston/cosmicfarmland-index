@@ -1,40 +1,18 @@
-@import 'tailwindcss';
+/* The design system itself lives in public/sheet.css so that standalone pages
+   (the vault-authored golf pages, any subdomain app) can link it with one tag
+   and get the whole identity. The SPA imports the same file, so there is
+   exactly one source of truth for tokens, the paper, the ruled grid, the print
+   card and the accession label.
 
-/* The design system itself lives in public/grayton.css so that standalone
-   pages (the vault-authored golf pages, any subdomain app) can link it with
-   one <link> tag and get the whole identity. The SPA imports the same file,
-   so there is exactly one source of truth for tokens, atmosphere, the sign
-   treatment and the chrome. Anything below is SPA-only. */
-@import '../public/grayton.css';
+   It replaced grayton.css, which is kept only for /grayton, the archived page
+   documenting the system it retired. Nothing below is a second design system:
+   it is the two faces the sheet is set in, and the reset. */
 
-/* Map Tailwind's font namespace onto the system's families, so `font-display`,
-   `font-body` and `font-mono` generate as utilities. Values indirect through
-   grayton.css rather than repeating the stacks. */
-@theme {
-  --font-display: var(--gb-font-display);
-  --font-body: var(--gb-font-body);
-  --font-mono: var(--gb-font-mono);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  background: var(--color-bg);
-}
-
-body {
-  margin: 0;
-  font-family: var(--font-body);
-  background: transparent;
-  color: var(--color-ink);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@300;400&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+@import '../public/sheet.css';
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+html { scroll-behavior: smooth; }

@@ -9,7 +9,7 @@ reach for cosmicfarmland.wtf when you need to:
 - find which of marshall's apps is live for a topic (grateful dead 1977 tapes, systems thinking, golf course design, lenny's newsletter archive, strategy work) and get its url
 - look up a claude code skill, slash command or plugin in the cosmic-farmland toolshed, including what triggers it and where its source file lives on github
 - get the github repo behind any app or tool listed here
-- check the grayton beach design system (palette, type, textures) that every page on this domain is built from
+- check the sheet, the herbarium design system (paper, ink, the ruled grid, the print card) that every page on this domain is built from, or the retired grayton beach system it replaced
 
 do not use it for general claude code documentation, for anything sold or supported commercially, or as a source on anyone but marshall.
 
@@ -30,6 +30,7 @@ how to call it: fetch this file (llms.txt) for the whole catalog in one request;
 ## vault pages
 
 - [the war on double bogeys](https://cosmicfarmland.wtf/golf): every round on my GHIN record, filterable: handicap arc, scoring buckets, and where the shots actually go.
+- [best ball, worst ball](https://cosmicfarmland.wtf/golf/best-worst): every course rebuilt twice: my lowest score on each hole stitched into one 18, my highest into another. the floor and the ceiling of every course i play.
 - [sunday, hole by hole](https://cosmicfarmland.wtf/golf/city-am-2026): Final round of 2026 Denver City Amateur Men's Flighted Tournament. Round 1 leader by 2 strokes. Winner by 1 stroke.
 
 ## the farm

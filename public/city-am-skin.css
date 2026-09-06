@@ -1,54 +1,59 @@
-/* Grayton Beach skin for the City Am hole-by-hole page.
-   Loaded after grayton.css (the design system) and golf-skin.css (shared golf
+/* Sheet skin for the City Am hole-by-hole page.
+   Loaded after sheet.css (the design system) and golf-skin.css (shared golf
    mappings, brand, footer), and after the page's own inline <style>, so
    same-specificity rules win. Nothing
-   here may live in the vault source: that file is regenerated wholesale. */
+   here may live in the vault source: that file is regenerated wholesale.
+
+   Surfaces, ink and rules come from the sheet. The score colours do not:
+   birdie, bogey, double and eagle are the page's data encoding, and a
+   scorecard that cannot separate them has lost its point. */
 
 :root {
-  /* the page ships its own token names; point them at the Grayton palette */
+  /* the page ships its own token names; point them at the sheet */
   --surface-1: transparent;
-  --surface-2: rgba(238, 239, 233, 0.9);
-  --card: rgba(238, 239, 233, 0.82);
-  --text-primary: #24222a;
-  --text-secondary: #575360;
-  --text-muted: #615e58;
-  --grid: #d5d5cd;
-  --border: rgba(36, 34, 42, 0.16);
-  --me: rgba(233, 187, 71, 0.22);
-  --me-border: #7d5a0c;
-  --series-1: #3f5c3f;
-  --good: #3f5c3f;
-  --bad: #9c443c;
-  --line-dim: #bcbcb4;
-  --birdie: #3f5c3f;
-  --bogey: #7d5a0c;
-  --dbl: #9c443c;
-  --eagle: #615e58;
+  --surface-2: var(--stock);
+  --card: var(--stock);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --text-muted: var(--ink-3);
+  --grid: var(--rule);
+  --border: var(--rule);
+  --line-dim: rgba(20, 19, 16, 0.30);
+  /* data encoding, darkened to sit on cream */
+  --me: rgba(138, 109, 31, 0.18);
+  --me-border: #6b5416;
+  --series-1: #44603f;
+  --good: #44603f;
+  --bad: #8c3c34;
+  --birdie: #44603f;
+  --bogey: #8a6d1f;
+  --dbl: #8c3c34;
+  --eagle: var(--ink-3);
 }
 
 :root[data-theme="dark"] {
   --surface-1: transparent;
-  --surface-2: rgba(35, 32, 37, 0.8);
-  --card: rgba(45, 41, 47, 0.7);
-  --text-primary: #f3e7c9;
-  --text-secondary: #b6ac97;
-  --text-muted: #948d80;
-  --grid: #4a464e;
-  --border: rgba(243, 231, 201, 0.14);
-  --me: rgba(233, 187, 71, 0.18);
-  --me-border: #e9bb47;
+  --surface-2: var(--stock);
+  --card: var(--stock);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --text-muted: var(--ink-3);
+  --grid: var(--rule);
+  --border: var(--rule);
+  --line-dim: rgba(232, 226, 210, 0.28);
+  --me: rgba(201, 169, 89, 0.18);
+  --me-border: #c9a959;
   --series-1: #9db38c;
   --good: #9db38c;
   --bad: #d98d84;
-  --line-dim: #665f68;
   --birdie: #7d9a70;
-  --bogey: #e9bb47;
+  --bogey: #c9a959;
   --dbl: #c9736a;
-  --eagle: #a9a5a0;
+  --eagle: var(--ink-3);
 }
 
-body { font-family: var(--font-body); background: #e4e5df; }
-:root[data-theme="dark"] body { background: #1b191c; }
+body { font-family: Spectral, Georgia, serif; background: var(--sheet); }
+:root[data-theme="dark"] body { background: var(--sheet); }
 .wrap { position: relative; z-index: 1; }
 a { color: var(--moss); }
 a:hover { color: var(--gold-deep); }

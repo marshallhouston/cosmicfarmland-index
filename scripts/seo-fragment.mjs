@@ -48,7 +48,7 @@ export function seoFragment(tagline = '') {
     li(origin + '/about', 'About', 'who grows this and how the site is built'),
     li(origin + '/contact', 'Contact', 'github is the front door; issues and pull requests welcome'),
     li(origin + '/privacy', 'Privacy', 'no analytics, no tracking, one theme preference in localStorage'),
-    li(origin + '/grayton', 'Grayton Beach', 'the design system every page here is sampled from'),
+    li(origin + '/grayton', 'Grayton Beach', 'the retired design system this site used to be sampled from, kept as a record'),
     li(origin + '/llms.txt', 'llms.txt', 'the whole farm in one machine-readable file, with when-to-use guidance'),
     '</ul>',
     '</div>',

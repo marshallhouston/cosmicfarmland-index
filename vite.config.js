@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 import { seoFragment } from './scripts/seo-fragment.mjs'
 
 // Inject a plain-HTML mirror of the farm into #root at build time, so a crawler
@@ -22,5 +21,5 @@ function seoPrerender() {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), seoPrerender()],
+  plugins: [react(), seoPrerender()],
 })
