@@ -1053,11 +1053,12 @@ function renderClimb(){
   const counting=ALL.filter(r=>r.used&&r.diff!=null).sort((a,b)=>a.diff-b.diff);
   const avg8=mean(counting.map(r=>r.diff));
   const under=ALL.filter(r=>r.diff!=null&&r.diff<=TARGET).length;
+  const ACSER=anticapSeries(), ACNOW=ACSER[ACSER.length-1];
   const g=$('#climbTiles'); g.innerHTML='';
   [['Index on GHIN', f1(PROFILE.index), 'as of the '+PROFILE.asOf+' pull'],
    ['All-time low index', f1(PROFILE.lowIndex), 'set '+fmtDate(PROFILE.lowDate)],
-   ['Counting rounds average', counting.length?f1(avg8):'—',
-     counting.length? 'the '+counting.length+' GHIN currently counts':'no counting rounds flagged'],
+   ['Anticap now', ACNOW?f1(ACNOW.anti):'—',
+     ACNOW? 'worst 8 of the last 20 · '+f1(ACNOW.anti-ACNOW.cap)+' above the best 8':'needs 20 posted rounds'],
    ['Rounds at '+f1(TARGET)+' or better', under,
      'of '+ALL.filter(r=>r.diff!=null).length+' all time · '+pct(under,ALL.filter(r=>r.diff!=null).length)]]
   .forEach(([k,v,n])=>g.appendChild(el('div','tile','<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div>')));
