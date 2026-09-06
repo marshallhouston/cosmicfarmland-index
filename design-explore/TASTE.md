@@ -61,6 +61,20 @@ Where they conflict with anything else, these win.
   as the page stayed legible and calm. Withhold rather than explain, but never at the
   cost of clarity about what to click.
 
+## The plate is a print
+
+Settled. Each plate is a mounted print card sitting inside its ruled cell:
+one window, one specimen scale, one caption band of fixed depth carrying the
+accession label. The owner picked it over a card whose caption sat on the sheet
+and over one held by photo corners.
+
+The card takes the sheet's own tone. Any lighter and each scan's off-white
+background shows as a grey rectangle inside the window. It reads as a card by
+its edge and its shadow, not by being paler.
+
+The tilt stays under half of what loose specimens carried. Ten tilted cards
+read as mess.
+
 ## The cosmic
 
 Lyra is plotted on the sheet from real coordinates. Four treatments of how present
