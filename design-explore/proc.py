@@ -14,9 +14,14 @@ print("paper", p.size, "->", Image.open("work/img/paper.jpg").size)
 for f in sorted(glob.glob("work/img/specimen-*.jpg")):
     im = Image.open(f).convert("RGB")
     g  = im.convert("L")
-    # alpha: fully opaque at ink, transparent at paper white
-    lo, hi = 120, 252
+    # alpha: fully opaque at ink, transparent at paper white.
+    # hi was 252, but these scans' paper sits nearer 240, so the background
+    # came out at alpha 2-13 instead of 0. Invisible against the sheet and a
+    # visible rectangle against a print card, which is what matte.py had to go
+    # back and clear. FLOOR drops anything the ramp leaves in the haze.
+    lo, hi, FLOOR = 120, 236, 26
     alpha = g.point(lambda v: 255 if v <= lo else (0 if v >= hi else int(255*(hi-v)/(hi-lo))))
+    alpha = alpha.point(lambda v: 0 if v < FLOOR else v)
     out = im.convert("RGBA")
     out.putalpha(alpha)
     bbox = alpha.getbbox()
