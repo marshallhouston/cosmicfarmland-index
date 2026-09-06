@@ -31,6 +31,16 @@ alternatives to them.
   rejected notes. The banned frame is one drawn around the whole page, not the divisions
   inside it.
 - **Lowercase throughout is deliberate.** Not a typographic error to correct.
+- **Each plate is a mounted print card inside its ruled cell.** One window, one
+  caption band of fixed depth, every specimen at one scale. The owner chose it over
+  two other card treatments. "Return the specimens to the bare sheet", "vary the
+  card sizes", and "let the specimens break out of their cards" are rejected notes.
+  The card carries the sheet's own tone on purpose: made lighter it turns each
+  scan's background into a visible rectangle. Judge how well the card is drawn,
+  never whether it should be a card.
+- **The specimens are one size on purpose.** Scaling them per growth habit was
+  built and rejected by the owner as odd. Ask for different organisms, never for
+  different sizes.
 - **The absence of explanatory copy is deliberate.** Never ask for a tagline, a thesis
   line, a section intro, or a sentence naming the concept. That is the design working.
 
