@@ -1,298 +1,125 @@
-# Design — Grayton Beach
+# Design — the sheet
 
-Visual system for cosmicfarmland.wtf.
+The design system for cosmicfarmland.wtf. A herbarium sheet: cream card stock
+running to all four edges with no frame, black ink, and each entry mounted as a
+print card inside a ruled cell.
+
+It replaced Grayton Beach, which was sampled off a photograph of a hand-painted
+welcome sign. That system is not deleted: `/grayton` is still up as a record of
+what the site used to be, `public/grayton.css` is kept for that one page, and
+nothing else links it.
 
 ## Where it lives
 
-**`public/grayton.css` is the design system.** Tokens, type, the atmosphere
-layers, the sign treatment and the interface chrome — one plain stylesheet, no
-Tailwind at-rules, no build step, so any page can adopt it with one line:
+- **`public/sheet.css`** is the system: tokens, the paper, the ruled grid, the
+  print card, the accession label, light and dark. One plain stylesheet, no
+  build step. Any page adopts it with one tag:
 
-```html
-<link rel="stylesheet" href="https://cosmicfarmland.wtf/grayton.css">
-<html data-theme="dark">   <!-- or "light"; board is the default -->
-```
+  ```html
+  <link rel="stylesheet" href="https://cosmicfarmland.wtf/sheet.css">
+  ```
 
-The SPA imports that same file from `src/index.css`, so there is exactly one
-source of truth. Everything else is a consumer:
+- `src/index.css` imports the same file, so the SPA and the standalone pages
+  cannot drift.
+- `public/golf-skin.css` and `public/city-am-skin.css` sit on top and only map
+  the vault pages' own token names and style their components.
+- **The rules that govern this design are in `design-explore/`**, and they win
+  over this document:
+  - `DIRECTION.md` is the brief.
+  - `TASTE.md` is the page owner's own reactions. It is binding and beats
+    everything, including a critic and including this file.
+  - `CRITIC.md` is the critique prompt, including the list of decisions that
+    are settled and must not be re-argued.
+  - `critiques/` logs every critic run with the screenshots it was given.
+  - `rejected/` holds every variant that lost, by pass.
 
-| File | Owns |
+## Tokens
+
+Declared three times on purpose. Bare `:root` is the light palette, a
+`prefers-color-scheme` block guarded with `:not([data-theme="light"])` covers
+the viewer who has chosen nothing, and a `[data-theme]` block lets an explicit
+choice win in both directions.
+
+| token | what it is |
 |---|---|
-| `public/grayton.css` | the system: tokens, type, atmosphere, sign treatment, chrome |
-| `public/grayton.html` | `/grayton` — the source photo and the system, built *with* the system |
-| `src/index.css` | Tailwind entry: imports the system, maps its font namespace |
-| `src/App.jsx` | the index's own components |
-| `public/golf-skin.css` | maps the golf pages' token names onto Grayton, styles their components |
-| `public/city-am-skin.css` | the City Am page's own components |
+| `--sheet` | the card stock the whole page is printed on |
+| `--stock` | the print card mounted on it |
+| `--card` | the browser's own ground behind the sheet |
+| `--ink`, `--ink-2`, `--ink-3` | the ink scale, darkest to faintest |
+| `--rule` | every rule on the sheet, one weight and one dilution |
+| `--pad` | the measure. Anything that bleeds past the text column offsets by exactly this |
+| `--font-body`, `--font-display`, `--font-mono` | the two faces |
 
-A page skin never redefines a system value. Note that the vault pages declare
-their own tokens under `[data-theme=...]`, so a skin's mappings have to match
-that specificity to win on source order — a bare `:root` loses.
+## Two registers, and no third
 
-## Origin
+A typewriter for the institution's own marks (the wordmark, accession numbers,
+locality, the section registers) and one serif for everything a person reads.
+`--font-display` is the same serif as the body on purpose: the sheet's display
+voice is the typewriter, not a third face.
 
-One photograph, and nothing else: a hand-painted **WELCOME TO GRAYTON BEACH**
-sign. A long dark-stained board bolted to three weathered fence posts, standing
-in a wall of wet Florida shrub over pine straw and bark mulch, shot on a flat
-overcast morning.
+## After dark
 
-Two things about that photo drive everything here, and both of them are easy to
-get wrong from memory:
+The room goes dark, the sheet does not. The card stays cream paper with black
+ink on it, and only what is printed straight onto the board turns pale. This is
+the only reading where the specimens need no re-lighting: their surface never
+changes, so `multiply` keeps working. On a dark card, pressed ink vanishes under
+multiply and has to be inverted and screened.
 
-1. **The light is cool and the picture is desaturated.** The board is not
-   chocolate brown — sampled, it runs `#4d484c` / `#46444b` / `#363841`, a
-   near-neutral gray-brown. The painted green is `#547554`, a muted sage, not a
-   leaf green. The mulch is `#524f45`, gray taupe, not rust. The fence posts are
-   silver, `#9f9b97`. The only saturated thing in the entire frame is the
-   marigold lettering, `#e9bb47`. That is why gold is the only loud color in
-   this system and everything else is a warm neutral.
-2. **The lettering is psychedelic, not woodtype.** "GRAYTON BEACH" is
-   art-nouveau hand lettering — flared stems, blobby bowls, organic terminals,
-   letters that bounce off the baseline and interlock. Every letter is a **cream
-   outline** around a fill that runs **marigold at the top into sage at the
-   bottom**. "WELCOME TO" is the same hand, smaller, in flat cream.
+## The print card
 
-Every token below was sampled from those pixels. If a value ever needs to
-change, sample the photo again — don't eyeball it.
+One window, one caption band, every specimen at one scale. The card is the fixed
+object and the link; the cell around it is not clickable.
 
-The system answers to the town's slogan:
+- The card takes the sheet's own tone. Made lighter it turns each scan's
+  background into a visible rectangle inside the window.
+- The card's height is fixed and the caption takes the depth it needs; the
+  window absorbs the difference. Pinning the band instead leaves slack under a
+  short blurb.
+- Hinges are percentages of the specimen, so they are positioned against the
+  specimen's own box and not the window it is centred in. The `.sizer` wrapper
+  carries the specimen's aspect ratio, driven by width with the height derived.
+  Give it a definite height and the ratio is ignored and every hinge drifts off
+  its stem by half the letterbox.
+- Specimens differ in form, never in size. Scaling them per growth habit was
+  built and rejected.
 
-> **nice dogs, strange people**
+## The ruled grid
 
-Nice dogs = the interface is friendly, plainspoken, unguarded. Strange people =
-the personality is not sanded off. Weirdness lives in the lettering, the texture
-and the copy; the layout, the contrast and the interaction stay well-behaved.
+A hairline divides the plates. It is deliberate and it is settled: it reads as a
+ruled page rather than a frame, and it was chosen over four looser layouts. The
+banned frame is one drawn around the whole page, not the divisions inside it.
+Every rule on the sheet is one weight and one dilution, and every rule closes
+the measure.
 
-## Theme
+## The cosmic
 
-Two readings of the same photograph, both shipped.
-
-- **board** (default) — the page *is* the stained board. The letters are painted
-  straight onto it.
-- **daylight** — the page is the overcast morning around the sign. The wordmark
-  gets its own board to sit on, because a cream outline over a pale sky is no
-  outline at all — and because a dark board in flat daylight is literally what
-  the photo shows.
-
-Board-first: `data-theme` is stamped on `<html>` by an inline script in
-`index.html` before paint, defaults to `dark`, and persists in `localStorage`
-under `cf-theme`. System preference is deliberately not consulted — the board is
-the identity, daylight is opt-in via the nav toggle.
-
-Atmosphere is four fixed layers behind the content, present in both themes:
-`.board` (stain plus long grain running *along* the board, i.e. horizontal, the
-way the real one does), `.canopy` (the shrub crowding the edges, 19s sway),
-`.straw` (mulch banked and feathered along the bottom), `.grain` (film noise).
-
-`public/board.jpg` is a seamless tile cut from a bare patch of the sign's own
-board, mirrored four ways. It is kept for any surface that wants photographed
-wood, but nothing currently uses it: the page background reads better as a warm
-gradient (at full-viewport scale the tile's repeat is obvious), and the wordmark
-no longer sits on a board at all.
-
-## Color
-
-Two token layers in `public/grayton.css`: materials sampled from the photo,
-then semantic tokens under `:root, :root[data-theme='dark']` (board) and
-`:root[data-theme='light']` (daylight). Components reference only the semantic layer, so each component is
-written once and is correct in both themes.
-
-### Materials (sampled; never change per theme)
-
-| Token | Value | Sampled from |
-|---|---|---|
-| `--paint-gold` | `#e9bb47` | the marigold letters, top half |
-| `--paint-gold-deep` | `#b98a1e` | their shaded edge |
-| `--paint-green` | `#547554` | the letters' bottom half |
-| `--paint-cream` | `#f3e7c9` | the outline, and "WELCOME TO" |
-| `--board-dark` | `#1b191c` | where the stain pooled |
-| `--board` | `#322f34` | the board face |
-| `--board-lit` | `#4d484c` | where the stain thinned |
-| `--post` | `#9f9b97` | the weathered fence posts |
-| `--post-shadow` | `#59575c` | their shadowed side |
-| `--mulch` | `#524f45` | pine straw and bark |
-| `--foliage-deep` | `#2e3a2b` | inside the shrub |
-| `--foliage` | `#485c4b` | the leaf mass |
-| `--foliage-lit` | `#718865` | leaves catching light |
-| `--foliage-pale` | `#a7b79c` | new growth |
-| `--overcast` | `#e4e5df` | the sky that morning |
-
-### Semantic tokens
-
-| Token | board | daylight | Role |
-|---|---|---|---|
-| `--color-bg` | `#2a2621` | `#e4e5df` | page ground |
-| `--color-surface` | `#332e27` | `#eeefe9` | recessed surface (closed rows, inputs) |
-| `--color-surface-2` | `#3d372f` | `#f8f8f3` | raised surface (cards, open rows) |
-| `--color-line` | `#5b5346` | `#c8c8c0` | borders, scrollbar thumb |
-| `--color-line-soft` | cream 12% | ink 12% | hairlines |
-| `--color-ink` | `#f3e7c9` | `#24222a` | primary text |
-| `--color-ink-dim` | `#c2b8a3` | `#575360` | secondary text |
-| `--color-gold` | `#e9bb47` | `#7d5a0c` | active state, stats, links on hover |
-| `--color-gold-strong` | `#f2c95f` | `#6e4f08` | emphasis |
-| `--color-moss` | `#a8bd97` | `#3f5c3f` | live status, kickers, sprouts |
-| `--color-moss-strong` | `#8aa87c` | `#2f4a30` | hover borders |
-| `--color-post` | `#b4b0aa` | `#615e58` | tertiary neutral (trigger chips) |
-| `--card-shadow` | inset cream lip | white lip + paper shadow | how a card sits on its ground |
-
-The board ground is deliberately a step **warmer and deeper** than the sampled
-board face. The sampled values stay in the materials layer, but a page painted
-literally `#363841` reads as a black screen rather than as wood — so the ground
-runs `#37322c → #2a2621 → #201d1a` with the shrub washing green in from the
-edges. Warm wood and verdant green, which is what the photo *feels* like even
-though a colour-picker on a single pixel doesn't say so.
-
-Contrast against each theme's page ground: ink 11.8 / 12.4, ink-dim 7.4 / 5.9,
-gold 8.1 / 5.0, moss 7.2 / 5.9, post 6.7 / 5.1. All body and accent text clears
-WCAG AA in both themes, on the ground and on raised surfaces. `--paint-green` at 3.4 on the board is a *fill* color
-only — it never carries text.
-
-### Interaction language
-
-Two accents, two jobs, everywhere:
-
-- **moss** = alive and hoverable. Card hover borders, live dots, kickers, the
-  sprout icon.
-- **gold** = active and current. The open catalog row, the selected filter pill,
-  focus rings, the search field in focus, stats.
-
-Nothing else signals state. Gray-on-color is never used; secondary text is a
-dimmed version of the ground's own warmth.
-
-## Typography
-
-- Display: **Amarante** via `--font-display` — art-nouveau, flared stems,
-  organic curves. The closest available skeleton to the sign's hand. Used for
-  the hero wordmark and section heads only, never for body copy.
-- Body: **Figtree** via `--font-body` — warm humanist sans, quiet under the
-  display face.
-- Mono: **Space Mono** via `--font-mono` — labels, counts, slugs, nav, footer.
-  Its quirks are on-brand; leave them.
-
-The first pass of this system used Rye, a western woodtype. That was wrong: the
-sign is psychedelic/nouveau, not Wild West. If the display face is ever
-revisited, bake off candidates *against a crop of the photo* rather than from
-description — the two lanes look nothing alike side by side.
-
-Apply the display face with the `font-display` utility, **not**
-`font-[var(--font-display)]` — Tailwind v4 resolves that arbitrary value to
-`font-weight` and silently drops the family.
-
-## The sign treatment
-
-Three pieces reproduce how the board was painted. The CSS is in `grayton.css`,
-so any page can use it — one `.glyph` per letter, `.glyph-space` for the gaps,
-the per-letter rotation inline, all wrapped in `.plank`:
-
-- **`.glyph`** — one per letter. Cream `-webkit-text-stroke` with
-  `paint-order: stroke fill` so the outline sits behind the fill, over a
-  `background-clip: text` gradient that runs `--paint-gold` to 34%, blends
-  through `#8ea063`, and lands on `--paint-green` by 64%. Plus a hard drop
-  shadow, because the letters are painted into routed wood. An `@supports` guard
-  paints solid gold if `background-clip: text` is missing.
-- **`SignWord`** (in `App.jsx`) — wraps each letter and applies a fixed rotation
-  and vertical offset from `LETTER_JITTER`. Fixed, not random: the wordmark must
-  be identical on every load.
-- **`.plank`** — the wrapper around the wordmark. It carries no board in either
-  theme. A dark slab behind the letters in daylight reads as a separate object
-  sitting in the page, narrower than the column around it, and two rounds of
-  trying to make it a convincing board (rounded, photographed grain, lit edge,
-  tilt) did not fix that — it is the rectangle itself that is wrong. In daylight
-  the cream outline is instead held by a tight dark halo hugging the letterforms
-  (`drop-shadow` at ~1px with no offset), which does the board's job with none
-  of its furniture and keeps the wordmark on the same left margin as everything
-  else.
-
-The index hero holds each word in its own child of a `flex flex-wrap` span,
-gapped `0.24em` to match `.glyph-space`, and the `h1` carries
-`mr-[calc(50%-50vw+1.5rem)]` so the sign can run past the `max-w-5xl` column into
-the right gutter. **COSMIC FARMLAND** lands on one line from about 380px of
-viewport up, and only breaks in two below that, where the `clamp` floor of
-`2.6rem` stops the type shrinking with the screen. The left margin stays on the
-column and the negative margin collapses to zero once the column is full-width,
-so nothing ever scrolls sideways. At `7.5rem` one line measures ~1137px against
-976px of column: the sign has to leave the column to fit, or shrink to ~6.4rem.
-
-Don't put a `<br>` back: it costs the wide-screen line, and the words can't wrap
-on their own because `.glyph-space` is an `inline-block` and offers no break
-opportunity.
-
-The wordmark's visible letters are `aria-hidden` and `user-select: none`; an
-`sr-only` "Cosmic Farmland" carries the accessible name and the copy buffer. The
-`h1` computes to `heading "Cosmic Farmland" [level=1]`.
-
-`.painted-cream` is the "WELCOME TO" treatment — flat cream with a carved edge —
-used on section heads, and flipped to a white top-bounce in daylight.
-
-## Components
-
-- **AppCard**: rounded-2xl, 1px line border, surface-2/70, `--card-shadow` (a
-  routed lip on the board, a paper lift in daylight). Hover lifts -6px, border
-  goes moss, a blurred foliage orb blooms top-right, the arrow goes gold.
-  Coming-soon variant: dashed border, dimmed, no link.
-- **CatalogCard**: rounded-xl accordion row; closed = circle icon + mono slug +
-  truncated blurb, open = gold border, gold CircleDot, full blurb, args in gold,
-  trigger chips in post-gray. Grids use `items-start` so an open row doesn't
-  stretch its neighbour into a tall empty box.
-- **PageCard** (golf looping): moss kicker, medium-weight name, arrow nudge.
-- **Filter pills**: rounded-full mono; active = gold border + gold/10 fill.
-- **Stat**: mono gold number over a 10px uppercase tracked label
-  (`whitespace-nowrap`, so "apps live" doesn't break in half on a phone).
-- **Search**: rounded-full inset input, mono, gold focus border. The WebKit
-  clear button is repainted from its default blue system glyph to an ink X that
-  goes gold on hover.
-- **ThemeToggle**: rounded-full mono pill in the nav, sun/moon plus the name of
-  the *destination* theme ("daylight" / "board"). The word is hidden below `sm`;
-  the icon and `aria-label` carry it there.
-
-Every grid child carries `min-w-0` — without it a long slug or blurb blows the
-column out past the viewport instead of truncating.
-
-## Motion
-
-Library: `motion/react`. Entrances: fade + rise (y 18–24px), 0.6–0.9s, staggered
-~0.08s per card, `whileInView` once with -60px margin. Hover: card lift, arrow
-nudge, color transitions. Ambient: 19s canopy sway, the only looping animation.
-Reduced motion: honored via `MotionConfig reducedMotion="user"` and a
-`prefers-reduced-motion` block that stops the sway.
-
-## Layout
-
-Single column, `max-w-5xl`, px-6. Hero fills ~70vh, then apps grid
-(`sm:grid-cols-2`, gap-5), golf looping, toolshed (gap-3 two-col), footer with a
-top hairline. Section rhythm: mt-12 / mt-24 / mt-28.
+Lyra, plotted from real right ascension and declination at the coordinate
+printed on the colophon. It is never announced in words: the sheet's speckle
+simply resolves, in one place, into a real constellation. The magnitude ramp is
+capped, because at full scale Vega drew as a hard dot the size of a blemish and
+readers took it for one.
 
 ## Voice
 
-All-lowercase interface copy, farm-metaphor language ("the toolshed", "the back
-forty", "nothing in this patch yet", "grown by marshall"). Keep it — the farm
-metaphor and the Grayton material are not in conflict; the sign is a farm sign.
-The slogan **nice dogs, strange people** sits in the footer of the index and of
-both golf pages, in mono, gold, wide tracking. It is the brand line, not a
-product tagline: the hero tagline stays "apps, tools, and writing. entrypoint to
-the cosmic farmland".
+Lowercase throughout, plainspoken, few words. No copy whose job is to explain
+the metaphor, justify the design, or state the idea. No tagline under the
+wordmark. No gloss beside a section heading. The design carries the idea or the
+idea is not worth having.
+
+No em-dashes or en-dashes anywhere.
 
 ## Charts
 
-The golf pages ship their own chart tokens; the skin repaints them. Categorical
-series are the sign's own paints — `--series-1` sage (the data), `--series-2`
-gold (the emphasized line), `--series-3` post-gray — and the "under par"
-sequential ramp (`--seq-*`, `--u*`) is a foliage ramp instead of the stock blue.
-The over-par ramp (`--o*`) and `--critical` stay red: severity has to read as a
-warning, and red is the one hue the photograph doesn't supply. That exception is
-deliberate; don't "fix" it by making bad scores sage.
+The sheet is monochrome by choice, and the golf pages are the exception, because
+their colour encodes data. Chart series, and birdie against bogey against
+double, stay as a small deliberate functional palette darkened to sit on cream.
+A scorecard that cannot separate a birdie from a double has lost the information
+it exists to carry. Everything else on those pages, paper, ink, rules and type,
+comes from the sheet.
 
 ## Vault pages
 
-`public/golf-skin.css` and `public/city-am-skin.css` carry the same palette,
-fonts, atmosphere and footer to the golf pages. Those pages ship light-first
-(bare `:root` = daylight, `[data-theme="dark"]` = board), the inverse of the
-index — that's the vault page's own toggle and it stays that way. The injected
-font links, `grayton.css`, the atmosphere divs and the slogan footer live in
-`scripts/sync-vault.mjs`; the published HTML in `public/` is stamped to match,
-with `?v=` hashes refreshed whenever a stylesheet changes.
-
-A *new* vault page inherits the palette, type and atmosphere for free from
-`grayton.css`, but its own components are its own problem: `golf-skin.css` is
-written against the golf pages' class names. Give a genuinely different page its
-own thin skin rather than widening the golf one.
+`scripts/sync-vault.mjs` injects `sheet.css` first and the page skins after it,
+each with a content hash in the query string so a deploy cannot serve a stale
+stylesheet. The skins live in this repo, not in the vault source, because that
+source is regenerated wholesale.

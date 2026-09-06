@@ -59,7 +59,7 @@ const whenToUse = [
   "- find which of marshall's apps is live for a topic (grateful dead 1977 tapes, systems thinking, golf course design, lenny's newsletter archive, strategy work) and get its url",
   '- look up a claude code skill, slash command or plugin in the cosmic-farmland toolshed, including what triggers it and where its source file lives on github',
   '- get the github repo behind any app or tool listed here',
-  '- check the grayton beach design system (palette, type, textures) that every page on this domain is built from',
+  '- check the sheet, the herbarium design system (paper, ink, the ruled grid, the print card) that every page on this domain is built from, or the retired grayton beach system it replaced',
   '',
   'do not use it for general claude code documentation, for anything sold or supported commercially, or as a source on anyone but marshall.',
   '',

@@ -42,6 +42,14 @@
     /* one measure for the whole sheet. anything that bleeds past the text
        column offsets by exactly this, so nothing lands half a pixel off. */
     --pad:max(28px, calc((100vw - 1240px) / 2));
+
+    /* Two registers and nothing else. --font-display is the same serif as the
+       body: the sheet's display voice is the typewriter, not a third face.
+       Named so a page adopting sheet.css gets the faces without repeating the
+       stacks. */
+    --font-body:Spectral, Georgia, serif;
+    --font-display:Spectral, Georgia, serif;
+    --font-mono:"IBM Plex Mono", ui-monospace, monospace;
   }
   *{box-sizing:border-box}
   body{
@@ -49,7 +57,7 @@
     overflow-x:hidden;
     background:var(--card);
     color:var(--ink);
-    font-family:Spectral, Georgia, serif;
+    font-family:var(--font-body);
     font-weight:300;
     -webkit-font-smoothing:antialiased;
   }
@@ -95,7 +103,7 @@
 
   /* ---------- stamped block, top left ---------- */
   .stamp{
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
     font-weight:500;
     font-size:19px;
     letter-spacing:.34em;
@@ -164,7 +172,7 @@
     padding:8px 0 0; border-top:1px solid rgba(20,19,16,.55);
   }
   .lab .no{
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
     font-weight:500; font-size:9.5px; letter-spacing:.2em;
     color:var(--ink-3); display:block;
   }
@@ -179,7 +187,7 @@
   }
   .lab .fld{
     display:block; margin-top:6px;
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
     font-size:10px; letter-spacing:.14em; color:var(--ink-2);
   }
   .lab .fld em{ font-style:normal; color:inherit; letter-spacing:.05em }
@@ -279,7 +287,7 @@
   #apps{ margin-top:46px }
   .reg > h2{
     margin:0 0 2px;
-    font-family:"IBM Plex Mono", monospace; font-weight:500;
+    font-family:var(--font-mono); font-weight:500;
     font-size:10px; letter-spacing:.3em; color:var(--ink);
   }
   .reg > h2 .ct{ color:var(--ink-3); margin-left:12px; letter-spacing:.2em; font-weight:400 }
@@ -287,7 +295,7 @@
   /* ---------- index: the sheet's own contents, printed in the header ---------- */
   .idx{
     display:flex; gap:26px; align-items:baseline;
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
     font-size:10px; letter-spacing:.24em; color:var(--ink-3);
   }
   .idx a{ color:var(--ink-2); padding-bottom:2px; border-bottom:1px solid transparent }
@@ -311,7 +319,7 @@
   .shed{ border-top:1px solid var(--rule); padding:30px 34px 34px }
   .shed h3{
     margin:0 0 16px;
-    font-family:"IBM Plex Mono", monospace; font-weight:500;
+    font-family:var(--font-mono); font-weight:500;
     font-size:9px; letter-spacing:.24em; color:var(--ink-3);
   }
   .shed a{
@@ -320,7 +328,7 @@
     font-size:12.5px; line-height:1.35; color:var(--ink-2);
   }
   .shed a b{
-    font-family:"IBM Plex Mono", monospace; font-weight:400; font-size:12px;
+    font-family:var(--font-mono); font-weight:400; font-size:12px;
     letter-spacing:.02em; color:var(--ink);
   }
   .shed a:hover b{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:.5px }
@@ -331,7 +339,7 @@
   .sift{
     display:flex; flex-wrap:wrap; gap:10px; align-items:center;
     margin:0 0 4px; padding:0 34px;
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
   }
   .sift input{
     flex:0 1 210px; min-width:0;
@@ -350,14 +358,14 @@
   .sift button:hover{ color:var(--ink-2) }
   .sift button.on{ color:var(--ink); border-bottom-color:var(--ink) }
   .empty{
-    padding:34px; font-family:"IBM Plex Mono", monospace;
+    padding:34px; font-family:var(--font-mono);
     font-size:10px; letter-spacing:.2em; color:var(--ink-3);
   }
 
   /* ---------- the lamp: the reader's own choice of light ---------- */
   .lamp{
     background:transparent; border:0; cursor:pointer; padding:0;
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
     font-size:10px; letter-spacing:.24em; color:var(--ink-3);
   }
   .lamp:hover{ color:var(--ink) }
@@ -366,7 +374,7 @@
   .colwrap{ display:flex; justify-content:flex-start; margin-top:38px }
   .col{
     width:330px; transform:rotate(.5deg);
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
     font-size:9.5px; letter-spacing:.12em; color:var(--ink-2);
   }
   .col .hd{ display:block; letter-spacing:.28em; color:var(--ink); margin-bottom:11px; font-weight:500 }
@@ -378,7 +386,7 @@
 
   footer{
     margin-top:54px; font-size:9px; letter-spacing:.15em; color:var(--ink-3);
-    font-family:"IBM Plex Mono", monospace;
+    font-family:var(--font-mono);
   }
   footer a{ border-bottom:.5px solid rgba(112,94,58,.35) }
   footer a:hover{ color:var(--ink) }

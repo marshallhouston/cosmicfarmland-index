@@ -23,9 +23,11 @@ slash commands and hooks that do the repetitive parts of shipping.
 
 a static vite + react page, served by a small bun server on railway. the catalog
 and the machine-readable files are generated from committed json, so the site
-cannot drift from the repo it describes. the whole look is sampled off one
-photograph of a hand-painted welcome sign in grayton beach, florida, which is
-documented in [the design system](/grayton).
+cannot drift from the repo it describes. the whole look is a herbarium sheet:
+cream card, black ink, each app mounted as a pressed specimen on its own print
+card. the site used to be sampled off one photograph of a hand-painted welcome
+sign in grayton beach, florida, and [that design system](/grayton) is still up
+as a record of what it was.
 
 ## for agents
 
