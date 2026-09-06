@@ -36,7 +36,16 @@ Where they conflict with anything else, these win.
   hairline grid on all sides, over four looser variants. Design critics scored the ruled
   separation down. The owner overrode them. Rules stay.
 - **If drawings or specimens appear, they must be visibly different from each other.**
-  Nine near-identical illustrations was a specific complaint.
+  Nine near-identical illustrations was a specific complaint. Different in FORM,
+  not in size: when the plates were scaled per habit, from 0.45 to 1.3, the owner
+  read the varied sizes as "kinda odd". One size, different organisms.
+- **Type must hold its own against the specimens.** At 16px name and 11px blurb
+  beside a 340px plate the owner said the text looked "super small compared to
+  the flowers, so it looks a little off". Set the label to reading size.
+- **Labels sit on a datum, not wherever the specimen ends.** The owner disliked
+  that the words "feel randomly distributed in each of the sections". A critic
+  said the same thing independently. Every caption in a section starts at the
+  same place.
 - **Lowercase, plainspoken, few words.**
 
 ## Allowed and liked, use with restraint
@@ -51,6 +60,14 @@ Where they conflict with anything else, these win.
 - Intrigue is good. The owner liked not immediately knowing what a page was, as long
   as the page stayed legible and calm. Withhold rather than explain, but never at the
   cost of clarity about what to click.
+
+## The cosmic
+
+Lyra is plotted on the sheet from real coordinates. Four treatments of how present
+it should be were built and the owner could not tell them apart, calling three of
+the four fine. So visibility of the constellation is NOT a live lever: do not spend
+another pass tuning it. If it needs to carry more, it needs a different idea, not a
+bigger one.
 
 ## Content
 
