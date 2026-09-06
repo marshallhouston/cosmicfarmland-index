@@ -105,7 +105,6 @@
     display:flex; align-items:center; justify-content:center;
   }
   .mount img{ display:block; width:auto; height:auto; max-width:100%; max-height:100% }
-  .row.full .mount{ height:calc(470px * var(--s)) }
 
   /* real pressed material, all nine. multiply drops the scan matte so the
      sheet fibre reads straight through; the duotone pulls them to the ink. */
@@ -153,7 +152,7 @@
     color:var(--ink); margin-top:3px; text-wrap:balance;
   }
   .lab .d{
-    display:block; font-size:13px; line-height:1.45;
+    display:block; font-size:13px; line-height:1.45; max-width:34em;
     color:var(--ink-2); margin-top:4px; text-wrap:balance;
   }
   .lab .fld{
@@ -184,10 +183,10 @@
     display:flex; align-items:center; justify-content:center;
   }
   .card .mount img{ max-width:100%; max-height:100% }
-  .row.full .card .mount, .row.full .card .mount img{ height:300px; max-height:300px }
+
   .card .lab{ height:124px; overflow:hidden }
   .sp{ align-items:center; justify-content:flex-start }
-  .row.full .sp .card{ width:560px }
+
 
   /* ---------- section register: a ruled heading, same voice as the labels ---------- */
   .reg{ margin-top:60px }
