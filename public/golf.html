@@ -198,6 +198,7 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
 </nav>
   <a href="#overview">Overview</a>
   <a href="#trend">Trend</a>
+  <a href="#anticap">The anticap</a>
   <a href="#highlights">Highlights</a>
   <a href="#ranking">To par vs differential</a>
   <a href="#partype">Par 3 / 4 / 5</a>
@@ -300,6 +301,37 @@ footer{border-top:1px solid var(--border);padding-top:20px;color:var(--muted);fo
       <div class="tblview" id="monthTbl"></div>
     </div>
   </div>
+</section>
+
+<section id="anticap">
+  <h2>The anticap</h2>
+  <p class="lede">Your index takes the <b>best 8</b> of your last 20 differentials. The
+  <b>anticap</b> takes the <b>worst 8</b> of the same 20 - the round you post when it goes wrong.
+  The gap between the two lines is your <b>spread</b>: how far the bad day sits from the good one.
+  Both numbers come off the same 20 rounds, so a line that falls is real, not a smaller sample.
+  This section reads the whole record; the filters above do not narrow it.</p>
+  <div class="grid g4" id="anticapTiles"></div>
+  <div class="chart" style="margin-top:12px">
+    <h4>Best 8 and worst 8 of the last 20, window by window</h4>
+    <p class="cap">One point per round from your 20th onward, each closing a 20-round window. Lower
+    is better on both lines. Hover for the window, click to open the round that closed it. Both
+    lines use the scaled differentials the index counts. The x axis is the date the window closed,
+    so a long flat span is an off-season gap between rounds, not a stalled number.</p>
+    <div id="anticapChart"></div>
+    <div class="legend">
+      <span><span class="ln" style="background:var(--series-1)"></span>Best 8 of 20 - index arithmetic</span>
+      <span><span class="ln" style="background:var(--critical)"></span>Worst 8 of 20 - the anticap</span>
+    </div>
+    <button class="btn tblbtn" data-tbl="anticapTbl">Table view</button>
+    <div class="tblview" id="anticapTbl"></div>
+  </div>
+  <div class="chart" style="margin-top:12px">
+    <h4>The eight rounds in today's anticap</h4>
+    <p class="cap">The worst 8 differentials among your last 20 rounds - what the number is actually
+    made of. Click any row for the scorecard.</p>
+    <div class="tablewrap"><table id="anticapNowTbl"></table></div>
+  </div>
+  <p class="cap" id="anticapNote" style="margin-top:12px"></p>
 </section>
 
 <section id="highlights">
@@ -974,7 +1006,7 @@ function render(){
   if(!VIEW.length){
     document.querySelectorAll('section').forEach(s=>{ if(s.id!=='quality'){} });
   }
-  renderHero(); renderTrend(); renderHighlights(); renderParType();
+  renderHero(); renderTrend(); renderAnticap(); renderHighlights(); renderParType();
   renderPercentiles(); renderRanking(); renderMethod();
   renderOutcomes(); renderOutHoles(); renderNotable(); renderStretches();
   renderCourses(); renderHoles(); renderRounds();
@@ -1271,6 +1303,96 @@ function renderPercentiles(){
 
 
 /* --- highlights --- */
+/* --- anticap: the worst 8 of the last 20, the mirror of the index --- */
+const ACWIN=20, ACTAKE=8;
+function anticapSeries(){
+  // ALL is newest-first; walk oldest-first so each point closes one 20-round window
+  const rs=[...ALL].filter(r=>r.diff!=null).sort((a,b)=>a.date<b.date?-1:1);
+  const out=[];
+  for(let i=ACWIN-1;i<rs.length;i++){
+    const sorted=rs.slice(i-ACWIN+1,i+1).sort((a,b)=>a.diff-b.diff);
+    const best=sorted.slice(0,ACTAKE), worst=sorted.slice(-ACTAKE);
+    out.push({r:rs[i], t:new Date(rs[i].date).getTime(),
+      cap:mean(best.map(x=>x.diff)), anti:mean(worst.map(x=>x.diff)),
+      worst:worst.slice().reverse()});
+  }
+  return out;
+}
+function renderAnticap(){
+  const box=$('#anticapChart'); box.innerHTML='';
+  const g=$('#anticapTiles'); g.innerHTML='';
+  const SER=anticapSeries();
+  if(!SER.length){
+    box.innerHTML='<div class="empty">Needs 20 posted differentials; the record has '+
+      ALL.filter(r=>r.diff!=null).length+'.</div>';
+    $('#anticapTbl').innerHTML=''; $('#anticapNowTbl').innerHTML=''; $('#anticapNote').textContent=''; return;
+  }
+  const now=SER[SER.length-1], first=SER[0];
+  const lowA=SER.reduce((a,b)=>b.anti<a.anti?b:a), hiA=SER.reduce((a,b)=>b.anti>a.anti?b:a);
+  const tieLow=SER.filter(p=>Math.abs(p.anti-lowA.anti)<1e-9).length;
+  [['Anticap now', f1(now.anti), 'worst 8 of the last 20 - window closed '+shortDate(now.r.date)],
+   ['Best 8 now', f1(now.cap), 'same 20 rounds - GHIN index '+f1(PROFILE.index)],
+   ['Spread', f1(now.anti-now.cap), 'bad day minus good day'],
+   ['Lowest anticap ever', f1(lowA.anti), shortDate(lowA.r.date)+(tieLow>1?' - '+tieLow+' windows tie this':'')]]
+  .forEach(([k,v,n])=>g.appendChild(el('div','tile','<div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div>')));
+
+  const W=880,H=320,P={t:14,r:16,b:34,l:40};
+  const s=SVG(W,H);
+  const t0=first.t, t1=now.t;
+  const lo=Math.floor((Math.min(...SER.map(p=>p.cap))-1)/2)*2;
+  const hiV=Math.ceil((Math.max(...SER.map(p=>p.anti))+1)/2)*2;
+  const X=t=>P.l+((t-t0)/Math.max(1,(t1-t0)))*(W-P.l-P.r);
+  const Y=v=>P.t+(1-(v-lo)/Math.max(1,(hiV-lo)))*(H-P.t-P.b);
+  for(let v=lo; v<=hiV; v+=Math.max(2,Math.round((hiV-lo)/6/2)*2)){
+    s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),stroke:'var(--grid)','stroke-width':1}));
+    const tx=N('text',{x:P.l-8,y:Y(v)+4,'text-anchor':'end',fill:'var(--muted)','font-size':11}); tx.textContent=v; s.appendChild(tx);
+  }
+  const months=[...new Set(SER.map(p=>p.r.date.slice(0,7)))];
+  months.filter((_,i)=>i%Math.ceil(months.length/6)===0).forEach(ym=>{
+    const t=new Date(ym+'-01').getTime(); if(t<t0||t>t1) return;
+    const tx=N('text',{x:X(t),y:H-P.b+18,'text-anchor':'middle',fill:'var(--muted)','font-size':11});
+    tx.textContent=MONTHS[+ym.slice(5,7)-1]+' '+ym.slice(2,4); s.appendChild(tx); });
+  s.appendChild(N('line',{x1:P.l,x2:W-P.r,y1:H-P.b,y2:H-P.b,stroke:'var(--axis)','stroke-width':1}));
+  const pt=(p,k)=>X(p.t).toFixed(1)+' '+Y(p[k]).toFixed(1);
+  s.appendChild(N('path',{d:'M'+SER.map(p=>pt(p,'anti')).join('L')+'L'+
+    SER.slice().reverse().map(p=>pt(p,'cap')).join('L')+'Z',
+    fill:'var(--series-1)',opacity:.12,stroke:'none'}));
+  const line=(k,color)=>s.appendChild(N('path',{d:'M'+SER.map(p=>pt(p,k)).join('L'),
+    fill:'none',stroke:color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  line('cap','var(--series-1)'); line('anti','var(--critical)');
+  const wpx=(W-P.l-P.r)/Math.max(1,SER.length-1);
+  SER.forEach(p=>{
+    s.appendChild(N('circle',{cx:X(p.t),cy:Y(p.anti),r:2.6,fill:'var(--critical)'}));
+    s.appendChild(N('circle',{cx:X(p.t),cy:Y(p.cap),r:2.6,fill:'var(--series-1)'}));
+    const hit=N('rect',{x:X(p.t)-wpx/2,y:P.t,width:Math.max(4,wpx),height:H-P.t-P.b,fill:'transparent',style:'cursor:pointer'});
+    bindTip(hit,'<b>anticap '+f1(p.anti)+'</b><br>best 8 '+f1(p.cap)+' - spread '+f1(p.anti-p.cap)+
+      '<br>window closed '+fmtDate(p.r.date)+'<br>'+p.r.course+' - '+p.r.score+' strokes'+
+      '<br>worst in the window: '+f1(p.worst[0].diff)+' at '+p.worst[0].course+' - '+shortDate(p.worst[0].date)+
+      '<br><span style="opacity:.75">Click to open the closing round</span>');
+    hit.addEventListener('click',()=>openRound(p.r.id));
+    s.appendChild(hit);
+  });
+  box.appendChild(s);
+
+  $('#anticapTbl').innerHTML=tableFrom(
+    [{t:'Window closed'},{t:'Course'},{t:'Best 8',num:1},{t:'Anticap',num:1},{t:'Spread',num:1}],
+    SER.map(p=>[fmtDate(p.r.date),p.r.course,f1(p.cap),f1(p.anti),f1(p.anti-p.cap)]).reverse());
+
+  $('#anticapNowTbl').innerHTML='<thead><tr><th>Date</th><th>Course</th><th>Tees</th>'+
+    '<th class="num">Score</th><th class="num">Differential</th><th class="num">Over the anticap</th></tr></thead><tbody>'+
+    now.worst.map(r=>'<tr class="rowlink" data-rid="'+r.id+'"><td>'+shortDate(r.date)+'</td><td>'+r.course+
+      '</td><td>'+r.tee+'</td><td class="num">'+r.score+(r.nHoles===9?' (9)':'')+'</td><td class="num">'+f1(r.diff)+
+      (r.scaled?'<span style="color:var(--series-2);font-weight:700">&dagger;</span>':'')+
+      '</td><td class="num">'+((r.diff-now.anti>0?'+':'')+f1(r.diff-now.anti))+'</td></tr>').join('')+'</tbody>';
+
+  $('#anticapNote').innerHTML='Across <b>'+SER.length+'</b> windows the anticap has run from <b>'+
+    f1(lowA.anti)+'</b> ('+shortDate(lowA.r.date)+') to <b>'+f1(hiA.anti)+'</b> ('+shortDate(hiA.r.date)+
+    '). It opened at '+f1(first.anti)+' on a spread of '+f1(first.anti-first.cap)+' and stands at <b>'+
+    f1(now.anti)+'</b> on a spread of <b>'+f1(now.anti-now.cap)+'</b>. The best-8 line is the index '+
+    'arithmetic on the same scaled differentials, without the World Handicap System caps and '+
+    'adjustments, so it tracks the published index without being it.';
+}
+
 function bandCard(title,sub,rs,accent){
   const pa=parAvgs(rs);
   const ds=rs.map(r=>r.diff).filter(v=>v!=null);
