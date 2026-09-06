@@ -75,6 +75,23 @@ its edge and its shadow, not by being paler.
 The tilt stays under half of what loose specimens carried. Ten tilted cards
 read as mess.
 
+## After dark, the room goes dark, not the sheet
+
+Settled. The card stays cream paper with black ink on it; only what is printed
+straight onto the board turns pale. The owner picked it over a fully inverted
+stock and over the same paper further down the exposure.
+
+This is the reading that keeps the cream-and-black card, which is the strongest
+positive signal in this file, and it is also the only one where the specimens
+need no re-lighting: their surface never changes, so multiply keeps working. On
+a dark card, pressed ink vanishes under multiply and has to be inverted and
+screened, which is what d-2 had to do.
+
+Tokens are declared three times on purpose: bare `:root` is light, a
+`prefers-color-scheme` block guarded with `:not([data-theme="light"])` covers the
+viewer who has chosen nothing, and a `[data-theme]` block lets an explicit
+choice win in both directions.
+
 ## The cosmic
 
 Lyra is plotted on the sheet from real coordinates. Four treatments of how present
