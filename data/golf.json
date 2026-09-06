@@ -8,6 +8,13 @@
       "url": "/golf"
     },
     {
+      "slug": "best-worst",
+      "kicker": "composite scorecards",
+      "name": "best ball, worst ball",
+      "blurb": "every course rebuilt twice: my lowest score on each hole stitched into one 18, my highest into another. the floor and the ceiling of every course i play.",
+      "url": "/golf/best-worst"
+    },
+    {
       "slug": "city-am-2026",
       "kicker": "2026 denver city am",
       "name": "sunday, hole by hole",

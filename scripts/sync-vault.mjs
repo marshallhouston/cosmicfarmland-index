@@ -47,6 +47,7 @@ const strip = (here) => {
   return `<nav class="cf-golf-nav" aria-label="golf pages">
   <a class="cf-golf-link cf-home" href="https://cosmicfarmland.wtf">&#8592; cosmic farmland</a>
   ${link('/golf', 'the record')}
+  ${link('/golf/best-worst', 'best ball, worst ball')}
   ${link('/golf/city-am-2026', 'city am 2026')}
 </nav>`
 }
@@ -71,6 +72,21 @@ const SHARE_META = `<link rel="canonical" href="${CITY_AM_URL}">
 <meta name="twitter:card" content="summary">`
 
 const PAGES = [
+  {
+    slug: 'best-worst',
+    src: join(VAULT, 'golf-best-worst-composite.html'),
+    out: pub('golf', 'best-worst.html'),
+    skins: ['golf-skin.css'],
+    steps: [
+      ['dark default', (h) => h.replace(/<html([^>]*?)\sdata-theme="[^"]*"/, '<html$1 data-theme="dark"')],
+      ['fonts + skin stylesheet', (h) => h.replace('</head>', `${head('golf-skin.css')}\n</head>`)],
+      ['atmosphere + home link', (h) => h.replace(/<body[^>]*>/, (m) => `${m}\n${ATMOSPHERE}`)],
+      ['theme button label', (h) => h.replace(/(<button[^>]*id="themebtn"[^>]*>)Dark(<\/button>)/, '$1Light$2')],
+      ['golf nav strip', (h) => h.replace(/(<nav class="jump"[^>]*>)/, `${strip('/golf/best-worst')}\n$1`)],
+      ['hero accent', (h) => h.replace(/<h1>(.*?)(,\s+\S+\s+\S+)<\/h1>/, '<h1>$1<em>$2</em></h1>')],
+      ['footer', (h) => h.replace(/(\s*<\/body>)/, `\n${FOOTER}$1`)],
+    ],
+  },
   {
     slug: 'golf',
     src: join(VAULT, 'golf-rounds-deep-dive-ghin.html'),
