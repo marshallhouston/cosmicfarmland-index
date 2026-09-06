@@ -1,273 +1,283 @@
 import { useEffect, useMemo, useState } from 'react'
-import { motion, MotionConfig } from 'motion/react'
-import {
-  ArrowUpRight,
-  Sprout,
-  Terminal,
-  Puzzle,
-  Wand2,
-  Search,
-  Circle,
-  CircleDot,
-  Flag,
-  Sun,
-  Moon,
-} from 'lucide-react'
 import appsData from '../data/apps.json'
 import catalogData from '../data/catalog.json'
 import golfData from '../data/golf.json'
+import platesData from '../data/plates.json'
+import specimens from '../public/specimens.json'
+
+/* The sheet is styled entirely by public/sheet.css, imported through
+   src/index.css. Nothing here carries presentation: the markup emits the class
+   names that stylesheet governs, so the page and the standalone pages that link
+   sheet.css cannot drift apart. */
 
 const KINDS = [
-  { id: 'skill', label: 'Skills', icon: Wand2 },
-  { id: 'command', label: 'Commands', icon: Terminal },
-  { id: 'plugin', label: 'Plugins', icon: Puzzle },
+  { id: 'skill', label: 'skills' },
+  { id: 'command', label: 'commands' },
+  { id: 'plugin', label: 'plugins' },
 ]
 
-/** Board (dark) is the default reading of the sign; daylight is the other one. */
-function useTheme() {
-  const [theme, setTheme] = useState(
-    () =>
-      (typeof document !== 'undefined' && document.documentElement.dataset.theme) ||
-      'dark'
-  )
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    try {
-      localStorage.setItem('cf-theme', theme)
-    } catch {
-      /* private mode: the board just comes back next visit */
-    }
-  }, [theme])
-  return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))]
+/* One deterministic hash, so the paper's blemishes are in the same place on
+   every load and every machine. A real sheet's foxing does not move. */
+const rnd = (i) => {
+  const v = Math.sin(i * 127.1 + 4.7) * 43758.5453
+  return v - Math.floor(v)
 }
 
-function ThemeToggle() {
-  const [theme, toggle] = useTheme()
-  const dark = theme === 'dark'
+/* Four discrete clusters, not a scatter: foxing spreads from a point. */
+const FOXING = [
+  [9, 320, 74],
+  [71, 86, 58],
+  [36, 1268, 66],
+  [88, 1540, 52],
+]
+
+function Foxing() {
+  return FOXING.map(([left, top, size], c) => (
+    <span key={c} className="fox" style={{ left: `${left}%`, top, width: size, height: size }}>
+      {Array.from({ length: 11 }, (_, i) => {
+        const sz = 1.4 + rnd(c * 40 + i) * 4.6
+        return (
+          <i
+            key={i}
+            style={{
+              position: 'absolute',
+              left: rnd(c * 40 + i + 7) * (size - sz),
+              top: rnd(c * 40 + i + 19) * (size - sz),
+              width: sz,
+              height: sz,
+              borderRadius: '50%',
+              background: `rgba(122,86,36,${(0.16 + rnd(c * 40 + i + 31) * 0.3).toFixed(2)})`,
+              filter: 'blur(.4px)',
+            }}
+          />
+        )
+      })}
+    </span>
+  ))
+}
+
+/* Lyra, at the coordinate printed on the colophon. Right ascension in hours,
+   declination in degrees, visual magnitude. Nothing announces it: the sheet's
+   speckle simply resolves, in one place, into a real constellation. The
+   magnitude ramp is capped because at full scale Vega drew as a hard dot the
+   size of a blemish, and readers took it for one. */
+const LYRA = [
+  [18.6156, 38.784, 0.03], [18.8347, 33.363, 3.52], [18.9824, 32.69, 3.24],
+  [18.9135, 36.899, 4.22], [18.746, 37.605, 4.36], [18.7373, 39.67, 4.67],
+  [18.7462, 39.613, 4.59], [18.3299, 36.064, 4.33], [19.2745, 38.134, 4.36],
+  [19.2203, 39.146, 4.39], [19.1216, 36.099, 5.28], [18.8887, 36.966, 5.58],
+  [19.0788, 32.548, 5.65], [18.5387, 32.552, 5.9], [19.2929, 32.884, 5.6],
+  [18.4444, 37.594, 5.94], [19.1657, 38.984, 5.6], [18.6752, 34.437, 6.1],
+]
+
+function Field() {
+  const W = 380
+  const H = 220
+  return (
+    <div id="field" aria-hidden="true">
+      {LYRA.map(([ra, dec, m], i) => (
+        <i
+          key={i}
+          style={{
+            left: ((19.4 - ra) / 1.15) * W,
+            top: ((40.6 - dec) / 9.0) * H,
+            width: Math.min(3.6, Math.max(1.4, (7.0 - m) * 0.55)),
+            height: Math.min(3.6, Math.max(1.4, (7.0 - m) * 0.55)),
+            opacity: Math.min(0.78, Math.max(0.34, (7.0 - m) * 0.13)),
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+/* A mounted print. The card is the link and the fixed object: one window, one
+   caption band, every specimen at one scale. The tilt is a fraction of what the
+   data carries, because ten cards at full tilt read as mess. */
+function Plate({ no, kicker, name, blurb, href, loc, mount, lead }) {
+  const spec = specimens[mount.specimen]
+  const slug = loc && loc.replace(/-/g, ' ')
+  return (
+    <span className="sp">
+      <a className="card" href={href} style={{ transform: `rotate(${(mount.rot * 0.42).toFixed(2)}deg)` }}>
+        <span className="mount">
+          {/* The hinges are percentages of the specimen, so they have to be
+              positioned against the specimen's own box and not against the
+              window. object-fit letterboxes inside the window, and without
+              this wrapper every hinge drifts off its stem by whatever the
+              letterbox is. */}
+          <span className="sizer" style={{ aspectRatio: `${spec.w} / ${spec.h}` }}>
+          <img
+            className={`ph${mount.pale ? ' pale' : ''}`}
+            src={`/specimens/${mount.specimen}.webp`}
+            width={spec.w}
+            height={spec.h}
+            loading={lead ? 'eager' : 'lazy'}
+            fetchPriority={lead ? 'high' : undefined}
+            decoding="async"
+            alt={mount.alt || ''}
+          />
+          {spec.hinges.map(([x, y, len, rot], j) => (
+            <span
+              key={j}
+              className={`hinge h${(j % 3) + 1}`}
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                width: len,
+                height: 9 + (j % 3),
+                transform: `translate(-50%,-50%) rotate(${rot}deg)`,
+              }}
+            />
+          ))}
+          </span>
+        </span>
+        <span className="lab">
+          <span className="no">
+            {no}
+            {kicker ? <>&nbsp;&nbsp;/&nbsp;&nbsp;{kicker}</> : null}
+          </span>
+          <span className="name">{name}</span>
+          <span className="d">{blurb}</span>
+          {loc && slug !== name ? (
+            <span className="fld">
+              loc. <em>{loc}</em>
+            </span>
+          ) : null}
+        </span>
+      </a>
+    </span>
+  )
+}
+
+/* A full-width plate takes its own row; the rest pair up. */
+function Rows({ plates, lead }) {
+  const rows = []
+  let pair = []
+  const flush = () => {
+    if (pair.length) {
+      rows.push(pair)
+      pair = []
+    }
+  }
+  plates.forEach((p) => {
+    if (p.mount.full) {
+      flush()
+      rows.push([p])
+    } else {
+      pair.push(p)
+      if (pair.length === 2) flush()
+    }
+  })
+  flush()
+  return rows.map((row, i) => (
+    <div className={`row${row.length === 1 && row[0].mount.full ? ' full' : ''}`} key={i}>
+      {row.map((p) => (
+        <Plate key={p.no} {...p} lead={i === 0 && lead} />
+      ))}
+    </div>
+  ))
+}
+
+/* The blurbs are sentence-cased in the data because they are also read as
+   prose in llms.txt. The sheet is lowercase throughout. */
+const lower = (s) => (s || '').replace(/\.$/, '').toLowerCase()
+
+function appPlates() {
+  const bySlug = Object.fromEntries(appsData.apps.map((a) => [a.slug, a]))
+  return platesData.order.apps
+    .map((slug, i) => {
+      const app = bySlug[slug]
+      const mount = platesData.apps[slug]
+      if (!app || app.status !== 'live' || !mount) return null
+      return {
+        no: `cf-${String(i + 1).padStart(3, '0')}`,
+        name: app.name.toLowerCase(),
+        blurb: lower(app.blurb),
+        href: app.url,
+        loc: app.url.startsWith('http')
+          ? app.url.replace(/^https?:\/\//, '').replace(/\.cosmicfarmland\.wtf$/, '')
+          : app.url,
+        mount: { ...mount, alt: `a pressed specimen standing for ${app.name.toLowerCase()}` },
+      }
+    })
+    .filter(Boolean)
+}
+
+function golfPlates(offset) {
+  const bySlug = Object.fromEntries(golfData.pages.map((p) => [p.slug, p]))
+  return platesData.order.golf
+    .map((slug, i) => {
+      const page = bySlug[slug]
+      const mount = platesData.golf[slug]
+      if (!page || !mount) return null
+      return {
+        no: `cf-${String(offset + i + 1).padStart(3, '0')}`,
+        kicker: page.kicker,
+        name: page.name.toLowerCase(),
+        blurb: lower(page.blurb),
+        href: page.url,
+        loc: page.url,
+        mount: { ...mount, alt: `a pressed specimen standing for ${page.name.toLowerCase()}` },
+      }
+    })
+    .filter(Boolean)
+}
+
+/* The reader's own choice of light. Nothing stored means the sheet follows the
+   system, which is what most readers want and what sheet.css does on its own;
+   a stored choice writes data-theme and wins in both directions. */
+function useLamp() {
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('cf-theme') || ''
+    } catch {
+      return ''
+    }
+  })
+  useEffect(() => {
+    const root = document.documentElement
+    if (theme) root.setAttribute('data-theme', theme)
+    else root.removeAttribute('data-theme')
+    try {
+      if (theme) localStorage.setItem('cf-theme', theme)
+      else localStorage.removeItem('cf-theme')
+    } catch {
+      /* private windows and blocked site data: the sheet still renders */
+    }
+  }, [theme])
+  return [theme, setTheme]
+}
+
+function Lamp() {
+  const [theme, setTheme] = useLamp()
+  const dark =
+    theme === 'dark' ||
+    (!theme &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
   return (
     <button
-      onClick={toggle}
-      aria-label={dark ? 'switch to daylight' : 'switch to the board'}
-      className="ml-auto inline-flex items-center gap-2 rounded-full border border-[var(--color-line)] px-3 py-1.5 text-[var(--color-ink-dim)] transition-colors hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
+      type="button"
+      className="lamp"
+      aria-label={dark ? 'light the sheet' : 'put the sheet under a dark room'}
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
     >
-      {dark ? <Sun size={13} aria-hidden="true" /> : <Moon size={13} aria-hidden="true" />}
-      <span className="hidden sm:inline">{dark ? 'daylight' : 'board'}</span>
+      {dark ? 'daylight' : 'lamp'}
     </button>
   )
 }
 
-/* No two letters on the sign sit on the same baseline or the same angle.
-   Fixed offsets, not random ones, so the wordmark is the same every load. */
-const LETTER_JITTER = [
-  [-2, 2], [1.5, -3], [-1, 1.5], [2, -1.5], [-1.5, 3], [1, -2], [-2.5, 1],
-  [1.8, 2], [-1.2, -1.5], [2.2, 1.5], [-1.8, -2], [1, 3], [-2, -1],
-]
-
-/** A hand-lettered word: cream outline, marigold-into-sage fill, per-letter bounce. */
-function SignWord({ children, offset = 0 }) {
-  return [...children].map((ch, i) => {
-    if (ch === ' ') return <span key={i} className="glyph-space" aria-hidden="true"> </span>
-    const [rot, dy] = LETTER_JITTER[(i + offset) % LETTER_JITTER.length]
-    return (
-      <span
-        key={i}
-        className="glyph"
-        style={{ transform: `rotate(${rot}deg) translateY(${dy}px)` }}
-      >
-        {ch}
-      </span>
-    )
-  })
-}
-
-function Stat({ value, label }) {
-  return (
-    <div className="flex flex-col items-center">
-      <span className="font-mono text-2xl text-[var(--color-gold)]">{value}</span>
-      <span className="whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-ink-dim)]">
-        {label}
-      </span>
-    </div>
-  )
-}
-
-function SectionHead({ icon: Icon, tint, children }) {
-  return (
-    <div className="mb-6">
-      <h2 className="painted-cream flex items-center gap-3 font-display text-2xl lowercase text-[var(--color-ink)]">
-        <Icon size={17} aria-hidden="true" className={tint} /> {children}
-      </h2>
-      <div className="brushrule mt-3 w-28" />
-    </div>
-  )
-}
-
-function PageCard({ page, index }) {
-  return (
-    <motion.a
-      href={page.url}
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      whileHover={{ y: -4 }}
-      className="group flex h-full min-w-0 flex-col gap-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-surface-2)]/70 px-5 py-4 shadow-[var(--card-shadow)] transition-colors hover:border-[var(--color-moss-strong)]"
-    >
-      <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-moss)]">
-        {page.kicker}
-      </span>
-      <span className="flex items-center gap-2 text-lg font-medium text-[var(--color-ink)]">
-        {page.name}
-        <ArrowUpRight
-          size={15}
-          aria-hidden="true"
-          className="text-[var(--color-ink-dim)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        />
-      </span>
-      <span className="text-sm text-[var(--color-ink-dim)]">{page.blurb}</span>
-    </motion.a>
-  )
-}
-
-function AppCard({ app, index }) {
-  const live = app.status === 'live'
-  const Body = live ? motion.a : motion.div
-  const props = live ? { href: app.url } : {}
-  return (
-    <Body
-      {...props}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      whileHover={live ? { y: -6 } : {}}
-      className={`group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border p-6 backdrop-blur-sm transition-colors ${
-        live
-          ? 'cursor-pointer border-[var(--color-line)] bg-[var(--color-surface-2)]/70 shadow-[var(--card-shadow)] hover:border-[var(--color-moss-strong)]'
-          : 'border-dashed border-[var(--color-line)]/70 bg-[var(--color-surface)]/50'
-      }`}
-    >
-      <div
-        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: live ? 'var(--foliage-lit)' : 'transparent' }}
-      />
-      <div className="mb-4 flex items-center justify-between">
-        <Sprout
-          aria-hidden="true"
-          className={live ? 'text-[var(--color-moss)]' : 'text-[var(--color-ink-dim)]'}
-          size={22}
-        />
-        <span
-          className={`font-mono text-[10px] uppercase tracking-[0.2em] ${
-            live ? 'text-[var(--color-moss)]' : 'text-[var(--color-ink-dim)]'
-          }`}
-        >
-          {live ? '● live' : '○ soon'}
-        </span>
-      </div>
-      <h3 className="mb-2 text-2xl font-semibold leading-tight tracking-tight">
-        {app.name}
-      </h3>
-      <p className="mb-5 text-sm leading-relaxed text-[var(--color-ink-dim)]">
-        {app.blurb}
-      </p>
-      <div className="mt-auto flex flex-wrap items-center gap-3">
-        {(app.tags || []).map((t) => (
-          <span
-            key={t}
-            className="rounded-full border border-[var(--color-line)] px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-ink-dim)]"
-          >
-            {t}
-          </span>
-        ))}
-        {live && (
-          <ArrowUpRight
-            size={18}
-            className="ml-auto text-[var(--color-ink-dim)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--color-gold)]"
-          />
-        )}
-      </div>
-    </Body>
-  )
-}
-
-function CatalogCard({ entry }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div
-      className={`min-w-0 rounded-xl border transition-colors ${
-        open
-          ? 'border-[var(--color-gold)] bg-[var(--color-surface-2)]/90'
-          : 'border-[var(--color-line)] bg-[var(--color-surface)]/70 hover:border-[var(--color-moss-strong)]'
-      }`}
-    >
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="flex w-full items-start gap-3 p-4 text-left"
-      >
-        {open ? (
-          <CircleDot size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-gold)]" />
-        ) : (
-          <Circle size={16} aria-hidden="true" className="mt-1 shrink-0 text-[var(--color-ink-dim)]" />
-        )}
-        <span className="min-w-0 flex-1">
-          <span className="flex min-w-0 items-baseline gap-2">
-            <span className="shrink-0 font-mono text-sm text-[var(--color-ink)]">{entry.slug}</span>
-            <span className="truncate text-sm italic text-[var(--color-ink-dim)]">
-              {entry.name}
-            </span>
-          </span>
-          {!open && (
-            <span className="mt-1 block truncate text-xs text-[var(--color-ink-dim)]">
-              {entry.blurb}
-            </span>
-          )}
-        </span>
-      </button>
-      {open && (
-        <div className="px-4 pb-4 pl-11">
-          <p className="mb-3 text-sm leading-relaxed text-[var(--color-ink)]">{entry.blurb}</p>
-          {entry.argumentHint && (
-            <p className="mb-3 font-mono text-xs text-[var(--color-gold)]">
-              args: {entry.argumentHint}
-            </p>
-          )}
-          {entry.triggers?.length > 0 && (
-            <div className="mb-4 flex flex-wrap gap-2">
-              {entry.triggers.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-md border border-[var(--color-line)] bg-[var(--color-surface)]/70 px-2 py-0.5 font-mono text-[11px] text-[var(--color-post)]"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          )}
-          <a
-            href={entry.source}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 font-mono text-xs text-[var(--color-ink-dim)] transition-colors hover:text-[var(--color-gold)]"
-          >
-            view source <ArrowUpRight size={13} />
-          </a>
-        </div>
-      )}
-    </div>
-  )
-}
-
-// Toolshed filters live in the query string, so a filtered view is a link you
-// can send someone. Read once at mount; ?kind= is validated against KINDS so a
-// mangled link falls back to the default tab instead of an empty, unexplained
-// toolshed.
+/* Toolshed filters live in the query string, so a filtered view is a link you
+   can send someone. ?kind= is validated against KINDS, and unlike the old
+   toolshed an absent kind now means all three registers rather than skills
+   only: the sheet shows every entry it claims to hold. Old ?kind= links keep
+   working. */
 function initialFilters() {
   const p = new URLSearchParams(window.location.search)
   const kind = p.get('kind')
   return {
-    kind: KINDS.some((k) => k.id === kind) ? kind : 'skill',
+    kind: KINDS.some((k) => k.id === kind) ? kind : '',
     q: p.get('q') || '',
   }
 }
@@ -282,7 +292,7 @@ export default function App() {
   // untouched page is a clean '/', and any #anchor is preserved.
   useEffect(() => {
     const p = new URLSearchParams()
-    if (kind !== 'skill') p.set('kind', kind)
+    if (kind) p.set('kind', kind)
     if (q.trim()) p.set('q', q.trim())
     const qs = p.toString()
     window.history.replaceState(
@@ -292,213 +302,132 @@ export default function App() {
     )
   }, [kind, q])
 
-  const counts = catalogData.counts || {}
-  const filtered = useMemo(() => {
+  const apps = useMemo(appPlates, [])
+  const golf = useMemo(() => golfPlates(apps.length), [apps.length])
+
+  const shed = useMemo(() => {
     const needle = q.trim().toLowerCase()
-    return catalogData.entries
-      .filter((e) => e.kind === kind)
-      .filter(
-        (e) =>
-          !needle ||
-          e.slug.toLowerCase().includes(needle) ||
-          e.blurb.toLowerCase().includes(needle)
-      )
+    return KINDS.map((k) => ({
+      ...k,
+      entries: catalogData.entries
+        .filter((e) => e.kind === k.id)
+        .filter(
+          (e) =>
+            !needle ||
+            e.slug.toLowerCase().includes(needle) ||
+            e.name.toLowerCase().includes(needle) ||
+            e.blurb.toLowerCase().includes(needle)
+        ),
+    })).filter((k) => !kind || k.id === kind)
   }, [kind, q])
 
+  const found = shed.reduce((n, k) => n + k.entries.length, 0)
+
   return (
-    <MotionConfig reducedMotion="user">
-      <div className="board" />
-      <div className="canopy" />
-      <div className="straw" />
-      <div className="grain" />
+    <main className="sheet">
+      <Foxing />
 
-      <main className="mx-auto max-w-5xl px-6 pb-32">
-        {/* Nav */}
-        <nav className="flex items-center gap-4 pt-8 font-mono text-xs uppercase tracking-[0.25em] text-[var(--color-ink-dim)] sm:gap-6">
-          <a href="#apps" className="hover:text-[var(--color-gold)]">apps</a>
-          <a href="#catalog" className="hover:text-[var(--color-gold)]">toolshed</a>
-          <a href="#golf" className="hover:text-[var(--color-gold)]">golf</a>
-          <ThemeToggle />
+      <header className="head">
+        <div className="stamp">cosmic farmland</div>
+        <nav className="idx">
+          <a href="#apps">apps</a>
+          <a href="#golf">golf</a>
+          <a href="#toolshed">toolshed</a>
+          <Lamp />
         </nav>
+      </header>
 
-        {/* Hero */}
-        <header className="flex min-h-[70vh] flex-col justify-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="mb-6 font-mono text-xs uppercase tracking-[0.4em] text-[var(--color-moss)]"
-          >
-            ✧ cosmicfarmland.wtf
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1 }}
-            className="mr-[calc(50%-50vw+1.5rem)] font-display text-[clamp(2.6rem,11vw,7.5rem)] font-normal leading-[1.25] tracking-[-0.015em]"
-          >
-            <span className="plank">
-              <span className="sr-only">Cosmic Farmland</span>
-              {/* One line when there's room for it, two when there isn't. The
-                  negative right margin lets the sign run past the text column
-                  into the gutter; flex wrapping picks the break itself. */}
-              <span aria-hidden="true" className="flex flex-wrap gap-x-[0.24em]">
-                <span><SignWord>COSMIC</SignWord></span>
-                <span><SignWord offset={6}>FARMLAND</SignWord></span>
-              </span>
-            </span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.25 }}
-            className="mt-8 max-w-lg text-pretty text-lg leading-relaxed text-[var(--color-ink-dim)]"
-          >
-            apps, tools, and writing. entrypoint to the cosmic farmland
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.35 }}
-            className="mt-4 font-mono text-xs tracking-[0.12em] text-[var(--color-ink-dim)]"
-          >
-            inspired by{' '}
-            <a
-              href="/grayton"
-              className="text-[var(--color-moss)] underline decoration-[var(--color-moss)]/40 underline-offset-4 transition-colors hover:text-[var(--color-gold)] hover:decoration-[var(--color-gold)]/60"
+      <section className="reg" id="apps">
+        <h2>apps</h2>
+        <div className="plate">
+          <Rows plates={apps} lead />
+          <Field />
+        </div>
+      </section>
+
+      <section className="reg" id="golf">
+        <h2>golf</h2>
+        <div className="plate">
+          <Rows plates={golf} />
+        </div>
+      </section>
+
+      <section className="reg" id="toolshed">
+        <h2>
+          toolshed
+          <span className="ct">
+            {catalogData.counts.skill} skills, {catalogData.counts.command} commands,{' '}
+            {catalogData.counts.plugin} plugins
+          </span>
+        </h2>
+
+        <div className="sift">
+          <input
+            type="search"
+            aria-label="search the toolshed"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="search"
+          />
+          {KINDS.map((k) => (
+            <button
+              key={k.id}
+              type="button"
+              aria-pressed={kind === k.id}
+              className={kind === k.id ? 'on' : ''}
+              onClick={() => setKind(kind === k.id ? '' : k.id)}
             >
-              grayton beach ↗
-            </a>
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.5 }}
-            className="mt-12 flex flex-wrap gap-x-8 gap-y-5"
-          >
-            <Stat value={appsData.apps.filter((a) => a.status === 'live').length} label="apps live" />
-            <Stat value={counts.skill || 0} label="skills" />
-            <Stat value={counts.command || 0} label="commands" />
-            <Stat value={counts.plugin || 0} label="plugins" />
-          </motion.div>
-        </header>
+              {k.label}
+            </button>
+          ))}
+        </div>
 
-        {/* Apps */}
-        <section id="apps" className="mt-12">
-          <SectionHead icon={Sprout} tint="text-[var(--color-moss)]">
-            apps
-          </SectionHead>
-          <div className="grid gap-5 sm:grid-cols-2">
-            {appsData.apps.map((app, i) => (
-              <AppCard key={app.slug} app={app} index={i} />
+        {shed.map((k) => (
+          <div className="shed" key={k.id}>
+            <h3>{k.label}</h3>
+            {k.entries.map((e) => (
+              <a key={`${e.kind}-${e.slug}`} href={e.source}>
+                <b>{e.slug}</b>
+                <span>{lower(e.blurb)}</span>
+              </a>
             ))}
           </div>
-        </section>
+        ))}
 
-        {/* Golf */}
-        <section id="golf" className="mt-24">
-          <SectionHead icon={Flag} tint="text-[var(--color-moss)]">
-            golf looping
-          </SectionHead>
-          <p className="mb-8 max-w-lg text-sm text-[var(--color-ink-dim)]">
-            golf, counted properly. every round i post and every hole of the
-            tournaments worth writing down.
-          </p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {golfData.pages.map((page, i) => (
-              <PageCard key={page.slug} page={page} index={i} />
-            ))}
+        {found === 0 && <p className="empty">nothing in this patch yet.</p>}
+      </section>
+
+      <div className="colwrap">
+        <div className="col">
+          <div className="hd">cosmic farmland</div>
+          <div>
+            <span>acc.</span>
+            <em>cf 2026 / 001-{String(apps.length + golf.length).padStart(3, '0')}</em>
           </div>
-        </section>
-
-        {/* Catalog */}
-        <section id="catalog" className="mt-24">
-          <SectionHead icon={Terminal} tint="text-[var(--color-gold)]">
-            the toolshed
-          </SectionHead>
-          <p className="mb-8 max-w-lg text-sm text-[var(--color-ink-dim)]">
-            the skills, commands, and plugins i use across every project. browse here,
-            then jump to source on github when you want the code.
-          </p>
-
-          <div className="mb-6 flex flex-wrap items-center gap-3">
-            {KINDS.map((k) => {
-              const Icon = k.icon
-              const active = kind === k.id
-              return (
-                <button
-                  key={k.id}
-                  onClick={() => setKind(k.id)}
-                  aria-pressed={active}
-                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-xs transition-colors ${
-                    active
-                      ? 'border-[var(--color-gold)] bg-[var(--color-gold)]/10 text-[var(--color-gold-strong)]'
-                      : 'border-[var(--color-line)] text-[var(--color-ink-dim)] hover:border-[var(--color-moss-strong)]'
-                  }`}
-                >
-                  <Icon size={14} aria-hidden="true" /> {k.label}
-                  <span>{counts[k.id] || 0}</span>
-                </button>
-              )
-            })}
-            <div className="relative ml-auto">
-              <Search
-                size={14}
-                aria-hidden="true"
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-ink-dim)]"
-              />
-              <input
-                type="search"
-                aria-label="filter the toolshed"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="filter…"
-                className="w-40 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)]/70 py-2 pl-9 pr-3 font-mono text-xs text-[var(--color-ink)] outline-none placeholder:text-[var(--color-ink-dim)] focus:border-[var(--color-gold)]"
-              />
-            </div>
+          <div>
+            <span>coll.</span>
+            <em>m. houston</em>
           </div>
-
-          <div className="grid items-start gap-3 sm:grid-cols-2">
-            {filtered.map((entry) => (
-              <CatalogCard key={`${entry.kind}-${entry.slug}`} entry={entry} />
-            ))}
+          <div>
+            <span>loc.</span>
+            <em>cosmicfarmland.wtf</em>
           </div>
-          {filtered.length === 0 && (
-            <p className="py-12 text-center font-mono text-sm text-[var(--color-ink-dim)]">
-              nothing in this patch yet.
-            </p>
-          )}
-        </section>
-
-        <footer className="mt-28 border-t border-[var(--color-line)]/60 pt-8 font-mono text-xs text-[var(--color-ink-dim)]">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span>grown by marshall · {new Date().getFullYear()}</span>
-            <span className="uppercase tracking-[0.28em] text-[var(--color-gold)]">
-              nice dogs, strange people
-            </span>
-            <div className="flex flex-wrap gap-5">
-              <a href="/about" className="hover:text-[var(--color-gold)]">
-                about
-              </a>
-              <a href="/contact" className="hover:text-[var(--color-gold)]">
-                contact
-              </a>
-              <a href="/privacy" className="hover:text-[var(--color-gold)]">
-                privacy
-              </a>
-              <a href="/grayton" className="hover:text-[var(--color-gold)]">
-                grayton beach ↗
-              </a>
-              <a
-                href="https://github.com/marshallhouston/cosmic-farmland"
-                className="hover:text-[var(--color-gold)]"
-              >
-                github ↗
-              </a>
-            </div>
+          <div>
+            <span>field</span>
+            <em>18h 36m 56s &nbsp;+38&deg; 47&prime; 01&Prime;</em>
           </div>
-        </footer>
-      </main>
-    </MotionConfig>
+          <div>
+            <span>det.</span>
+            <em>m. houston, 2026</em>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <a href="https://github.com/marshallhouston/cosmic-farmland">
+          cosmicfarmland.wtf / source on github
+        </a>
+      </footer>
+    </main>
   )
 }

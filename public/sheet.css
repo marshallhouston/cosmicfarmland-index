@@ -1,0 +1,400 @@
+/* ============================================================================
+   The sheet. The design system for cosmicfarmland.wtf.
+
+   A herbarium sheet: cream card stock running to all four edges with no frame,
+   black ink, and each entry mounted as a print card inside a ruled cell. One
+   window, one caption band, every specimen at one scale.
+
+   This file is the single source of truth for tokens, the paper, the ruled
+   grid, the print card and the accession label. Any page can adopt it with one
+   tag:
+
+       <link rel="stylesheet" href="https://cosmicfarmland.wtf/sheet.css">
+
+   It replaces grayton.css, which is kept only for /grayton, the archived page
+   documenting the design system this one retired.
+
+   Two type registers and nothing else: a typewriter for the institution's own
+   marks (accession numbers, locality, the wordmark) and one serif for
+   everything a person reads.
+
+   Tokens are declared three times on purpose. Bare :root is the light palette,
+   a prefers-color-scheme block guarded with :not([data-theme="light"]) covers
+   the viewer who has chosen nothing, and a [data-theme] block lets an explicit
+   choice win in both directions.
+
+   The rules that govern this design are in design-explore/: DIRECTION.md is the
+   brief, TASTE.md is binding and wins over everything, CRITIC.md lists what is
+   settled and must not be re-argued.
+   ============================================================================ */
+
+  /* two registers only: a typewriter for the institution, one serif for the text. */
+  :root{
+    --sheet:#f2ede0;         /* the card stock the whole page is printed on */
+    --stock:#f2ede0;         /* the print card mounted on it */
+    --card:#ece3ce;          /* the browser's own ground behind the sheet */
+    --ink:#141310;
+    --ink-2:#3a352b;
+    --ink-3:#6c6453;
+    --slip:#f2ead6;
+    --hair:rgba(48,38,20,.34);
+    --rule:rgba(20,19,16,.18);
+    /* one measure for the whole sheet. anything that bleeds past the text
+       column offsets by exactly this, so nothing lands half a pixel off. */
+    --pad:max(28px, calc((100vw - 1240px) / 2));
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    overflow-x:hidden;
+    background:var(--card);
+    color:var(--ink);
+    font-family:Spectral, Georgia, serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- the sheet: cream to all four edges ---------- */
+  .sheet{
+    position:relative;
+    min-height:100vh;
+    padding:0 var(--pad) 44px;
+    background:var(--sheet);
+    overflow:clip;          /* clips the foxing without trapping position:sticky */
+  }
+  /* scanned rag fibre. big tile, low opacity: felt, not counted. */
+  .sheet::before{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none; z-index:1;
+    mix-blend-mode:multiply;
+    opacity:.12;
+    background-image:url("/paper.webp");
+    background-size:760px auto;
+    background-repeat:repeat;
+  }
+  /* low-frequency tonal drift. the sheet is not one flat value anywhere. */
+  .sheet::after{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none; z-index:2;
+    mix-blend-mode:multiply;
+    opacity:.55;
+    background:
+      radial-gradient(120% 70% at 12% 4%,   rgba(255,252,242,.85), rgba(255,252,242,0) 62%),
+      radial-gradient(90% 55% at 88% 26%,   rgba(150,130,86,.16),  rgba(150,130,86,0) 70%),
+      radial-gradient(130% 60% at 30% 62%,  rgba(255,251,238,.7),  rgba(255,251,238,0) 66%),
+      radial-gradient(80% 46% at 6% 88%,    rgba(142,120,76,.19),  rgba(142,120,76,0) 72%),
+      radial-gradient(100% 50% at 96% 96%,  rgba(150,128,80,.15),  rgba(150,128,80,0) 70%);
+  }
+  .sheet > *{position:relative; z-index:4}
+
+  /* discrete foxing. four marks, clustered, not scattered. */
+  .fox{ position:absolute; z-index:3; pointer-events:none; mix-blend-mode:multiply; opacity:.5 }
+
+  /* ---------- stamped block, top left ---------- */
+  .stamp{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:500;
+    font-size:19px;
+    letter-spacing:.34em;
+    line-height:1.4;
+    color:var(--ink);
+    display:inline-block;
+  }
+  .stamp small{
+    display:block;
+    font-weight:400; font-size:8.5px; letter-spacing:.26em;
+    color:var(--ink-3); margin-top:7px;
+  }
+
+  /* ---------- the sheet's ruled divisions ----------
+     rows are explicit, so the vertical rule only runs where two plates actually
+     face each other, and a full-width plate breaks it cleanly. */
+  .plate{ position:relative; margin-top:26px }
+  .row{
+    display:grid; grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--rule);
+  }
+  .row.full{ grid-template-columns:1fr }
+  .row:not(.full) > .sp:first-child{ border-right:1px solid var(--rule) }
+  .sp{ display:flex; flex-direction:column; padding:40px 34px 48px }
+  .mount{
+    --s:1;                 /* per specimen, set on the element. see the data. */
+    position:relative; width:fit-content; max-width:100%; margin:0 auto;
+    height:calc(340px * var(--s));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mount img{ display:block; width:auto; height:auto; max-width:100%; max-height:100% }
+
+  /* real pressed material, all nine. multiply drops the scan matte so the
+     sheet fibre reads straight through; the duotone pulls them to the ink. */
+  .ph{
+    mix-blend-mode:multiply;
+    opacity:.9;
+    filter:grayscale(1) sepia(.62) saturate(1.5) hue-rotate(-16deg) contrast(1.22) brightness(.95);
+  }
+  .ph.pale{
+    opacity:.94;
+    filter:grayscale(1) sepia(.62) saturate(1.8) hue-rotate(-16deg) contrast(2.5) brightness(.74);
+  }
+  .ph.faint{   /* bleached to nearly nothing. without this the sheet eats it. */
+    opacity:1;
+    filter:grayscale(1) sepia(.62) saturate(2.2) hue-rotate(-16deg) contrast(3.6) brightness(.52);
+  }
+
+  /* ---------- gummed hinges: short strips, torn at the two short ends ---------- */
+  .hinge{
+    position:absolute; z-index:6;
+    background:linear-gradient(180deg, rgba(229,219,191,.82), rgba(212,199,166,.78));
+  }
+  .h1{ clip-path:polygon(3% 0%,100% 0%,97% 22%,100% 48%,96% 74%,100% 100%,4% 100%,0% 76%,5% 50%,1% 24%) }
+  .h2{ clip-path:polygon(0% 0%,97% 0%,100% 26%,95% 52%,99% 78%,96% 100%,2% 100%,5% 72%,0% 46%,4% 20%) }
+  .h3{ clip-path:polygon(2% 0%,98% 0%,100% 30%,96% 55%,100% 80%,97% 100%,3% 100%,0% 74%,4% 48%,1% 22%) }
+  /* one hard contact line, lift edge only. nothing blurred, nothing floats. */
+  .hinge::after{
+    content:""; position:absolute; left:8%; right:8%; bottom:0; height:1px;
+    background:rgba(58,45,22,.34);
+  }
+
+  /* ---------- accession labels: printed flat onto the sheet ---------- */
+  .lab{
+    display:block; width:292px; max-width:100%;
+    padding:8px 0 0; border-top:1px solid rgba(20,19,16,.55);
+  }
+  .lab .no{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:500; font-size:9.5px; letter-spacing:.2em;
+    color:var(--ink-3); display:block;
+  }
+  .lab .name{
+    display:block;
+    font-weight:400; font-size:20px; line-height:1.12;
+    color:var(--ink); margin-top:3px; text-wrap:balance;
+  }
+  .lab .d{
+    display:block; font-size:13px; line-height:1.45; max-width:34em;
+    color:var(--ink-2); margin-top:4px; text-wrap:balance;
+  }
+  .lab .fld{
+    display:block; margin-top:6px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10px; letter-spacing:.14em; color:var(--ink-2);
+  }
+  .lab .fld em{ font-style:normal; color:inherit; letter-spacing:.05em }
+  .card:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
+  .lab{ margin-top:0; align-self:stretch; width:100%; border-top:0;
+        padding:16px 0 36px }
+
+  /* ---------- the field where the speckle resolves ---------- */
+  #field{ position:absolute; right:2%; top:38%; width:380px; height:220px; pointer-events:none; z-index:3 }
+  #field i{ position:absolute; border-radius:50%; background:#141310; display:block }
+
+
+  /* ---------- the print: one object, one window, one caption band ---------- */
+  .card{
+    position:relative; display:flex; flex-direction:column;
+    width:392px; max-width:100%; height:452px;
+    background:var(--stock);
+    padding:22px 22px 0;
+    box-shadow:0 0 0 .5px rgba(58,45,22,.34), 6px 8px 14px -10px rgba(40,31,14,.55);
+  }
+  .card .mount{
+    --s:1;                      /* one window. the print is the fixed thing. */
+    width:100%; margin:0; flex:1 1 auto; min-height:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  /* The image fills its window rather than sizing to its own intrinsic box.
+     Sized auto it lays out 0x0 until it loads, and a zero-sized lazy image
+     never intersects the viewport, so it never loads at all. object-fit keeps
+     the specimen's proportions inside the window. */
+  /* The sizer shrink-wraps the specimen exactly, so a hinge at 48% is 48% of
+     the plant and not 48% of the window it is centred in. A wide specimen is
+     capped by the window's width and stands well short of its height, and
+     without this the hinges float off the stem by half that difference. */
+  .card .mount .sizer{
+    position:relative; display:block;
+    width:100%; height:auto; max-height:100%;   /* width drives it, height
+       follows the specimen's own ratio, and max-height pulls both back for a
+       tall plant. Give it a definite height instead and the ratio is ignored. */
+  }
+  .card .mount img{ display:block; width:100%; height:100%; object-fit:contain }
+
+  .card .lab{ flex:0 0 auto }
+  .sp{ align-items:center; justify-content:flex-start }
+
+
+
+  /* ---------- after dark: the room, not the sheet ----------
+     The card is still cream paper with black ink on it. Only what is printed
+     straight onto the board turns pale, so the specimens need no re-lighting:
+     their surface never changes and multiply keeps working. Tokens are defined
+     three times on purpose. Bare :root is the light palette, the media block
+     covers the viewer who has chosen nothing, and the [data-theme] block lets
+     an explicit choice win in both directions. */
+  :root[data-theme="dark"]{ 
+    --sheet:#1c1a16;
+    --stock:#f2ede0;
+    --card:#141310;
+    --ink:#e8e2d2;
+    --ink-2:#bdb5a2;
+    --ink-3:#8d8676;
+    --rule:rgba(232,226,210,.20);
+ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ 
+    --sheet:#1c1a16;
+    --stock:#f2ede0;
+    --card:#141310;
+    --ink:#e8e2d2;
+    --ink-2:#bdb5a2;
+    --ink-3:#8d8676;
+    --rule:rgba(232,226,210,.20);
+ }
+  }
+
+  /* the card keeps the light palette: it is paper lying on a dark board */
+  :root[data-theme="dark"] .card,
+  :root[data-theme="dark"] .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
+  :root[data-theme="dark"] .lab{ border-top-color:rgba(20,19,16,.55) }
+  :root[data-theme="dark"] .sheet::after{ opacity:.32 }
+  :root[data-theme="dark"] .sheet::before{ mix-blend-mode:screen; opacity:.05 }
+  :root[data-theme="dark"] .card{
+    box-shadow:0 0 0 .5px rgba(0,0,0,.5), 8px 10px 20px -10px rgba(0,0,0,.7);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .card,
+    :root:not([data-theme="light"]) .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
+    :root:not([data-theme="light"]) .lab{ border-top-color:rgba(20,19,16,.55) }
+    :root:not([data-theme="light"]) .sheet::after{ opacity:.32 }
+    :root:not([data-theme="light"]) .sheet::before{ mix-blend-mode:screen; opacity:.05 }
+    :root:not([data-theme="light"]) .card{
+      box-shadow:0 0 0 .5px rgba(0,0,0,.5), 8px 10px 20px -10px rgba(0,0,0,.7);
+    }
+  }
+
+  /* ---------- section register: a ruled heading, same voice as the labels ---------- */
+  .reg{ margin-top:60px }
+  #apps{ margin-top:46px }
+  .reg > h2{
+    margin:0 0 2px;
+    font-family:"IBM Plex Mono", monospace; font-weight:500;
+    font-size:10px; letter-spacing:.3em; color:var(--ink);
+  }
+  .reg > h2 .ct{ color:var(--ink-3); margin-left:12px; letter-spacing:.2em; font-weight:400 }
+
+  /* ---------- index: the sheet's own contents, printed in the header ---------- */
+  .idx{
+    display:flex; gap:26px; align-items:baseline;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10px; letter-spacing:.24em; color:var(--ink-3);
+  }
+  .idx a{ color:var(--ink-2); padding-bottom:2px; border-bottom:1px solid transparent }
+  .idx a:hover, .idx a.on{ color:var(--ink); border-bottom-color:rgba(20,19,16,.55) }
+  .sheet > .head{
+    position:relative; z-index:20;
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin:0 calc(-1 * var(--pad));
+    padding:30px var(--pad) 15px;
+  }
+  .sheet > .head::after{     /* stops on the measure, like every other rule */
+    content:""; position:absolute; left:var(--pad); right:var(--pad);
+    bottom:0; height:1px;
+    background:var(--rule);
+  }
+
+  /* ---------- toolshed: a determination list, three registers ----------
+     The old sheet printed commands and plugins in two columns and left the
+     twenty skills off entirely, while its own heading counted them. Every entry
+     is on the sheet now, one register per kind, ruled only at the head. */
+  .shed{ border-top:1px solid var(--rule); padding:30px 34px 34px }
+  .shed h3{
+    margin:0 0 16px;
+    font-family:"IBM Plex Mono", monospace; font-weight:500;
+    font-size:9px; letter-spacing:.24em; color:var(--ink-3);
+  }
+  .shed a{
+    display:grid; grid-template-columns:150px 1fr; gap:16px; align-items:baseline;
+    padding:6px 0;
+    font-size:12.5px; line-height:1.35; color:var(--ink-2);
+  }
+  .shed a b{
+    font-family:"IBM Plex Mono", monospace; font-weight:400; font-size:12px;
+    letter-spacing:.02em; color:var(--ink);
+  }
+  .shed a:hover b{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:.5px }
+
+  /* ---------- the sift: how you narrow the toolshed ----------
+     Set in the institution's own typewriter, so it reads as a finding aid on
+     the sheet rather than as interface pasted onto it. */
+  .sift{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    margin:0 0 4px; padding:0 34px;
+    font-family:"IBM Plex Mono", monospace;
+  }
+  .sift input{
+    flex:0 1 210px; min-width:0;
+    background:transparent; color:var(--ink);
+    border:0; border-bottom:1px solid var(--rule);
+    padding:6px 2px; font:inherit; font-size:11px; letter-spacing:.12em;
+  }
+  .sift input::placeholder{ color:var(--ink-3); letter-spacing:.2em }
+  .sift input:focus{ outline:none; border-bottom-color:var(--ink) }
+  .sift button{
+    background:transparent; color:var(--ink-3);
+    border:0; border-bottom:1px solid transparent;
+    padding:6px 2px; font:inherit; font-size:9px; letter-spacing:.24em;
+    cursor:pointer;
+  }
+  .sift button:hover{ color:var(--ink-2) }
+  .sift button.on{ color:var(--ink); border-bottom-color:var(--ink) }
+  .empty{
+    padding:34px; font-family:"IBM Plex Mono", monospace;
+    font-size:10px; letter-spacing:.2em; color:var(--ink-3);
+  }
+
+  /* ---------- the lamp: the reader's own choice of light ---------- */
+  .lamp{
+    background:transparent; border:0; cursor:pointer; padding:0;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10px; letter-spacing:.24em; color:var(--ink-3);
+  }
+  .lamp:hover{ color:var(--ink) }
+
+  /* ---------- colophon: one stamped block on flat ground ---------- */
+  .colwrap{ display:flex; justify-content:flex-start; margin-top:38px }
+  .col{
+    width:330px; transform:rotate(.5deg);
+    font-family:"IBM Plex Mono", monospace;
+    font-size:9.5px; letter-spacing:.12em; color:var(--ink-2);
+  }
+  .col .hd{ display:block; letter-spacing:.28em; color:var(--ink); margin-bottom:11px; font-weight:500 }
+  .col div{ display:grid; grid-template-columns:74px 1fr; line-height:2 }
+  .col span{
+    font-weight:500; font-size:8.5px; letter-spacing:.2em; color:var(--ink-3);
+  }
+  .col em{ font-style:normal; color:var(--ink); letter-spacing:.06em; font-size:10px }
+
+  footer{
+    margin-top:54px; font-size:9px; letter-spacing:.15em; color:var(--ink-3);
+    font-family:"IBM Plex Mono", monospace;
+  }
+  footer a{ border-bottom:.5px solid rgba(112,94,58,.35) }
+  footer a:hover{ color:var(--ink) }
+
+  @media (max-width:900px){
+    .row{ grid-template-columns:1fr }
+    .row:not(.full) > .sp:first-child{ border-right:0 }
+    .sp{ padding:30px 0 36px }
+    .shed{ padding:26px 0 30px }
+    .shed a{ grid-template-columns:1fr; gap:3px }
+    .sift{ padding:0 }
+    .mount, .row.full .mount{ height:300px }
+    .mount img, .row.full .mount img{ max-height:300px }
+    .lab{ width:100% }
+    #field{ display:none }
+    .head{ flex-direction:column; gap:14px }
+    .colwrap{ margin-top:44px }
+    .col{ transform:none }
+  }

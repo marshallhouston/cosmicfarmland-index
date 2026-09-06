@@ -25,7 +25,12 @@ hinges = json.load(open("work/hinges.json"))
 USED = ["specimen-ice-plant", "specimen-bee-balm", "specimen-aster",
         "specimen-blue-salvia", "specimen-furmans-red-sage", "specimen-hyssop",
         "specimen-hummingbird-mint", "specimen-yarrow", "specimen-echinacea",
-        "specimen-pitcher-salvia"]
+        "specimen-pitcher-salvia",
+        # best ball, worst ball landed on main after the sheet was drawn, so
+        # the eleventh plate comes out of the unused library. a bleached grass
+        # stalk, which is also the first specimen here that is not a flowering
+        # stem, and every critique has asked for that.
+        "specimen-grass"]
 
 os.makedirs(OUT, exist_ok=True)
 manifest = {}
