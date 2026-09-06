@@ -161,7 +161,7 @@
     font-size:10px; letter-spacing:.14em; color:var(--ink-2);
   }
   .lab .fld em{ font-style:normal; color:#2a261e; letter-spacing:.05em }
-  .sp:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
+  .card:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
   .lab{ margin-top:0; align-self:stretch; width:100%; border-top:0;
         padding:16px 0 36px }
 
@@ -405,20 +405,19 @@ const tools = {
 function plateHTML(a){
   const hinges = a.h.map(([x,y,len,r],j) =>
     `<span class="hinge h${(j%3)+1}" style="left:${x}%;top:${y}%;width:${len}px;height:${9+(j%3)}px;transform:translate(-50%,-50%) rotate(${r}deg)"></span>`).join("");
-  return `<a class="sp" href="${a.u}">
-    <span class="card" style="transform:rotate(${(a.rot*0.42).toFixed(2)}deg)">
+  return `<span class="sp">
+    <a class="card" href="${a.u}" style="transform:rotate(${(a.rot*0.42).toFixed(2)}deg)">
       <span class="mount">
         <img class="ph${a.pale?" pale":""}" src="img/${a.img}" alt="${a.alt}">
       </span>
-    <span class="lab">
-      <span class="no">${a.no}${a.kick?" &nbsp;/&nbsp; "+a.kick:""}</span>
-      <span class="name">${a.n}</span>
-      <span class="d">${a.d}</span>
-      ${a.loc.replace(/-/g," ") === a.n ? "" : `<span class="fld">loc. <em>${a.loc}</em></span>`}
-    </span>
-      
-    </span>
-  </a>`;
+      <span class="lab">
+        <span class="no">${a.no}${a.kick?" &nbsp;/&nbsp; "+a.kick:""}</span>
+        <span class="name">${a.n}</span>
+        <span class="d">${a.d}</span>
+        ${a.loc.replace(/-/g," ") === a.n ? "" : `<span class="fld">loc. <em>${a.loc}</em></span>`}
+      </span>
+    </a>
+  </span>`;
 }
 
 /* pack into rows: a full-width plate takes its own row, the rest pair up */
