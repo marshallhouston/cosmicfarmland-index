@@ -83,6 +83,15 @@ the four fine. So visibility of the constellation is NOT a live lever: do not sp
 another pass tuning it. If it needs to carry more, it needs a different idea, not a
 bigger one.
 
+## Section headings carry no gloss
+
+The registers read `apps`, `golf`, `toolshed` and nothing else. The owner
+disliked "eight live" sitting beside apps, and "counted properly" beside golf
+was the same species: a remark about the section rather than content in it. A
+critic flagged both independently as the closest the page comes to explanatory
+copy. The toolshed's counts stay, because they are real numbers the brief asks
+the page to carry.
+
 ## Content
 
 Real content only: the nine app names and their real blurbs, the toolshed, the counts.
