@@ -1,0 +1,27 @@
+# The build context is COPY . . , so anything not needed to build or serve the
+# site is image weight and cache churn.
+
+# Rebuilt inside the image. Copying the host's would shadow them, and
+# node_modules would bring the wrong platform's binaries.
+node_modules
+dist
+
+.git
+.gitignore
+.claude
+
+# Design exploration: source scans, rejected variants and the critique log. Tens
+# of megabytes that never reach dist/. What ships is the optimised derivatives
+# under public/.
+design-explore
+
+# Read by people and by CI, not by the build or the server. Named one by one
+# rather than as *.md, because scripts/gen-seo.mjs reads content/*.md at build
+# time to write the about, contact and privacy pages.
+README.md
+DESIGN.md
+PRODUCT.md
+tests
+
+.DS_Store
+*.log
