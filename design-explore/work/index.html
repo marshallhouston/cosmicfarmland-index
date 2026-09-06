@@ -162,7 +162,7 @@
     font-family:"IBM Plex Mono", monospace;
     font-size:10px; letter-spacing:.14em; color:var(--ink-2);
   }
-  .lab .fld em{ font-style:normal; color:#2a261e; letter-spacing:.05em }
+  .lab .fld em{ font-style:normal; color:inherit; letter-spacing:.05em }
   .card:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
   .lab{ margin-top:0; align-self:stretch; width:100%; border-top:0;
         padding:16px 0 36px }
@@ -190,6 +190,55 @@
   .card .lab{ flex:0 0 auto }
   .sp{ align-items:center; justify-content:flex-start }
 
+
+
+  /* ---------- after dark: the room, not the sheet ----------
+     The card is still cream paper with black ink on it. Only what is printed
+     straight onto the board turns pale, so the specimens need no re-lighting:
+     their surface never changes and multiply keeps working. Tokens are defined
+     three times on purpose. Bare :root is the light palette, the media block
+     covers the viewer who has chosen nothing, and the [data-theme] block lets
+     an explicit choice win in both directions. */
+  :root[data-theme="dark"]{ 
+    --sheet:#1c1a16;
+    --stock:#f2ede0;
+    --card:#141310;
+    --ink:#e8e2d2;
+    --ink-2:#bdb5a2;
+    --ink-3:#8d8676;
+    --rule:rgba(232,226,210,.20);
+ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ 
+    --sheet:#1c1a16;
+    --stock:#f2ede0;
+    --card:#141310;
+    --ink:#e8e2d2;
+    --ink-2:#bdb5a2;
+    --ink-3:#8d8676;
+    --rule:rgba(232,226,210,.20);
+ }
+  }
+
+  /* the card keeps the light palette: it is paper lying on a dark board */
+  :root[data-theme="dark"] .card,
+  :root[data-theme="dark"] .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
+  :root[data-theme="dark"] .lab{ border-top-color:rgba(20,19,16,.55) }
+  :root[data-theme="dark"] .sheet::after{ opacity:.32 }
+  :root[data-theme="dark"] .sheet::before{ mix-blend-mode:screen; opacity:.05 }
+  :root[data-theme="dark"] .card{
+    box-shadow:0 0 0 .5px rgba(0,0,0,.5), 8px 10px 20px -10px rgba(0,0,0,.7);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .card,
+    :root:not([data-theme="light"]) .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
+    :root:not([data-theme="light"]) .lab{ border-top-color:rgba(20,19,16,.55) }
+    :root:not([data-theme="light"]) .sheet::after{ opacity:.32 }
+    :root:not([data-theme="light"]) .sheet::before{ mix-blend-mode:screen; opacity:.05 }
+    :root:not([data-theme="light"]) .card{
+      box-shadow:0 0 0 .5px rgba(0,0,0,.5), 8px 10px 20px -10px rgba(0,0,0,.7);
+    }
+  }
 
   /* ---------- section register: a ruled heading, same voice as the labels ---------- */
   .reg{ margin-top:60px }
@@ -246,7 +295,7 @@
   .col{
     width:330px; transform:rotate(.5deg);
     font-family:"IBM Plex Mono", monospace;
-    font-size:9.5px; letter-spacing:.12em; color:#4c4638;
+    font-size:9.5px; letter-spacing:.12em; color:var(--ink-2);
   }
   .col .hd{ display:block; letter-spacing:.28em; color:var(--ink); margin-bottom:11px; font-weight:500 }
   .col div{ display:grid; grid-template-columns:74px 1fr; line-height:2 }
@@ -256,7 +305,7 @@
   .col em{ font-style:normal; color:var(--ink); letter-spacing:.06em; font-size:10px }
 
   footer{
-    margin-top:54px; font-size:9px; letter-spacing:.15em; color:#5f5849;
+    margin-top:54px; font-size:9px; letter-spacing:.15em; color:var(--ink-3);
     font-family:"IBM Plex Mono", monospace;
   }
   footer a{ border-bottom:.5px solid rgba(112,94,58,.35) }
