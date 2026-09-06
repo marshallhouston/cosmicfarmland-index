@@ -21,7 +21,7 @@ const pub = (...p) => join(REPO, 'public', ...p)
 // Content hash in the query string sidesteps that entirely.
 const version = (f) => createHash('sha1').update(readFileSync(pub(f))).digest('hex').slice(0, 8)
 
-const FONT_LINKS = `<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9971;</text></svg>">
+const FONT_LINKS = `<link rel="icon" href="/favicon.svg" type="image/svg+xml">  <!-- one mark for the whole domain, golf pages included -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">`
