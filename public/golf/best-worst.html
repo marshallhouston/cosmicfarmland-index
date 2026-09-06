@@ -215,6 +215,7 @@ td.pick:hover b{outline:2px solid var(--text-primary);outline-offset:1px}
       <option value="spread">best-to-worst spread</option>
       <option value="best">best composite to par</option>
       <option value="gap">gap: best round vs best composite</option>
+      <option value="gettable">gettable shots: average vs best composite</option>
       <option value="name">course name</option>
     </select>
   </div>
@@ -230,7 +231,7 @@ td.pick:hover b{outline:2px solid var(--text-primary);outline-offset:1px}
 <section id="top">
   <h2>The extremes</h2>
   <p class="lede">Across every course with a complete 18 covered.</p>
-  <div class="grid g4" id="tiles"></div>
+  <div class="grid g3" id="tiles"></div>
 </section>
 
 <section id="courses">
@@ -264,14 +265,18 @@ for(const c of DATA.courses){
   c.parTot=sum('par'); c.bestTot=sum('best'); c.worstTot=sum('worst');
   c.bestPar=c.bestTot-c.parTot; c.worstPar=c.worstTot-c.parTot;
   c.spread=c.worstTot-c.bestTot;
-  c.tees=[...new Set(c.rounds.map(r=>r.t).filter(Boolean))];
   c.gap=(c.full&&c.lowRound)?c.lowRound.raw-c.bestTot:null;
+  /* The average round is the honest baseline: the best composite is one shot
+     from each hole's best day, so avg - best is the shot actually on the table. */
+  c.avgTot=c.holes.reduce((a,h)=>a+h.avg,0);
+  c.gettable=c.avgTot-c.bestTot;
+  c.holes.forEach(h=>h.gettable=+(h.avg-h.best).toFixed(2));
   c.parSplit=c.holes.some(h=>h.parSplit);
 }
 
 function rlist(c,idxs){
   return idxs.map(i=>c.rounds[i]).sort((a,b)=>a.d<b.d?1:-1)
-    .map(r=>`<b>${fdate(r.d)}</b> ${r.t?esc(r.t)+' tees, ':''}${r.raw!=null?r.raw+' ('+sign(r.rawPar)+')':(r.n===18?'18 holes':'9 holes')}${r.pending?' <span class="flag">not posted</span>':''}`)
+    .map(r=>`<b>${fdate(r.d)}</b> ${r.raw!=null?r.raw+' ('+sign(r.rawPar)+')':(r.n===18?'18 holes':'9 holes')}${r.pending?' <span class="flag">not posted</span>':''}`)
     .join(' &middot; ');
 }
 
@@ -300,6 +305,24 @@ function scard(c,ci){
   </table></div>`;
 }
 
+/* Where the shots are. Ranked by how far the average sits above the best on
+   that hole, so a hole played once cannot out-rank one played twenty times on
+   volume alone - both are per-play numbers. */
+function gettable(c){
+  const top=c.holes.slice().sort((a,b)=>b.gettable-a.gettable).slice(0,5);
+  if(!top.length||top[0].gettable<=0) return '';
+  const max=top[0].gettable;
+  const rows=top.map(h=>`<tr><td class="lab" style="min-width:64px">Hole ${h.h}</td>
+    <td style="text-align:left;width:100%"><span style="display:inline-block;height:9px;border-radius:3px;background:var(--series-1);width:${Math.max(3,Math.round(h.gettable/max*100))}%"></span></td>
+    <td style="text-align:right"><b>${h.gettable.toFixed(1)}</b></td>
+    <td style="text-align:right;color:var(--text-secondary)">par ${h.par} &middot; avg ${h.avg.toFixed(1)} &middot; best ${h.best} &middot; ${h.n} play${h.n===1?'':'s'}</td></tr>`).join('');
+  return `<div class="card" style="margin-top:12px">
+    <div class="k" style="font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600">The gettable round</div>
+    <p class="who" style="margin:6px 0 10px">An average round here is <b>${c.avgTot.toFixed(1)}</b> and the best composite is <b>${c.bestTot}</b>: <b>${c.gettable.toFixed(1)} shots</b> sit between the two. Where the most of them are:</p>
+    <table class="scard" style="min-width:0"><tbody>${rows}</tbody></table>
+  </div>`;
+}
+
 function tile(k,v,n){return `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="n">${n}</div></div>`}
 
 function render(){
@@ -307,7 +330,7 @@ function render(){
   const sortk=$('#sortsel').value;
   let list=DATA.courses.map((c,i)=>({c,i})).filter(o=>o.c.rounds.length>=min);
   const key={rounds:o=>-o.c.rounds.length, spread:o=>-o.c.spread, best:o=>o.c.bestPar,
-             gap:o=>-(o.c.gap==null?-1:o.c.gap), name:o=>o.c.name};
+             gap:o=>-(o.c.gap==null?-1:o.c.gap), gettable:o=>-o.c.gettable, name:o=>o.c.name};
   list.sort((a,b)=>{const x=key[sortk](a),y=key[sortk](b);return x<y?-1:x>y?1:0});
 
   $('#fcount').innerHTML=`<b>${list.length}</b> courses &middot; <b>${list.reduce((a,o)=>a+o.c.rounds.length,0)}</b> rounds`;
@@ -317,10 +340,12 @@ function render(){
   const worstC=full.slice().sort((a,b)=>b.c.worstPar-a.c.worstPar)[0];
   const spreadC=full.slice().sort((a,b)=>b.c.spread-a.c.spread)[0];
   const gapC=full.filter(o=>o.c.gap!=null).sort((a,b)=>b.c.gap-a.c.gap)[0];
+  const getC=full.slice().sort((a,b)=>b.c.gettable-a.c.gettable)[0];
   $('#tiles').innerHTML=[
     bestC&&tile('Lowest best composite',`${bestC.c.bestTot} <span style="font-size:16px">(${sign(bestC.c.bestPar)})</span>`,esc(bestC.c.name)),
     worstC&&tile('Highest worst composite',`${worstC.c.worstTot} <span style="font-size:16px">(${sign(worstC.c.worstPar)})</span>`,esc(worstC.c.name)),
     spreadC&&tile('Widest spread',`${spreadC.c.spread} shots`,`${esc(spreadC.c.name)} — ${spreadC.c.bestTot} to ${spreadC.c.worstTot}`),
+    getC&&tile('Most gettable course',`${getC.c.gettable.toFixed(1)} shots`,`${esc(getC.c.name)} — average ${getC.c.avgTot.toFixed(1)}, best composite ${getC.c.bestTot}`),
     gapC&&tile('Biggest gap to a real round',`${gapC.c.gap} shots`,`${esc(gapC.c.name)} — best round ${gapC.c.lowRound.raw}, best composite ${gapC.c.bestTot}`),
   ].filter(Boolean).join('');
 
@@ -336,9 +361,10 @@ function render(){
     ].join('');
     return `<div class="course" id="c${i}">
       <div class="chead"><h3>${esc(c.name)}</h3>
-        <span class="meta">${c.rounds.length} round${c.rounds.length===1?'':'s'}${nine}${c.tees.length?' &middot; '+c.tees.map(esc).join(', ')+' tees':''}</span></div>
+        <span class="meta">${c.rounds.length} round${c.rounds.length===1?'':'s'}${nine}</span></div>
       <div class="card-grid">${tiles}</div>
       ${scard(c,i)}
+      ${gettable(c)}
       ${c.full?'':'<p class="who"><span class="flag">*</span> Not all 18 holes have been played here yet, so the totals cover only the holes listed.</p>'}
       ${c.parSplit?'<p class="who"><span class="flag">*</span> Par for that hole is not the same on every card; the most common value is shown.</p>':''}
       <div class="pop" id="pop${i}" style="display:none"></div>
@@ -370,7 +396,7 @@ $('#rules').innerHTML=`<b>How it is built.</b> Raw hole scores, never the ESC-ad
  Tees are merged: the same hole from a forward tee and a back tee is the same hole.
  Nine-hole rounds count &mdash; they record holes 1 to 9 and feed the first nine of the course they name.
  A hole left unplayed in a round is skipped, never guessed.
- Round totals shown here are raw sums of the 18 hole scores, not GHIN's adjusted gross, so they compare like for like against the composites. Every best and worst is clickable and names each round that made it, ties included.
+ Round totals shown here are raw sums of the 18 hole scores, not GHIN's adjusted gross, so they compare like for like against the composites. The gettable round measures each hole's average against its best, so a hole played once cannot out-rank one played twenty times on volume alone. Every best and worst is clickable and names each round that made it, ties included.
  Built ${fdate(DATA.built)} from ${DATA.nRounds} rounds, GHIN pull ${esc(DATA.pullDate||'')}.`;
 
 render();
