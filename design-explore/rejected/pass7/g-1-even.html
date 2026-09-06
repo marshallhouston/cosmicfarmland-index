@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cosmic farmland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* two registers only: a typewriter for the institution, one serif for the text. */
+  :root{
+    --card:#ece3ce;
+    --ink:#141310;
+    --ink-2:#3a352b;
+    --ink-3:#6c6453;
+    --slip:#f2ead6;
+    --hair:rgba(48,38,20,.34);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    overflow-x:hidden;
+    background:var(--card);
+    color:var(--ink);
+    font-family:Spectral, Georgia, serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- the sheet: cream to all four edges ---------- */
+  .sheet{
+    position:relative;
+    min-height:100vh;
+    padding:34px max(28px, calc((100% - 1240px) / 2)) 44px;
+    background:#f2ede0;
+    overflow:hidden;
+  }
+  /* scanned rag fibre. big tile, low opacity: felt, not counted. */
+  .sheet::before{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none; z-index:1;
+    mix-blend-mode:multiply;
+    opacity:.12;
+    background-image:url("img/paper.jpg");
+    background-size:760px auto;
+    background-repeat:repeat;
+  }
+  /* low-frequency tonal drift. the sheet is not one flat value anywhere. */
+  .sheet::after{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none; z-index:2;
+    mix-blend-mode:multiply;
+    opacity:.55;
+    background:
+      radial-gradient(120% 70% at 12% 4%,   rgba(255,252,242,.85), rgba(255,252,242,0) 62%),
+      radial-gradient(90% 55% at 88% 26%,   rgba(150,130,86,.16),  rgba(150,130,86,0) 70%),
+      radial-gradient(130% 60% at 30% 62%,  rgba(255,251,238,.7),  rgba(255,251,238,0) 66%),
+      radial-gradient(80% 46% at 6% 88%,    rgba(142,120,76,.19),  rgba(142,120,76,0) 72%),
+      radial-gradient(100% 50% at 96% 96%,  rgba(150,128,80,.15),  rgba(150,128,80,0) 70%);
+  }
+  .sheet > *{position:relative; z-index:4}
+
+  /* discrete foxing. four marks, clustered, not scattered. */
+  .fox{ position:absolute; z-index:3; pointer-events:none; mix-blend-mode:multiply; opacity:.5 }
+
+  /* ---------- stamped block, top left ---------- */
+  .stamp{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:500;
+    font-size:19px;
+    letter-spacing:.34em;
+    line-height:1.4;
+    color:var(--ink);
+    display:inline-block;
+  }
+  .stamp small{
+    display:block;
+    font-weight:400; font-size:8.5px; letter-spacing:.26em;
+    color:var(--ink-3); margin-top:7px;
+  }
+
+  /* ---------- the mounted plate: an image-centric grid, not free scatter ----------
+     technique 6 (element elimination) applied to the layout itself: the old
+     absolute bleed-anchor system and its computed dead-air gaps were the excess.
+     one grid, one gap value, no leftover machinery. */
+  .plate{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:76px 64px;
+    margin-top:56px;
+    align-items:start;
+    
+  }
+  .sp{ display:flex; flex-direction:column; grid-column:auto;  }
+  .sp.lg{ grid-column:auto }
+  .mount{
+    position:relative; width:100%; height:360px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mount img{ display:block; width:auto; height:auto; max-width:100%; max-height:360px }
+  
+
+  /* real pressed material, all nine. multiply drops the scan matte so the
+     sheet fibre reads straight through; the duotone pulls them to the ink. */
+  .ph{
+    mix-blend-mode:multiply;
+    opacity:.9;
+    filter:grayscale(1) sepia(.62) saturate(1.5) hue-rotate(-16deg) contrast(1.22) brightness(.95);
+  }
+  .ph.pale{
+    opacity:.94;
+    filter:grayscale(1) sepia(.62) saturate(1.8) hue-rotate(-16deg) contrast(2.5) brightness(.74);
+  }
+  .ph.faint{   /* bleached to nearly nothing. without this the sheet eats it. */
+    opacity:1;
+    filter:grayscale(1) sepia(.62) saturate(2.2) hue-rotate(-16deg) contrast(3.6) brightness(.52);
+  }
+
+  /* ---------- gummed hinges: short strips, torn at the two short ends ---------- */
+  .hinge{
+    position:absolute; z-index:6;
+    background:linear-gradient(180deg, rgba(229,219,191,.82), rgba(212,199,166,.78));
+  }
+  .h1{ clip-path:polygon(3% 0%,100% 0%,97% 22%,100% 48%,96% 74%,100% 100%,4% 100%,0% 76%,5% 50%,1% 24%) }
+  .h2{ clip-path:polygon(0% 0%,97% 0%,100% 26%,95% 52%,99% 78%,96% 100%,2% 100%,5% 72%,0% 46%,4% 20%) }
+  .h3{ clip-path:polygon(2% 0%,98% 0%,100% 30%,96% 55%,100% 80%,97% 100%,3% 100%,0% 74%,4% 48%,1% 22%) }
+  /* one hard contact line, lift edge only. nothing blurred, nothing floats. */
+  .hinge::after{
+    content:""; position:absolute; left:8%; right:8%; bottom:0; height:1px;
+    background:rgba(58,45,22,.34);
+  }
+
+  /* ---------- accession labels: printed flat onto the sheet ---------- */
+  .lab{
+    display:block; width:240px; padding:8px 0 0;
+    border-top:1px solid rgba(20,19,16,.55);
+  }
+  .lab .no{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:500; font-size:8.5px; letter-spacing:.2em;
+    color:var(--ink-3); display:block;
+  }
+  .lab .name{
+    display:block;
+    font-weight:400; font-size:16px; line-height:1.15;
+    color:var(--ink); margin-top:3px; text-wrap:balance;
+  }
+  .lab .d{
+    display:block; font-size:11px; line-height:1.4;
+    color:var(--ink-2); margin-top:4px; text-wrap:balance;
+  }
+  .lab .fld{
+    display:block; margin-top:6px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:9px; letter-spacing:.14em; color:var(--ink-2);
+  }
+  .lab .fld em{ font-style:normal; color:#2a261e; letter-spacing:.05em }
+  .lab.lg .name{ font-size:16px }
+  .lab.lg .d{ font-size:11px }
+  .lab.sm .name{ font-size:16px }
+  .lab.sm .d{ font-size:11px }
+  .sp:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
+  .lab{ margin-top:14px; align-self:flex-start }
+
+  /* ---------- the field where the speckle resolves ---------- */
+  #field{ position:absolute; right:2%; top:38%; width:380px; height:220px; pointer-events:none; z-index:3 }
+  #field i{ position:absolute; border-radius:50%; background:#141310; display:block }
+
+  /* ---------- toolshed: a folded slip tipped onto the sheet ---------- */
+  .shed{
+    position:relative;
+    width:min(100%,620px);
+    margin:26px 0 0 3%;
+    transform:rotate(-1.7deg);
+    padding:20px 26px 22px;
+    background:linear-gradient(180deg,#f6eedb 0%,#f3ebd6 46%,#e6dcc0 49.4%,#faf3e2 50.6%,#f1e9d2 55%,#eee5cd 100%);
+    clip-path:polygon(0% 1.5%,18% 0%,41% 1.8%,68% .2%,89% 2%,100% .6%,99.2% 33%,100% 68%,98.6% 99%,72% 97.4%,44% 100%,21% 97.8%,.7% 99.4%,1.4% 62%,0% 30%);
+  }
+  .shed h2{
+    margin:0 0 14px;
+    font-family:"IBM Plex Mono", monospace; font-weight:500;
+    font-size:10px; letter-spacing:.28em; color:var(--ink);
+  }
+  .shed a{
+    display:block; padding:2.5px 0;
+    font-size:12px; color:var(--ink-2);
+  }
+  .shed a b{
+    font-family:"IBM Plex Mono", monospace; font-weight:400; font-size:11px;
+    letter-spacing:.03em; color:var(--ink); margin-right:8px;
+  }
+  .shed a:hover b{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:.5px }
+  .shed .plug{ margin-top:11px }
+
+  /* ---------- colophon: one stamped block on flat ground ---------- */
+  .colwrap{ display:flex; justify-content:flex-end; margin-top:38px }
+  .col{
+    width:330px; transform:rotate(.5deg);
+    font-family:"IBM Plex Mono", monospace;
+    font-size:9.5px; letter-spacing:.12em; color:#4c4638;
+  }
+  .col .hd{ display:block; letter-spacing:.28em; color:var(--ink); margin-bottom:11px; font-weight:500 }
+  .col div{ display:grid; grid-template-columns:74px 1fr; line-height:2 }
+  .col span{
+    font-weight:500; font-size:8.5px; letter-spacing:.2em; color:var(--ink-3);
+  }
+  .col em{ font-style:normal; color:var(--ink); letter-spacing:.06em; font-size:10px }
+
+  footer{
+    margin-top:54px; font-size:9px; letter-spacing:.15em; color:#5f5849;
+    font-family:"IBM Plex Mono", monospace;
+  }
+  footer a{ border-bottom:.5px solid rgba(112,94,58,.35) }
+  footer a:hover{ color:var(--ink) }
+
+  @media (max-width:900px){
+    .plate{ grid-template-columns:1fr; gap:52px; margin-top:26px }
+    .sp, .sp.lg{ grid-column:1 }
+    .mount{ max-width:420px }
+    #field{ display:none }
+    #sprig{ display:none }
+    .shed{ margin-left:0; transform:none; width:100% }
+    .colwrap{ margin-top:44px; justify-content:flex-start }
+    .col{ transform:none }
+  }
+</style>
+</head>
+<body>
+
+<main class="sheet">
+  <header style="position:relative">
+    <div class="stamp">cosmic farmland</div>
+    <span style="position:absolute;top:-4px;right:6%;width:130px;display:inline-block;transform:rotate(5deg)">
+      <img class="ph" src="img/specimen-pitcher-salvia.png" style="width:100%;display:block"
+        alt="a small pressed sprig of pitcher sage, sparse tubular flowers on a thin stem">
+      <span class="hinge h2" style="left:50%;bottom:-4px;width:20px;height:9px;transform:translate(-50%,50%) rotate(-2deg)"></span>
+    </span>
+  </header>
+
+  <section class="plate" id="plate">
+  </section>
+
+  <section class="shed" id="toolshed">
+    <span class="hinge h2" style="left:12%;top:-5px;width:28px;height:11px;transform:rotate(-3.2deg)"></span>
+    <span class="hinge h1" style="left:63%;top:-5px;width:19px;height:10px;transform:rotate(2.6deg)"></span>
+    <span class="hinge h3" style="left:34%;bottom:-5px;width:24px;height:10px;transform:rotate(4.1deg)"></span>
+    <h2>toolshed</h2>
+    <div id="packet"></div>
+  </section>
+
+  <div class="colwrap">
+    <div class="col">
+      <div class="hd">cosmic farmland</div>
+      <div><span>acc.</span><em>cf 2026 / 001-009</em></div>
+      <div><span>coll.</span><em>m. houston</em></div>
+      <div><span>loc.</span><em>cosmicfarmland.wtf</em></div>
+      <div><span>field</span><em>18h 36m 56s &nbsp;+38&deg; 47&prime; 01&Prime;</em></div>
+      <div><span>kit</span><em>20 skills, 7 commands, 4 plugins</em></div>
+      <div><span>det.</span><em>m. houston, 2026</em></div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://github.com/marshallhouston/cosmic-farmland">cosmicfarmland.wtf / source on github</a>
+  </footer>
+</main>
+
+<script>
+/* ---------------- the nine, all photographed, one material system ----------------
+   colorado native perennials, real species, all visibly different, laid on a real
+   grid instead of hand-placed coordinates: technique 6, element elimination,
+   applied to layout. no anchor math, no dead-air, one gap value for the page. */
+const apps = [
+  { no:"cf-001", n:"anthology '77", u:"https://grateful-dead-77.cosmicfarmland.wtf",
+    d:"every show of the grateful dead's spring 1977 tour, mapped, with setlists and tapes",
+    img:"specimen-bee-balm.png", alt:"a pressed bee balm flower head, shaggy tubular petals radiating from the crown",
+    rot:-3.5, cls:"lg", loc:"grateful-dead-77",
+    h:[[50,30,22,4],[50,68,20,-5]] },
+
+  { no:"cf-005", n:"marshallhouston.wtf", u:"https://marshallhouston.wtf",
+    d:"writing about the cosmic farmland",
+    img:"specimen-ice-plant.png", alt:"a pressed hardy ice plant sprig, thick fleshy leaves and one star-shaped flower",
+    rot:3.2, cls:"sm", loc:"marshallhouston.wtf",
+    h:[[36,52,20,88],[66,50,22,92]] },
+
+  { no:"cf-002", n:"lenny explorer", u:"https://lenny-explorer.cosmicfarmland.wtf",
+    d:"a reader for lenny's newsletter posts and podcast transcripts",
+    img:"specimen-aster.png", alt:"a pressed aster stem, narrow leaves and small daisy-like flower heads", pale:1,
+    rot:-2.4, cls:"sm", loc:"lenny-explorer",
+    h:[[50,30,22,4],[50,68,20,-5]] },
+
+  { no:"cf-007", n:"systems playground", u:"https://systems-thinking.cosmicfarmland.wtf",
+    d:"stocks, flows, feedback loops, delays, and meadows' twelve leverage points",
+    img:"specimen-blue-salvia.png", alt:"a pressed blue salvia spike, narrow leaves and a tall row of tubular flowers",
+    rot:5.5, cls:"lg", loc:"systems-thinking",
+    h:[[50,30,22,4],[50,68,20,-5]] },
+
+  { no:"cf-004", n:"bobby bowser arcade", u:"https://bobby-bowser.cosmicfarmland.wtf",
+    d:"ten cabinets of coding-craft minigames. defeat bad practices, collect good ones",
+    img:"specimen-hyssop.png", alt:"a single pressed anise hyssop spike, tall and narrow, dense with tiny dried flowers",
+    rot:2, cls:"sm", loc:"bobby-bowser",
+    h:[[50,30,22,4],[50,68,20,-5]] },
+
+  { no:"cf-006", n:"strategy wizard", u:"https://strategy-wizard.cosmicfarmland.wtf",
+    d:"build a real action agenda and let an inline critic tear at it",
+    img:"specimen-furmans-red-sage.png", alt:"a pressed furman's red sage stem, small oval leaves and a spike of tubular flowers",
+    rot:-2.2, cls:"lg", loc:"strategy-wizard",
+    h:[[50,30,22,4],[50,68,20,-5]] },
+
+  { no:"cf-008", n:"octopus antipatterns", u:"https://octopus-org-lair.cosmicfarmland.wtf",
+    d:"36 org antipatterns to browse, drill with recall quizzes, and diagnose",
+    img:"specimen-hummingbird-mint.png", alt:"a pressed hummingbird mint stem, triangular leaves and a loose spike of flowers",
+    rot:-3, cls:"sm", loc:"octopus-org-lair",
+    h:[[36,52,20,88],[66,50,22,92]] },
+
+  { no:"cf-009", n:"golf course designer", u:"https://golf-course-designer.cosmicfarmland.wtf",
+    d:"shape nine holes of dirt, then let a simulated field of real handicaps judge them",
+    img:"specimen-yarrow.png", alt:"a pressed yarrow stem, feathery leaves and a flat cluster of tiny flowers", pale:1,
+    rot:6, cls:"sm", loc:"golf-course-designer",
+    h:[[50,30,22,4],[50,68,20,-5]] },
+
+  { no:"cf-003", n:"golf record", u:"/golf",
+    d:"every round from my ghin history, and where the strokes actually go",
+    img:"specimen-echinacea.png", alt:"a pressed echinacea flower head, drooping dried petals around a spiky cone center",
+    rot:-5, cls:"lg", loc:"/golf",
+    h:[[36,52,20,88],[66,50,22,92]] }
+];
+
+const tools = {
+  commands: [
+    ["/ship", "wait for a pr to go green, merge it, clean the worktree"],
+    ["/ptv", "prove-the-value audit that flags bloat"],
+    ["/next", "what to work on next in this repo"],
+    ["/handoff", "self-contained resumption prompt"],
+    ["/deps-sweep", "bucket outdated deps, one pr per bucket"],
+    ["/systematize", "promote a lesson to enforcement"],
+    ["/wrap", "end-of-session cap, ship then hand off"]
+  ],
+  plugins: [
+    ["cosmic-farmland", "always-on core, and the hooks"],
+    ["cosmic-farmland-content", "feedback pages, review docs, granola sync"],
+    ["cosmic-farmland-utils", "tee times, activity stats, deploys"],
+    ["obsidian-weaver", "vault interface with an auto-weaving graph"]
+  ]
+};
+
+/* ---------------- mount: grid does the placement, js only draws the plates ---------------- */
+const plate = document.getElementById("plate");
+const cells = apps.map((a,i) => {
+  const hinges = a.h.map(([x,y,len,r],j) =>
+    `<span class="hinge h${(j%3)+1}" style="left:${x}%;top:${y}%;width:${len}px;height:${9+(j%3)}px;transform:translate(-50%,-50%) rotate(${r}deg)"></span>`).join("");
+  const cell = `<a class="sp ${a.cls}" href="${a.u}">
+    <span class="mount" style="transform:rotate(${a.rot}deg)">
+      <img class="ph${a.pale?(a.pale===1?" pale":" "+a.pale):""}" src="img/${a.img}" alt="${a.alt}">
+      ${hinges}
+    </span>
+    <span class="lab ${a.cls}">
+      <span class="no">${a.no}</span>
+      <span class="name">${a.n}</span>
+      <span class="d">${a.d}</span>
+      <span class="fld">loc. <em>${a.loc}</em></span>
+    </span>
+  </a>`;
+  /* the cosmic thread sits mid-grid, on the fold, not scrolled past: one full-width
+     row after the third specimen. */
+  return cell;
+});
+plate.insertAdjacentHTML("beforeend", cells.join("") + '<div id="field"></div>');
+
+/* ---------------- toolshed slip ---------------- */
+const src = "https://github.com/marshallhouston/cosmic-farmland";
+const row = ([c,d]) => `<a href="${src}"><b>${c}</b>${d}</a>`;
+document.getElementById("packet").innerHTML =
+  tools.commands.map(row).join("") +
+  `<div class="plug">${tools.plugins.map(row).join("")}</div>`;
+
+/* ---------------- foxing: four discrete clusters ---------------- */
+const rnd = (i) => { const v = Math.sin(i*127.1+4.7)*43758.5453; return v - Math.floor(v); };
+document.querySelector(".sheet").insertAdjacentHTML("afterbegin",
+  [[9,320,74],[71,86,58],[36,1268,66],[88,1540,52]].map(([lx,ty,size],c) => {
+    let dots = "";
+    for (let i=0;i<11;i++){
+      const s = 1.4 + rnd(c*40+i)*4.6;
+      const x = rnd(c*40+i+7)*(size-s), y = rnd(c*40+i+19)*(size-s);
+      dots += `<i style="position:absolute;left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;width:${s.toFixed(1)}px;height:${s.toFixed(1)}px;border-radius:50%;background:rgba(122,86,36,${(.16+rnd(c*40+i+31)*.3).toFixed(2)});filter:blur(.4px)"></i>`;
+    }
+    return `<span class="fox" style="left:${lx}%;top:${ty}px;width:${size}px;height:${size}px">${dots}</span>`;
+  }).join(""));
+
+/* ---------------- lyra, at the coordinate on the slip ----------------
+   ra hours, dec degrees, visual magnitude. the speckle resolves, nothing is drawn. */
+const lyra = [
+  [18.6156,38.784,0.03],[18.8347,33.363,3.52],[18.9824,32.690,3.24],
+  [18.9135,36.899,4.22],[18.7460,37.605,4.36],[18.7373,39.670,4.67],
+  [18.7462,39.613,4.59],[18.3299,36.064,4.33],[19.2745,38.134,4.36],
+  [19.2203,39.146,4.39],[19.1216,36.099,5.28],[18.8887,36.966,5.58],
+  [19.0788,32.548,5.65],[18.5387,32.552,5.90],[19.2929,32.884,5.60],
+  [18.4444,37.594,5.94],[19.1657,38.984,5.60],[18.6752,34.437,6.10]
+];
+const fld = document.getElementById("field"), W = 380, H = 220;
+fld.innerHTML = lyra.map(([ra,dec,m]) => {
+  const x = (19.40 - ra) / 1.15 * W, y = (40.6 - dec) / 9.0 * H;
+  const s = Math.max(1.8, (7.0 - m) * 0.92), o = Math.max(.5, (7.0 - m) * .19);
+  return `<i style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;width:${s.toFixed(2)}px;height:${s.toFixed(2)}px;opacity:${o.toFixed(2)}"></i>`;
+}).join("") +
+/* the grain it emerges from */
+Array.from({length:18},(_,i) => {
+  const s = .8 + rnd(i+300)*1.1;
+  return `<i style="left:${(rnd(i)*W).toFixed(1)}px;top:${(rnd(i+90)*H).toFixed(1)}px;width:${s.toFixed(2)}px;height:${s.toFixed(2)}px;opacity:${(.1+rnd(i+170)*.16).toFixed(2)}"></i>`;
+}).join("");
+</script>
+
+
+<!--variant nav: arrow keys left/right-->
+<div id="vnav" style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#141310;color:#f2ede0;padding:9px 16px;border-radius:999px;opacity:.72;user-select:none">
+&larr;&nbsp;&nbsp;1/5&nbsp; even &nbsp;&rarr;
+</div>
+<script>
+(function(){
+  var files = ["g-1-even.html","g-2-ruled.html","g-3-sidelabel.html","g-4-hero.html","g-5-quadrant.html"];
+  var i = 0;
+  addEventListener("keydown", function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target.tagName; if (t === "INPUT" || t === "TEXTAREA") return;
+    if (e.key === "ArrowLeft")  location.href = files[(i + files.length - 1) % files.length];
+    if (e.key === "ArrowRight") location.href = files[(i + 1) % files.length];
+  });
+})();
+</script>
+</body>
+</html>
