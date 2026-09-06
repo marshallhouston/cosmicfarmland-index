@@ -191,6 +191,34 @@
   .sp{ align-items:center; justify-content:flex-start }
 
 
+
+  /* ---------- after dark ---------- */
+  :root{
+    --sheet:#15130f;
+    --stock:#24211a;
+    --card:#0e0d0b;
+    --ink:#ece6d6;
+    --ink-2:#c2baa6;
+    --ink-3:#8f8878;
+    --rule:rgba(236,230,214,.18);
+  }
+  .lab{ border-top-color:rgba(236,230,214,.45) }
+  .sheet::after{ opacity:.3 }
+  .sheet::before{ mix-blend-mode:screen; opacity:.06 }
+  .ph, .ph.pale, .ph.faint{
+    mix-blend-mode:screen;
+    filter:invert(1) grayscale(1) sepia(.32) saturate(1.4) hue-rotate(-14deg) contrast(.94) brightness(1.02);
+    opacity:.92;
+  }
+  .lab .fld em{ color:inherit }
+  .col{ color:var(--ink-2) }
+  footer{ color:var(--ink-3) }
+  footer a{ border-bottom-color:rgba(236,230,214,.3) }
+  .hinge{ background:linear-gradient(180deg, rgba(84,76,58,.9), rgba(64,58,44,.85)) }
+  .hinge::after{ background:rgba(0,0,0,.45) }
+  #field i{ background:#f4efe0 }
+  .card{ box-shadow:0 0 0 .5px rgba(0,0,0,.6), 8px 10px 20px -10px rgba(0,0,0,.8) }
+
   /* ---------- section register: a ruled heading, same voice as the labels ---------- */
   .reg{ margin-top:60px }
   #apps{ margin-top:46px }
@@ -479,20 +507,6 @@ const marks = [...document.querySelectorAll(".idx a")];
 const secs = marks.map(a => document.querySelector(a.getAttribute("href")));
 
 
-/* ---------------- arrows step between registers ---------------- */
-addEventListener("keydown", e => {
-  if (e.metaKey || e.ctrlKey || e.altKey) return;
-  const t = e.target.tagName; if (t === "INPUT" || t === "TEXTAREA") return;
-  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-  e.preventDefault();
-  const tops = secs.map(x => Math.round(x.getBoundingClientRect().top + scrollY) - 96);
-  const y = scrollY + 4;
-  let i = 0; tops.forEach((top, k) => { if (top <= y) i = k; });
-  i = e.key === "ArrowRight"
-      ? Math.min(i + 1, tops.length - 1)
-      : (scrollY > tops[i] + 4 ? i : Math.max(i - 1, 0));
-  scrollTo({ top: tops[i], behavior: "smooth" });
-});
 
 /* ---------------- index marks the register you are in ---------------- */
 addEventListener("scroll", () => {
@@ -504,5 +518,21 @@ addEventListener("scroll", () => {
 </script>
 
 
+
+<div id="vnav" style="position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:99999;font:12px/1 ui-monospace,monospace;letter-spacing:.08em;background:#f2ede0;color:#141310;padding:9px 16px;border-radius:999px;opacity:.8;user-select:none">
+&larr;&nbsp;&nbsp;2/3&nbsp; inverted &nbsp;&rarr;
+</div>
+<script>
+(function(){
+  var files = ["d-1-board.html", "d-2-inverted.html", "d-3-dim.html"];
+  var i = 1;
+  addEventListener("keydown", function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target.tagName; if (t === "INPUT" || t === "TEXTAREA") return;
+    if (e.key === "ArrowLeft")  location.href = files[(i + files.length - 1) % files.length];
+    if (e.key === "ArrowRight") location.href = files[(i + 1) % files.length];
+  }, true);
+})();
+</script>
 </body>
 </html>
