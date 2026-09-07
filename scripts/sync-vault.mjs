@@ -54,14 +54,20 @@ const strip = (here) => {
 </nav>`
 }
 
-const CITY_AM_URL = 'https://cosmicfarmland.wtf/golf/city-am-2026'
+const ORIGIN = 'https://cosmicfarmland.wtf'
+
+// Without a canonical, /golf and /golf/city-am-2026.html are two 200s of one
+// page and Google picks the winner. Every synced page declares its pretty URL.
+const canonical = (path) => `<link rel="canonical" href="${ORIGIN}${path}">`
+
+const CITY_AM_URL = `${ORIGIN}/golf/city-am-2026`
 // The unversioned photo URL can be pinned to a stale edge-cached response, so
 // the card points at the same versioned URL the page itself renders.
 const CHAMP = 'city-am-2026-champion.jpg'
 const champVersion = createHash('sha1')
   .update(readFileSync(join(VAULT, 'denver-city-park-golf-tournament-2026', CHAMP)))
   .digest('hex').slice(0, 8)
-const SHARE_META = `<link rel="canonical" href="${CITY_AM_URL}">
+const SHARE_META = `${canonical('/golf/city-am-2026')}
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="cosmic farmland">
 <meta property="og:url" content="${CITY_AM_URL}">
@@ -82,6 +88,7 @@ const PAGES = [
     steps: [
       ['dark default', (h) => h.replace(/<html([^>]*?)\sdata-theme="[^"]*"/, '<html$1 data-theme="dark"')],
       ['fonts + skin stylesheet', (h) => h.replace('</head>', `${head('golf-skin.css')}\n</head>`)],
+      ['canonical', (h) => h.replace('</head>', `${canonical('/golf/best-worst')}\n</head>`)],
       ['atmosphere + home link', (h) => h.replace(/<body[^>]*>/, (m) => `${m}\n${ATMOSPHERE}`)],
       ['theme button label', (h) => h.replace(/(<button[^>]*id="themebtn"[^>]*>)Dark(<\/button>)/, '$1Light$2')],
       ['golf nav strip', (h) => h.replace(/(<nav class="jump"[^>]*>)/, `${strip('/golf/best-worst')}\n$1`)],
@@ -97,6 +104,7 @@ const PAGES = [
     steps: [
       ['dark default', (h) => h.replace(/<html([^>]*?)\sdata-theme="[^"]*"/, '<html$1 data-theme="dark"')],
       ['fonts + skin stylesheet', (h) => h.replace('</head>', `${head('golf-skin.css')}\n</head>`)],
+      ['canonical', (h) => h.replace('</head>', `${canonical('/golf')}\n</head>`)],
       ['atmosphere + home link', (h) => h.replace(/<body[^>]*>/, (m) => `${m}\n${ATMOSPHERE}`)],
       ['theme button label', (h) => h.replace(/(<button[^>]*id="themebtn"[^>]*>)Dark(<\/button>)/, '$1Light$2')],
       ['golf nav strip', (h) => h.replace(/(<nav class="jump"[^>]*>)/, `$1\n  ${strip('/golf')}`)],
