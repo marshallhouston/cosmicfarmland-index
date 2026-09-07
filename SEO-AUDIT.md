@@ -23,21 +23,44 @@ over the URL in the sitemap.
 This is the one origin defect the audit could reproduce, and it is a real duplicate-
 content bug regardless of which alert it maps to.
 
-**2. `X-Robots-Tag` / `noindex`: not reproducible at the origin.**
+**2. `X-Robots-Tag` / `noindex`: not reproducible anywhere, origin or edge.**
 
 Every one of the 8 sitemap URLs was fetched twice, once as a normal client and once
 with a Googlebot user agent, checking the response headers and the full response body
 for any `noindex` in any form. None carries one. The string `noindex` does not appear
-anywhere in this repository, and `git log -S noindex --all` returns no commit that
-ever added or removed one. Every URL the sitemap has ever listed, across its whole
-history, is one of the same 8 and all 8 are 200 with no robots directive.
+anywhere in this repository, and a history-wide search for a commit that added or
+removed one returns nothing. Every URL the sitemap has ever listed, across its whole
+history, is one of the same 8, and all 8 are 200 with no robots directive.
 
-So the `noindex` GSC saw was not served by this origin. See the Cloudflare item in
-the dashboard checklist below: a Cloudflare challenge or block interstitial is served
-with `<meta name="robots" content="noindex,nofollow">` in its body, which is the
-usual way a site behind Cloudflare reports `Excluded by 'noindex' tag` while its own
-HTML is clean. That is a dashboard setting, not a repo change, and it cannot be
-verified from here.
+The Cloudflare zone was then read through the API on 2026-09-07, because a challenge
+or block interstitial carries `<meta name="robots" content="noindex,nofollow">` and
+is the usual way a site behind Cloudflare reports this while its own HTML is clean.
+It is not that either:
+
+- Bot Fight Mode: **off**. `crawler_protection`, `ai_bots_protection` and `enable_js`
+  are all disabled.
+- Custom WAF rules: **none**. Page rules: **none**. Transform rules, response-header
+  rules and redirect rules: **none**.
+- Three rulesets, all Cloudflare-managed: Normalization, Managed Free Ruleset, DDoS
+  L7. The Free Ruleset is CVE signatures only (Log4j, Shellshock, WordPress, React).
+- `browser_check: on`, `security_level: medium`, `development_mode: off`.
+- 187 firewall events in the preceding 23 hours, **zero** involving Google: no
+  Googlebot user agent, no ASN 15169. The busiest rule is `React - RCE -
+  CVE-2025-55182` firing 167 times on `/` against datacenter ASNs, i.e. scanners.
+
+Two limits on that evidence: free-plan firewall event retention is 24 hours, so the
+window cannot speak to the crawl period GSC reported on, and Browser Integrity Check
+challenges may not all land in `firewallEventsAdaptive` on a free plan. BIC being on
+is the only challenge surface left, and nothing observed suggests it is firing at
+Googlebot.
+
+What the GSC "Discovered - currently not indexed" report shows instead: `/golf`,
+`/golf/city-am-2026` and `/grayton` all have **Last crawled: N/A**. Google knows the
+URLs and has never fetched them. A page that was never fetched cannot have been
+excluded for a `noindex` it was served, so the likeliest reading of the whole alert
+set is discovery priority on a young, low-authority domain rather than a directive
+problem. The canonical fix in item 1 removes the one genuine reason Google had to
+deprioritise these URLs.
 
 No `noindex` was removed to silence this alert, because there is none to remove.
 
@@ -67,19 +90,19 @@ app link.
 
 ## What changed
 
-- `server.mjs` — 301 `/<path>.html` to `/<path>` and `/index.html` to `/`, before
+- `server.mjs`: 301 `/<path>.html` to `/<path>` and `/index.html` to `/`, before
   any other routing. One page, one URL. Query strings are preserved.
-- `scripts/sync-vault.mjs` — inject a canonical into every synced page. The city-am
+- `scripts/sync-vault.mjs`: inject a canonical into every synced page. The city-am
   page already had one inside its share-metadata block; that now comes from the same
   `canonical()` helper, so the three golf pages cannot drift apart again. Regenerated
   `public/golf.html` and `public/golf/best-worst.html` (one line added to each).
-- `public/grayton.html` — canonical added by hand; this page is authored directly in
+- `public/grayton.html`: canonical added by hand; this page is authored directly in
   `public/`, not synced.
-- `tests/seo.test.mjs` (new) — the sitemap invariant as a contract test, run by the
+- `tests/seo.test.mjs` (new): the sitemap invariant as a contract test, run by the
   repo's existing `bun test`: every sitemap URL is 200 with no redirect,
   self-canonical and not noindexed; every `.html` twin 301s to the pretty path; and
   no page links to a `.html` or trailing-slash URL. 19 tests pass across both files.
-- `README.md` — the one-URL-per-page contract documented next to the existing ones.
+- `README.md`: the one-URL-per-page contract documented next to the existing ones.
 
 Verified by rebuilding and running the real `server.mjs` over `dist/`, then re-running
 the step-1 checks against it. Markdown content negotiation, the `.md` twins, the
@@ -97,9 +120,11 @@ real-404 behavior and `/api/health` are all unchanged.
 
 ## Flagged, not fixed here
 
-- **The `noindex` GSC reported cannot be reproduced at the origin.** If it is still
-  reported after the next crawl, the cause is at the Cloudflare edge, not in this
-  repo. The checklist below says what to look at.
+- **The `noindex` GSC reported cannot be reproduced at the origin or at Cloudflare.**
+  Both were checked directly (see item 2 above). The affected URLs show
+  `Last crawled: N/A` in GSC, so nothing was served to Google at all. Nothing in this
+  repo can move that; it is crawl priority, and the fixes here plus a re-index request
+  are the levers.
 - **The homepage is a client-rendered SPA.** `scripts/seo-fragment.mjs` already
   injects a no-JS mirror into `#root` at build time, so this is handled, but it does
   mean the apex depends on that fragment staying in sync. Worth a glance if the apex
@@ -109,20 +134,16 @@ real-404 behavior and `/api/health` are all unchanged.
 
 Copy-paste checklist. Nothing here can be done from the repo.
 
-1. **Cloudflare first, before anything in GSC.** Dashboard → the cosmicfarmland.wtf
-   zone:
-   - Security → Bots → **Bot Fight Mode off**. It challenges traffic it cannot
-     verify, and a challenge page carries `<meta name="robots" content="noindex">`.
-     This is the most likely source of `Excluded by 'noindex' tag` on a site whose
-     own HTML has none.
-   - Security → WAF → check no custom rule matches Googlebot, and that
-     **Verified Bots are allowed**.
-   - Confirm the zone is not in **Under Attack** mode.
-   - Rules → Transform Rules → Modify Response Header: confirm nothing sets
-     `X-Robots-Tag`.
-2. **GSC → URL Inspection → Test Live URL** on `https://cosmicfarmland.wtf/golf`.
-   Read the rendered HTML it returns. If it shows a Cloudflare interstitial rather
-   than the page, item 1 is confirmed and is the whole fix.
+1. **Cloudflare is already ruled out, no action needed.** Read via the API on
+   2026-09-07: Bot Fight Mode off, no custom WAF rules, no page rules, no transform
+   or redirect rules, managed CVE ruleset only, and no Google traffic in the firewall
+   log. The one setting still capable of serving a `noindex` interstitial is Browser
+   Integrity Check (`browser_check: on`, Security -> Settings). Leave it on unless
+   step 2 shows Google getting an interstitial.
+2. **GSC -> URL Inspection -> Test Live URL** on `https://cosmicfarmland.wtf/golf`.
+   Read the rendered HTML it returns. If it shows the page, the origin and the edge
+   are both clean and the alert was about crawl priority. If it shows a Cloudflare
+   interstitial, turn off Browser Integrity Check and retest.
 3. **After this PR deploys, Request Indexing** for the three pages that had no
    canonical:
 
@@ -146,13 +167,17 @@ Copy-paste checklist. Nothing here can be done from the repo.
    its status is Success. It is the only sitemap; it returns 200 and `robots.txt`
    already points at it.
 5. **Clears on its own after recrawl, no action needed:**
-   - `Page with redirect` for the `.html` twins — they are redirects now by design,
+   - `Page with redirect` for the `.html` twins. They are redirects now by design,
      and were never in the sitemap.
-   - `Page with redirect` for `http://` URLs — the http-to-https 301 is correct and
+   - `Page with redirect` for `http://` URLs. The http-to-https 301 is correct and
      permanent. This one will keep being reported as an exclusion and that is fine.
-   - Duplicate/canonical reports on `/golf`, `/golf/best-worst` and `/grayton` — they
+   - Duplicate/canonical reports on `/golf`, `/golf/best-worst` and `/grayton`. They
      now declare a canonical and their twins redirect.
-6. **Only if `Excluded by 'noindex' tag` survives** both the Cloudflare check and a
-   recrawl: re-run the live check (`curl -sSI` plus a body grep for `noindex` on all
-   8 sitemap URLs, with and without a Googlebot user agent). If the origin is still
-   clean, the answer is at the edge, and no code change in this repo will move it.
+6. **Only if `Excluded by 'noindex' tag` survives** a recrawl: re-run the live check
+   (`curl -sSI` plus a body grep for `noindex` on all 8 sitemap URLs, with and without
+   a Googlebot user agent) and re-read the Cloudflare zone. Both were clean on
+   2026-09-07, so a recurrence means something changed, not something missed.
+7. **The fourth URL in the "Discovered - currently not indexed" list**,
+   `https://golf-course-designer.cosmicfarmland.wtf/`, is a sibling app on its own
+   subdomain and its own GSC property. Nothing in this repo serves it; it needs the
+   same audit run against its own repo.
