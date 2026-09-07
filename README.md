@@ -43,6 +43,10 @@ without JavaScript:
   client on a path with no twin gets 406, and unknown paths get a real 404 with
   a markdown body pointing at llms.txt and the sitemap. `tests/server.test.mjs`
   holds that contract.
+- Every page answers at one url: `server.mjs` 301s `/about.html` to `/about`
+  and `/index.html` to `/`, and each page declares its pretty url as canonical.
+  `tests/seo.test.mjs` holds that contract, plus the sitemap invariant (every
+  url 200, self-canonical, indexable). See `SEO-AUDIT.md`.
 
 ## Design system
 

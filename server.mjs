@@ -54,6 +54,13 @@ export async function handle(req) {
   if (url.pathname === '/api/health') return Response.json({ status: 'ok' })
 
   const safe = normalize(url.pathname).replace(/^(\.\.(\/|\\|$))+/, '')
+
+  // Every page is reachable twice: /about and /about.html both serve
+  // dist/about.html with a 200, and Google indexed the .html twin as the
+  // canonical while the sitemap listed the pretty path. One page, one URL.
+  const pretty = safe === '/index.html' ? '/' : safe.replace(/\.html$/, '')
+  if (pretty !== safe) return Response.redirect(new URL(pretty + url.search, url), 301)
+
   const q = accepts(req.headers.get('accept') ?? '')
   const wantsMd = qFor(q, 'text/markdown') > qFor(q, 'text/html', 'application/xhtml+xml')
   const mdOnly = wantsMd && qFor(q, 'text/html', 'application/xhtml+xml') === 0
