@@ -55,11 +55,16 @@ export async function handle(req) {
 
   const safe = normalize(url.pathname).replace(/^(\.\.(\/|\\|$))+/, '')
 
-  // Every page is reachable twice: /about and /about.html both serve
-  // dist/about.html with a 200, and Google indexed the .html twin as the
-  // canonical while the sitemap listed the pretty path. One page, one URL.
-  const pretty = safe === '/index.html' ? '/' : safe.replace(/\.html$/, '')
-  if (pretty !== safe) return Response.redirect(new URL(pretty + url.search, url), 301)
+  // Every page is reachable three ways: /about, /about.html and /about/ all
+  // name the same page, and Google indexed the .html twin as the canonical
+  // while the sitemap listed the pretty path. One page, one URL. Strip the
+  // trailing slash first so /about.html/ collapses in a single hop.
+  const trimmed = safe === '/' ? '/' : safe.replace(/\/+$/, '')
+  const pretty = trimmed === '/index.html' ? '/' : trimmed.replace(/\.html$/, '')
+  // Relative Location on purpose. Railway terminates TLS, so req.url reaches
+  // this process as http://, and an absolute redirect built from it downgrades
+  // every crawler to plaintext for a hop before the edge sends it back to https.
+  if (pretty !== safe) return new Response(null, { status: 301, headers: { location: pretty + url.search } })
 
   const q = accepts(req.headers.get('accept') ?? '')
   const wantsMd = qFor(q, 'text/markdown') > qFor(q, 'text/html', 'application/xhtml+xml')

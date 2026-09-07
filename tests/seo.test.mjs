@@ -55,12 +55,32 @@ test('no sitemap url is noindexed', () => {
   }
 })
 
+// Location is relative, so resolve against a dummy https base: an absolute
+// Location here would mean the origin leaked its own http:// scheme.
+const locationOf = (res) => new URL(res.headers.get('location'), 'https://base.invalid')
+
 test('the .html twin of every sitemap url 301s to the pretty path', async () => {
   for (const path of sitemapPaths()) {
     const twin = path === '/' ? '/index.html' : `${path}.html`
     const res = await get(twin)
     expect(`${twin} -> ${res.status}`).toBe(`${twin} -> 301`)
-    expect(`${twin} -> ${new URL(res.headers.get('location')).pathname}`).toBe(`${twin} -> ${path}`)
+    expect(`${twin} -> ${locationOf(res).pathname}`).toBe(`${twin} -> ${path}`)
+  }
+})
+
+test('the trailing-slash twin of every sitemap url 301s to the pretty path', async () => {
+  for (const path of sitemapPaths()) {
+    if (path === '/') continue
+    const res = await get(`${path}/`)
+    expect(`${path}/ -> ${res.status}`).toBe(`${path}/ -> 301`)
+    expect(`${path}/ -> ${locationOf(res).pathname}`).toBe(`${path}/ -> ${path}`)
+  }
+})
+
+test('a redirect never sends the client to a bare http:// origin', async () => {
+  for (const probe of ['/about.html', '/about/', '/index.html', '/about.html/']) {
+    const loc = (await get(probe)).headers.get('location') ?? ''
+    expect(`${probe}: ${loc.startsWith('http:')}`).toBe(`${probe}: false`)
   }
 })
 
