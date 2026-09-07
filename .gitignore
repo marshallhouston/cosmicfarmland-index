@@ -4,3 +4,6 @@ dist/
 *.log
 bun.lock
 __pycache__/
+design-explore/favicon/fonts/
+design-explore/favicon/candidates/
+design-explore/favicon/candidates2/
