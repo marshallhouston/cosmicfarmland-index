@@ -62,6 +62,11 @@ set is discovery priority on a young, low-authority domain rather than a directi
 problem. The canonical fix in item 1 removes the one genuine reason Google had to
 deprioritise these URLs.
 
+A live URL inspection in GSC on 2026-09-07 settles it: `https://cosmicfarmland.wtf/golf`
+returns **"URL is available to Google"** and **"Page can be indexed"**. Google's own
+fetcher gets the page, with no interstitial and no robots directive. There is nothing
+left to find at the origin or the edge.
+
 No `noindex` was removed to silence this alert, because there is none to remove.
 
 **3. `Page with redirect`: one redirect exists, and it is the correct one.**
@@ -120,11 +125,17 @@ real-404 behavior and `/api/health` are all unchanged.
 
 ## Flagged, not fixed here
 
-- **The `noindex` GSC reported cannot be reproduced at the origin or at Cloudflare.**
-  Both were checked directly (see item 2 above). The affected URLs show
-  `Last crawled: N/A` in GSC, so nothing was served to Google at all. Nothing in this
-  repo can move that; it is crawl priority, and the fixes here plus a re-index request
-  are the levers.
+- **The `noindex` GSC reported does not exist.** Origin, Cloudflare and Google's own
+  live fetch were all checked directly (item 2 above); the last one returns "URL is
+  available to Google". The affected URLs show `Last crawled: N/A`, so nothing was
+  ever served to Google to carry a directive. This is crawl priority.
+- **The real constraint is inbound links, and it is not in this repo.** Every sitemap
+  URL is linked from the apex and the pages cross-link each other, but GSC reports
+  "Referring page: None detected" because it has not crawled the rewritten apex yet.
+  More to the point, `marshallhouston.wtf` (older, already crawled) linked here zero
+  times while this site links out to it. That is fixed in
+  marshallhouston.wtf#25, which links cosmicfarmland.wtf from its about page. Beyond
+  that, inbound links are an off-repo activity.
 - **The homepage is a client-rendered SPA.** `scripts/seo-fragment.mjs` already
   injects a no-JS mirror into `#root` at build time, so this is handled, but it does
   mean the apex depends on that fragment staying in sync. Worth a glance if the apex
@@ -134,18 +145,16 @@ real-404 behavior and `/api/health` are all unchanged.
 
 Copy-paste checklist. Nothing here can be done from the repo.
 
-1. **Cloudflare is already ruled out, no action needed.** Read via the API on
-   2026-09-07: Bot Fight Mode off, no custom WAF rules, no page rules, no transform
-   or redirect rules, managed CVE ruleset only, and no Google traffic in the firewall
-   log. The one setting still capable of serving a `noindex` interstitial is Browser
-   Integrity Check (`browser_check: on`, Security -> Settings). Leave it on unless
-   step 2 shows Google getting an interstitial.
-2. **GSC -> URL Inspection -> Test Live URL** on `https://cosmicfarmland.wtf/golf`.
-   Read the rendered HTML it returns. If it shows the page, the origin and the edge
-   are both clean and the alert was about crawl priority. If it shows a Cloudflare
-   interstitial, turn off Browser Integrity Check and retest.
-3. **After this PR deploys, Request Indexing** for the three pages that had no
-   canonical:
+1. **Cloudflare is ruled out, no action needed.** Read via the API on 2026-09-07:
+   Bot Fight Mode off, no custom WAF rules, no page rules, no transform or redirect
+   rules, managed CVE ruleset only, and no Google traffic in the firewall log.
+   `browser_check` is on, and the live test in step 2 shows it is not affecting
+   Googlebot, so leave it alone.
+2. **Already done, recorded here.** GSC -> URL Inspection -> Test Live URL on
+   `https://cosmicfarmland.wtf/golf` returned "URL is available to Google" and
+   "Page can be indexed" on 2026-09-07. Nothing is blocking the crawl.
+3. **Request Indexing** for the three pages that had no canonical. Do this after this
+   PR deploys, so Google fetches the version with the canonical on it:
 
    ```
    https://cosmicfarmland.wtf/golf
