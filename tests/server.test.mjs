@@ -113,3 +113,15 @@ test('robots.txt welcomes reading agents and refuses training crawlers', async (
   for (const ua of ['ClaudeBot', 'GPTBot', 'CCBot', 'Google-Extended'])
     expect(group(ua)).toContain('Disallow: /')
 })
+
+// The SVG mark is primary, but crawlers, feed readers and Google's result-icon
+// scraper fetch /favicon.ico blind and never parse SVG, and iOS only reads
+// apple-touch-icon.png. Both 404'd in production until they were generated, so
+// this pins the paths rather than the bytes.
+test('the raster icon fallbacks are served, not 404s', async () => {
+  for (const path of ['/favicon.ico', '/apple-touch-icon.png', '/favicon.svg']) {
+    const res = await get(path)
+    expect(res.status).toBe(200)
+    expect((await res.arrayBuffer()).byteLength).toBeGreaterThan(0)
+  }
+})
