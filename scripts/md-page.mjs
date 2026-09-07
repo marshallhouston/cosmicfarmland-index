@@ -59,7 +59,9 @@ export function htmlPage(md, { slug, origin }) {
 <meta property="og:image" content="${origin}/sheet.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="text/markdown" href="${origin}/${slug}.md">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
