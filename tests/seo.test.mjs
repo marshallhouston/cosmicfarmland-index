@@ -93,3 +93,27 @@ test('no page in dist links to a .html or trailing-slash url', () => {
     expect(`${path}: ${[...new Set(bad)].join(', ')}`).toBe(`${path}: `)
   }
 })
+
+// lastmod used to be one build-wide date, so every page claimed it changed on
+// every deploy. Google discounts a lastmod that moves when the page doesn't.
+const sitemapLastmods = () =>
+  [
+    ...readFileSync(join(DIST, 'sitemap.xml'), 'utf8').matchAll(
+      /<loc>([^<]+)<\/loc><lastmod>([^<]+)<\/lastmod>/g,
+    ),
+  ].map((m) => ({ url: m[1], lastmod: m[2] }))
+
+test('every sitemap url carries an iso lastmod no later than today', () => {
+  const today = new Date().toISOString().slice(0, 10)
+  for (const { url, lastmod } of sitemapLastmods()) {
+    expect(`${url}: ${/^\d{4}-\d{2}-\d{2}$/.test(lastmod)}`).toBe(`${url}: true`)
+    expect(`${url}: ${lastmod <= today}`).toBe(`${url}: true`)
+  }
+})
+
+test('lastmod is per-page, not one date stamped across the whole sitemap', () => {
+  const dates = new Set(sitemapLastmods().map((e) => e.lastmod))
+  // Pages are edited independently, so a single date across all of them means
+  // the generator stamped the build rather than reading each page's history.
+  expect(`distinct lastmod values: ${dates.size > 1}`).toBe('distinct lastmod values: true')
+})
