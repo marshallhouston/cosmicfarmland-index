@@ -121,13 +121,18 @@
      rows are explicit, so the vertical rule only runs where two plates actually
      face each other, and a full-width plate breaks it cleanly. */
   .plate{ position:relative; margin-top:26px }
+  /* minmax(0,...) and not 1fr: a grid item's automatic minimum is its content,
+     so the card's own 392px would widen the track and push the row past the
+     sheet's measure on any screen narrower than two full cells. The sheet
+     clips its overflow, so that lands as specimens and blurbs cut off at the
+     right edge rather than as a scrollbar. The track holds; the card fits it. */
   .row{
-    display:grid; grid-template-columns:1fr 1fr;
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
     border-top:1px solid var(--rule);
   }
-  .row.full{ grid-template-columns:1fr }
+  .row.full{ grid-template-columns:minmax(0,1fr) }
   .row:not(.full) > .sp:first-child{ border-right:1px solid var(--rule) }
-  .sp{ display:flex; flex-direction:column; padding:40px 34px 48px }
+  .sp{ display:flex; flex-direction:column; min-width:0; padding:40px 34px 48px }
   .mount{
     --s:1;                 /* per specimen, set on the element. see the data. */
     position:relative; width:fit-content; max-width:100%; margin:0 auto;
@@ -191,7 +196,7 @@
     font-size:10px; letter-spacing:.14em; color:var(--ink-2);
   }
   .lab .fld em{ font-style:normal; color:inherit; letter-spacing:.05em }
-  .card:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
+  .sp .card:hover .name{ text-decoration:underline; text-decoration-thickness:.5px; text-underline-offset:4px }
   .lab{ margin-top:0; align-self:stretch; width:100%; border-top:0;
         padding:16px 0 36px }
 
@@ -200,15 +205,19 @@
   #field i{ position:absolute; border-radius:50%; background:#141310; display:block }
 
 
-  /* ---------- the print: one object, one window, one caption band ---------- */
-  .card{
+  /* ---------- the print: one object, one window, one caption band ----------
+     Scoped to the sheet's own cells. "card" is a common name, and a page that
+     adopts sheet.css for the paper and the type (the golf pages do) has its own
+     panels called that. Unscoped, this geometry clamped them to 392 by 452 and
+     their text ran out over whatever came next. */
+  .sp .card{
     position:relative; display:flex; flex-direction:column;
     width:392px; max-width:100%; height:452px;
     background:var(--stock);
     padding:22px 22px 0;
     box-shadow:0 0 0 .5px rgba(58,45,22,.34), 6px 8px 14px -10px rgba(40,31,14,.55);
   }
-  .card .mount{
+  .sp .card .mount{
     --s:1;                      /* one window. the print is the fixed thing. */
     width:100%; margin:0; flex:1 1 auto; min-height:0;
     display:flex; align-items:center; justify-content:center;
@@ -221,15 +230,15 @@
      the plant and not 48% of the window it is centred in. A wide specimen is
      capped by the window's width and stands well short of its height, and
      without this the hinges float off the stem by half that difference. */
-  .card .mount .sizer{
+  .sp .card .mount .sizer{
     position:relative; display:block;
     width:100%; height:auto; max-height:100%;   /* width drives it, height
        follows the specimen's own ratio, and max-height pulls both back for a
        tall plant. Give it a definite height instead and the ratio is ignored. */
   }
-  .card .mount img{ display:block; width:100%; height:100%; object-fit:contain }
+  .sp .card .mount img{ display:block; width:100%; height:100%; object-fit:contain }
 
-  .card .lab{ flex:0 0 auto }
+  .sp .card .lab{ flex:0 0 auto }
   .sp{ align-items:center; justify-content:flex-start }
 
 
@@ -263,21 +272,21 @@
   }
 
   /* the card keeps the light palette: it is paper lying on a dark board */
-  :root[data-theme="dark"] .card,
-  :root[data-theme="dark"] .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
+  :root[data-theme="dark"] .sp .card,
+  :root[data-theme="dark"] .sp .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
   :root[data-theme="dark"] .lab{ border-top-color:rgba(20,19,16,.55) }
   :root[data-theme="dark"] .sheet::after{ opacity:.32 }
   :root[data-theme="dark"] .sheet::before{ mix-blend-mode:screen; opacity:.05 }
-  :root[data-theme="dark"] .card{
+  :root[data-theme="dark"] .sp .card{
     box-shadow:0 0 0 .5px rgba(0,0,0,.5), 8px 10px 20px -10px rgba(0,0,0,.7);
   }
   @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]) .card,
-    :root:not([data-theme="light"]) .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
+    :root:not([data-theme="light"]) .sp .card,
+    :root:not([data-theme="light"]) .sp .card *{ --ink:#141310; --ink-2:#3a352b; --ink-3:#6c6453 }
     :root:not([data-theme="light"]) .lab{ border-top-color:rgba(20,19,16,.55) }
     :root:not([data-theme="light"]) .sheet::after{ opacity:.32 }
     :root:not([data-theme="light"]) .sheet::before{ mix-blend-mode:screen; opacity:.05 }
-    :root:not([data-theme="light"]) .card{
+    :root:not([data-theme="light"]) .sp .card{
       box-shadow:0 0 0 .5px rgba(0,0,0,.5), 8px 10px 20px -10px rgba(0,0,0,.7);
     }
   }
@@ -392,17 +401,35 @@
   footer a:hover{ color:var(--ink) }
 
   @media (max-width:900px){
-    .row{ grid-template-columns:1fr }
+    .row{ grid-template-columns:minmax(0,1fr) }
     .row:not(.full) > .sp:first-child{ border-right:0 }
-    .sp{ padding:30px 0 36px }
+    /* one column, and the cell carries the card's width so a wide phone or a
+       narrow window does not print the card at poster size. */
+    .sp{ padding:30px 0 36px; width:100%; max-width:392px; margin-inline:auto }
     .shed{ padding:26px 0 30px }
     .shed a{ grid-template-columns:1fr; gap:3px }
     .sift{ padding:0 }
-    .mount, .row.full .mount{ height:300px }
+    .mount, .row.full .mount{ height:300px }          /* a mount outside a card */
     .mount img, .row.full .mount img{ max-height:300px }
+    /* Narrower than the card's own width, the window keeps its proportion and
+       the card takes its height from what is printed on it. Holding 452 would
+       run a 337px card down the screen as a column, and holding the card's
+       proportion would let a long blurb's caption band eat the window. The
+       specimen scale is the thing that has to stay constant, so the window is
+       what gets held: 348 by 300 is the window at the card's full width.
+       Written to out-specify the bare-mount height above, full rows included. */
+    .sp .card{ width:100%; height:auto }
+    .sp .card .mount, .row.full .sp .card .mount{
+      aspect-ratio:348 / 300; height:auto; flex:0 0 auto;
+    }
     .lab{ width:100% }
     #field{ display:none }
     .head{ flex-direction:column; gap:14px }
+    /* the wordmark is set at one width, and at .34em it is fourteen times its
+       own font size across. below the width it needs, it sizes off the sheet's
+       measure so it never runs into the margin. */
+    .stamp{ font-size:min(19px, calc(6.4vw - 2px)) }
+    .idx{ flex-wrap:wrap; gap:12px 22px }
     .colwrap{ margin-top:44px }
     .col{ transform:none }
   }
