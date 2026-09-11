@@ -1,10 +1,10 @@
-// Generate public/herbarium.html: every specimen the sheet holds, as itself.
+// Generate public/plant-prints.html: every specimen the sheet holds, as itself.
 //
 // On the index a specimen is a stand-in, mounted on a plate so an app has a
 // face. Here it is the subject. The two pages read the same data from opposite
 // ends, which is why this is generated rather than hand-built: specimens.json
 // already knows each scan's box and hinge placement, so a rescan moves the
-// hinges on both pages at once, and herbarium.json carries the only thing the
+// hinges on both pages at once, and plant-prints.json carries the only thing the
 // sheet never needed, which is what the plant actually is.
 //
 // The cards are sheet.css's own .sp .card geometry, not a second set of styles.
@@ -18,7 +18,7 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), '..')
 const read = (...p) => JSON.parse(readFileSync(join(REPO, ...p), 'utf8'))
 
 const ORIGIN = 'https://cosmicfarmland.wtf'
-const { gardens, specimens: entries } = read('data', 'herbarium.json')
+const { gardens, specimens: entries } = read('data', 'plant-prints.json')
 const boxes = read('public', 'specimens.json')
 const plates = read('data', 'plates.json')
 
@@ -26,14 +26,14 @@ const esc = (s) =>
   String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
 
 // Which specimens the index has mounted, so the label can say so. A mounted
-// specimen is doing a second job, and the herbarium is where you find out.
+// specimen is doing a second job, and this page is where you find out.
 const mounted = {}
 for (const group of ['apps', 'golf'])
   for (const [slug, m] of Object.entries(plates[group])) mounted[m.specimen] = slug
 
 function card(e, i) {
   const box = boxes[e.id]
-  if (!box) throw new Error(`${e.id} is in herbarium.json but not specimens.json`)
+  if (!box) throw new Error(`${e.id} is in plant-prints.json but not specimens.json`)
   const hinges = box.hinges
     .map(
       ([x, y, len, rot], j) =>
@@ -56,7 +56,7 @@ function card(e, i) {
       </span>
     </span>
     <span class="lab">
-      <span class="no">hb-${String(i + 1).padStart(3, '0')}${
+      <span class="no">pp-${String(i + 1).padStart(3, '0')}${
         mounted[e.id] ? `&nbsp;&nbsp;/&nbsp;&nbsp;mounted` : ''
       }</span>
       <span class="name">${esc(e.name)}</span>
@@ -80,13 +80,13 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>herbarium — cosmicfarmland.wtf</title>
+<title>plant prints — cosmicfarmland.wtf</title>
 <meta name="description" content="${esc(description)}">
-<link rel="canonical" href="${ORIGIN}/herbarium">
-<meta property="og:title" content="herbarium — cosmicfarmland.wtf">
+<link rel="canonical" href="${ORIGIN}/plant-prints">
+<meta property="og:title" content="plant prints — cosmicfarmland.wtf">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="article">
-<meta property="og:url" content="${ORIGIN}/herbarium">
+<meta property="og:url" content="${ORIGIN}/plant-prints">
 <meta property="og:image" content="${ORIGIN}/sheet.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -148,7 +148,7 @@ const html = `<!doctype html>
 <div class="wrap">
   <nav class="top"><a href="/">&#8592; cosmic farmland</a></nav>
   <header class="h">
-    <h1>herbarium</h1>
+    <h1>plant prints</h1>
     <p>The index mounts a specimen on every plate, standing in for an app. These are
     the specimens themselves. All but one grow in the beds at the house, from the
     Garden in a Box plantings listed on each label, and each was pressed, scanned
@@ -168,5 +168,5 @@ ${entries.map(card).join('\n')}
 </html>
 `
 
-writeFileSync(join(REPO, 'public', 'herbarium.html'), html)
-console.log(`wrote herbarium.html (${entries.length} specimens, ${planted} in the beds)`)
+writeFileSync(join(REPO, 'public', 'plant-prints.html'), html)
+console.log(`wrote plant-prints.html (${entries.length} specimens, ${planted} in the beds)`)

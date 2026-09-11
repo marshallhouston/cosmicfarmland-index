@@ -333,7 +333,7 @@ export default function App() {
           <a href="#apps">apps</a>
           <a href="#golf">golf</a>
           <a href="#toolshed">toolshed</a>
-          <a href="/herbarium">herbarium</a>
+          <a href="/plant-prints">plant prints</a>
           <Lamp />
         </nav>
       </header>

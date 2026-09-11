@@ -35,7 +35,7 @@ how to call it: fetch this file (llms.txt) for the whole catalog in one request;
 
 ## the farm
 
-- [herbarium](https://cosmicfarmland.wtf/herbarium): every specimen the sheet mounts, named, with the garden bed it grows in.
+- [plant prints](https://cosmicfarmland.wtf/plant-prints): every specimen the sheet mounts, named, with the garden bed it grows in.
 - [about](https://cosmicfarmland.wtf/about): who grows this, what is on it, and how it is built.
 - [contact](https://cosmicfarmland.wtf/contact): github is the front door; issues and pull requests welcome.
 - [privacy](https://cosmicfarmland.wtf/privacy): no analytics, no tracking, one theme preference in localStorage.

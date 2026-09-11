@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/gen-herbarium.mjs && node scripts/gen-seo.mjs && vite build",
+    "build": "node scripts/gen-plant-prints.mjs && node scripts/gen-seo.mjs && vite build",
     "preview": "vite preview",
     "start": "bun server.mjs",
-    "gen": "node scripts/gen-catalog.mjs && node scripts/gen-herbarium.mjs && node scripts/gen-seo.mjs",
+    "gen": "node scripts/gen-catalog.mjs && node scripts/gen-plant-prints.mjs && node scripts/gen-seo.mjs",
     "sync:vault": "bash scripts/sync-vault.sh"
   },
   "dependencies": {
