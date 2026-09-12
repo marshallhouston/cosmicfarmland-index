@@ -53,8 +53,7 @@ function card(e, i) {
 </div>`
 }
 
-const planted = entries.filter((e) => e.beds.length).length
-const description = `Every specimen on cosmicfarmland.wtf, as itself: ${planted} plants growing in the beds at the house, pressed, scanned and mounted.`
+const description = `The ${entries.length} plants growing around the yard at cosmicfarmland.wtf, each one pressed, scanned and hinged to its card.`
 
 const html = `<!doctype html>
 <html lang="en">
@@ -132,15 +131,14 @@ const html = `<!doctype html>
   <nav class="top"><a href="/">&#8592; cosmic farmland</a></nav>
   <header class="h">
     <h1>plant prints</h1>
-    <p>The index mounts a specimen on every plate, standing in for an app. These are
-    the specimens themselves: all but one a plant growing in the beds at the house,
-    each pressed, scanned and hinged to its card the same way.</p>
+    <p>Plants from around the yard. Yay for low-water and native plants that make
+    pollinators happy.</p>
   </header>
   <main class="beds">
 ${entries.map(card).join('\n')}
   </main>
   <footer>
-    <span>${entries.length} specimens &#183; ${planted} in the beds</span>
+    <span>${entries.length} prints</span>
     <span><a href="/">index</a> &#183; <a href="/about">about</a> &#183; <a href="/contact">contact</a> &#183; <a href="/llms.txt">llms.txt</a></span>
     <span class="slogan">nice dogs, strange people</span>
   </footer>
@@ -151,4 +149,4 @@ ${entries.map(card).join('\n')}
 `
 
 writeFileSync(join(REPO, 'public', 'plant-prints.html'), html)
-console.log(`wrote plant-prints.html (${entries.length} specimens, ${planted} in the beds)`)
+console.log(`wrote plant-prints.html (${entries.length} prints)`)

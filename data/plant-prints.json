@@ -1,5 +1,5 @@
 {
-  "_": "What each specimen actually is. specimens.json carries pixels and hinge coordinates; this carries the plant. Kept apart because a specimen can be remounted, rescanned or replaced without becoming a different species, and because plates.json already owns the other half of the question: which specimen stands for which app. Everything here is a plant in the beds at the house, from the Resource Central Garden in a Box sheets. 'beds' lists the plantings it appears in. Order is the accession order of the page.",
+  "_": "What each specimen actually is. specimens.json carries pixels and hinge coordinates; this carries the plant. Kept apart because a specimen can be remounted, rescanned or replaced without becoming a different species, and because plates.json already owns the other half of the question: which specimen stands for which app. Everything here is a plant in the beds at the house, from the Resource Central Garden in a Box sheets. 'beds' lists the plantings it appears in. Order is the accession order of the page. specimens.json holds one more, a generic bleached grass, which the index mounts but which is not a plant in the yard and so is not here.",
   "gardens": {
     "bees-blooms": "Bees & Blooms, 2024",
     "butterfly-daydream": "Butterfly Daydream, 2024",
@@ -20,7 +20,6 @@
     { "id": "specimen-yarrow", "name": "yarrow", "latin": "Achillea millefolium", "note": "feathery leaves the whole way down the stem, flat plates of flower on top", "beds": ["bees-blooms", "golden-hour"] },
     { "id": "specimen-pitcher-salvia", "name": "blue pitcher sage", "latin": "Salvia azurea", "note": "airy and sky blue, tall enough to lean on its neighbours", "beds": ["butterfly-haven", "mosaic"] },
     { "id": "specimen-bee-balm", "name": "native lavender bee balm", "latin": "Monarda fistulosa menthifolia", "note": "a shaggy crown of tubes, minty when you brush past it", "beds": ["golden-hour"] },
-    { "id": "specimen-grass", "name": "bleached grass", "latin": "Poaceae", "note": "the first specimen on the sheet that was never a flower", "beds": [] },
     { "id": "specimen-autumn-joy-sedum", "name": "autumn joy sedum", "latin": "Sedum 'Autumn Joy'", "note": "soft pink in august, coppery seedheads standing through november", "beds": ["bees-blooms"] },
     { "id": "specimen-red-salvia", "name": "red salvia", "latin": "Salvia greggii", "note": "shrubby and many branched, magenta red through late summer", "beds": ["bees-blooms"] },
     { "id": "specimen-moonbeam-coreopsis", "name": "moonbeam coreopsis", "latin": "Coreopsis verticillata 'Moonbeam'", "note": "threadleaf foliage under pale yellow daisies, months of them", "beds": ["bees-blooms", "sunlit-fiesta", "mosaic"] },
