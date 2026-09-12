@@ -102,6 +102,18 @@ OVERRIDES = {
     # line is ever a single narrow run. these two are read off the stem by hand
     # at 66% and 88% of the plate.
     "specimen-yarrow.png": [[48.7, 66.0, 20, -2.0], [50.2, 88.0, 22, 1.0]],
+    # four plates the detector cannot read: winecups, blue spruce sedum,
+    # fleabane and basket of gold are mounded or sprawling, with no single
+    # narrow stem run anywhere on the scan. hinges placed by hand at 30% and
+    # 80% down the middle, which is where a mounter would tape a loose mat.
+    # the ice plant is a horizontal mat now, so its stems run across the plate,
+    # not up it. two strips at a quarter and three quarters, turned to lie
+    # across the runners.
+    "specimen-ice-plant.png": [[26.0, 50.0, 26, -90.0], [74.0, 50.0, 26, -90.0]],
+    "specimen-prairie-winecups.png": [[50.0, 30.0, 24, 0.0], [50.0, 80.0, 24, 0.0]],
+    "specimen-blue-spruce-sedum.png": [[50.0, 30.0, 24, 0.0], [50.0, 80.0, 24, 0.0]],
+    "specimen-showy-fleabane.png": [[50.0, 30.0, 24, 0.0], [50.0, 80.0, 24, 0.0]],
+    "specimen-basket-of-gold.png": [[50.0, 30.0, 24, 0.0], [50.0, 80.0, 24, 0.0]],
 }
 
 import os

@@ -84,6 +84,7 @@ const llms = [
   ...section(
     'the farm',
     [
+      `- [plant prints](${ORIGIN}/plant-prints): every specimen the sheet mounts, named, with the garden bed it grows in.`,
       `- [about](${ORIGIN}/about): who grows this, what is on it, and how it is built.`,
       `- [contact](${ORIGIN}/contact): github is the front door; issues and pull requests welcome.`,
       `- [privacy](${ORIGIN}/privacy): no analytics, no tracking, one theme preference in localStorage.`,
@@ -102,6 +103,7 @@ const llms = [
 const urls = [
   ORIGIN + '/',
   ORIGIN + '/grayton',
+  ORIGIN + '/plant-prints',
   ...golf.map((p) => ORIGIN + p.url),
   ...PAGES.map((s) => `${ORIGIN}/${s}`),
 ]
@@ -112,6 +114,7 @@ const urls = [
 const SOURCES = new Map([
   [ORIGIN + '/', ['index.html', 'data/apps.json', 'data/catalog.json']],
   [ORIGIN + '/grayton', ['public/grayton.html']],
+  [ORIGIN + '/plant-prints', ['data/plant-prints.json', 'public/specimens.json']],
   ...golf.map((p) => [ORIGIN + p.url, ['data/golf.json', `public${p.url}.html`]]),
   ...PAGES.map((s) => [`${ORIGIN}/${s}`, [`content/${s}.md`]]),
 ])
