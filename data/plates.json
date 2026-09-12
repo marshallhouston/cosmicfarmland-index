@@ -13,7 +13,7 @@
   "golf": {
     "golf-record": { "specimen": "specimen-echinacea", "rot": -4 },
     "city-am-2026": { "specimen": "specimen-pitcher-salvia", "rot": 3 },
-    "best-worst": { "specimen": "specimen-grass", "rot": -2.6, "pale": true }
+    "best-worst": { "specimen": "specimen-blue-grama-grass", "rot": -2.6, "pale": true }
   },
   "order": {
     "apps": ["writing", "grateful-dead-77", "lenny-explorer", "systems-thinking", "strategy-wizard", "bobby-bowser", "octopus-org-lair", "golf-course-designer"],
