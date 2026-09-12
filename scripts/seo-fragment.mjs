@@ -45,6 +45,7 @@ export function seoFragment(tagline = '') {
     '</ul>',
     // The trust pages, so a crawler that only reads the homepage still finds them.
     '<h2>The farm</h2><ul>',
+    li(origin + '/plant-prints', 'Plant prints', 'every specimen the sheet mounts, named, as a wall of prints'),
     li(origin + '/about', 'About', 'who grows this and how the site is built'),
     li(origin + '/contact', 'Contact', 'github is the front door; issues and pull requests welcome'),
     li(origin + '/privacy', 'Privacy', 'no analytics, no tracking, one theme preference in localStorage'),
