@@ -20,16 +20,9 @@ const read = (...p) => JSON.parse(readFileSync(join(REPO, ...p), 'utf8'))
 const ORIGIN = 'https://cosmicfarmland.wtf'
 const { gardens, specimens: entries } = read('data', 'plant-prints.json')
 const boxes = read('public', 'specimens.json')
-const plates = read('data', 'plates.json')
 
 const esc = (s) =>
   String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
-
-// Which specimens the index has mounted, so the label can say so. A mounted
-// specimen is doing a second job, and this page is where you find out.
-const mounted = {}
-for (const group of ['apps', 'golf'])
-  for (const [slug, m] of Object.entries(plates[group])) mounted[m.specimen] = slug
 
 function card(e, i) {
   const box = boxes[e.id]
@@ -42,32 +35,20 @@ function card(e, i) {
         }px;transform:translate(-50%,-50%) rotate(${rot}deg)"></span>`
     )
     .join('')
-  const beds = e.beds.map((b) => gardens[b]).filter(Boolean)
-  // Deterministic, from the accession number: a real sheet's plates are not
-  // square to the board, but they do not move between visits either.
-  const rot = (((i * 37) % 13) / 13 - 0.5) * 2.2
+  // Name only. The binomial, the note and the beds are still in the data,
+  // where they caption the image for a reader who cannot see it and feed the
+  // page's description, but four to a row there is no room for any of it and
+  // the plants are the point.
   return `<div class="sp">
-  <div class="card" style="transform:rotate(${rot.toFixed(2)}deg)">
+  <div class="card">
     <span class="mount">
       <span class="sizer" style="aspect-ratio:${box.w} / ${box.h}">
         <img class="ph" src="/specimens/${e.id}.webp" width="${box.w}" height="${box.h}"
-             loading="${i < 4 ? 'eager' : 'lazy'}" decoding="async"
-             alt="a pressed and dried ${esc(e.name)} specimen">${hinges}
+             loading="${i < 8 ? 'eager' : 'lazy'}" decoding="async"
+             alt="a pressed and dried ${esc(e.name)} specimen, ${esc(e.latin)}">${hinges}
       </span>
     </span>
-    <span class="lab">
-      <span class="no">pp-${String(i + 1).padStart(3, '0')}${
-        mounted[e.id] ? `&nbsp;&nbsp;/&nbsp;&nbsp;mounted` : ''
-      }</span>
-      <span class="name">${esc(e.name)}</span>
-      <span class="sci">${esc(e.latin)}</span>
-      <span class="d">${esc(e.note)}</span>
-      ${
-        beds.length
-          ? `<span class="fld">bed. <em>${beds.map(esc).join(' &middot; ')}</em></span>`
-          : '<span class="fld">bed. <em>not planted</em></span>'
-      }
-    </span>
+    <span class="lab"><span class="name">${esc(e.name)}</span></span>
   </div>
 </div>`
 }
@@ -103,8 +84,10 @@ const html = `<!doctype html>
   body { margin: 0; background: var(--sheet); color: var(--ink);
          font-family: var(--font-body); font-weight: 300;
          -webkit-font-smoothing: antialiased; }
-  .wrap { position: relative; z-index: 4; max-width: 1240px;
-          margin: 0 auto; padding: 0 var(--pad) 6rem; }
+  /* .sheet already carries --pad, which centres the 1240px measure the index
+     uses. Repeating it here paid the gutter twice and left 968px of grid:
+     three columns where four fit. Vertical padding only. */
+  .wrap { position: relative; z-index: 4; padding: 0 0 6rem; }
   nav.top { display: flex; gap: 1.5rem; padding: 30px 0 15px;
             border-bottom: 1px solid var(--rule);
             font-family: var(--font-mono); font-size: 10px; letter-spacing: .24em; }
@@ -115,23 +98,23 @@ const html = `<!doctype html>
        letter-spacing: .34em; text-transform: lowercase; margin: 0; color: var(--ink); }
   header.h p { font-size: 15px; line-height: 1.7; color: var(--ink-2);
                max-width: 52ch; margin: 1.2rem 0 0; }
-  /* auto-fill, so a narrow window drops to one column instead of clipping the
-     card: sheet.css fixes the card at 392px and the sheet clips its overflow. */
+  /* Four to a row on a normal screen, dropping a column at a time as the
+     window narrows. minmax with min() rather than a fixed track, so the last
+     column collapses instead of clipping: sheet.css fixes the card at 392px
+     and the sheet clips its overflow. */
   .beds { display: grid; gap: 0;
-          grid-template-columns: repeat(auto-fill, minmax(min(392px, 100%), 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
           border-top: 1px solid var(--rule); margin-top: 2.6rem; }
-  .beds .sp { padding: 40px 24px 44px; border-bottom: 1px solid var(--rule); }
-  /* sheet.css fixes the card at 452px, which is right for the index: every
-     plate carries the same three lines. Here the label also carries a binomial
-     and a list of beds, and a plant in four gardens ran off the bottom edge.
-     Let the card take the height its label needs, with the index's height as
-     the floor so a one-bed card still reads as the same object. */
-  .beds .card { height: auto; min-height: 452px; padding-bottom: 4px; }
-  .beds .card .mount { min-height: 300px; }
-  /* The binomial, which the index has no room for and no use for. */
-  .lab .sci { display: block; font-style: italic; font-size: 13px;
-              line-height: 1.3; color: var(--ink-3); margin-top: 2px; }
-  .lab .fld em { font-style: normal; }
+  .beds .sp { padding: 18px 12px 22px; }
+  /* The index's card is one fixed object, 392 by 452, because a plate there
+     carries three lines of catalogue. Here the card is a frame around a print
+     and nothing else, so it takes the column's width and the height its
+     specimen needs. No tilt either: a wall of tilted frames is noise, and at
+     this size the rotation only cost the plants their alignment. */
+  .beds .card { width: 100%; height: auto; padding: 14px 14px 0; }
+  .beds .card .mount { height: 200px; min-height: 0; }
+  .beds .card .lab { padding: 10px 0 12px; }
+  .beds .card .lab .name { font-size: 15px; line-height: 1.2; }
   /* No rule of its own: the grid already closes on one, and two hairlines with
      four rems of nothing between them read as a mistake. */
   footer { margin-top: 1.6rem; padding-top: 0; border-top: 0;
@@ -150,9 +133,8 @@ const html = `<!doctype html>
   <header class="h">
     <h1>plant prints</h1>
     <p>The index mounts a specimen on every plate, standing in for an app. These are
-    the specimens themselves. All but one grow in the beds at the house, from the
-    Garden in a Box plantings listed on each label, and each was pressed, scanned
-    and hinged to its card the same way.</p>
+    the specimens themselves: all but one a plant growing in the beds at the house,
+    each pressed, scanned and hinged to its card the same way.</p>
   </header>
   <main class="beds">
 ${entries.map(card).join('\n')}
