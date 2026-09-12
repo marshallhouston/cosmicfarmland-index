@@ -35,9 +35,8 @@ whole identity comes off one photograph of a hand-lettered welcome sign: a
 stained board on fence posts, art-nouveau letters running marigold into sage
 inside a cream outline, wet shrub, pine straw, flat overcast light. The palette
 is sampled from that photo's pixels, which means it is cool and desaturated
-everywhere except the gold. It answers to that town's slogan, **nice dogs,
-strange people**: friendly and unguarded in how it talks, unsanded in how it
-looks. Voice is lowercase and plainspoken ("grown by marshall", "nothing in this
+everywhere except the gold. Friendly and unguarded in how it talks, unsanded in
+how it looks. Voice is lowercase and plainspoken ("grown by marshall", "nothing in this
 patch yet"), never corporate.
 
 ## Anti-references

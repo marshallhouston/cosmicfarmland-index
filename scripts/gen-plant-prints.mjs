@@ -140,7 +140,6 @@ ${entries.map(card).join('\n')}
   <footer>
     <span>${entries.length} prints</span>
     <span><a href="/">index</a> &#183; <a href="/about">about</a> &#183; <a href="/contact">contact</a> &#183; <a href="/llms.txt">llms.txt</a></span>
-    <span class="slogan">nice dogs, strange people</span>
   </footer>
 </div>
 </div>

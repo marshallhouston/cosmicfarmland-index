@@ -182,8 +182,6 @@ section { margin-bottom: 60px; }
 }
 .cf-footer a { color: var(--moss); text-decoration: none; }
 .cf-footer a:hover { color: var(--gold); }
-.cf-footer .cf-slogan { color: var(--gold-deep); letter-spacing: 0.28em; }
-:root[data-theme="dark"] .cf-footer .cf-slogan { color: var(--gold); }
 
 /* ---------- shared golf nav strip (both golf pages) ---------- */
 .cf-golf-nav {
