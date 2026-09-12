@@ -40,7 +40,6 @@ const ATMOSPHERE = `<div class="sheet" aria-hidden="true" style="position:fixed;
 
 const FOOTER = `<div class="cf-footer">
   <span>grown by marshall</span>
-  <span class="cf-slogan">nice dogs, strange people</span>
   <a href="https://cosmicfarmland.wtf">cosmicfarmland.wtf &#8599;</a>
 </div>`
 
