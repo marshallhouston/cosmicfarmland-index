@@ -1,0 +1,100 @@
+/* Meadow Hills scouting-report skin.
+
+   Deliberately NOT golf-skin.css. That file maps the other golf pages' token
+   names onto sheet.css and styles body, h1, h2, h3, section, th, .eyebrow,
+   .legend and .chip directly - all of which this page already defines for
+   itself. Injecting it would restyle the page in ten places and then need ten
+   overrides fighting back, so this page keeps its own look and takes only the
+   site chrome: the nav strip that reaches the other golf pages, and the footer.
+
+   sheet.css is not injected here either. It declares --ink on :root, which this
+   page also declares, and it would win on source order and recolour every line
+   of primary text. Skipping it avoids the collision outright and costs nothing,
+   since the rules below reference the page's own tokens (--fs-mono, --ink3,
+   --line, --brass) rather than the sheet's.
+
+   Lives here, not in the vault source, so regenerating the vault HTML can't
+   wipe it. */
+
+.cf-golf-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 18px 0 2px;
+  font-family: var(--fs-mono);
+}
+
+.cf-golf-link {
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink3);
+  border: 1px solid transparent;
+}
+
+.cf-golf-link:hover {
+  color: var(--brass);
+  border-color: var(--line2);
+}
+
+.cf-golf-link.on {
+  color: var(--brass);
+  border-color: var(--brass-soft);
+}
+
+.cf-golf-link.cf-home {
+  padding-left: 0;
+  color: var(--ink2);
+}
+
+.cf-golf-link.cf-home:hover {
+  color: var(--brass);
+  border-color: transparent;
+}
+
+.cf-golf-link:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+.cf-footer {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  font-family: var(--fs-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+.cf-footer a {
+  color: var(--ink2);
+  text-decoration: none;
+}
+
+.cf-footer a:hover {
+  color: var(--brass);
+}
+
+/* The page is one long column with its own side padding; keep the chrome on the
+   same measure so the strip and footer line up with the masthead rule. */
+.cf-golf-nav,
+.cf-footer {
+  max-width: 1080px;
+  margin-inline: auto;
+}
+
+@media print {
+  .cf-golf-nav { display: none !important; }
+  .cf-footer { border-top: 1px solid #c6ccbe; color: #5c6455; }
+  .cf-footer a { color: #5c6455; }
+}
