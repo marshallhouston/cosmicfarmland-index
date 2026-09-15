@@ -1,0 +1,1187 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aurora City Amateur Scouting Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#ecefe9; --surf:#fafbf8; --surf2:#e2e6dd; --line:#cfd5c8; --line2:#b9c1b0;
+  --ink:#151a12; --ink2:#4b5347; --ink3:#79826f;
+  --brass:#8f6410; --brass-soft:#c9a35a;
+  --blue:#2a78d6; --blue-d:#184f95; --red:#c33a39; --red-d:#8f2220; --mid:#dfe3db;
+  --fs-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --fs-disp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --fs-body:"Newsreader",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#111409; --surf:#191d14; --surf2:#232819; --line:#333a29; --line2:#4a5340;
+    --ink:#f1f4ea; --ink2:#b4bda8; --ink3:#828c76;
+    --brass:#d8ad5c; --brass-soft:#8a6d2e;
+    --blue:#4d95ee; --blue-d:#7db4f3; --red:#e86b6a; --red-d:#f09291; --mid:#2c3222;
+    }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#111409; --surf:#191d14; --surf2:#232819; --line:#333a29; --line2:#4a5340;
+  --ink:#f1f4ea; --ink2:#b4bda8; --ink3:#828c76;
+  --brass:#d8ad5c; --brass-soft:#8a6d2e;
+  --blue:#4d95ee; --blue-d:#7db4f3; --red:#e86b6a; --red-d:#f09291; --mid:#2c3222;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--fs-body);
+  font-size:17px;line-height:1.6;margin:0;padding:0 20px;padding-block:0 64px;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:0}
+h1,h2,h3,h4{font-family:var(--fs-disp);font-weight:700;letter-spacing:-.02em;text-wrap:balance;margin:0;line-height:1.13}
+p{margin:0}
+a{color:var(--brass)}
+.mono{font-family:var(--fs-mono);font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+.mast{padding-block:56px 34px;border-bottom:2px solid var(--brass-soft)}
+.kicker{font-family:var(--fs-mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brass);font-weight:600}
+.mast h1{font-size:clamp(38px,7vw,68px);line-height:.96;font-weight:800;margin-top:14px;max-width:20ch}
+.dek{margin-top:18px;max-width:64ch;color:var(--ink2);font-size:18.5px}
+.mastmeta{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--fs-mono);
+  font-size:12px;color:var(--ink3);letter-spacing:.03em}
+
+/* ---------- sections ---------- */
+section{padding-block:44px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.eyebrow{font-family:var(--fs-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink3);font-weight:600;display:flex;align-items:baseline;gap:10px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line);align-self:center}
+h2{font-size:clamp(25px,3.6vw,34px);margin-top:12px;max-width:22ch}
+.lede{margin-top:12px;max-width:66ch;color:var(--ink2)}
+.body{margin-top:16px;max-width:66ch;display:flex;flex-direction:column;gap:14px}
+.body strong{font-weight:500;color:var(--ink);background:linear-gradient(transparent 62%,var(--surf2) 62%)}
+
+/* ---------- stat rail ---------- */
+.rail{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:var(--surf);padding:16px 16px 14px;display:flex;flex-direction:column;gap:3px}
+.stat .n{font-family:var(--fs-disp);font-size:34px;font-weight:800;line-height:1;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums}
+.stat .l{font-family:var(--fs-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.stat .s{font-size:13.5px;color:var(--ink2);line-height:1.4}
+.neg{color:var(--red)} .pos{color:var(--blue)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;margin-top:22px;border:1px solid var(--line);background:var(--surf)}
+table{border-collapse:collapse;width:100%;font-family:var(--fs-mono);font-size:12.5px;
+  font-variant-numeric:tabular-nums}
+th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600;
+  text-align:right;padding:10px 9px;border-bottom:1px solid var(--line2);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--surf);z-index:1}
+td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--surf2)}
+tbody tr:hover td:first-child{background:var(--surf2)}
+tfoot td{font-weight:600;border-top:1px solid var(--line2);border-bottom:0;background:var(--surf2)}
+.sub{color:var(--ink3)}
+
+/* ---------- scoring matrix ---------- */
+.matrix{margin-top:24px;overflow-x:auto;padding-bottom:4px}
+.mgrid{display:grid;grid-template-columns:86px repeat(18,minmax(30px,1fr)) 46px;gap:2px;min-width:760px}
+.mcell{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fs-mono);font-size:13px;font-weight:500;position:relative;cursor:default;
+  border-radius:2px;color:var(--ink)}
+.mhead{font-family:var(--fs-mono);font-size:10.5px;color:var(--ink3);display:flex;align-items:center;
+  justify-content:center;letter-spacing:.04em}
+.mrow-label{font-family:var(--fs-mono);font-size:11px;color:var(--ink2);display:flex;
+  align-items:center;justify-content:flex-start;padding-right:6px;letter-spacing:.02em}
+.mtot{font-family:var(--fs-mono);font-size:12.5px;font-weight:600;display:flex;align-items:center;
+  justify-content:flex-end}
+.n-circ{border-radius:50%;box-shadow:inset 0 0 0 1.5px currentColor}
+.n-dcirc{border-radius:50%;box-shadow:inset 0 0 0 1.5px currentColor,0 0 0 2.5px var(--surf),0 0 0 4px currentColor}
+.n-sq{box-shadow:inset 0 0 0 1.5px currentColor;border-radius:2px}
+.n-dsq{box-shadow:inset 0 0 0 1.5px currentColor,0 0 0 2.5px var(--surf),0 0 0 4px currentColor;border-radius:2px}
+.legend{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--fs-mono);
+  font-size:11px;color:var(--ink3);align-items:center}
+.legend i{display:inline-flex;width:20px;height:20px;align-items:center;justify-content:center;
+  font-style:normal;margin-right:7px;font-size:11px;color:var(--ink)}
+
+/* ---------- bar charts ---------- */
+.bars{margin-top:22px;display:flex;flex-direction:column;gap:9px}
+.brow{display:grid;grid-template-columns:minmax(96px,150px) 1fr auto;gap:12px;align-items:center}
+.blabel{font-family:var(--fs-mono);font-size:11.5px;color:var(--ink2);text-align:right;letter-spacing:.02em}
+.btrack{position:relative;height:16px;background:var(--surf2);border-radius:2px}
+.bzero{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--line2)}
+.bfill{position:absolute;top:0;bottom:0;border-radius:2px}
+.bval{font-family:var(--fs-mono);font-size:11.5px;min-width:46px;text-align:right;font-variant-numeric:tabular-nums}
+.bsimple .btrack{background:var(--surf2)}
+.bsimple .bfill{background:var(--blue);left:0}
+
+/* ---------- shot cards ---------- */
+.cards{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line)}
+.card{background:var(--surf);padding:15px 16px;display:flex;flex-direction:column;gap:7px}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.card .sg{font-family:var(--fs-disp);font-size:23px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.card .where{font-family:var(--fs-mono);font-size:10.5px;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
+.card .what{font-size:15px;color:var(--ink2);line-height:1.45}
+
+/* ---------- filter ---------- */
+.filters{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filters .flab{font-family:var(--fs-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink3);margin-right:4px}
+button.chip{font-family:var(--fs-mono);font-size:11.5px;letter-spacing:.04em;padding:6px 12px;
+  background:var(--surf);color:var(--ink2);border:1px solid var(--line2);border-radius:999px;cursor:pointer}
+button.chip[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+button.chip:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed;z-index:50;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .1s;
+  background:var(--surf);border:1px solid var(--line2);box-shadow:0 8px 28px rgba(0,0,0,.22);
+  padding:11px 13px;max-width:330px;font-family:var(--fs-mono);font-size:11.5px;line-height:1.5;
+  color:var(--ink);border-radius:3px}
+#tip .th{font-weight:600;margin-bottom:5px;letter-spacing:.03em}
+#tip .sl{color:var(--ink2);display:flex;justify-content:space-between;gap:12px}
+#tip[data-on]{opacity:1;visibility:visible}
+.tipable{cursor:pointer}
+.tipable:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+
+/* ---------- notes ---------- */
+.note{margin-top:18px;padding:14px 16px;background:var(--surf);border-left:2px solid var(--brass-soft);
+  font-size:15px;color:var(--ink2);max-width:70ch}
+.foot{padding-block:34px;font-family:var(--fs-mono);font-size:11.5px;color:var(--ink3);line-height:1.75}
+.foot h3{font-family:var(--fs-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brass);font-weight:600;margin-bottom:10px}
+.foot ul{margin:0;padding-left:16px;display:flex;flex-direction:column;gap:7px}
+
+.tapeh{margin-top:26px;font-family:var(--fs-mono);font-size:15px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);font-weight:600}
+.tapenote{margin-top:14px;font-family:var(--fs-mono);font-size:11px;color:var(--ink3);letter-spacing:.03em}
+
+.plan{margin-top:24px;display:flex;flex-direction:column;gap:1px;background:var(--line);
+  border:1px solid var(--line)}
+.pitem{background:var(--surf);padding:16px 18px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.pnum{font-family:var(--fs-mono);font-size:11px;color:var(--brass);font-weight:600;padding-top:4px;letter-spacing:.08em}
+.pitem h4{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.pitem p{font-size:15.5px;color:var(--ink2);margin-top:5px;max-width:62ch}
+
+@media (max-width:560px){
+  body{font-size:16px}
+  .rail{grid-template-columns:repeat(2,1fr)}
+  .brow{grid-template-columns:minmax(72px,96px) 1fr auto;gap:8px}
+  .mast{padding-block:40px 28px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- print / PDF export ---------- */
+@media print{
+  :root{color-scheme:light;--ground:#fff;--surf:#fff;--surf2:#f0f2ed;--line:#c6ccbe;--line2:#9aa48e;
+    --ink:#000;--ink2:#333;--ink3:#5c6455;--brass:#6b4a09;--brass-soft:#b0904c;
+    --blue:#1a5fb4;--blue-d:#123c72;--red:#a8201f;--red-d:#6f1615;--mid:#e8ebe4}
+  body{font-size:10.5pt;padding:0;background:#fff}
+  .wrap{max-width:none}
+  section{padding-block:16pt;break-inside:auto}
+  h2,h3,h4{break-after:avoid}
+  .mast{padding-block:0 16pt}
+  .mast h1{font-size:30pt}
+  .rail,.cards{break-inside:avoid}
+  .stat,.card,.pitem,.brow{break-inside:avoid}
+  .scroll,.matrix{overflow:visible}
+  .mgrid{min-width:0}
+  table{font-size:7.5pt}
+  th,td{padding:3pt 4pt}
+  thead{display:table-header-group}
+  .filters,#tip{display:none!important}
+  tbody tr:hover td{background:none}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+<link rel="icon" href="/favicon.ico" sizes="32x32">  <!-- one mark for the whole domain, golf pages included -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/meadow-skin.css?v=ba69e594">
+<link rel="canonical" href="https://cosmicfarmland.wtf/golf/meadow-hills">
+</head>
+<body>
+<div class="wrap">
+<nav class="cf-golf-nav" aria-label="golf pages">
+  <a class="cf-golf-link cf-home" href="https://cosmicfarmland.wtf">&#8592; cosmic farmland</a>
+  <a class="cf-golf-link" href="/golf">the record</a>
+  <a class="cf-golf-link" href="/golf/best-worst">best ball, worst ball</a>
+  <a class="cf-golf-link" href="/golf/city-am-2026">city am 2026</a>
+  <a class="cf-golf-link on" href="/golf/meadow-hills">meadow hills</a>
+</nav>
+
+<header class="mast">
+  <div class="kicker">Scouting report · Meadow Hills GC · Sep 19-20, 2026</div>
+  <h1>Aurora City Amateur Tournament</h1>
+  <p class="dek">Preparing for the 2026 tournament with a deep dive on 6 previous rounds.</p>
+  <div class="mastmeta">
+    <span id="mmScope">Aurora, CO · par 70</span>
+    <span id="mmRange"></span>
+    <span>Source: ShotPattern · handicap 9, target 5</span>
+  </div>
+</header>
+
+<section id="overview">
+  <div class="eyebrow">01 · The number</div>
+  <h2>83.5 average, and 3.5 double bogeys a round</h2>
+  <p class="lede">The scoring average is respectable. The double-bogey rate is what stands between you and a good 36 holes here, and almost none of it
+  comes from the tee.</p>
+  <div class="rail" id="rail"></div>
+  <div class="body">
+    <p>Across 108 holes you made <strong>1 eagle, 3 birdies and 47 pars</strong>: par or better on 47% of holes. Then <strong>21
+    holes went double or worse</strong>, 50 strokes over par between them. Convert half of those to bogeys and the
+    average round is an 81.</p>
+    <p>The strokes-gained split says the same thing from the other direction. Against ShotPattern's
+    5-index benchmark you are <strong>+9.5 off the tee across six rounds</strong> and
+    <strong>−31.6 with the short game and the putter</strong>. You are not losing this golf course with the driver.
+    You are losing it with a wedge and a putter.</p>
+  </div>
+</section>
+
+<section id="rounds">
+  <div class="eyebrow">02 · Round by round</div>
+  <h2>Where each round went</h2>
+  <p class="lede">Two of these were the 2025 Aurora City Am itself: the Sep 20 and Sep 21 rounds,
+  both from the Blue tees at 6,105 yards, 69.1/123. That 36-hole total was 167.</p>
+  <div class="scroll"><table id="tblRounds"></table></div>
+  <div class="bars" id="sgChart"></div>
+  <div class="note">Strokes gained is ShotPattern's, measured against its 5-index benchmark, so
+  a 0.0 means "played that part of the game like a 5-handicap." The differential column is the raw
+  score differential, (113 ÷ slope) × (score − course rating), computed from the rating and slope
+  the app stores with each round. It carries no net-double-bogey cap, so it runs a little higher
+  than a posted handicap differential and is comparable across all six rounds.</div>
+</section>
+
+<section id="matrix">
+  <div class="eyebrow">03 · The scoring matrix</div>
+  <h2>Every hole, every round</h2>
+  <p class="lede">Six rounds down, eighteen holes across. Hover or tap any square for the shot-by-shot
+  record of that hole. Circles are birdie or better, squares bogey or worse, double outlines
+  for eagle and for double bogey and beyond.</p>
+  <div class="matrix" id="mx"></div>
+  <div class="legend">
+    <span><i class="mcell n-circ" style="background:var(--blue);color:#fff">3</i>birdie / eagle</span>
+    <span><i class="mcell">4</i>par</span>
+    <span><i class="mcell n-sq">5</i>bogey</span>
+    <span><i class="mcell n-dsq" style="background:var(--red);color:#fff">6</i>double+</span>
+  </div>
+  <div class="filters">
+    <span class="flab">Hole table</span>
+    <button class="chip" id="fAll" aria-pressed="true">All six rounds</button>
+    <button class="chip" id="fBlue" aria-pressed="false">Blue tees only (4)</button>
+    <button class="chip" id="fOrange" aria-pressed="false">Orange tees only (2)</button>
+  </div>
+  <div class="scroll"><table id="tblHoles"></table></div>
+  <div class="body">
+    <p>Nine holes cost you a stroke or more over par on average. <strong>The 9th is the worst
+    hole on the course for you (+1.67)</strong>: a par 4 of 390 from the Blue and 402 from the Orange, played 7, 5, 5, 7, 6, 4.
+    Then <strong>17 (+1.50) and 15 (+1.33)</strong>, the two long par 3s, back to back on the
+    closing stretch, where you have made six 5s and 6s in twelve tries.</p>
+    <p>The 6th you have played the same way every time: six rounds, six 5s.</p>
+  </div>
+</section>
+
+<section id="doubles">
+  <div class="eyebrow">04 · The war on double bogeys</div>
+  <h2>Twenty-one holes, and a very short list of causes</h2>
+  <p class="lede">Every hole that went double or worse, tagged with what ShotPattern flagged on it.
+  Every one of them carried at least one tag; twelve carried more than one stroke of blame.</p>
+  <div class="bars bsimple" id="causeChart"></div>
+  <div class="scroll"><table id="tblDoubles"></table></div>
+  <div class="body">
+    <p><strong>Twelve of the twenty-one involved a second chip</strong>, a short-game shot that failed to reach the putting surface. That is
+    the most common cause in your record here, ahead of three-putts (7) and penalties (6).</p>
+    <p>The tags also say where they are not coming from. Only four of these holes were
+    short-sided, and only five bogeys all told came from inside 150 yards. Most of the damage is a chunked or bladed chip from ordinary rough.</p>
+  </div>
+</section>
+
+<section id="penalties">
+  <div class="eyebrow">05 · Penalties</div>
+  <h2>Ten strokes, nine shots, 1.7 per round</h2>
+  <p class="lede">Low by most standards, but eight of the nine turned into a bogey or worse, and the two
+  from the tee cost two full shots each.</p>
+  <div class="scroll"><table id="tblPen"></table></div>
+  <div class="body">
+    <p>Five of nine came on <strong>approach shots rather than tee shots</strong>, and they follow one shape: a drive into the
+    rough, then a long recovery that finds trouble instead of the fairway. Holes 8, 11, 16 and 17 account for six of them.</p>
+    <p>A tee ball that finds the fairway here plays to <strong>+0.48</strong> on the hole; one that
+    finds rough plays to <strong>+0.60</strong>, almost nothing. A tee ball in a penalty area plays
+    to <strong>+2.00</strong>. You can play out of the rough at Meadow Hills. The penalty areas cost
+    a shot and a half.</p>
+  </div>
+</section>
+
+<section id="putting">
+  <div class="eyebrow">06 · Putting</div>
+  <h2>35.3 putts a round, 19 three-putts in six rounds</h2>
+  <p class="lede">The largest single leak in the record: −16.4 strokes gained across six rounds,
+  −2.7 a round. Speed on the long ones, more than line.</p>
+  <div class="rail" id="railPutt"></div>
+  <div class="bars" id="puttChart"></div>
+  <div class="body">
+    <p><strong>Fifteen of the nineteen three-putts started from 20 feet or more.</strong> Your own rule, finish the first putt inside 10% of the starting distance, passes on <strong>45% of
+    the long ones (19 of 42)</strong>, with a median leave right at 10%. The rounds where you clear
+    it comfortably are the 77s.</p>
+    <p>From short range the record is fine: 85% from inside five feet. The damage is in the approach
+    putt that sets up the short one.</p>
+  </div>
+  <div class="scroll"><table id="tblThree"></table></div>
+</section>
+
+<section id="approach">
+  <div class="eyebrow">07 · Approach, tee, and the short game</div>
+  <h2>Everything changes at 175 yards</h2>
+  <p class="lede">44% greens in regulation, 23% scrambling, 33% fairways, and a driver that is the best club in the
+  bag.</p>
+  <div class="bars" id="appChart"></div>
+  <div class="body">
+    <p>Inside 175 yards you are <strong>a plus player: +5.3 strokes gained across 63 shots</strong>
+    from 100 to 175. Beyond it you are <strong>−7.9 across 35 shots</strong>, and from 200+ you have
+    not hit a single green in 21 attempts. Past 175 the course starts taking strokes back.</p>
+    <p>Off the tee: <strong>median drive 285 yards, 33% fairways, +9.5 strokes gained.</strong> The
+    length is buying more than the accuracy is costing. The short game runs the other way at
+    <strong>−15.2 across 76 shots</strong>, and from rough specifically, <strong>15 of 43 failed to
+    reach the green.</strong></p>
+  </div>
+  <div class="scroll"><table id="tblCat"></table></div>
+</section>
+
+<section id="composite">
+  <div class="eyebrow">08 · Composite scorecards</div>
+  <h2>Your best is a 65. Your worst is a 105.</h2>
+  <p class="lede">Take your best score on each hole across all six rounds, and your worst. The gap between them, 40 shots, is the range this golf course has produced from you.</p>
+  <div class="matrix" id="mxComposite"></div>
+  <div class="body">
+    <p>The best composite is <strong>65, five under par</strong>, built only from scores you have posted: the eagle at 7, birdies at 1, 5 and 12, pars everywhere
+    else.</p>
+    <p>The worst is <strong>105</strong>: 7s at 9, 10, 11, 12, 16 and 18, and a 6 at both long par 3s. Those are the holes where
+    a bad swing has already turned into a big number more than once.</p>
+  </div>
+</section>
+
+<section id="shots">
+  <div class="eyebrow">09 · The tape</div>
+  <h2>Best and worst shots by strokes gained</h2>
+  <p class="lede">Every shot worth half a stroke or more against the 5-index baseline from where it started.</p>
+  <div class="filters">
+    <span class="flab">Category</span>
+    <button class="chip" data-tape="all" aria-pressed="true">All</button>
+    <button class="chip" data-tape="Tee" aria-pressed="false">Tee</button>
+    <button class="chip" data-tape="App" aria-pressed="false">Approach</button>
+    <button class="chip" data-tape="ARG" aria-pressed="false">Short game</button>
+    <button class="chip" data-tape="Putt" aria-pressed="false">Putting</button>
+  </div>
+  <h3 class="tapeh" id="bestHead">Gained half a stroke or more</h3>
+  <div class="cards" id="bestShots"></div>
+  <h3 class="tapeh" id="worstHead">Cost half a stroke or more</h3>
+  <div class="cards" id="worstShots"></div>
+  <p class="tapenote" id="tapeNote"></p>
+</section>
+
+<section id="form">
+  <div class="eyebrow">10 · Current form</div>
+  <h2>You are not playing the golf you played in July</h2>
+  <p class="lede">Every 18-hole round ShotPattern has on you, 69 of them, scored against par.
+  The Meadow Hills rounds are marked.</p>
+  <div id="formChart"></div>
+  <div class="scroll"><table id="tblForm"></table></div>
+  <div class="body">
+    <p>July 2026 was the best stretch in the record: <strong>six rounds averaging 81.7 (+10.3),
+    driving at +2.8 a round and putting nearly neutral.</strong> Since August 1 the average is
+    <strong>88.5 (+16.5) across eight rounds</strong>, or 86.3 setting aside the 104 at Meadows Golf Club on Sep 12. Driving has gone from +2.8 to −0.3 a round, and approach from −1.7 to −2.3.</p>
+    <p>Set against that, your Meadow Hills record from the Blue tees averages 81.75. <strong>A realistic pair of rounds this weekend is 83 to 85 each, with the ceiling around 78 and the
+    floor around 90.</strong> The difference between those two outcomes is almost entirely the
+    double-bogey count.</p>
+  </div>
+</section>
+
+<section id="tee">
+  <div class="eyebrow">11 · The tee sheet</div>
+  <h2>Club off every tee</h2>
+  <p class="lede">The Shot Pattern course preview's expected strokes gained for each club from
+  every tee, read against your own miss pattern. Driver is the play on ten of the thirteen par 4s and
+  5s.</p>
+  <div class="rail" id="railTee"></div>
+  <div class="body">
+    <p>The case for the driver is not that it is straight. Driver carries the best expected strokes gained on twelve of the thirteen, hole 5 the only
+    exception. It is that <strong>the mid-irons are the weak spot</strong>: 7-iron 22% greens, 6-iron 9% greens, both around 70 feet of
+    proximity, against <strong>70 to 75% for the wedges</strong>. Driver median 285 with a 107-yard
+    90% width and 75% of the misses right, and it still grades out ahead, because the club it
+    hands you next is a wedge.</p>
+    <p>So the shape of the round is <strong>driver to inside 130, then a wedge</strong>. A layup
+    that leaves a 6-iron or 7-iron trades a good club for a bad one. With the ZXi7s
+    <strong>150 is a 9-iron</strong>, so a layup that leaves 150 is fine, which is exactly why 11
+    and 12 are the two holes worth clubbing down on.</p>
+  </div>
+
+  <h3 class="tapeh">Par 4s and 5s</h3>
+  <div class="scroll"><table id="tblTee"></table></div>
+  <h3 class="tapeh">Par 3s</h3>
+  <div class="scroll"><table id="tblPar3"></table></div>
+  <div class="note">Yardages here are the course preview's current Blue card. They differ from
+  the per-hole numbers elsewhere on this page, which are what Shot Pattern measured on the day
+  you played: up to 29 yards apart on 11, and 12 shorter on 17. Tees move. Use the card for
+  planning and the measured numbers for what actually happened.</div>
+
+  <h3 class="tapeh">Carry numbers</h3>
+  <div class="scroll"><table id="tblClubs"></table></div>
+  <div class="body">
+    <p>The gap to know is <strong>8-iron to 9-iron, 24 yards</strong>: 160 is a hard 9 or a soft 8.
+    From the fairway the strong bands are <strong>110 to 120 and 140 to 180</strong>. From rough
+    beyond 150 the hole is a bogey, so play to the front edge. Out of rough the
+    <strong>56° is the club</strong> at 86% greens; the 60° and the 50° are not.</p>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="eyebrow">12 · The read</div>
+  <h2>What the data says to do on Saturday</h2>
+  <div class="plan">
+    <div class="pitem"><div class="pnum">01</div><div>
+      <h4>Take the rough. Do not take the penalty area.</h4>
+      <p>A drive in the rough costs you 0.12 of a shot versus the fairway here. A drive in a
+      penalty area costs 1.5. With 33% fairways and 285-yard median distance the driver is still the play on 10 of the 13 par 4s and 5s, the exceptions being 5, 11 and 12. The discipline is on the second shot out of rough,
+      which is where five of your nine penalties came from.</p></div></div>
+    <div class="pitem"><div class="pnum">02</div><div>
+      <h4>Wedge to the middle, always.</h4>
+      <p>You are +5.3 from 100 to 175 and −3.4 from inside 100. The short approach is the worse shot, and
+      short-siding yourself is what makes the chip that follows so expensive. Twelve of twenty-one
+      doubles started as a missed green that needed two chips. On 6, 10 and 16 that means laying up
+      to 110-120 and hitting a full 50°, never a long iron at the green.</p></div></div>
+    <div class="pitem"><div class="pnum">03</div><div>
+      <h4>Take the shorter iron on 17 and 15.</h4>
+      <p>The two long par 3s have cost you +2.83 combined per round. In twelve tries you have hit three
+      greens and made six 5s or worse, and the wreckage came from the long clubs: a triple on 17
+      with the hybrid in the water, a double with the 7-iron. The tee sheet says 7-iron on 15, and
+      8-iron on 17 when it plays 160-180 the way it did in Sep 2025. Anywhere on the putting surface
+      is a win, and a bogey on 17 is a good score.</p></div></div>
+    <div class="pitem"><div class="pnum">04</div><div>
+      <h4>Spend the warm-up on 30-footers, not 6-footers.</h4>
+      <p>85% from inside five feet is fine. The 45% pass rate on the 10% lag rule is the problem. Fifteen
+      of nineteen three-putts started outside 20 feet, so first-putt speed is what to rehearse
+      before the first tee.</p></div></div>
+    <div class="pitem"><div class="pnum">05</div><div>
+      <h4>Play the front nine to score and the back nine to survive.</h4>
+      <p>Your front nine here averages +5.2 and your back nine +8.3. Sixteen of the twenty-one doubles came on holes 9 to 12 and 15 to 18. A bogey on 17 is a good score.</p></div></div>
+  </div>
+</section>
+
+<div class="foot">
+  <h3>How this was built</h3>
+  <ul>
+    <li>Round, hole and shot records read straight out of ShotPattern's local store on your Mac (6 Meadow Hills rounds, 108 holes, 492 shots) and rebuilt shot by shot rather than read off the
+    app's summary tiles. Two rounds (Sep 1 and Sep 21, 2025) had to be opened in the app first to
+    pull their shot data down from the cloud.</li>
+    <li>Hole scores are <em>highest shot number plus any penalty on the final shot</em>, with
+    duplicate shots de-duplicated by shot number. One duplicate tee shot turned up, on Sep 1,
+    hole 14. Every round's reconstructed total matches the total ShotPattern itself reports.</li>
+    <li>Differentials are raw: (113 ÷ slope) × (score − course rating), using the rating and slope
+    ShotPattern stores per round. No net-double-bogey cap, so they sit slightly above posted handicap differentials, but they are consistent across all six rounds, which is what matters
+    for comparing them.</li>
+    <li>Strokes gained figures are ShotPattern's own, measured against the 5-index benchmark set in
+    your profile. Distances are as the app recorded them; putt and short-game distances are shown in
+    feet, full shots in yards.</li>
+    <li>ShotPattern's record on this course begins Sep 1, 2025. Anything you played at Meadow Hills
+    before that is not here, and nothing on this page comes from anywhere else.</li>
+  </ul>
+</div>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script>
+const DATA={"rounds":[{"id":"qwRna7Vriv1PgXac4qL6","date":"2025-09-01","tees":"Blue","yards":6105,"par":70,"cr":69.1,"sr":123,"type":"Casual","total":83,"sg":{"tee":4.32,"app":-1.73,"arg":-5.04,"putt":-2.45},"diff":11.9,"ags":82,"holes":[{"h":1,"par":4,"y":430,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",313,430.0,117.9,0.48,0],[2,"App","FW","RGH",138,117.9,21.9,-0.42,0],[3,"ARG","RGH","GRN",27,21.9,4.8,-0.18,0],[4,"Putt","GRN","GRN",4,4.8,0.4,-0.11,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":2,"par":3,"y":169,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",176,169.3,6.6,0.47,0],[2,"Putt","GRN","GRN",5,6.6,1.8,-0.5,0],[3,"Putt","GRN","HOLE",2,1.8,0,0.49,0]]},{"h":3,"par":4,"y":427,"s":4,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","RGH",289,426.6,122.0,0.35,0],[2,"App","RGH","FW",112,122.0,21.8,-0.21,0],[3,"ARG","FW","GRN",21,21.8,0.5,0.6,0],[4,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":4,"par":3,"y":151,"s":5,"pen":0,"pu":2,"f":"C","sh":[[1,"App","TEE","RGH",151,151.2,15.9,-0.28,0],[2,"ARG","RGH","RGH",8,15.9,8.3,-0.8,0],[3,"ARG","RGH","GRN",11,8.3,2.8,-0.27,0],[4,"Putt","GRN","GRN",3,2.8,0.4,-0.34,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":5,"par":4,"y":358,"s":3,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","FW",255,358.3,100.8,0.21,0],[2,"App","FW","GRN",100,100.8,2.4,0.65,0],[3,"Putt","GRN","HOLE",2,2.4,0,0.59,0]]},{"h":6,"par":5,"y":493,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",278,493.2,217.5,0.32,0],[2,"App","FW","FW",233,217.5,16.9,0.34,0],[3,"ARG","FW","GRN",21,16.9,4.0,-0.34,0],[4,"Putt","GRN","GRN",4,4.0,0.4,-0.16,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":7,"par":4,"y":323,"s":4,"pen":0,"pu":1,"f":"C","sh":[[1,"Tee","TEE","RGH",276,323.2,47.3,0.29,0],[2,"ARG","RGH","BKR",32,47.3,14.9,-0.77,0],[3,"ARG","BKR","GRN",17,14.9,2.3,0.23,0],[4,"Putt","GRN","HOLE",2,2.3,0,0.59,0]]},{"h":8,"par":4,"y":363,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",294,362.8,68.9,0.4,0],[2,"App","FW","GRN",77,68.9,8.4,0.02,0],[3,"Putt","GRN","GRN",7,8.4,1.7,-0.33,0],[4,"Putt","GRN","HOLE",2,1.7,0,0.38,0]]},{"h":9,"par":4,"y":390,"s":7,"pen":0,"pu":2,"f":"C","sh":[[1,"Tee","TEE","FW",274,390.5,115.6,0.29,0],[2,"App","FW","RGH",134,115.6,31.3,-0.58,0],[3,"ARG","RGH","FW",18,31.3,13.5,-0.58,0],[4,"ARG","FW","FW",25,13.5,11.6,-0.95,0],[5,"ARG","FW","GRN",13,11.6,1.4,0.14,0],[6,"Putt","GRN","GRN",2,1.4,0.5,-0.75,0],[7,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":10,"par":5,"y":490,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",313,490.0,171.3,0.61,0],[2,"App","FW","RGH",170,171.3,24.0,-0.24,0],[3,"ARG","RGH","GRN",17,24.0,7.5,-0.27,0],[4,"Putt","GRN","GRN",7,7.5,0.6,-0.01,0],[5,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":11,"par":4,"y":359,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","FW",218,359.5,132.3,0.14,0],[2,"App","FW","GRN",124,132.3,16.9,-0.02,0],[3,"Putt","GRN","GRN",19,16.9,2.1,-0.16,0],[4,"Putt","GRN","GRN",2,2.1,0.4,-0.51,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":12,"par":4,"y":344,"s":7,"pen":0,"pu":2,"f":"C","sh":[[1,"Tee","TEE","RGH",289,344.4,64.9,0.25,0],[2,"App","RGH","BKR",35,64.9,30.0,-0.95,0],[3,"ARG","BKR","RGH",43,30.0,13.0,-0.43,0],[4,"ARG","RGH","FW",5,13.0,8.0,-0.75,0],[5,"ARG","FW","GRN",6,8.0,1.8,-0.1,0],[6,"Putt","GRN","GRN",2,1.8,0.5,-0.62,0],[7,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":13,"par":3,"y":123,"s":4,"pen":0,"pu":2,"f":"S","sh":[[1,"App","TEE","RGH",126,123.2,12.7,-0.28,0],[2,"ARG","RGH","GRN",20,12.7,7.5,-0.49,0],[3,"Putt","GRN","GRN",7,7.5,0.8,-0.01,0],[4,"Putt","GRN","HOLE",1,0.8,0,0.03,0]]},{"h":14,"par":4,"y":421,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",305,427.3,123.9,0.44,0],[2,"App","FW","GRN",117,115.8,5.5,0.33,0],[3,"Putt","GRN","GRN",6,5.5,0.3,-0.05,0],[4,"Putt","GRN","HOLE",0,0.3,0,0,0]]},{"h":15,"par":3,"y":182,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",175,182.1,10.1,0.44,0],[2,"Putt","GRN","GRN",9,10.1,1.1,0,0],[3,"Putt","GRN","HOLE",1,1.1,0,0.1,0]]},{"h":16,"par":5,"y":486,"s":7,"pen":1,"pu":3,"f":"3S","sh":[[1,"Tee","TEE","FW",280,486.5,204.8,0.34,0],[2,"App","FW","PEN+1",169,204.8,44.2,-1.31,1],[4,"ARG","RGH","GRN",41,48.3,8.7,0,0],[5,"Putt","GRN","GRN",8,8.7,1.6,-0.32,0],[6,"Putt","GRN","GRN",2,1.6,0.4,-0.62,0],[7,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":17,"par":3,"y":217,"s":4,"pen":0,"pu":2,"f":"S","sh":[[1,"App","TEE","DEEP",212,216.6,15.4,-0.23,0],[2,"ARG","DEEP","GRN",24,15.4,9.0,-0.08,0],[3,"Putt","GRN","GRN",8,9.0,1.0,-0.03,0],[4,"Putt","GRN","HOLE",1,1.0,0,0.1,0]]},{"h":18,"par":4,"y":368,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",235,367.9,125.3,0.19,0],[2,"App","FW","GRN",128,125.3,3.2,0.54,0],[3,"Putt","GRN","GRN",3,3.2,0.5,-0.27,0],[4,"Putt","GRN","HOLE",1,0.5,0,0.03,0]]}]},{"id":"5Zx3lF7EFupYFgbqhApD","date":"2025-09-12","tees":"Blue","yards":6105,"par":70,"cr":69.1,"sr":123,"type":"Casual","total":77,"sg":{"tee":2.48,"app":2.75,"arg":-1.47,"putt":-2.64},"diff":7.3,"ags":77,"holes":[{"h":1,"par":4,"y":431,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",257,431.2,185.4,0.15,0],[2,"App","FW","FW",160,185.4,27.0,-0.07,0],[3,"ARG","FW","GRN",20,27.0,6.7,-0.3,0],[4,"Putt","GRN","GRN",6,6.7,0.6,-0.04,0],[5,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":2,"par":3,"y":173,"s":3,"pen":0,"pu":1,"f":"","sh":[[1,"App","TEE","FW",180,172.7,11.5,0.13,0],[2,"ARG","FW","GRN",9,11.5,2.3,-0.22,0],[3,"Putt","GRN","HOLE",2,2.3,0,0.59,0]]},{"h":3,"par":4,"y":413,"s":4,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","RGH",301,412.7,116.1,0.31,0],[2,"App","RGH","RGH",107,116.1,11.5,-0.11,0],[3,"ARG","RGH","GRN",11,11.5,1.4,0.25,0],[4,"Putt","GRN","HOLE",1,1.4,0,0.25,0]]},{"h":4,"par":3,"y":148,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",139,148.3,9.4,0.23,0],[2,"Putt","GRN","GRN",9,9.4,0.4,0.08,0],[3,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":5,"par":4,"y":365,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",260,364.6,108.0,0.09,0],[2,"App","RGH","GRN",97,108.0,11.7,0.22,0],[3,"Putt","GRN","GRN",10,11.7,1.6,-0.22,0],[4,"Putt","GRN","GRN",1,1.6,0.4,-0.62,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":6,"par":5,"y":490,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",272,489.6,218.3,0.28,0],[2,"App","FW","RGH",210,218.3,9.0,0.42,0],[3,"ARG","RGH","GRN",8,9.0,1.4,0.17,0],[4,"Putt","GRN","GRN",2,1.4,0.4,-0.75,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":7,"par":4,"y":325,"s":5,"pen":0,"pu":2,"f":"C","sh":[[1,"Tee","TEE","RGH",302,324.8,43.3,0.32,0],[2,"ARG","RGH","BKR",31,43.3,13.1,-0.76,0],[3,"ARG","BKR","GRN",16,13.1,3.6,-0.01,0],[4,"Putt","GRN","GRN",4,3.6,0.5,-0.21,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":8,"par":4,"y":351,"s":4,"pen":1,"pu":1,"f":"","sh":[[1,"Tee","TEE","PEN+1",272,350.7,88.5,-0.88,1],[3,"App","RGH","GRN",101,103.1,1.7,0.99,0],[4,"Putt","GRN","HOLE",2,1.7,0,0.38,0]]},{"h":9,"par":4,"y":377,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",322,376.6,56.6,0.39,0],[2,"App","RGH","BKR",44,56.6,13.1,-0.68,0],[3,"ARG","BKR","GRN",18,13.1,5.0,-0.13,0],[4,"Putt","GRN","GRN",4,5.0,0.5,-0.12,0],[5,"Putt","GRN","HOLE",1,0.5,0,0.03,0]]},{"h":10,"par":5,"y":507,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",275,506.6,256.4,0.13,0],[2,"App","RGH","FW",132,256.4,125.6,-0.21,0],[3,"App","FW","GRN",118,125.6,7.5,0.28,0],[4,"Putt","GRN","GRN",7,7.5,0.5,0.02,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":11,"par":4,"y":361,"s":5,"pen":0,"pu":2,"f":"S","sh":[[1,"Tee","TEE","RGH",187,360.9,153.3,-0.08,0],[2,"App","RGH","FW",148,153.3,10.6,0.16,0],[3,"ARG","FW","GRN",8,10.6,2.9,-0.34,0],[4,"Putt","GRN","GRN",3,2.9,0.4,-0.29,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":12,"par":4,"y":320,"s":5,"pen":0,"pu":3,"f":"3S","sh":[[1,"Tee","TEE","RGH",325,319.5,22.7,0.61,0],[2,"ARG","RGH","GRN",28,22.7,6.4,-0.25,0],[3,"Putt","GRN","GRN",6,6.4,0.7,-0.05,0],[4,"Putt","GRN","GRN",1,0.7,0.5,-0.97,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":13,"par":3,"y":117,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",118,117.4,6.9,0.23,0],[2,"Putt","GRN","GRN",7,6.9,0.4,0,0],[3,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":14,"par":4,"y":444,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",307,443.8,139.4,0.39,0],[2,"App","RGH","GRN",136,139.4,5.9,0.5,0],[3,"Putt","GRN","GRN",6,5.9,0.5,-0.04,0],[4,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":15,"par":3,"y":183,"s":3,"pen":0,"pu":1,"f":"","sh":[[1,"App","TEE","FW",183,182.9,8.6,0.26,0],[2,"ARG","FW","GRN",10,8.6,1.5,0.06,0],[3,"Putt","GRN","HOLE",1,1.5,0,0.25,0]]},{"h":16,"par":5,"y":476,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",285,476.2,188.2,0.29,0],[2,"App","RGH","GRN",174,188.2,16.4,0.43,0],[3,"Putt","GRN","GRN",15,16.4,1.8,-0.18,0],[4,"Putt","GRN","GRN",1,1.8,0.4,-0.51,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":17,"par":3,"y":198,"s":4,"pen":0,"pu":2,"f":"S","sh":[[1,"App","TEE","RGH",187,197.9,25.1,-0.08,0],[2,"ARG","RGH","GRN",28,25.1,3.0,0.06,0],[3,"Putt","GRN","GRN",3,3.0,0.4,-0.29,0],[4,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":18,"par":4,"y":384,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",305,384.3,71.0,0.48,0],[2,"App","FW","GRN",64,71.0,7.3,0.05,0],[3,"Putt","GRN","GRN",7,7.3,0.4,0.02,0],[4,"Putt","GRN","HOLE",0,0.4,0,0,0]]}]},{"id":"kXb6rROtdhfmF3iGUkns","date":"2025-09-20","tees":"Blue","yards":6105,"par":70,"cr":69.1,"sr":123,"type":"Tournament","total":84,"sg":{"tee":-0.36,"app":0.57,"arg":-1.28,"putt":-5.27},"diff":13.7,"ags":84,"holes":[{"h":1,"par":4,"y":418,"s":5,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","REC",278,418.2,156.5,-0.57,0],[2,"App","REC","FW",73,156.5,89.2,0.11,0],[3,"App","FW","FW",79,89.2,10.9,-0.18,0],[4,"ARG","FW","GRN",11,10.9,0.6,0.34,0],[5,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":2,"par":3,"y":174,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",180,173.6,7.0,0.5,0],[2,"Putt","GRN","GRN",7,7.0,0.4,0,0],[3,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":3,"par":4,"y":430,"s":6,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","REC",288,429.7,128.6,-0.47,0],[2,"App","REC","RGH",55,128.6,73.8,0.03,0],[3,"App","RGH","GRN",55,73.8,20.8,-0.21,0],[4,"Putt","GRN","GRN",27,20.8,5.9,-0.54,0],[5,"Putt","GRN","GRN",6,5.9,0.5,-0.04,0],[6,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":4,"par":3,"y":149,"s":4,"pen":0,"pu":3,"f":"3","sh":[[1,"App","TEE","GRN",155,148.7,6.8,0.32,0],[2,"Putt","GRN","GRN",9,6.8,1.7,-0.39,0],[3,"Putt","GRN","GRN",2,1.7,0.4,-0.62,0],[4,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":5,"par":4,"y":358,"s":5,"pen":1,"pu":1,"f":"","sh":[[1,"Tee","TEE","RGH",212,358.3,168.9,-0.17,0],[2,"App","RGH","PEN+1",75,168.9,93.5,-1.7,1],[4,"App","RGH","GRN",103,108.0,9.0,0.31,0],[5,"Putt","GRN","HOLE",9,9.0,0,1.07,0]]},{"h":6,"par":5,"y":491,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",281,491.3,222.9,0.22,0],[2,"App","RGH","RGH",76,222.9,148.8,-0.59,0],[3,"App","RGH","GRN",160,148.8,13.3,0.28,0],[4,"Putt","GRN","GRN",12,13.3,0.9,0.11,0],[5,"Putt","GRN","HOLE",1,0.9,0,0.1,0]]},{"h":7,"par":4,"y":315,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",237,315.0,82.0,0.09,0],[2,"App","RGH","FW",87,82.0,12.1,-0.15,0],[3,"ARG","FW","GRN",12,12.1,1.2,0.14,0],[4,"Putt","GRN","GRN",2,1.2,0.5,-0.75,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":8,"par":4,"y":363,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",315,363.5,58.9,0.35,0],[2,"App","RGH","GRN",54,58.9,8.0,0.08,0],[3,"Putt","GRN","GRN",8,8.0,0.4,0.04,0],[4,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":9,"par":4,"y":381,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",286,381.4,98.0,0.17,0],[2,"App","RGH","GRN",100,98.0,10.3,0.23,0],[3,"Putt","GRN","GRN",8,10.3,2.1,-0.37,0],[4,"Putt","GRN","GRN",2,2.1,0.4,-0.51,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":10,"par":5,"y":509,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","REC",317,508.5,201.9,-0.29,0],[2,"App","REC","RGH",37,201.9,165.2,-0.06,0],[3,"App","RGH","GRN",165,165.2,0.9,1.5,0],[4,"Putt","GRN","GRN",1,0.9,0.4,-0.9,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":11,"par":4,"y":361,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",216,361.0,138.9,0.11,0],[2,"App","FW","GRN",134,138.9,12.3,0.16,0],[3,"Putt","GRN","GRN",13,12.3,0.7,0.15,0],[4,"Putt","GRN","HOLE",1,0.7,0,0.03,0]]},{"h":12,"par":4,"y":322,"s":5,"pen":0,"pu":2,"f":"S","sh":[[1,"Tee","TEE","RGH",296,321.9,51.3,0.26,0],[2,"App","RGH","RGH",21,51.3,36.3,-0.84,0],[3,"ARG","RGH","GRN",32,36.3,4.7,0.03,0],[4,"Putt","GRN","GRN",5,4.7,0.5,-0.11,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":13,"par":3,"y":124,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",115,124.0,8.9,0.18,0],[2,"Putt","GRN","GRN",9,8.9,0.6,0.04,0],[3,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":14,"par":4,"y":440,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",292,440.1,165.1,0.22,0],[2,"App","RGH","GRN",171,165.1,5.6,0.65,0],[3,"Putt","GRN","GRN",5,5.6,0.7,-0.08,0],[4,"Putt","GRN","GRN",1,0.7,0.4,-0.97,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":15,"par":3,"y":170,"s":5,"pen":0,"pu":2,"f":"C","sh":[[1,"App","TEE","RGH",165,169.9,23.2,-0.27,0],[2,"ARG","RGH","FW",33,23.2,10.0,-0.61,0],[3,"ARG","FW","GRN",7,10.0,3.1,-0.37,0],[4,"Putt","GRN","GRN",3,3.1,0.4,-0.29,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":16,"par":5,"y":475,"s":7,"pen":0,"pu":2,"f":"C","sh":[[1,"Tee","TEE","REC",276,475.2,195.8,-0.47,0],[2,"App","REC","RGH",77,195.8,127.6,0.08,0],[3,"App","RGH","RGH",94,127.6,34.4,-0.48,0],[4,"ARG","RGH","FW",46,34.4,14.4,-0.54,0],[5,"ARG","FW","GRN",17,14.4,2.9,-0.27,0],[6,"Putt","GRN","GRN",3,2.9,0.4,-0.29,0],[7,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":17,"par":3,"y":148,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",152,147.6,4.3,0.45,0],[2,"Putt","GRN","GRN",4,4.3,0.5,-0.17,0],[3,"Putt","GRN","HOLE",1,0.5,0,0.03,0]]},{"h":18,"par":4,"y":373,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",287,372.9,91.6,0.19,0],[2,"App","RGH","GRN",102,91.6,10.6,0.17,0],[3,"Putt","GRN","GRN",15,10.6,4.0,-0.71,0],[4,"Putt","GRN","GRN",4,4.0,0.5,-0.16,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]}]},{"id":"O3IBxRb8x1U2QUQtUE6o","date":"2025-09-21","tees":"Blue","yards":6105,"par":70,"cr":69.1,"sr":123,"type":"Tournament","total":83,"sg":{"tee":0.5,"app":-1.86,"arg":-0.94,"putt":-2.74},"diff":12.8,"ags":83,"holes":[{"h":1,"par":4,"y":431,"s":3,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","RGH",283,430.5,152.3,0.28,0],[2,"App","RGH","GRN",150,152.3,2.0,1.0,0],[3,"Putt","GRN","HOLE",2,2.0,0,0.49,0]]},{"h":2,"par":3,"y":185,"s":4,"pen":0,"pu":2,"f":"S","sh":[[1,"App","TEE","FW",207,185.1,26.4,-0.1,0],[2,"ARG","FW","GRN",29,26.4,2.6,0.01,0],[3,"Putt","GRN","GRN",3,2.6,0.4,-0.34,0],[4,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":3,"par":4,"y":424,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",293,423.8,118.4,0.35,0],[2,"App","RGH","FW",67,118.4,52.2,-0.58,0],[3,"App","FW","GRN",57,52.2,6.9,-0.03,0],[4,"Putt","GRN","GRN",7,6.9,0.4,0,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":4,"par":3,"y":158,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","RGH",164,158.4,8.3,0,0],[2,"ARG","RGH","GRN",13,8.3,5.9,-0.57,0],[3,"Putt","GRN","GRN",6,5.9,0.4,-0.04,0],[4,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":5,"par":4,"y":366,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",227,366.5,153.8,-0.06,0],[2,"App","RGH","GRN",138,153.8,15.9,0.23,0],[3,"Putt","GRN","GRN",16,15.9,1.6,-0.08,0],[4,"Putt","GRN","HOLE",2,1.6,0,0.38,0]]},{"h":6,"par":5,"y":490,"s":5,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","RGH",279,489.9,216.4,0.27,0],[2,"App","RGH","RGH",40,216.4,177.9,-0.84,0],[3,"App","RGH","FW",114,177.9,63.9,-0.36,0],[4,"App","FW","GRN",68,63.9,4.4,0.19,0],[5,"Putt","GRN","HOLE",4,4.4,0,0.86,0]]},{"h":7,"par":4,"y":311,"s":5,"pen":0,"pu":2,"f":"C","sh":[[1,"Tee","TEE","RGH",302,311.1,23.6,0.57,0],[2,"ARG","RGH","RGH",35,23.6,12.1,-0.75,0],[3,"ARG","RGH","GRN",13,12.1,1.3,0.25,0],[4,"Putt","GRN","GRN",2,1.3,0.6,-0.78,0],[5,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":8,"par":4,"y":370,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",297,370.2,73.2,0.38,0],[2,"App","FW","GRN",77,73.2,4.3,0.25,0],[3,"Putt","GRN","GRN",5,4.3,0.5,-0.14,0],[4,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":9,"par":4,"y":392,"s":7,"pen":1,"pu":2,"f":"S","sh":[[1,"Tee","TEE","PEN+1",294,392.0,104.7,-2.02,1],[3,"App","RGH","RGH",297,388.8,99.3,0.24,0],[4,"App","RGH","RGH",83,99.3,16.5,-0.26,0],[5,"ARG","RGH","GRN",15,16.5,1.8,0.12,0],[6,"Putt","GRN","GRN",1,1.8,0.4,-0.51,0],[7,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":10,"par":5,"y":499,"s":7,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",314,498.6,194.9,0.41,0],[2,"App","RGH","FW",137,194.9,60.5,-0.24,0],[3,"App","FW","BKR",44,60.5,16.2,-0.82,0],[4,"ARG","BKR","GRN",22,16.2,6.6,-0.15,0],[5,"Putt","GRN","GRN",8,6.6,1.0,-0.11,0],[6,"Putt","GRN","GRN",1,1.0,0.5,-0.9,0],[7,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":11,"par":4,"y":373,"s":4,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","FW",213,373.4,149.8,0.13,0],[2,"App","FW","BKR",126,149.8,25.5,-0.66,0],[3,"ARG","BKR","GRN",25,25.5,2.4,0.43,0],[4,"Putt","GRN","HOLE",2,2.4,0,0.59,0]]},{"h":12,"par":4,"y":330,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",258,330.4,71.8,0.19,0],[2,"App","RGH","GRN",81,71.8,9.5,0.09,0],[3,"Putt","GRN","GRN",9,9.5,1.3,-0.17,0],[4,"Putt","GRN","HOLE",1,1.3,0,0.25,0]]},{"h":13,"par":3,"y":113,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","FW",131,113.1,17.9,-0.3,0],[2,"ARG","FW","GRN",16,17.9,1.5,0.15,0],[3,"Putt","GRN","GRN",2,1.5,0.5,-0.62,0],[4,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":14,"par":4,"y":435,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",298,435.1,136.1,0.36,0],[2,"App","RGH","GRN",143,136.1,13.6,0.21,0],[3,"Putt","GRN","GRN",14,13.6,0.7,0.19,0],[4,"Putt","GRN","HOLE",1,0.7,0,0.03,0]]},{"h":15,"par":3,"y":181,"s":3,"pen":0,"pu":2,"f":"","sh":[[1,"App","TEE","GRN",174,181.2,7.4,0.52,0],[2,"Putt","GRN","GRN",7,7.4,0.4,0.02,0],[3,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":16,"par":5,"y":482,"s":6,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","REC",276,481.6,201.7,-0.48,0],[2,"App","REC","FW",85,201.7,124.7,0.24,0],[3,"App","FW","GRN",123,124.7,11.3,0.15,0],[4,"Putt","GRN","GRN",13,11.3,1.6,-0.23,0],[5,"Putt","GRN","GRN",2,1.6,0.4,-0.62,0],[6,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":17,"par":3,"y":162,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"App","TEE","FW",129,162.0,33.3,-0.39,0],[2,"ARG","FW","GRN",24,33.3,8.9,-0.29,0],[3,"Putt","GRN","GRN",8,8.9,0.6,0.04,0],[4,"Putt","GRN","GRN",1,0.6,0.5,-0.97,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":18,"par":4,"y":364,"s":5,"pen":0,"pu":2,"f":"S","sh":[[1,"Tee","TEE","RGH",282,363.5,101.6,0.12,0],[2,"App","RGH","RGH",78,101.6,23.7,-0.4,0],[3,"ARG","RGH","GRN",28,23.7,4.7,-0.14,0],[4,"Putt","GRN","GRN",6,4.7,1.1,-0.21,0],[5,"Putt","GRN","HOLE",1,1.1,0,0.1,0]]}]},{"id":"vC3ydu9crbc8ByUyxtMj","date":"2026-03-14","tees":"Orange","yards":6492,"par":70,"cr":70.7,"sr":132,"type":"Casual","total":87,"sg":{"tee":4.38,"app":-4.01,"arg":-7.61,"putt":0.62},"diff":null,"ags":85,"holes":[{"h":1,"par":4,"y":446,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",296,445.9,170.8,0.34,0],[2,"App","FW","RGH",171,170.8,23.2,-0.22,0],[3,"ARG","RGH","GRN",19,23.2,4.8,-0.16,0],[4,"Putt","GRN","GRN",5,4.8,0.5,-0.11,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":2,"par":3,"y":212,"s":3,"pen":0,"pu":1,"f":"","sh":[[1,"App","TEE","RGH",145,211.8,81.8,-0.52,0],[2,"App","RGH","GRN",82,81.8,4.8,0.35,0],[3,"Putt","GRN","HOLE",5,4.8,0,0.89,0]]},{"h":3,"par":4,"y":426,"s":4,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","FW",306,426.3,124.7,0.44,0],[2,"App","FW","BKR",111,124.7,16.2,-0.54,0],[3,"ARG","BKR","GRN",31,16.2,15.0,-0.43,0],[4,"Putt","GRN","HOLE",15,15.0,0,1.27,0]]},{"h":4,"par":3,"y":171,"s":5,"pen":0,"pu":2,"f":"CS","sh":[[1,"App","TEE","RGH",171,170.7,22.8,-0.27,0],[2,"ARG","RGH","RGH",36,22.8,14.1,-0.82,0],[3,"ARG","RGH","GRN",19,14.1,6.9,-0.45,0],[4,"Putt","GRN","GRN",7,6.9,0.4,0,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":5,"par":4,"y":398,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",240,397.9,163.3,0.04,0],[2,"App","RGH","GRN",173,163.3,11.2,0.45,0],[3,"Putt","GRN","GRN",14,11.2,3.0,-0.56,0],[4,"Putt","GRN","HOLE",3,3.0,0,0.71,0]]},{"h":6,"par":5,"y":515,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",266,514.9,258.5,0.17,0],[2,"App","RGH","BKR",226,258.5,32.4,0,0],[3,"ARG","BKR","GRN",29,32.4,3.5,0.33,0],[4,"Putt","GRN","GRN",4,3.5,0.7,-0.24,0],[5,"Putt","GRN","HOLE",1,0.7,0,0.03,0]]},{"h":7,"par":4,"y":348,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",294,347.9,54.5,0.43,0],[2,"App","FW","GRN",59,54.5,4.9,0.08,0],[3,"Putt","GRN","GRN",5,4.9,0.6,-0.12,0],[4,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":8,"par":4,"y":402,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",295,401.7,109.0,0.26,0],[2,"App","RGH","GRN",110,109.0,6.3,0.4,0],[3,"Putt","GRN","GRN",8,6.3,1.6,-0.4,0],[4,"Putt","GRN","HOLE",2,1.6,0,0.38,0]]},{"h":9,"par":4,"y":402,"s":6,"pen":0,"pu":2,"f":"C","sh":[[1,"Tee","TEE","RGH",322,402.0,81.1,0.4,0],[2,"App","RGH","FW",67,81.1,14.5,-0.2,0],[3,"ARG","FW","RGH",40,14.5,25.8,-1.34,0],[4,"ARG","RGH","GRN",20,25.8,7.0,-0.22,0],[5,"Putt","GRN","GRN",7,7.0,0.6,-0.03,0],[6,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":10,"par":5,"y":522,"s":5,"pen":0,"pu":1,"f":"C","sh":[[1,"Tee","TEE","FW",315,521.7,182.3,0.73,0],[2,"App","FW","RGH",171,182.3,45.6,-0.45,0],[3,"ARG","RGH","RGH",24,45.6,21.7,-0.67,0],[4,"ARG","RGH","GRN",21,21.7,2.6,0.05,0],[5,"Putt","GRN","HOLE",3,2.6,0,0.66,0]]},{"h":11,"par":4,"y":389,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",221,388.6,171.8,0.06,0],[2,"App","FW","RGH",166,171.8,31.4,-0.35,0],[3,"ARG","RGH","GRN",26,31.4,5.9,-0.1,0],[4,"Putt","GRN","GRN",7,5.9,1.1,-0.14,0],[5,"Putt","GRN","HOLE",1,1.1,0,0.1,0]]},{"h":12,"par":4,"y":355,"s":6,"pen":0,"pu":1,"f":"C","sh":[[1,"Tee","TEE","RGH",287,355.2,89.8,0.13,0],[2,"App","RGH","RGH",43,89.8,46.9,-0.75,0],[3,"ARG","RGH","BKR",23,46.9,24.2,-0.95,0],[4,"ARG","BKR","RGH",36,24.2,12.2,-0.5,0],[5,"ARG","RGH","GRN",14,12.2,2.6,-0.16,0],[6,"Putt","GRN","HOLE",3,2.6,0,0.66,0]]},{"h":13,"par":3,"y":131,"s":4,"pen":0,"pu":3,"f":"3","sh":[[1,"App","TEE","GRN",137,131.1,7.4,0.24,0],[2,"Putt","GRN","GRN",9,7.4,1.5,-0.36,0],[3,"Putt","GRN","GRN",2,1.5,0.7,-0.65,0],[4,"Putt","GRN","HOLE",1,0.7,0,0.03,0]]},{"h":14,"par":4,"y":452,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",312,452.5,147.2,0.4,0],[2,"App","RGH","FW",124,147.2,23.2,-0.15,0],[3,"ARG","FW","GRN",23,23.2,2.7,-0.04,0],[4,"Putt","GRN","GRN",3,2.7,0.5,-0.34,0],[5,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":15,"par":3,"y":204,"s":6,"pen":0,"pu":2,"f":"C","sh":[[1,"App","TEE","RGH",109,204.2,99.1,-0.66,0],[2,"App","RGH","RGH",108,99.1,9.1,-0.07,0],[3,"ARG","RGH","RGH",34,9.1,25.3,-1.35,0],[4,"ARG","RGH","GRN",21,25.3,5.0,-0.14,0],[5,"Putt","GRN","GRN",5,5.0,0.6,-0.12,0],[6,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":16,"par":5,"y":520,"s":6,"pen":1,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",328,519.6,191.3,0.66,0],[2,"App","FW","PEN+1",213,191.3,22.1,-0.95,1],[4,"ARG","RGH","GRN",19,17.4,5.0,-0.3,0],[5,"Putt","GRN","GRN",5,5.0,0.7,-0.12,0],[6,"Putt","GRN","HOLE",1,0.7,0,0.03,0]]},{"h":17,"par":3,"y":242,"s":6,"pen":1,"pu":3,"f":"3S","sh":[[1,"App","TEE","PEN+1",230,241.7,30.0,-0.89,1],[3,"ARG","RGH","GRN",17,28.5,12.0,-0.36,0],[4,"Putt","GRN","GRN",14,12.0,1.7,-0.21,0],[5,"Putt","GRN","GRN",3,1.7,0.9,-0.72,0],[6,"Putt","GRN","HOLE",1,0.9,0,0.1,0]]},{"h":18,"par":4,"y":396,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","FW",277,395.7,116.7,0.32,0],[2,"App","FW","GRN",116,116.7,3.6,0.49,0],[3,"Putt","GRN","GRN",3,3.6,0.6,-0.24,0],[4,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]}],"diffEst":12.2},{"id":"bTqaGR9RLFjqrYS7mhdi","date":"2026-03-28","tees":"Orange","yards":6492,"par":70,"cr":70.7,"sr":132,"type":"Casual","total":87,"sg":{"tee":-1.83,"app":-1.75,"arg":1.09,"putt":-3.88},"diff":13.1,"ags":86,"holes":[{"h":1,"par":4,"y":453,"s":6,"pen":0,"pu":2,"f":"C","sh":[[1,"Tee","TEE","FW",270,452.9,207.3,0.15,0],[2,"App","FW","RGH",186,207.3,27.2,-0.05,0],[3,"ARG","RGH","FW",14,27.2,13.2,-0.62,0],[4,"ARG","FW","GRN",10,13.2,2.8,-0.24,0],[5,"Putt","GRN","GRN",3,2.8,0.4,-0.34,0],[6,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":2,"par":3,"y":205,"s":3,"pen":0,"pu":1,"f":"","sh":[[1,"App","TEE","FW",186,205.2,19.2,0.14,0],[2,"ARG","FW","GRN",19,19.2,0.6,0.52,0],[3,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":3,"par":4,"y":429,"s":5,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",283,428.6,159.2,0.2,0],[2,"App","RGH","GRN",165,159.2,17.9,0.21,0],[3,"Putt","GRN","GRN",16,17.9,2.2,-0.23,0],[4,"Putt","GRN","GRN",2,2.2,0.3,-0.41,0],[5,"Putt","GRN","HOLE",0,0.3,0,0,0]]},{"h":4,"par":3,"y":162,"s":4,"pen":0,"pu":2,"f":"S","sh":[[1,"App","TEE","FW",131,162.2,35.8,-0.42,0],[2,"ARG","FW","GRN",38,35.8,2.4,0.22,0],[3,"Putt","GRN","GRN",3,2.4,0.3,-0.41,0],[4,"Putt","GRN","HOLE",0,0.3,0,0,0]]},{"h":5,"par":4,"y":395,"s":4,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",273,394.7,126.1,0.2,0],[2,"App","RGH","GRN",119,126.1,9.6,0.31,0],[3,"Putt","GRN","GRN",11,9.6,1.7,-0.29,0],[4,"Putt","GRN","HOLE",2,1.7,0,0.38,0]]},{"h":6,"par":5,"y":512,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","RGH",250,512.2,266.4,0.1,0],[2,"App","RGH","RGH",179,266.4,87.7,-0.15,0],[3,"App","RGH","GRN",93,87.7,5.7,0.35,0],[4,"Putt","GRN","GRN",6,5.7,0.5,-0.08,0],[5,"Putt","GRN","HOLE",1,0.5,0,0.03,0]]},{"h":7,"par":4,"y":353,"s":2,"pen":0,"pu":0,"f":"S","sh":[[1,"Tee","TEE","RGH",316,352.6,48.9,0.36,0],[2,"ARG","RGH","HOLE",49,48.9,0,2.07,0]]},{"h":8,"par":4,"y":393,"s":6,"pen":1,"pu":2,"f":"","sh":[[1,"Tee","TEE","PEN+1",195,392.7,209.1,-1.22,1],[3,"App","RGH","REC",132,262.2,143.4,-1.16,0],[4,"App","REC","GRN",144,143.4,7.1,1.28,0],[5,"Putt","GRN","GRN",7,7.1,1.1,-0.1,0],[6,"Putt","GRN","HOLE",1,1.1,0,0.1,0]]},{"h":9,"par":4,"y":404,"s":4,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","FW",328,403.8,70.4,0.59,0],[2,"App","FW","FW",56,70.4,14.8,-0.39,0],[3,"ARG","FW","GRN",16,14.8,0.9,0.36,0],[4,"Putt","GRN","HOLE",1,0.9,0,0.1,0]]},{"h":10,"par":5,"y":531,"s":5,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","REC",311,530.7,201.7,-0.18,0],[2,"App","REC","RGH",103,201.7,110.7,0.16,0],[3,"App","RGH","RGH",127,110.7,17.1,-0.23,0],[4,"ARG","RGH","GRN",17,17.1,0.6,0.58,0],[5,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":11,"par":4,"y":402,"s":7,"pen":1,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",193,402.4,181.7,-0.05,0],[2,"App","RGH","PEN+1",85,181.7,97.3,-1.63,1],[4,"App","RGH","GRN",115,116.5,10.1,0.29,0],[5,"Putt","GRN","GRN",12,10.1,2.2,-0.49,0],[6,"Putt","GRN","GRN",3,2.2,0.4,-0.41,0],[7,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":12,"par":4,"y":359,"s":3,"pen":0,"pu":1,"f":"","sh":[[1,"Tee","TEE","RGH",308,358.9,64.1,0.3,0],[2,"App","RGH","GRN",60,64.1,3.7,0.36,0],[3,"Putt","GRN","HOLE",4,3.7,0,0.79,0]]},{"h":13,"par":3,"y":141,"s":4,"pen":0,"pu":2,"f":"S","sh":[[1,"App","TEE","RGH",130,140.9,36.5,-0.63,0],[2,"ARG","RGH","GRN",40,36.5,5.5,-0.01,0],[3,"Putt","GRN","GRN",6,5.5,0.6,-0.1,0],[4,"Putt","GRN","HOLE",1,0.6,0,0.03,0]]},{"h":14,"par":4,"y":457,"s":5,"pen":0,"pu":2,"f":"","sh":[[1,"Tee","TEE","REC",291,457.2,165.9,-0.42,0],[2,"App","REC","FW",123,165.9,47.6,0.37,0],[3,"App","FW","GRN",45,47.6,2.8,0.29,0],[4,"Putt","GRN","GRN",3,2.8,0.4,-0.34,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":15,"par":3,"y":196,"s":6,"pen":0,"pu":3,"f":"3","sh":[[1,"App","TEE","RGH",163,195.9,51.2,-0.43,0],[2,"App","RGH","FW",64,51.2,12.7,-0.34,0],[3,"ARG","FW","GRN",15,12.7,2.8,-0.24,0],[4,"Putt","GRN","GRN",3,2.8,0.7,-0.37,0],[5,"Putt","GRN","GRN",1,0.7,0.5,-0.97,0],[6,"Putt","GRN","HOLE",0,0.5,0,0,0]]},{"h":16,"par":5,"y":520,"s":6,"pen":0,"pu":3,"f":"3","sh":[[1,"Tee","TEE","RGH",186,520.5,344.7,-0.11,0],[2,"App","RGH","RGH",208,344.7,139.3,-0.03,0],[3,"App","RGH","GRN",130,139.3,9.7,0.37,0],[4,"Putt","GRN","GRN",10,9.7,1.0,-0.01,0],[5,"Putt","GRN","GRN",2,1.0,0.7,-0.93,0],[6,"Putt","GRN","HOLE",1,0.7,0,0.03,0]]},{"h":17,"par":3,"y":216,"s":5,"pen":0,"pu":2,"f":"C","sh":[[1,"App","TEE","RGH",207,215.6,38.1,-0.2,0],[2,"ARG","RGH","RGH",17,38.1,21.0,-0.74,0],[3,"ARG","RGH","GRN",20,21.0,1.9,0.21,0],[4,"Putt","GRN","GRN",2,1.9,0.4,-0.51,0],[5,"Putt","GRN","HOLE",0,0.4,0,0,0]]},{"h":18,"par":4,"y":395,"s":7,"pen":2,"pu":1,"f":"C","sh":[[1,"Tee","TEE","PEN+2",226,395.1,153.7,-2.0,2],[3,"Tee","TEE","FW",239,395.1,142.7,0.25,0],[4,"App","FW","RGH",143,142.7,15.2,-0.22,0],[5,"ARG","RGH","RGH",26,15.2,11.0,-0.91,0],[6,"ARG","RGH","GRN",13,11.0,2.3,-0.11,0],[7,"Putt","GRN","HOLE",2,2.3,0,0.59,0]]}]}],"notes":{},"form":[{"d":"2025-05-05","s":87,"par":72,"c":"Silo/Sleeping Indian-West Woods Golf Club","sg":[2.1,-3.1,-0.8,-4.3]},{"d":"2025-05-12","s":86,"par":72,"c":"Walnut Creek Golf Preserve","sg":[0.8,-0.3,-2.0,-2.3]},{"d":"2025-05-18","s":88,"par":72,"c":"Legacy Ridge Golf Course at Westminster","sg":[-0.7,-4.3,-0.3,0.2]},{"d":"2025-05-22","s":83,"par":72,"c":"Walnut Creek Golf Preserve","sg":[2.0,0.2,-3.2,0.2]},{"d":"2025-05-24","s":85,"par":72,"c":"Overland Golf Course","sg":[4.6,-2.8,-3.6,-2.6]},{"d":"2025-05-26","s":88,"par":70,"c":"Willis Case Golf Course","sg":[2.0,-2.1,-4.2,-4.4]},{"d":"2025-05-28","s":82,"par":72,"c":"Cottonwood/Silo-West Woods Golf Club","sg":[2.0,-2.3,-0.9,0.2]},{"d":"2025-05-31","s":80,"par":72,"c":"Gold-Golf Courses at Hyland Hills","sg":[2.4,0.8,-0.1,-1.8]},{"d":"2025-06-01","s":79,"par":72,"c":"Legacy Ridge Golf Course at Westminster","sg":[2.9,0.0,0.8,-3.0]},{"d":"2025-06-04","s":89,"par":72,"c":"Ute Creek Golf Course","sg":[2.5,-7.1,-0.2,-2.6]},{"d":"2025-06-07","s":82,"par":70,"c":"Denver City Park Golf Course","sg":[2.5,-3.8,-1.0,-1.9]},{"d":"2025-06-16","s":74,"par":72,"c":"Walnut Creek Golf Preserve","sg":[1.3,1.1,1.0,2.4]},{"d":"2025-06-21","s":83,"par":72,"c":"18 - Broken Tee Golf Course","sg":[3.8,-3.3,-1.9,-2.6]},{"d":"2025-06-25","s":87,"par":70,"c":"Denver City Park Golf Course","sg":[0.6,-3.4,-2.2,-3.8]},{"d":"2025-06-28","s":77,"par":70,"c":"Denver City Park Golf Course","sg":[2.8,-1.2,0.4,-0.5]},{"d":"2025-06-29","s":76,"par":70,"c":"Denver City Park Golf Course","sg":[3.3,2.6,-2.5,-1.6]},{"d":"2025-07-03","s":78,"par":72,"c":"Legacy Ridge Golf Course at Westminster","sg":[1.5,2.2,0.0,1.1]},{"d":"2025-07-05","s":85,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[2.0,-0.5,0.2,-3.7]},{"d":"2025-07-08","s":83,"par":72,"c":"Dunes - Riverdale Golf Courses","sg":[3.4,0.9,-2.9,-2.1]},{"d":"2025-07-10","s":90,"par":72,"c":"Walnut Creek Golf Preserve","sg":[-0.3,-0.8,-2.7,-3.4]},{"d":"2025-07-18","s":82,"par":72,"c":"Dunes - Riverdale Golf Courses","sg":[4.1,1.3,-1.9,-3.0]},{"d":"2025-07-20","s":91,"par":72,"c":"Legacy Ridge Golf Course at Westminster","sg":[-1.6,1.6,-3.3,-3.9]},{"d":"2025-07-22","s":84,"par":72,"c":"Dunes - Riverdale Golf Courses","sg":[3.1,1.0,-0.7,-5.2]},{"d":"2025-08-01","s":85,"par":72,"c":"Dunes - Riverdale Golf Courses","sg":[1.4,-1.0,-1.3,-1.9]},{"d":"2025-08-10","s":89,"par":72,"c":"Walnut Creek Golf Preserve","sg":[-4.0,2.1,-1.4,-5.4]},{"d":"2025-09-01","s":83,"par":70,"c":"Meadow Hills Golf Course","sg":[4.3,-1.7,-5.0,-2.5]},{"d":"2025-09-03","s":81,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[1.5,2.0,-2.1,-0.3]},{"d":"2025-09-12","s":77,"par":70,"c":"Meadow Hills Golf Course","sg":[2.5,2.7,-1.5,-2.6]},{"d":"2025-09-20","s":84,"par":70,"c":"Meadow Hills Golf Course","sg":[-0.4,0.6,-1.3,-5.3]},{"d":"2025-09-21","s":83,"par":70,"c":"Meadow Hills Golf Course","sg":[0.5,-1.9,-0.9,-2.7]},{"d":"2025-09-25","s":88,"par":72,"c":"Walnut Creek Golf Preserve","sg":[1.5,-3.3,-2.6,-0.9]},{"d":"2025-09-29","s":86,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[-0.1,0.1,-0.6,-2.5]},{"d":"2025-10-04","s":90,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[-1.2,-2.3,-2.2,-1.8]},{"d":"2025-10-12","s":88,"par":72,"c":"Fossil Trace Golf Club","sg":[-2.9,2.2,-1.3,-5.9]},{"d":"2025-10-27","s":86,"par":72,"c":"Dunes - Riverdale Golf Courses","sg":[-2.5,0.3,-0.7,-1.4]},{"d":"2025-11-04","s":78,"par":72,"c":"Silo/Sleeping Indian-West Woods Golf Club","sg":[3.5,0.3,0.8,-1.3]},{"d":"2025-11-23","s":85,"par":72,"c":"Silo/Sleeping Indian-West Woods Golf Club","sg":[0.7,0.7,0.4,-5.1]},{"d":"2025-11-28","s":88,"par":72,"c":"Dunes - Riverdale Golf Courses","sg":[-1.2,-2.6,0.3,-1.9]},{"d":"2026-01-04","s":81,"par":72,"c":"Championship - Foothills Golf Course","sg":[2.0,-0.2,-0.3,-2.4]},{"d":"2026-01-18","s":86,"par":72,"c":"Walnut Creek Golf Preserve","sg":[-1.5,-0.5,-0.7,-0.0]},{"d":"2026-01-31","s":83,"par":72,"c":"Overland Golf Course","sg":[1.5,-3.0,-0.0,-0.9]},{"d":"2026-02-08","s":83,"par":71,"c":"Dunes - Riverdale Golf Courses","sg":[3.0,-2.9,-0.3,-0.8]},{"d":"2026-02-15","s":89,"par":72,"c":"Ute Creek Golf Course","sg":[0.9,-1.5,-4,-2.8]},{"d":"2026-02-28","s":88,"par":72,"c":"Legacy Ridge Golf Course at Westminster","sg":[-1.7,-2.3,-1.0,-3.4]},{"d":"2026-03-14","s":87,"par":70,"c":"Meadow Hills Golf Course","sg":[4.4,-4.0,-7.6,0.6]},{"d":"2026-03-28","s":87,"par":70,"c":"Meadow Hills Golf Course","sg":[-1.8,-1.7,1.1,-3.9]},{"d":"2026-04-11","s":83,"par":71,"c":"Applewood Golf Course","sg":[4.2,-1.7,-4.5,-3.1]},{"d":"2026-04-13","s":84,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[1.4,-3.1,-2.0,2.2]},{"d":"2026-04-19","s":84,"par":72,"c":"Walnut Creek Golf Preserve","sg":[3.2,-2.8,-1.7,-0.5]},{"d":"2026-05-03","s":84,"par":72,"c":"Gold - Golf Courses at Hyland Hills","sg":[0.3,0.1,0.8,-4.1]},{"d":"2026-05-04","s":89,"par":72,"c":"Walnut Creek Golf Preserve","sg":[1.4,-2.8,-4.0,-1.3]},{"d":"2026-05-20","s":88,"par":72,"c":"Ute Creek Golf Course","sg":[-0.7,-7.0,0.6,0.5]},{"d":"2026-05-23","s":82,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[2.7,2.4,-1.9,-2.9]},{"d":"2026-06-07","s":89,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[1.6,-2.8,-0.4,-5.5]},{"d":"2026-06-28","s":89,"par":72,"c":"Meadows Golf Club","sg":[2.6,-3.0,-3.4,-2.8]},{"d":"2026-07-03","s":88,"par":72,"c":"Sleeping Indian/Cottonwood-West Woods Golf Club","sg":[-0.3,-1.9,-4.1,1.2]},{"d":"2026-07-12","s":78,"par":72,"c":"Championship - Foothills Golf Course","sg":[3.4,-2.4,0.7,1.0]},{"d":"2026-07-19","s":84,"par":72,"c":"Meadows Golf Club","sg":[6.2,-0.6,-1.7,-4.7]},{"d":"2026-07-25","s":74,"par":70,"c":"Denver City Park Golf Course","sg":[3.0,2.1,-1.0,0.4]},{"d":"2026-07-26","s":76,"par":70,"c":"Denver City Park Golf Course","sg":[3.4,-3.8,0.5,1.7]},{"d":"2026-07-30","s":90,"par":72,"c":"Mountain & Lake - Pinery Country Club","sg":[1.1,-3.3,-2.4,-2.9]},{"d":"2026-08-08","s":92,"par":72,"c":"Legacy Ridge Golf Course at Westminster","sg":[0.4,-2.7,-1.7,-4.1]},{"d":"2026-08-16","s":85,"par":72,"c":"Championship - Foothills Golf Course","sg":[-0.3,0.4,-1.5,-1.6]},{"d":"2026-08-20","s":84,"par":72,"c":"Dunes - Riverdale Golf Courses","sg":[2.3,0.7,-2.3,-1.6]},{"d":"2026-08-23","s":84,"par":72,"c":"Murphy Creek Golf Course","sg":[2.2,-0.4,-0.3,-1.4]},{"d":"2026-08-29","s":83,"par":72,"c":"Aurora Hills Golf Course","sg":[-1.4,0.3,0.8,-1.5]},{"d":"2026-08-31","s":87,"par":72,"c":"Walnut Creek Golf Preserve","sg":[2.6,-5.8,0.9,-1.8]},{"d":"2026-09-05","s":89,"par":72,"c":"Walnut Creek Golf Preserve","sg":[-0.5,0.2,-1.9,-4.2]},{"d":"2026-09-12","s":104,"par":72,"c":"Meadows Golf Club","sg":[-7.6,-10.9,-0.6,-2.7]}]};
+(function () {
+  const R = DATA.rounds, FORM = DATA.form;
+  const $ = (id) => document.getElementById(id);
+  const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
+  const sgn = (v, d) => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(d === undefined ? 1 : d);
+  const ft = (yd) => (yd * 3);
+  const shortDate = (d) => { const m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; const p = d.split("-"); return m[+p[1] - 1] + " " + (+p[2]) + " " + p[0].slice(2); };
+
+  /* ---------- derived ---------- */
+  const allHoles = [];
+  R.forEach(r => r.holes.forEach(h => allHoles.push({ r, h })));
+  const toPar = (h) => h.s - h.par;
+  const doubles = allHoles.filter(x => toPar(x.h) >= 2);
+  const outcome = (h) => { const d = toPar(h); return d <= -2 ? "Eagle" : d === -1 ? "Birdie" : d === 0 ? "Par" : d === 1 ? "Bogey" : d === 2 ? "Double" : "Triple+"; };
+  const counts = {}; allHoles.forEach(x => { const k = outcome(x.h); counts[k] = (counts[k] || 0) + 1; });
+
+  const sgTot = { tee: 0, app: 0, arg: 0, putt: 0 };
+  R.forEach(r => { for (const k in sgTot) sgTot[k] += r.sg[k]; });
+
+  const shots = [];
+  allHoles.forEach(({ r, h }) => h.sh.forEach(s => shots.push({
+    r, h, n: s[0], cat: s[1], sl: s[2], el: s[3], dist: s[4], from: s[5], to: s[6], sg: s[7], pen: s[8]
+  })));
+
+  /* ---------- tooltip ---------- */
+  const tip = $("tip");
+  function showTip(ev, html) {
+    tip.innerHTML = html; tip.dataset.on = "1";
+    const r = tip.getBoundingClientRect();
+    let x = ev.clientX + 14, y = ev.clientY + 14;
+    if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - 14;
+    if (y + r.height > innerHeight - 8) y = ev.clientY - r.height - 14;
+    tip.style.left = Math.max(8, x) + "px"; tip.style.top = Math.max(8, y) + "px";
+  }
+  const hideTip = () => { delete tip.dataset.on; };
+  function bind(node, html) {
+    node.classList.add("tipable");
+    if (!node.hasAttribute("tabindex")) node.tabIndex = 0;
+    const atNode = () => { const b = node.getBoundingClientRect(); return { clientX: b.left + b.width / 2, clientY: b.bottom }; };
+    node.addEventListener("mousemove", e => showTip(e, html));
+    node.addEventListener("mouseleave", hideTip);
+    node.addEventListener("click", e => showTip(e, html));
+    node.addEventListener("focus", () => showTip(atNode(), html));
+    node.addEventListener("blur", hideTip);
+    node.addEventListener("keydown", e => { if (e.key === "Escape") { hideTip(); node.blur(); } });
+  }
+  document.addEventListener("click", e => { if (!e.target.closest(".tipable")) hideTip(); });
+
+  /* ---------- masthead meta ---------- */
+  (function () {
+    const dates = R.map(r => r.date).sort();
+    const longDate = (d) => { const p = d.split("-"); return shortDate(d).replace(/ (\d\d)$/, ", 20$1"); };
+    $("mmScope").textContent = "Aurora, CO · par 70 · " + R.length + " rounds, " + allHoles.length +
+      " holes, " + shots.length + " shots";
+    $("mmRange").textContent = longDate(dates[0]) + " - " + longDate(dates[dates.length - 1]);
+  })();
+
+  /* ---------- 01 rail ---------- */
+  const avg = R.reduce((a, r) => a + r.total, 0) / R.length;
+  const blue = R.filter(r => r.tees === "Blue");
+  const blueAvg = blue.reduce((a, r) => a + r.total, 0) / blue.length;
+  const pens = shots.filter(s => s.pen > 0);
+  const penStrokes = pens.reduce((a, s) => a + s.pen, 0);
+  const putts = shots.filter(s => s.cat === "Putt");
+  const threes = allHoles.filter(x => x.h.f.indexOf("3") >= 0);
+  const overPar = R.reduce((a, r) => a + r.total - r.par, 0);
+  const parOrBetter = allHoles.filter(x => toPar(x.h) <= 0).length;
+  const pct = (n) => Math.round(n / allHoles.length * 100) + "%";
+  const per = (n) => (n / R.length).toFixed(1) + " per round";
+  const railItems = [
+    [avg.toFixed(1), "Scoring average", R.length + " rounds · " + sgn(overPar / R.length) + " to par", ""],
+    [blueAvg.toFixed(2).replace(/0$/, ""), "Blue tees only", blue.length + " rounds · the championship setup", ""],
+    [String(doubles.length), "Holes double or worse", pct(doubles.length) + " of holes · " + per(doubles.length), "neg"],
+    [String(parOrBetter), "Holes par or better", pct(parOrBetter) + " · " + (counts.Eagle || 0) + " eagle, " +
+      (counts.Birdie || 0) + " birdies, " + (counts.Par || 0) + " pars", "pos"],
+    [sgn(sgTot.tee), "Strokes gained, tee", "over " + R.length + " rounds vs a 5-index", "pos"],
+    [sgn(sgTot.arg + sgTot.putt), "Short game + putting", "over " + R.length + " rounds vs a 5-index", "neg"]
+  ];
+  const rail = $("rail");
+  railItems.forEach(([n, l, s, c]) => {
+    const d = el("div", "stat");
+    d.appendChild(el("div", "n " + c, n));
+    d.appendChild(el("div", "l", l));
+    d.appendChild(el("div", "s", s));
+    rail.appendChild(d);
+  });
+
+  /* ---------- 02 rounds table ---------- */
+  (function () {
+    const t = $("tblRounds");
+    t.innerHTML = "<thead><tr><th>Date</th><th>Type</th><th>Tees</th><th>Yds</th><th>Rating</th>" +
+      "<th>Score</th><th>To par</th><th>Raw diff</th><th>Tee</th><th>App</th><th>Short</th><th>Putt</th><th>Total SG</th></tr></thead>";
+    const tb = el("tbody");
+    R.forEach(r => {
+      const tot = r.sg.tee + r.sg.app + r.sg.arg + r.sg.putt;
+      const diff = ((113 / r.sr) * (r.total - r.cr)).toFixed(1);
+      const tr = el("tr");
+      tr.innerHTML = "<td>" + shortDate(r.date) + "</td><td class='sub'>" + r.type + "</td><td>" + r.tees +
+        "</td><td>" + r.yards + "</td><td class='sub'>" + r.cr.toFixed(1) + "/" + r.sr + "</td><td><b>" + r.total +
+        "</b></td><td>" + sgn(r.total - r.par, 0) + "</td><td>" + diff + "</td>" +
+        ["tee", "app", "arg", "putt"].map(k => "<td class='" + (r.sg[k] >= 0 ? "pos" : "neg") + "'>" + sgn(r.sg[k]) + "</td>").join("") +
+        "<td class='" + (tot >= 0 ? "pos" : "neg") + "'><b>" + sgn(tot) + "</b></td>";
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    const tf = el("tfoot");
+    tf.innerHTML = "<tr><td>6 rounds</td><td colspan='4'></td><td>" + R.reduce((a, r) => a + r.total, 0) +
+      "</td><td>" + sgn(R.reduce((a, r) => a + r.total - r.par, 0), 0) + "</td><td></td>" +
+      ["tee", "app", "arg", "putt"].map(k => "<td class='" + (sgTot[k] >= 0 ? "pos" : "neg") + "'>" + sgn(sgTot[k]) + "</td>").join("") +
+      "<td class='neg'><b>" + sgn(sgTot.tee + sgTot.app + sgTot.arg + sgTot.putt) + "</b></td></tr>";
+    t.appendChild(tf);
+  })();
+
+  /* ---------- diverging bar helper ---------- */
+  function divBars(host, rows, max, fmt) {
+    host.innerHTML = "";
+    rows.forEach(row => {
+      const r = el("div", "brow");
+      r.appendChild(el("div", "blabel", row.label));
+      const track = el("div", "btrack");
+      const zero = el("div", "bzero"); zero.style.left = "50%"; track.appendChild(zero);
+      const f = el("div", "bfill");
+      const w = Math.min(50, Math.abs(row.value) / max * 50);
+      if (row.value >= 0) { f.style.left = "50%"; f.style.background = "var(--blue)"; }
+      else { f.style.right = "50%"; f.style.background = "var(--red)"; }
+      f.style.width = w + "%";
+      track.appendChild(f);
+      r.appendChild(track);
+      const v = el("div", "bval " + (row.value >= 0 ? "pos" : "neg"), (fmt || sgn)(row.value));
+      r.appendChild(v);
+      if (row.tip) bind(r, row.tip);
+      host.appendChild(r);
+    });
+  }
+
+  /* ---------- 02 SG chart ---------- */
+  (function () {
+    const rows = [];
+    const names = { tee: "Off the tee", app: "Approach", arg: "Short game", putt: "Putting" };
+    ["tee", "app", "arg", "putt"].forEach(k => {
+      rows.push({
+        label: names[k], value: +sgTot[k].toFixed(1),
+        tip: "<div class='th'>" + names[k] + " · six rounds</div>" +
+          R.map(r => "<div class='sl'><span>" + shortDate(r.date) + "</span><span>" + sgn(r.sg[k]) + "</span></div>").join("")
+      });
+    });
+    const host = $("sgChart");
+    divBars(host, rows, 20);
+    const cap = el("div", "legend", "Strokes gained by category, totalled over all six rounds. Hover or tap for the round-by-round split.");
+    host.parentNode.insertBefore(cap, host.nextSibling);
+  })();
+
+  /* ---------- 03 scoring matrix ---------- */
+  function cellClass(d) { return d <= -2 ? "n-dcirc" : d === -1 ? "n-circ" : d === 1 ? "n-sq" : d >= 2 ? "n-dsq" : ""; }
+  function cellStyle(d) {
+    if (d <= -1) return "background:var(--blue);color:#fff";
+    if (d === 0) return "background:var(--surf2)";
+    if (d === 1) return "background:color-mix(in srgb, var(--red) 13%, var(--surf2))";
+    if (d === 2) return "background:var(--red);color:#fff";
+    return "background:var(--red-d);color:#fff";
+  }
+  function holeTip(r, h) {
+    let s = "<div class='th'>" + shortDate(r.date) + " · Hole " + h.h + " · par " + h.par + " · " + h.y + " yds</div>";
+    s += "<div class='sl'><span>Score</span><span>" + h.s + " (" + sgn(h.s - h.par, 0) + ")</span></div>";
+    s += "<div class='sl'><span>Putts</span><span>" + h.pu + (h.f.indexOf("3") >= 0 ? " · three-putt" : "") + "</span></div>";
+    if (h.pen) s += "<div class='sl'><span>Penalty</span><span>+" + h.pen + "</span></div>";
+    if (h.f.indexOf("C") >= 0) s += "<div class='sl'><span>Flag</span><span>two chips</span></div>";
+    if (h.f.indexOf("S") >= 0) s += "<div class='sl'><span>Flag</span><span>short-sided</span></div>";
+    s += "<div style='height:6px'></div>";
+    h.sh.forEach(x => {
+      const isShort = x[1] === "Putt" || x[6] < 25;
+      const lv = isShort ? Math.round(ft(x[6])) + " ft" : Math.round(x[6]) + " yd";
+      s += "<div class='sl'><span>" + x[0] + " " + x[1] + " " + x[2] + "→" + x[3] + "</span><span>" +
+        (x[4] ? Math.round(x[4]) + "y · " : "") + "to " + lv + " · " + sgn(x[7], 2) + "</span></div>";
+    });
+    return s;
+  }
+  (function () {
+    const g = el("div", "mgrid");
+    g.appendChild(el("div", "mhead", ""));
+    for (let i = 1; i <= 18; i++) g.appendChild(el("div", "mhead", String(i)));
+    g.appendChild(el("div", "mhead", "Tot"));
+    g.appendChild(el("div", "mrow-label", "par"));
+    R[0].holes.forEach(h => g.appendChild(el("div", "mhead", String(h.par))));
+    g.appendChild(el("div", "mhead", "70"));
+    R.forEach(r => {
+      g.appendChild(el("div", "mrow-label", shortDate(r.date) + (r.type === "Tournament" ? " ▸" : "")));
+      r.holes.forEach(h => {
+        const d = h.s - h.par;
+        const c = el("div", "mcell " + cellClass(d), String(h.s));
+        c.setAttribute("style", cellStyle(d));
+        bind(c, holeTip(r, h));
+        g.appendChild(c);
+      });
+      g.appendChild(el("div", "mtot", r.total));
+    });
+    $("mx").appendChild(g);
+  })();
+
+  /* ---------- 03 hole table with filter ---------- */
+  function renderHoles(filter) {
+    const rs = R.filter(r => filter === "all" || r.tees === filter);
+    const t = $("tblHoles");
+    t.innerHTML = "<thead><tr><th>Hole</th><th>Par</th><th>Blue</th><th>Orange</th><th>Scores</th>" +
+      "<th>Avg</th><th>vs par</th><th>Best</th><th>Worst</th><th>Dbl+</th><th>3-putts</th><th>Pen</th></tr></thead>";
+    const tb = el("tbody");
+    const rows = [];
+    for (let i = 0; i < 18; i++) {
+      const hs = rs.map(r => r.holes[i]);
+      const sc = hs.map(h => h.s);
+      const par = hs[0].par;
+      const av = sc.reduce((a, b) => a + b, 0) / sc.length;
+      rows.push({
+        hole: i + 1, par,
+        yb: R.find(r => r.tees === "Blue").holes[i].y,
+        yo: R.find(r => r.tees === "Orange").holes[i].y,
+        sc, av, vp: av - par, best: Math.min(...sc), worst: Math.max(...sc),
+        dbl: sc.filter(s => s - par >= 2).length,
+        tp: hs.filter(h => h.f.indexOf("3") >= 0).length,
+        pen: hs.reduce((a, h) => a + h.pen, 0)
+      });
+    }
+    const worst = Math.max(...rows.map(r => r.vp));
+    rows.forEach(r => {
+      const tr = el("tr");
+      const shade = r.vp > 0 ? Math.min(1, r.vp / worst) : 0;
+      tr.innerHTML = "<td><b>" + r.hole + "</b></td><td class='sub'>" + r.par + "</td><td class='sub'>" + r.yb +
+        "</td><td class='sub'>" + r.yo + "</td><td class='sub'>" + r.sc.join(" ") + "</td><td>" + r.av.toFixed(2) +
+        "</td><td class='" + (r.vp > 0 ? "neg" : "pos") + "' style='font-weight:600'>" + sgn(r.vp, 2) +
+        "</td><td>" + r.best + "</td><td>" + r.worst + "</td><td>" + (r.dbl || "·") + "</td><td>" +
+        (r.tp || "·") + "</td><td>" + (r.pen || "·") + "</td>";
+      if (shade > 0.45) tr.style.background = "color-mix(in srgb, var(--red) " + Math.round(shade * 14) + "%, transparent)";
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    const tot = rows.reduce((a, r) => a + r.av, 0);
+    const parTot = rows.reduce((a, r) => a + r.par, 0);
+    const tf = el("tfoot");
+    tf.innerHTML = "<tr><td>18</td><td>" + parTot + "</td><td>" + R.find(r => r.tees === "Blue").yards +
+      "</td><td>" + R.find(r => r.tees === "Orange").yards + "</td><td class='sub'>" + rs.length +
+      " round" + (rs.length > 1 ? "s" : "") + "</td><td>" + tot.toFixed(2) + "</td><td class='" +
+      (tot > parTot ? "neg" : "pos") + "'>" + sgn(tot - parTot, 2) + "</td><td>" + rows.reduce((a, r) => a + r.best, 0) + "</td><td>" +
+      rows.reduce((a, r) => a + r.worst, 0) + "</td><td>" + rows.reduce((a, r) => a + r.dbl, 0) + "</td><td>" +
+      rows.reduce((a, r) => a + r.tp, 0) + "</td><td>" + rows.reduce((a, r) => a + r.pen, 0) + "</td></tr>";
+    t.appendChild(tf);
+  }
+  renderHoles("all");
+  [["fAll", "all"], ["fBlue", "Blue"], ["fOrange", "Orange"]].forEach(([id, v]) => {
+    $(id).addEventListener("click", () => {
+      ["fAll", "fBlue", "fOrange"].forEach(o => $(o).setAttribute("aria-pressed", o === id));
+      renderHoles(v);
+    });
+  });
+
+  /* ---------- 04 doubles ---------- */
+  (function () {
+    const tags = { "Two chips": 0, "Three-putt": 0, "Penalty": 0, "Short-sided": 0 };
+    doubles.forEach(({ h }) => {
+      if (h.f.indexOf("C") >= 0) tags["Two chips"]++;
+      if (h.f.indexOf("3") >= 0) tags["Three-putt"]++;
+      if (h.pen) tags["Penalty"]++;
+      if (h.f.indexOf("S") >= 0) tags["Short-sided"]++;
+    });
+    const host = $("causeChart");
+    const max = Math.max(...Object.values(tags));
+    Object.entries(tags).sort((a, b) => b[1] - a[1]).forEach(([k, v]) => {
+      const r = el("div", "brow");
+      r.appendChild(el("div", "blabel", k));
+      const tr = el("div", "btrack");
+      const f = el("div", "bfill"); f.style.left = "0"; f.style.width = (v / max * 100) + "%";
+      f.style.background = "var(--blue)";
+      tr.appendChild(f); r.appendChild(tr);
+      r.appendChild(el("div", "bval", v + " of 21"));
+      host.appendChild(r);
+    });
+
+    const t = $("tblDoubles");
+    t.innerHTML = "<thead><tr><th>Round</th><th>Hole</th><th>Par</th><th>Yds</th><th>Score</th><th>vs par</th><th>Putts</th><th>What happened</th></tr></thead>";
+    const tb = el("tbody");
+    doubles.forEach(({ r, h }) => {
+      const tg = [];
+      if (h.pen) tg.push("penalty +" + h.pen);
+      if (h.f.indexOf("C") >= 0) tg.push("two chips");
+      if (h.f.indexOf("3") >= 0) tg.push("three-putt");
+      if (h.f.indexOf("S") >= 0) tg.push("short-sided");
+      const tr = el("tr");
+      tr.innerHTML = "<td>" + shortDate(r.date) + "</td><td><b>" + h.h + "</b></td><td class='sub'>" + h.par +
+        "</td><td class='sub'>" + h.y + "</td><td>" + h.s + "</td><td class='neg'>" + sgn(h.s - h.par, 0) +
+        "</td><td>" + h.pu + "</td><td style='text-align:left' class='sub'>" + tg.join(" · ") + "</td>";
+      bind(tr, holeTip(r, h));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+  })();
+
+  /* ---------- 05 penalties ---------- */
+  (function () {
+    const t = $("tblPen");
+    t.innerHTML = "<thead><tr><th>Round</th><th>Hole</th><th>Par</th><th>Shot</th><th>Type</th><th>From</th><th>Strokes</th><th>SG</th><th>Hole played</th></tr></thead>";
+    const tb = el("tbody");
+    pens.forEach(s => {
+      const tr = el("tr");
+      const cat = { Tee: "Tee shot", App: "Approach", ARG: "Short game", Putt: "Putt" }[s.cat];
+      tr.innerHTML = "<td>" + shortDate(s.r.date) + "</td><td><b>" + s.h.h + "</b></td><td class='sub'>" + s.h.par +
+        "</td><td class='sub'>" + s.n + "</td><td style='text-align:left'>" + cat + "</td><td class='sub'>" + s.sl +
+        "</td><td>+" + s.pen + "</td><td class='neg'>" + sgn(s.sg, 2) + "</td><td class='neg'>" + sgn(s.h.s - s.h.par, 0) + "</td>";
+      bind(tr, holeTip(s.r, s.h));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    const tf = el("tfoot");
+    tf.innerHTML = "<tr><td>9 shots</td><td colspan='5'></td><td>+" + penStrokes + "</td><td class='neg'>" +
+      sgn(pens.reduce((a, s) => a + s.sg, 0), 2) + "</td><td class='neg'>" +
+      sgn(pens.reduce((a, s) => a + s.h.s - s.h.par, 0), 0) + "</td></tr>";
+    t.appendChild(tf);
+  })();
+
+  /* ---------- 06 putting ---------- */
+  (function () {
+    const firsts = [];
+    allHoles.forEach(({ r, h }) => {
+      const p = h.sh.filter(x => x[1] === "Putt");
+      if (p.length) firsts.push({ r, h, dist: ft(p[0][5]), leave: ft(p[0][6]), made: p[0][6] === 0, n: p.length, sg: p[0][7] });
+    });
+    const lag = firsts.filter(f => f.dist >= 20);
+    const pass = lag.filter(f => f.leave <= f.dist * 0.10).length;
+    const inside5 = putts.filter(p => ft(p.from) < 5);
+    const tpLong = threes.filter(({ h }) => ft(h.sh.filter(x => x[1] === "Putt")[0][5]) >= 20).length;
+    const items = [
+      [String(putts.length), "Putts, " + R.length + " rounds", (putts.length / R.length).toFixed(1) +
+        " per round · " + (putts.length / allHoles.length).toFixed(2) + " per hole", ""],
+      [String(threes.length), "Three-putts", (threes.length / R.length).toFixed(1) + " per round · " +
+        tpLong + " began outside 20 ft", "neg"],
+      [Math.round(pass / lag.length * 100) + "%", "Pass the 10% rule", pass + " of " + lag.length + " first putts from 20 ft+", "neg"],
+      [Math.round(inside5.filter(p => p.to === 0).length / inside5.length * 100) + "%", "Made inside 5 ft",
+        inside5.filter(p => p.to === 0).length + " of " + inside5.length, ""]
+    ];
+    const rail = $("railPutt");
+    items.forEach(([n, l, s, c]) => {
+      const d = el("div", "stat");
+      d.appendChild(el("div", "n " + c, n)); d.appendChild(el("div", "l", l)); d.appendChild(el("div", "s", s));
+      rail.appendChild(d);
+    });
+
+    const bands = [[0, 5], [5, 10], [10, 15], [15, 25], [25, 999]];
+    const host = $("puttChart");
+    const rows = bands.map(([lo, hi]) => {
+      const sub = putts.filter(p => ft(p.from) >= lo && ft(p.from) < hi);
+      const made = sub.filter(p => p.to === 0).length;
+      return { lo, hi, n: sub.length, made, rate: sub.length ? made / sub.length : 0, sg: sub.reduce((a, p) => a + p.sg, 0) };
+    });
+    rows.forEach(r => {
+      const row = el("div", "brow");
+      row.appendChild(el("div", "blabel", (r.hi === 999 ? "25 ft +" : r.lo + "–" + r.hi + " ft") + "  n=" + r.n));
+      const tr = el("div", "btrack");
+      const f = el("div", "bfill"); f.style.left = "0"; f.style.width = Math.max(r.rate * 100, r.made ? 1.2 : 0) + "%";
+      f.style.background = "var(--blue)";
+      tr.appendChild(f); row.appendChild(tr);
+      row.appendChild(el("div", "bval", Math.round(r.rate * 100) + "%"));
+      bind(row, "<div class='th'>" + (r.hi === 999 ? "25 feet and beyond" : r.lo + "–" + r.hi + " feet") + "</div>" +
+        "<div class='sl'><span>Attempts</span><span>" + r.n + "</span></div>" +
+        "<div class='sl'><span>Made</span><span>" + r.made + "</span></div>" +
+        "<div class='sl'><span>Strokes gained</span><span>" + sgn(r.sg, 2) + "</span></div>");
+      host.appendChild(row);
+    });
+    const cap = el("div", "legend", "Make rate by putt length, all " + putts.length +
+      " putts including second and third putts; bar length is the percentage. Hover or tap for attempts, makes and strokes gained.");
+    host.parentNode.insertBefore(cap, host.nextSibling);
+
+    const t = $("tblThree");
+    t.innerHTML = "<thead><tr><th>Round</th><th>Hole</th><th>Par</th><th>First putt</th><th>Leave</th><th>Putts</th><th>Hole score</th></tr></thead>";
+    const tb = el("tbody");
+    firsts.filter(f => f.n >= 3).sort((a, b) => b.dist - a.dist).forEach(f => {
+      const tr = el("tr");
+      tr.innerHTML = "<td>" + shortDate(f.r.date) + "</td><td><b>" + f.h.h + "</b></td><td class='sub'>" + f.h.par +
+        "</td><td>" + f.dist.toFixed(1) + " ft</td><td>" + f.leave.toFixed(1) + " ft</td><td class='neg'>" + f.n +
+        "</td><td>" + f.h.s + " (" + sgn(f.h.s - f.h.par, 0) + ")</td>";
+      bind(tr, holeTip(f.r, f.h));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+  })();
+
+  /* ---------- 07 approach + categories ---------- */
+  (function () {
+    const app = shots.filter(s => s.cat === "App");
+    const bands = [[0, 100], [100, 125], [125, 150], [150, 175], [175, 200], [200, 400]];
+    const rows = bands.map(([lo, hi]) => {
+      const sub = app.filter(s => s.from >= lo && s.from < hi);
+      const green = sub.filter(s => s.el === "GRN" || s.el === "HOLE");
+      return {
+        label: (hi === 400 ? "200 yds +" : lo + "–" + hi),
+        value: +sub.reduce((a, s) => a + s.sg, 0).toFixed(1),
+        tip: "<div class='th'>" + (hi === 400 ? "200 yards and beyond" : lo + "–" + hi + " yards") + "</div>" +
+          "<div class='sl'><span>Shots</span><span>" + sub.length + "</span></div>" +
+          "<div class='sl'><span>Hit the green</span><span>" + green.length + " (" + Math.round(green.length / sub.length * 100) + "%)</span></div>" +
+          "<div class='sl'><span>Avg proximity</span><span>" + (green.length ? Math.round(green.reduce((a, s) => a + ft(s.to), 0) / green.length) + " ft" : "—") + "</span></div>" +
+          "<div class='sl'><span>SG per shot</span><span>" + sgn(sub.reduce((a, s) => a + s.sg, 0) / sub.length, 2) + "</span></div>"
+      };
+    });
+    divBars($("appChart"), rows, 6);
+    const cap = el("div", "legend", "Approach strokes gained by distance to the hole. Hover or tap for shot counts, green-hit rate and proximity.");
+    $("appChart").parentNode.insertBefore(cap, $("appChart").nextSibling);
+
+    // category summary table
+    const drv = shots.filter(s => s.cat === "Tee" && s.h.par >= 4);
+    const fw = drv.filter(s => s.el === "FW").length;
+    const arg = shots.filter(s => s.cat === "ARG");
+    const argRough = arg.filter(s => s.sl === "RGH");
+    let gir = 0, scrAtt = 0, scrMade = 0;
+    allHoles.forEach(({ h }) => {
+      const reg = h.par - 2;
+      const on = h.sh.some(x => x[0] <= reg && (x[3] === "GRN" || x[3] === "HOLE"));
+      if (on) gir++; else { scrAtt++; if (h.s <= h.par) scrMade++; }
+    });
+    const dists = drv.map(s => s.dist).filter(Boolean).sort((a, b) => a - b);
+    const rowsT = [
+      ["Fairways hit", fw + " of " + drv.length, Math.round(fw / drv.length * 100) + "%", sgn(sgTot.tee), "Median drive " + dists[Math.floor(dists.length / 2)] + " yds"],
+      ["Greens in regulation", gir + " of " + allHoles.length, Math.round(gir / allHoles.length * 100) + "%", sgn(sgTot.app),
+        shots.filter(s => s.cat === "App").length + " approach shots"],
+      ["Scrambling", scrMade + " of " + scrAtt, Math.round(scrMade / scrAtt * 100) + "%", sgn(sgTot.arg),
+        arg.length + " short-game shots, " + argRough.filter(s => s.el !== "GRN" && s.el !== "HOLE").length +
+        " of " + argRough.length + " from rough missed the green"],
+      ["Putts per hole", putts.length + " of " + allHoles.length, (putts.length / allHoles.length).toFixed(2), sgn(sgTot.putt),
+        threes.length + " three-putts"]
+    ];
+    const t = $("tblCat");
+    t.innerHTML = "<thead><tr><th>Measure</th><th>Count</th><th>Rate</th><th>SG, 6 rounds</th><th>Note</th></tr></thead>";
+    const tb = el("tbody");
+    rowsT.forEach(r => {
+      const tr = el("tr");
+      tr.innerHTML = "<td>" + r[0] + "</td><td class='sub'>" + r[1] + "</td><td><b>" + r[2] + "</b></td><td class='" +
+        (r[3][0] === "+" ? "pos" : "neg") + "'>" + r[3] + "</td><td style='text-align:left' class='sub'>" + r[4] + "</td>";
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+  })();
+
+  /* ---------- 08 composite ---------- */
+  (function () {
+    const g = el("div", "mgrid");
+    g.appendChild(el("div", "mhead", ""));
+    for (let i = 1; i <= 18; i++) g.appendChild(el("div", "mhead", String(i)));
+    g.appendChild(el("div", "mhead", "Tot"));
+    g.appendChild(el("div", "mrow-label", "par"));
+    R[0].holes.forEach(h => g.appendChild(el("div", "mhead", String(h.par))));
+    g.appendChild(el("div", "mhead", "70"));
+    [["Best ever", Math.min], ["Worst ever", Math.max]].forEach(([name, fn]) => {
+      g.appendChild(el("div", "mrow-label", name));
+      let tot = 0;
+      for (let i = 0; i < 18; i++) {
+        const par = R[0].holes[i].par;
+        const scores = R.map(r => r.holes[i].s);
+        const v = fn(...scores);
+        tot += v;
+        const who = R.filter(r => r.holes[i].s === v).map(r => shortDate(r.date));
+        const d = v - par;
+        const c = el("div", "mcell " + cellClass(d), String(v));
+        c.setAttribute("style", cellStyle(d));
+        bind(c, "<div class='th'>Hole " + (i + 1) + " · par " + par + "</div>" +
+          "<div class='sl'><span>" + name + "</span><span>" + v + " (" + sgn(d, 0) + ")</span></div>" +
+          "<div class='sl'><span>Rounds</span><span>" + who.join(", ") + "</span></div>" +
+          "<div class='sl'><span>All six</span><span>" + scores.join(" ") + "</span></div>");
+        g.appendChild(c);
+      }
+      g.appendChild(el("div", "mtot", tot + " (" + sgn(tot - 70, 0) + ")"));
+    });
+    $("mxComposite").appendChild(g);
+  })();
+
+  /* ---------- 09 shots ---------- */
+  (function () {
+    const sorted = shots.slice().sort((a, b) => b.sg - a.sg);
+    const CATN = { Tee: "Tee shot", App: "Approach", ARG: "Short game", Putt: "Putt" };
+    const LIEN = { TEE: "tee", FW: "fairway", RGH: "rough", DEEP: "deep rough", BKR: "bunker", GRN: "green", HOLE: "the hole", REC: "recovery", "PEN+1": "a penalty area", "PEN+2": "a penalty area" };
+    function card(s) {
+      const c = el("div", "card");
+      const top = el("div", "top");
+      top.appendChild(el("div", "sg " + (s.sg >= 0 ? "pos" : "neg"), sgn(s.sg, 2)));
+      top.appendChild(el("div", "where", shortDate(s.r.date) + " · H" + s.h.h + " par " + s.h.par));
+      c.appendChild(top);
+      const near = (v) => v < 25 ? Math.round(ft(v)) + " ft" : Math.round(v) + " yds";
+      const NOUN = { Tee: "drive", App: "approach", ARG: "pitch", Putt: "putt" };
+      // a tee shot is already "from the tee"; saying it twice reads badly
+      const lie = s.cat === "Tee" ? "" : " from the " + LIEN[s.sl];
+      let txt;
+      if (s.cat === "Putt") {
+        txt = (s.el === "HOLE" ? "Holed from " + Math.round(ft(s.from)) + " ft" : "Missed from " + Math.round(ft(s.from)) + " ft, " + Math.round(ft(s.to)) + " ft left");
+      } else if (s.el === "HOLE") {
+        txt = "Holed a " + Math.round(s.dist) + "-yard " + NOUN[s.cat] + lie;
+      } else if (String(s.el).indexOf("PEN") === 0) {
+        txt = CATN[s.cat] + lie + " into a penalty area, " + Math.round(s.dist) + " yds";
+      } else {
+        txt = CATN[s.cat] + lie + ", " + Math.round(s.dist) + " yds to " + LIEN[s.el] + " — " + near(s.to) + " away";
+      }
+      c.appendChild(el("div", "what", txt));
+      c.appendChild(el("div", "where", "hole played " + sgn(s.h.s - s.h.par, 0)));
+      bind(c, holeTip(s.r, s.h));
+      return c;
+    }
+    const GOOD = 0.5, BAD = -0.5;
+    const PLURAL = { Tee: "tee shots", App: "approach shots", ARG: "short-game shots", Putt: "putts" };
+    function renderTape(cat) {
+      const pool = cat === "all" ? sorted : sorted.filter(s => s.cat === cat);
+      const best = pool.filter(s => s.sg >= GOOD);
+      const worst = pool.filter(s => s.sg <= BAD).slice().reverse();
+      const fill = (host, list, empty) => {
+        const h = $(host); h.innerHTML = "";
+        if (!list.length) { h.appendChild(el("div", "card", "<div class='what'>" + empty + "</div>")); return; }
+        list.forEach(s => h.appendChild(card(s)));
+      };
+      $("bestHead").textContent = "Gained half a stroke or more · " + best.length;
+      $("worstHead").textContent = "Cost half a stroke or more · " + worst.length;
+      fill("bestShots", best, "No shot in this category gained half a stroke.");
+      fill("worstShots", worst, "No shot in this category cost half a stroke.");
+      $("tapeNote").textContent = best.length + " gained and " + worst.length + " cost at least half a stroke, out of " +
+        pool.length + " " + (cat === "all" ? "tracked shots" : PLURAL[cat]) +
+        ". Hover or tap a card for the whole hole.";
+    }
+    renderTape("all");
+    const chips = [...document.querySelectorAll("[data-tape]")];
+    chips.forEach(c => c.addEventListener("click", () => {
+      chips.forEach(o => o.setAttribute("aria-pressed", o === c));
+      renderTape(c.dataset.tape);
+    }));
+  })();
+
+  /* ---------- 11 the tee sheet ----------
+     Source: Shot Pattern course preview, 2026-09-14, plus the stats PDF of the
+     last 5 rounds. ev is the preview's expected strokes gained per club from
+     that tee (driver / 3-hybrid / 4-iron); null where the preview gave none. */
+  (function () {
+    const LONG = [
+      { h: 1, par: 4, y: 433, club: "Driver", aim: "aim left-center", ev: [0.20, 0.01, -0.06], leaves: "~150",
+        note: "Pond right 250-320 sits in your right miss. The 9-iron band is good, 67% greens." },
+      { h: 3, par: 4, y: 409, club: "Driver", aim: "", ev: [0.29, 0.07, 0.01], leaves: "~110",
+        note: "Wide, no water in play. Leaves a wedge, your best band." },
+      { h: 5, par: 4, y: 363, club: "3-hybrid", aim: "", ev: [-0.18, -0.02, -0.04], leaves: "~125",
+        note: "The one hole where driver loses: it lands in the pond cluster right of the green." },
+      { h: 6, par: 5, y: 501, club: "Driver", aim: "", ev: [0.26, 0.03, -0.05], leaves: "~215",
+        note: "Wide. Lay up to 110-120, do not force a hybrid at the green." },
+      { h: 7, par: 4, y: 319, club: "Driver", aim: "", ev: [0.18, 0.02, 0.01], leaves: "0-40",
+        note: "5 of 5 past drives in play, no penalties, including a holed eagle. The one hybrid layup made bogey." },
+      { h: 8, par: 4, y: 365, club: "Driver", aim: "", ev: [0.12, -0.09, -0.16], leaves: "~80",
+        note: "Pond left 230-300, so the right bias helps here. Full 56° or 60° in." },
+      { h: 9, par: 4, y: 380, club: "Driver", aim: "", ev: [0.12, 0.04, -0.11], leaves: "~75",
+        note: "Pond center 200-270 and you carry it. The 75-100 band is 50% greens, aim center." },
+      { h: 10, par: 5, y: 494, club: "Driver", aim: "favor the left half", ev: [0.35, 0.05, null], leaves: "~180-210",
+        note: "6 of 6 drives in play at 275-317, five pars. The double came from a chunked wedge. Lay up to 110-120." },
+      { h: 11, par: 4, y: 330, club: "5-iron", aim: "short of the pond", ev: [0.34, -0.64, -0.54], leaves: "~150",
+        note: "Driver is the app's pick, but the layup leaves a 9-iron now. Six layups: 2 pars, 3 bogeys, 1 triple." },
+      { h: 12, par: 4, y: 330, club: "3-hybrid", aim: "to 230", ev: [0.19, 0.01, -0.11], leaves: "~100",
+        note: "Driver is only +0.18 better and 2 of 6 found the right trees for +2 and +3. If driver, aim the left edge." },
+      { h: 14, par: 4, y: 434, club: "Driver", aim: "", ev: [0.12, 0.00, -0.09], leaves: "~150",
+        note: "Highway and OB left, and your miss is right." },
+      { h: 16, par: 5, y: 476, club: "Driver", aim: "aim left-center", ev: [0.29, 0.05, -0.04], leaves: "~190",
+        note: "6 of 6 in play, no OB, no water. The +1.2 average came from second shots. Never a 5-iron at the green." },
+      { h: 18, par: 4, y: 365, club: "Driver", aim: "", ev: [0.10, 0.04, -0.01], leaves: "~80",
+        note: "Pond short-left 200-260 and you carry it. 56° in." }
+    ];
+    const SHORT = [
+      { h: 2, y: 177, club: "7-iron", carry: 183, ladder: [["7i", -0.16], ["5i", -0.46], ["6i", -0.60], ["4i", -0.61], ["3Hy", -0.67]],
+        note: "Front 177, center 184. Bunkers short both sides, room long. The 6i and 4i fly long-left." },
+      { h: 4, y: 146, club: "9-iron", carry: 149, ladder: [["9i", -0.23], ["PW", -0.23], ["8i", -0.85]],
+        note: "Front 146, center 152. The 8i flies the green. Bunker short-right." },
+      { h: 13, y: 123, club: "PW, smooth", carry: 134, ladder: [["PW", -0.31], ["50°", -0.42], ["9i", -0.55]],
+        note: "The 50° only if the pin is front: its pattern leaks short, 10 of 31. Water short-left, so err long." },
+      { h: 15, y: 177, club: "7-iron", carry: 183, ladder: [["7i", -0.18], ["6i", -0.42], ["5i", -0.46], ["3Hy", -0.74]],
+        note: "Same shot as 2. The 6i and the hybrid go long-left over the green. Bunkers short-right." },
+      { h: 17, y: 205, club: "8-iron", carry: 173, ladder: [["4i", -0.14], ["5i", -0.15], ["3Hy", -0.27]],
+        note: "8-iron if it plays 160-180 as it did in Sep 2025, 7-iron only if the tee is back. Past: par with a 4i, bogeys with a 5i, double with a 7i, triple with the hybrid in the water. Bogey is acceptable." }
+    ];
+    const CLUBS = [["4i", 229], ["6i", 204], ["7i", 183], ["8i", 173], ["9i", 149], ["PW", 134], ["50°", 118], ["56°", 97], ["60°", 69]];
+
+    [["10", "Holes to hit driver", "of the 13 par 4s and 5s", "pos"],
+     ["3", "Holes to club down", "5, 11 and 12", ""],
+     ["23", "Driver swings on 7, 10, 12, 16", "0 penalty strokes, 2 tree lies", "pos"],
+     ["14%", "Driver penalty rate", "median 285, 107-yard 90% width", "neg"]
+    ].forEach(([n, l, sub2, c]) => {
+      const d = el("div", "stat");
+      d.appendChild(el("div", "n " + c, n)); d.appendChild(el("div", "l", l)); d.appendChild(el("div", "s", sub2));
+      $("railTee").appendChild(d);
+    });
+
+    const evc = (v) => v == null ? "<td class='sub'>·</td>" : "<td class='" + (v >= 0 ? "pos" : "neg") + "'>" + sgn(v, 2) + "</td>";
+    const t = $("tblTee");
+    t.innerHTML = "<thead><tr><th>Hole</th><th>Par</th><th>Card</th><th>Play</th><th>Driver</th>" +
+      "<th>3Hy</th><th>4i</th><th>Leaves</th><th>Why</th></tr></thead>";
+    const tb = el("tbody");
+    LONG.forEach(r => {
+      const tr = el("tr");
+      const best = Math.max(...r.ev.filter(v => v != null));
+      tr.innerHTML = "<td><b>" + r.h + "</b></td><td class='sub'>" + r.par + "</td><td class='sub'>" + r.y +
+        "</td><td style='text-align:left'><b>" + r.club + "</b>" + (r.aim ? "<span class='sub'>, " + r.aim + "</span>" : "") +
+        "</td>" + r.ev.map(evc).join("") + "<td>" + r.leaves + "</td>" +
+        "<td style='text-align:left;white-space:normal' class='sub'>" + r.note + "</td>";
+      if (r.ev[0] !== best || r.club.indexOf("Driver") !== 0) tr.style.background = "color-mix(in srgb, var(--brass) 8%, transparent)";
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+
+    const t3 = $("tblPar3");
+    t3.innerHTML = "<thead><tr><th>Hole</th><th>Card</th><th>Club</th><th>Carries</th>" +
+      "<th>Club ladder, best first</th><th>Why</th></tr></thead>";
+    const tb3 = el("tbody");
+    SHORT.forEach(r => {
+      const tr = el("tr");
+      tr.innerHTML = "<td><b>" + r.h + "</b></td><td class='sub'>" + r.y + "</td><td style='text-align:left'><b>" +
+        r.club + "</b></td><td class='sub'>" + r.carry + "</td><td style='text-align:left' class='mono'>" +
+        r.ladder.map(([k, v]) => k + " " + sgn(v, 2)).join("  ·  ") + "</td>" +
+        "<td style='text-align:left;white-space:normal' class='sub'>" + r.note + "</td>";
+      tb3.appendChild(tr);
+    });
+    t3.appendChild(tb3);
+
+    const tc = $("tblClubs");
+    tc.innerHTML = "<thead><tr><th>Club</th>" + CLUBS.map(([k]) => "<th>" + k + "</th>").join("") + "</tr></thead>";
+    const tbc = el("tbody");
+    tbc.innerHTML = "<tr><td>Median total</td>" + CLUBS.map(([, v]) => "<td>" + v + "</td>").join("") + "</tr>" +
+      "<tr><td class='sub'>Gap up</td>" + CLUBS.map(([, v], i) => "<td class='sub'>" +
+        (i === CLUBS.length - 1 ? "·" : "+" + (v - CLUBS[i + 1][1])) + "</td>").join("") + "</tr>";
+    tc.appendChild(tbc);
+  })();
+
+  /* ---------- 10 form ---------- */
+  (function () {
+    const W = 1000, H = 230, P = { t: 14, r: 14, b: 30, l: 34 };
+    const vals = FORM.map(f => f.s - f.par);
+    const lo = Math.min(...vals), hi = Math.max(...vals);
+    const x = i => P.l + i * (W - P.l - P.r) / (FORM.length - 1);
+    const y = v => P.t + (hi - v) * (H - P.t - P.b) / (hi - lo);
+    let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="230" role="img" aria-label="Score relative to par for all 69 tracked rounds">';
+    [0, 10, 20, 30].forEach(g => {
+      if (g < lo || g > hi) return;
+      svg += '<line x1="' + P.l + '" x2="' + (W - P.r) + '" y1="' + y(g) + '" y2="' + y(g) + '" stroke="var(--line)" stroke-width="1"/>';
+      svg += '<text x="' + (P.l - 7) + '" y="' + (y(g) + 4) + '" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink3)">+' + g + '</text>';
+    });
+    svg += '<polyline fill="none" stroke="var(--line2)" stroke-width="1.5" points="' +
+      FORM.map((f, i) => x(i) + "," + y(f.s - f.par)).join(" ") + '"/>';
+    FORM.forEach((f, i) => {
+      const mh = f.c.indexOf("Meadow Hills") === 0;
+      svg += '<circle cx="' + x(i) + '" cy="' + y(f.s - f.par) + '" r="' + (mh ? 5 : 3) + '" fill="' +
+        (mh ? "var(--blue)" : "var(--ink3)") + '" stroke="var(--surf)" stroke-width="' + (mh ? 2 : 1) + '"><title>' +
+        f.d + " · " + f.c + " · " + f.s + " (" + sgn(f.s - f.par, 0) + ")</title></circle>";
+    });
+    ["2025-05", "2025-09", "2026-01", "2026-05", "2026-09"].forEach(m => {
+      const i = FORM.findIndex(f => f.d.slice(0, 7) >= m);
+      if (i < 0) return;
+      svg += '<text x="' + x(i) + '" y="' + (H - 8) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink3)">' + m + '</text>';
+    });
+    svg += '</svg>';
+    const host = $("formChart");
+    host.style.marginTop = "22px";
+    host.innerHTML = svg;
+    host.appendChild(el("div", "legend", "Every 18-hole round ShotPattern has tracked, scored against par. Larger blue dots are Meadow Hills. Hover a dot for the round."));
+
+    const windows = [
+      ["Aug–Sep 2025", "2025-08-01", "2025-10-01"],
+      ["Oct 2025–Apr 2026", "2025-10-01", "2026-05-01"],
+      ["May–Jun 2026", "2026-05-01", "2026-07-01"],
+      ["July 2026", "2026-07-01", "2026-08-01"],
+      ["Aug–Sep 2026", "2026-08-01", "2026-12-31"]
+    ];
+    const t = $("tblForm");
+    t.innerHTML = "<thead><tr><th>Window</th><th>Rounds</th><th>Avg score</th><th>Avg to par</th><th>Tee</th><th>App</th><th>Short</th><th>Putt</th><th>Total SG</th></tr></thead>";
+    const tb = el("tbody");
+    windows.forEach(([label, a, b]) => {
+      const sub = FORM.filter(f => f.d >= a && f.d < b);
+      if (!sub.length) return;
+      const m = k => sub.reduce((x2, f) => x2 + f.sg[k], 0) / sub.length;
+      const tot = m(0) + m(1) + m(2) + m(3);
+      const tr = el("tr");
+      tr.innerHTML = "<td>" + label + "</td><td class='sub'>" + sub.length + "</td><td><b>" +
+        (sub.reduce((x2, f) => x2 + f.s, 0) / sub.length).toFixed(1) + "</b></td><td>" +
+        sgn(sub.reduce((x2, f) => x2 + f.s - f.par, 0) / sub.length) + "</td>" +
+        [0, 1, 2, 3].map(k => "<td class='" + (m(k) >= 0 ? "pos" : "neg") + "'>" + sgn(m(k), 2) + "</td>").join("") +
+        "<td class='" + (tot >= 0 ? "pos" : "neg") + "'><b>" + sgn(tot, 2) + "</b></td>";
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+  })();
+})();
+</script>
+<div class="cf-footer">
+  <span>grown by marshall</span>
+  <a href="https://cosmicfarmland.wtf">cosmicfarmland.wtf &#8599;</a>
+</div>
+</body>
+</html>

@@ -21,9 +21,11 @@ const pub = (...p) => join(REPO, 'public', ...p)
 // Content hash in the query string sidesteps that entirely.
 const version = (f) => createHash('sha1').update(readFileSync(pub(f))).digest('hex').slice(0, 8)
 
-const FONT_LINKS = `<link rel="icon" href="/favicon.ico" sizes="32x32">  <!-- one mark for the whole domain, golf pages included -->
+const FAVICONS = `<link rel="icon" href="/favicon.ico" sizes="32x32">  <!-- one mark for the whole domain, golf pages included -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">`
+
+const FONT_LINKS = `${FAVICONS}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">`
@@ -32,6 +34,12 @@ const FONT_LINKS = `<link rel="icon" href="/favicon.ico" sizes="32x32">  <!-- on
 // after it only map that page's own token names and components.
 const head = (...skins) =>
   [FONT_LINKS, ...['sheet.css', ...skins].map((s) => `<link rel="stylesheet" href="/${s}?v=${version(s)}">`)].join('\n')
+
+// For a page that brings its own design system. sheet.css declares --ink on
+// :root and would win on source order over a page that declares it too, so a
+// page whose own palette must survive takes its skin without the sheet.
+const headBare = (...skins) =>
+  [FAVICONS, ...skins.map((s) => `<link rel="stylesheet" href="/${s}?v=${version(s)}">`)].join('\n')
 
 // The sheet paints its own paper and tonal drift from .sheet's pseudo-elements,
 // so the four atmosphere layers grayton.css needed are gone.
@@ -52,6 +60,7 @@ const strip = (here) => {
   ${link('/golf', 'the record')}
   ${link('/golf/best-worst', 'best ball, worst ball')}
   ${link('/golf/city-am-2026', 'city am 2026')}
+  ${link('/golf/meadow-hills', 'meadow hills')}
 </nav>`
 }
 
@@ -146,6 +155,20 @@ const PAGES = [
           'were inside at all 19 checkpoints. Nathan Bartell spent 11 checkpoints in it and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 checkpoints and finished 9th.',
           'were inside after every hole. Nathan Bartell held a spot after 11 holes and finished 24th, undone by a 9 on the par-5 13th. Adam Seppala was outside it for 12 holes and finished 9th.',
         )],
+      ['footer', (h) => h.replace(/(\s*<\/body>)/, `\n${FOOTER}$1`)],
+    ],
+  },
+  {
+    slug: 'meadow-hills',
+    src: join(VAULT, 'marshall', 'golf', 'meadow-hills-scouting-report.html'),
+    out: pub('golf', 'meadow-hills.html'),
+    // Its own skin, not golf-skin.css: see the comment at the top of that file.
+    skins: ['meadow-skin.css'],
+    steps: [
+      ['dark default', (h) => h.replace(/<html([^>]*?)(\s+data-theme="[^"]*")?>/, '<html$1 data-theme="dark">')],
+      ['favicons + skin stylesheet', (h) => h.replace('</head>', `${headBare('meadow-skin.css')}\n</head>`)],
+      ['canonical', (h) => h.replace('</head>', `${canonical('/golf/meadow-hills')}\n</head>`)],
+      ['golf nav strip', (h) => h.replace(/(<div class="wrap">)/, `$1\n${strip('/golf/meadow-hills')}`)],
       ['footer', (h) => h.replace(/(\s*<\/body>)/, `\n${FOOTER}$1`)],
     ],
   },
