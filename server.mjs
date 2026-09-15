@@ -49,6 +49,13 @@ This page does not exist on cosmicfarmland.wtf.
 - [/](https://cosmicfarmland.wtf/) — the index
 `
 
+// Pages that have been renamed. The old path 301s to the new one rather than
+// 404ing: these URLs shipped in a sitemap and were pinged to IndexNow, so they
+// exist in indexes that will not be told otherwise.
+const MOVED = new Map([
+  ['/golf/meadow-hills', '/golf/2026-aurora-city-amateur-golf-tournament'],
+])
+
 export async function handle(req) {
   const url = new URL(req.url)
   if (url.pathname === '/api/health') return Response.json({ status: 'ok' })
@@ -65,6 +72,9 @@ export async function handle(req) {
   // this process as http://, and an absolute redirect built from it downgrades
   // every crawler to plaintext for a hop before the edge sends it back to https.
   if (pretty !== safe) return new Response(null, { status: 301, headers: { location: pretty + url.search } })
+
+  const moved = MOVED.get(pretty)
+  if (moved) return new Response(null, { status: 301, headers: { location: moved + url.search } })
 
   const q = accepts(req.headers.get('accept') ?? '')
   const wantsMd = qFor(q, 'text/markdown') > qFor(q, 'text/html', 'application/xhtml+xml')

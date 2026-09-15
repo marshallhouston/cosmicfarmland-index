@@ -32,7 +32,7 @@ how to call it: fetch this file (llms.txt) for the whole catalog in one request;
 - [the war on double bogeys](https://cosmicfarmland.wtf/golf): every round on my GHIN record, filterable: handicap arc, scoring buckets, and where the shots actually go.
 - [best ball, worst ball](https://cosmicfarmland.wtf/golf/best-worst): every course rebuilt twice: my lowest score on each hole stitched into one 18, my highest into another. the floor and the ceiling of every course i play.
 - [sunday, hole by hole](https://cosmicfarmland.wtf/golf/city-am-2026): Final round of 2026 Denver City Amateur Men's Flighted Tournament. Round 1 leader by 2 strokes. Winner by 1 stroke.
-- [six rounds at meadow hills](https://cosmicfarmland.wtf/golf/meadow-hills): every shot i have tracked on the course the aurora city am is played on: where the doubles come from, and the club off every tee.
+- [six rounds at meadow hills](https://cosmicfarmland.wtf/golf/2026-aurora-city-amateur-golf-tournament): every shot i have tracked on the course the aurora city am is played on: where the doubles come from, and the club off every tee.
 
 ## the farm
 

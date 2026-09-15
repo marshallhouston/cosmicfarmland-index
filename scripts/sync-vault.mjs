@@ -59,8 +59,8 @@ const strip = (here) => {
   <a class="cf-golf-link cf-home" href="https://cosmicfarmland.wtf">&#8592; cosmic farmland</a>
   ${link('/golf', 'the record')}
   ${link('/golf/best-worst', 'best ball, worst ball')}
-  ${link('/golf/city-am-2026', 'city am 2026')}
-  ${link('/golf/meadow-hills', 'meadow hills')}
+  ${link('/golf/city-am-2026', 'denver city am')}
+  ${link('/golf/2026-aurora-city-amateur-golf-tournament', 'aurora city am')}
 </nav>`
 }
 
@@ -159,16 +159,16 @@ const PAGES = [
     ],
   },
   {
-    slug: 'meadow-hills',
+    slug: 'aurora-city-am',
     src: join(VAULT, 'marshall', 'golf', 'meadow-hills-scouting-report.html'),
-    out: pub('golf', 'meadow-hills.html'),
+    out: pub('golf', '2026-aurora-city-amateur-golf-tournament.html'),
     // Its own skin, not golf-skin.css: see the comment at the top of that file.
-    skins: ['meadow-skin.css'],
+    skins: ['aurora-city-am-skin.css'],
     steps: [
       ['dark default', (h) => h.replace(/<html([^>]*?)(\s+data-theme="[^"]*")?>/, '<html$1 data-theme="dark">')],
-      ['favicons + skin stylesheet', (h) => h.replace('</head>', `${headBare('meadow-skin.css')}\n</head>`)],
-      ['canonical', (h) => h.replace('</head>', `${canonical('/golf/meadow-hills')}\n</head>`)],
-      ['golf nav strip', (h) => h.replace(/(<div class="wrap">)/, `$1\n${strip('/golf/meadow-hills')}`)],
+      ['favicons + skin stylesheet', (h) => h.replace('</head>', `${headBare('aurora-city-am-skin.css')}\n</head>`)],
+      ['canonical', (h) => h.replace('</head>', `${canonical('/golf/2026-aurora-city-amateur-golf-tournament')}\n</head>`)],
+      ['golf nav strip', (h) => h.replace(/(<div class="wrap">)/, `$1\n${strip('/golf/2026-aurora-city-amateur-golf-tournament')}`)],
       ['footer', (h) => h.replace(/(\s*<\/body>)/, `\n${FOOTER}$1`)],
     ],
   },
