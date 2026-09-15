@@ -14,10 +14,10 @@
     "golf-record": { "specimen": "specimen-echinacea", "rot": -4 },
     "city-am-2026": { "specimen": "specimen-pitcher-salvia", "rot": 3 },
     "best-worst": { "specimen": "specimen-blue-grama-grass", "rot": -2.6, "pale": true },
-    "meadow-hills": { "specimen": "specimen-blue-flax", "rot": 2.2 }
+    "aurora-city-am": { "specimen": "specimen-blue-flax", "rot": 2.2 }
   },
   "order": {
     "apps": ["writing", "grateful-dead-77", "lenny-explorer", "systems-thinking", "strategy-wizard", "bobby-bowser", "octopus-org-lair", "golf-course-designer"],
-    "golf": ["golf-record", "best-worst", "city-am-2026", "meadow-hills"]
+    "golf": ["golf-record", "best-worst", "city-am-2026", "aurora-city-am"]
   }
 }

@@ -125,3 +125,16 @@ test('the raster icon fallbacks are served, not 404s', async () => {
     expect((await res.arrayBuffer()).byteLength).toBeGreaterThan(0)
   }
 })
+
+// A renamed page keeps its old path working: /golf/meadow-hills shipped in a
+// sitemap and was pinged to IndexNow before the slug changed.
+test('renamed page 301s from its old path', async () => {
+  const r = await get('/golf/meadow-hills')
+  expect(r.status).toBe(301)
+  expect(r.headers.get('location')).toBe('/golf/2026-aurora-city-amateur-golf-tournament')
+})
+
+test('renamed page serves at its new path', async () => {
+  const r = await get('/golf/2026-aurora-city-amateur-golf-tournament')
+  expect(r.status).toBe(200)
+})
