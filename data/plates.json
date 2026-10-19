@@ -2,6 +2,7 @@
   "_": "Which specimen is mounted on which plate, and how the card lies. Kept out of apps.json and golf.json because those are the catalogue and this is the mounting: an app's identity does not change when a specimen is swapped. rot is degrees; the card renders it at a fraction of this so ten cards do not read as mess. pale lifts a bleached specimen that the sheet would otherwise eat.",
   "apps": {
     "writing": { "specimen": "specimen-ice-plant", "rot": 2.4, "full": true },
+    "rodeo-dunes": { "specimen": "specimen-rabbitbrush", "rot": -2.8 },
     "grateful-dead-77": { "specimen": "specimen-bee-balm", "rot": -3.5 },
     "lenny-explorer": { "specimen": "specimen-aster", "rot": -2.4, "pale": true },
     "systems-thinking": { "specimen": "specimen-blue-salvia", "rot": 3.5 },
@@ -17,7 +18,7 @@
     "aurora-city-am": { "specimen": "specimen-blue-flax", "rot": 2.2 }
   },
   "order": {
-    "apps": ["writing", "grateful-dead-77", "lenny-explorer", "systems-thinking", "strategy-wizard", "bobby-bowser", "octopus-org-lair", "golf-course-designer"],
+    "apps": ["writing", "rodeo-dunes", "grateful-dead-77", "lenny-explorer", "systems-thinking", "strategy-wizard", "bobby-bowser", "octopus-org-lair", "golf-course-designer"],
     "golf": ["golf-record", "best-worst", "city-am-2026", "aurora-city-am"]
   }
 }

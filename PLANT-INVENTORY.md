@@ -27,7 +27,7 @@ Fiesta and Color Pop.
 ## Printed (31)
 
 Every plant below has a specimen in `public/specimens/` and a card on
-`/plant-prints`. The eleven marked **mounted** are also doing a second job on the
+`/plant-prints`. The thirteen marked **mounted** are also doing a second job on the
 index, standing in for an app or a golf page.
 
 | Plant | Latin | Specimen | Gardens |
@@ -50,9 +50,9 @@ index, standing in for an app or a golf page.
 | Black-eyed Susan | *Rudbeckia fulgida* 'Goldsturm' | specimen-black-eyed-susan | Butterfly Daydream, Color Pop, Mosaic |
 | Butterfly Blue pincushion | *Scabiosa columbaria* 'Butterfly Blue' | specimen-butterfly-blue-pincushion | Butterfly Daydream, Sunlit Fiesta, Mosaic |
 | Blue Spruce sedum | *Sedum reflexum* 'Blue Spruce' | specimen-blue-spruce-sedum | Butterfly Daydream |
-| Blue flax | *Linum lewisii* | specimen-blue-flax | Butterfly Haven, Mosaic |
+| Blue flax | *Linum lewisii* | specimen-blue-flax (mounted) | Butterfly Haven, Mosaic |
 | Prairie coneflower | *Ratibida columnifera* | specimen-prairie-coneflower | Butterfly Haven, Mosaic |
-| Rabbitbrush | *Ericameria nauseosa* | specimen-rabbitbrush | Butterfly Haven, Mosaic |
+| Rabbitbrush | *Ericameria nauseosa* | specimen-rabbitbrush (mounted) | Butterfly Haven, Mosaic |
 | Rigid goldenrod | *Solidago rigida* | specimen-rigid-goldenrod | Butterfly Haven, Mosaic |
 | Rocky Mountain penstemon | *Penstemon strictus* | specimen-rocky-mountain-penstemon | Butterfly Haven, Mosaic |
 | Showy fleabane | *Erigeron speciosus* | specimen-showy-fleabane | Butterfly Haven, Mosaic |
