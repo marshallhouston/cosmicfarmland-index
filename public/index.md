@@ -25,6 +25,7 @@ how to call it: fetch this file (llms.txt) for the whole catalog in one request;
 - [Bobby Bowser Arcade](https://bobby-bowser.cosmicfarmland.wtf): A 10-cabinet arcade of coding-craft minigames. Defeat bad practices, collect good ones.
 - [Octopus Antipatterns](https://octopus-org-lair.cosmicfarmland.wtf): A personal study site for the 36 antipatterns in The Octopus Organization. Browse by category, drill with recall quizzes, and run a spot-it diagnostic on your own org.
 - [Golf Course Designer](https://golf-course-designer.cosmicfarmland.wtf): Shape nine holes of dirt, then watch a simulated field of real handicaps expose what you built. Every number on screen is a replayed round, not a rating.
+- [Rodeo Dunes](https://rodeo-dunes.cosmicfarmland.wtf): One round at Rodeo Dunes.
 - [Golf Record](https://cosmicfarmland.wtf/golf): Every round from my GHIN history - scoring trends, hole-by-hole splits, and where the strokes actually go.
 
 ## vault pages

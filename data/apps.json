@@ -71,6 +71,14 @@
       "tags": ["golf", "simulation", "interactive"]
     },
     {
+      "slug": "rodeo-dunes",
+      "name": "Rodeo Dunes",
+      "blurb": "One round at Rodeo Dunes.",
+      "url": "https://rodeo-dunes.cosmicfarmland.wtf",
+      "status": "live",
+      "tags": ["golf", "personal"]
+    },
+    {
       "slug": "golf-record",
       "name": "Golf Record",
       "blurb": "Every round from my GHIN history - scoring trends, hole-by-hole splits, and where the strokes actually go.",
