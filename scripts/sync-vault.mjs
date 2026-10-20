@@ -61,6 +61,7 @@ const strip = (here) => {
   ${link('/golf/best-worst', 'best ball, worst ball')}
   ${link('/golf/city-am-2026', 'denver city am')}
   ${link('/golf/2026-aurora-city-amateur-golf-tournament', 'aurora city am')}
+  ${link('https://rodeo-dunes.cosmicfarmland.wtf', 'rodeo dunes')}
 </nav>`
 }
 
