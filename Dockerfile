@@ -1,5 +1,5 @@
 # Single-stage Bun: build the static SPA, then serve it (+ /api/health).
-FROM oven/bun:1 AS app
+FROM oven/bun:1.4.4 AS app
 WORKDIR /app
 COPY package.json bun.lock* ./
 RUN bun install
